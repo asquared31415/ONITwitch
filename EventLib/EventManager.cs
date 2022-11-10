@@ -44,7 +44,7 @@ public class EventManager
 	}
 
 	[CanBeNull]
-	public EventInfo GetEventByID(string id)
+	public EventInfo GetEventByID([NotNull] string id)
 	{
 		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;
 	}
