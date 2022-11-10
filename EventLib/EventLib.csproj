@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <RootNamespace>EventLib</RootNamespace>
+        <PackageId>EventLib</PackageId>
+        <AssemblyName>EventLib</AssemblyName>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IsLib>true</IsLib>
+    </PropertyGroup>
+</Project>

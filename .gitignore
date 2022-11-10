@@ -1,0 +1,11 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+/lib/
+/.idea/
+
+Directory.Build.props.user
+ONITwitch.sln.DotSettings.user

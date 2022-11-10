@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <Target Name="Merge" AfterTargets="Build" Condition="'$(IsLib)' != 'true'">
+        <ItemGroup>
+            <_LocalRefs Include="$(TargetDir)/*.dll" Exclude="$(TargetPath)"/>
+        </ItemGroup>
+        <Exec Command="wine64 $(NuGetPackageRoot)/ilrepack/$(ILRepackVersion)/tools/ILRepack.exe /out:$(TargetPath) /lib:$(SolutionDir)/lib $(TargetPath) @(_LocalRefs -> '%(Identity)', ' ') > /dev/null 2>&amp;1"/>
+        <Delete Files="@(_LocalRefs)"/>
+    </Target>
+
+    <PropertyGroup>
+        <ModsPath>$(GameSavePath)/mods/Dev/$(ProjectName)/</ModsPath>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(IsLib)' != 'true'">
+        <_ModInfo Include="$(ProjectDir)/mod_info.yaml;$(ProjectDir)/mod.yaml">
+            <DestFolder>$(ModsPath)</DestFolder>
+        </_ModInfo>
+        <_ModDLL Include="$(TargetPath)">
+            <DestFolder>$(ModsPath)</DestFolder>
+        </_ModDLL>
+        <_Anim Include="$(ProjectDir)anim/**"/>
+        <_Templates Include="$(ProjectDir)templates/**"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MainMod)' == 'true'">
+        <_Readme Include="$(ProjectDir)/README.txt"/>
+        <_Readme Include="$(ProjectDir)/CREDITS.txt"/>
+    </ItemGroup>
+
+    <Target Name="CopyOutput" AfterTargets="Merge" Condition="'$(IsLib)' != 'true'" Inputs="@(_ModInfo);@(_ModDLL)" Outputs="@(_ModInfo -> %(DestFolder)%(Filename)%(Extension));@(_ModDLL -> %(DestFolder)%(Filename)%(Extension))">
+        <Copy SourceFiles="@(_ModDLL)" DestinationFolder="%(_ModDLL.DestFolder)"/>
+        <Copy SourceFiles="@(_ModInfo)" DestinationFolder="%(_ModInfo.DestFolder)"/>
+        <Copy SourceFiles="@(_Anim)" DestinationFolder="$(ModsPath)/anim/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(_Templates)" DestinationFolder="$(ModsPath)/templates/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(_Readme)" DestinationFolder="$(ModsPath)/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(CopyFolder)" DestinationFolder="$(ModsPath)/%(CopyFolder.DestName)/%(RecursiveDir)"/>
+    </Target>
+</Project>
