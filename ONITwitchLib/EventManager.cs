@@ -31,7 +31,7 @@ public class EventManager
 			"AddListenerForEvent",
 			new[] { EventInterface.EventInfoType, typeof(Action<object>) }
 		);
-		addListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
+		addListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			addListenerForEventInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,
@@ -42,7 +42,7 @@ public class EventManager
 			"RemoveListenerForEvent",
 			new[] { EventInterface.EventInfoType, typeof(Action<object>) }
 		);
-		removeListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
+		removeListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			removeListenerForEventInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,
@@ -53,7 +53,7 @@ public class EventManager
 			"TriggerEvent",
 			new[] { EventInterface.EventInfoType, typeof(object) }
 		);
-		triggerEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
+		triggerEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			triggerEventInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,

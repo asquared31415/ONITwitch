@@ -14,6 +14,9 @@ public static class EventInterface
 
 	private const string EventInfoTypeName = "EventLib.EventInfo, ONITwitch";
 	private static Type eventInfoType;
+	
+	private const string DataManagerTypeName = "EventLib.DataManager, ONITwitch";
+	private static Type dataManagerType;
 
 	/// <summary>
 	/// The Type for the main Twitch mod's UserMod2, if it exists. null if it cannot be found.
@@ -33,6 +36,13 @@ public static class EventInterface
 	/// </summary>
 	[NotNull]
 	public static Type EventInfoType => (eventInfoType ??= Type.GetType(EventInfoTypeName))!;
+
+	/// <summary>
+	/// Only safe to access if the Twitch mod is active.
+	/// </summary>
+	[NotNull]
+	public static Type DataManagerType => (dataManagerType ??= Type.GetType(DataManagerTypeName))!;
+
 
 	/// <summary>
 	/// True if the Twitch mod has been detected, false otherwise.
@@ -67,5 +77,34 @@ public static class EventInterface
 
 		var instance = eventManagerInstanceDelegate();
 		return new EventManager(instance);
+	}
+	
+	private static Func<object> dataManagerInstanceDelegate;
+
+	/// <summary>
+	/// Gets the instance of the data manager from the twitch mod.
+	/// Only safe to access if the Twitch mod is active.
+	/// </summary>
+	public static DataManager GetDataManagerInstance()
+	{
+		if (dataManagerInstanceDelegate == null)
+		{
+			var prop = AccessTools.Property(DataManagerType, "Instance");
+			var propInfo = prop.GetGetMethod();
+
+			var retType = propInfo.ReturnType;
+			if (retType != DataManagerType)
+			{
+				throw new Exception(
+					$"The Instance property on {DataManagerType.AssemblyQualifiedName} does not return an instance of {DataManagerType}"
+				);
+			}
+
+			// no argument because it's static property
+			dataManagerInstanceDelegate = DelegateUtil.CreateDelegate<Func<object>>(propInfo, null);
+		}
+
+		var instance = dataManagerInstanceDelegate();
+		return new DataManager(instance);
 	}
 }

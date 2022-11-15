@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using EventLib;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
+using DataManager = EventLib.DataManager;
 using EventManager = EventLib.EventManager;
 
 namespace ONITwitch;
@@ -61,6 +61,8 @@ public class OniTwitchMod : UserMod2
 		Debug.Log("triggering via reflection with data");
 		var d = (List<string>) DataManager.Instance.GetDataForEvent(eventInfo);
 		eventManager.TriggerEvent(info, d);
+		Debug.Log("adding to obtained info");
+		d.Add("AAAAAAAAAAAAAAA");
 		Debug.Log("triggering again normally");
 		EventManager.Instance.TriggerEvent(eventInfo, d);
 	}
