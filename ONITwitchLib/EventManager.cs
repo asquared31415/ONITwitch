@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 
@@ -11,34 +10,54 @@ public class EventManager
 	// the EventManager instance from the event lib, but type erased as an object
 	private readonly object eventManagerInstance;
 
+	// delegates created to wrap various methods on the event manager without needing to use reflection
+	// and Invoke every time
 	private readonly Func<string, object> registerEventDelegate;
 	private readonly Func<string, object> getEventByIdDelegate;
-	private readonly MethodInfo addListenerForEventInfo;
-	private readonly MethodInfo removeListenerForEventInfo;
-	private readonly MethodInfo triggerEventInfo;
+	private readonly Action<object, Action<Dictionary<string, object>>> addListenerForEventDelegate;
+	private readonly Action<object, Action<Dictionary<string, object>>> removeListenerForEventDelegate;
+	private readonly Action<object, Dictionary<string, object>> triggerEventDelegate;
 
 	internal EventManager(object instance)
 	{
 		eventManagerInstance = instance;
 		var eventType = eventManagerInstance.GetType();
 		var registerInfo = AccessTools.DeclaredMethod(eventType, "RegisterEvent", new[] { typeof(string) });
-		registerEventDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(eventManagerInstance, registerInfo);
+		registerEventDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(registerInfo, eventManagerInstance);
 		var getByIdInfo = AccessTools.DeclaredMethod(eventType, "GetEventByID", new[] { typeof(string) });
-		getEventByIdDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(eventManagerInstance, getByIdInfo);
-		addListenerForEventInfo = AccessTools.DeclaredMethod(
+		getEventByIdDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(getByIdInfo, eventManagerInstance);
+		var addListenerForEventInfo = AccessTools.DeclaredMethod(
 			eventType,
 			"AddListenerForEvent",
 			new[] { EventInterface.EventInfoType, typeof(Action<object>) }
 		);
-		removeListenerForEventInfo = AccessTools.DeclaredMethod(
+		addListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
+			addListenerForEventInfo,
+			eventManagerInstance,
+			EventInterface.EventInfoType,
+			typeof(Action<Dictionary<string, object>>)
+		);
+		var removeListenerForEventInfo = AccessTools.DeclaredMethod(
 			eventType,
 			"RemoveListenerForEvent",
 			new[] { EventInterface.EventInfoType, typeof(Action<object>) }
 		);
-		triggerEventInfo = AccessTools.DeclaredMethod(
+		removeListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
+			removeListenerForEventInfo,
+			eventManagerInstance,
+			EventInterface.EventInfoType,
+			typeof(Action<Dictionary<string, object>>)
+		);
+		var triggerEventInfo = AccessTools.DeclaredMethod(
 			eventType,
 			"TriggerEvent",
 			new[] { EventInterface.EventInfoType, typeof(Dictionary<string, object>) }
+		);
+		triggerEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
+			triggerEventInfo,
+			eventManagerInstance,
+			EventInterface.EventInfoType,
+			typeof(Dictionary<string, object>)
 		);
 	}
 
@@ -78,18 +97,18 @@ public class EventManager
 		return new EventInfo(output);
 	}
 
-	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
+	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
 	{
-		addListenerForEventInfo.Invoke(eventManagerInstance, new[] { eventInfo.EventInfoInstance, listener });
+		addListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
 	}
 
-	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
+	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
 	{
-		removeListenerForEventInfo.Invoke(eventManagerInstance, new[] { eventInfo.EventInfoInstance, listener });
+		removeListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
 	}
 
 	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] Dictionary<string, object> data)
 	{
-		triggerEventInfo.Invoke(eventManagerInstance, new[] { eventInfo.EventInfoInstance, data });
+		triggerEventDelegate(eventInfo.EventInfoInstance, data);
 	}
 }
