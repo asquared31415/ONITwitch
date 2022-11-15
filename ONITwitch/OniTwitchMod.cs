@@ -24,7 +24,7 @@ public class OniTwitchMod : UserMod2
 		EventManager.Instance.TriggerEvent(eventInfo, data);
 		Debug.Log("adding second listener");
 
-		void Listener2(Dictionary<string, object> _)
+		void Listener2(object _)
 		{
 			Debug.Log("Listener2");
 		}

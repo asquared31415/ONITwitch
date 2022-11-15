@@ -14,9 +14,9 @@ public class EventManager
 	// and Invoke every time
 	private readonly Func<string, object> registerEventDelegate;
 	private readonly Func<string, object> getEventByIdDelegate;
-	private readonly Action<object, Action<Dictionary<string, object>>> addListenerForEventDelegate;
-	private readonly Action<object, Action<Dictionary<string, object>>> removeListenerForEventDelegate;
-	private readonly Action<object, Dictionary<string, object>> triggerEventDelegate;
+	private readonly Action<object, Action<string>> addListenerForEventDelegate;
+	private readonly Action<object, Action<object>> removeListenerForEventDelegate;
+	private readonly Action<object, object> triggerEventDelegate;
 
 	internal EventManager(object instance)
 	{
@@ -35,7 +35,7 @@ public class EventManager
 			addListenerForEventInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,
-			typeof(Action<Dictionary<string, object>>)
+			typeof(Action<object>)
 		);
 		var removeListenerForEventInfo = AccessTools.DeclaredMethod(
 			eventType,
@@ -46,18 +46,18 @@ public class EventManager
 			removeListenerForEventInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,
-			typeof(Action<Dictionary<string, object>>)
+			typeof(Action<object>)
 		);
 		var triggerEventInfo = AccessTools.DeclaredMethod(
 			eventType,
 			"TriggerEvent",
-			new[] { EventInterface.EventInfoType, typeof(Dictionary<string, object>) }
+			new[] { EventInterface.EventInfoType, typeof(object) }
 		);
 		triggerEventDelegate = DelegateUtil.CreateRuntimeTypeDelegate(
 			triggerEventInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,
-			typeof(Dictionary<string, object>)
+			typeof(object)
 		);
 	}
 
@@ -97,17 +97,17 @@ public class EventManager
 		return new EventInfo(output);
 	}
 
-	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
+	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
 	{
 		addListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
 	}
 
-	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
+	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
 	{
 		removeListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
 	}
 
-	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] Dictionary<string, object> data)
+	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] object data)
 	{
 		triggerEventDelegate(eventInfo.EventInfoInstance, data);
 	}

@@ -9,9 +9,9 @@ public class EventManager
 {
 	private class RefActionWrapper
 	{
-		public Action<Dictionary<string, object>> Action;
+		public Action<object> Action;
 
-		public RefActionWrapper(Action<Dictionary<string, object>> action)
+		public RefActionWrapper(Action<object> action)
 		{
 			Action = action;
 		}
@@ -49,7 +49,10 @@ public class EventManager
 		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;
 	}
 
-	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
+	public void AddListenerForEvent(
+		[NotNull] EventInfo eventInfo,
+		[NotNull] Action<object> listener
+	)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var val))
 		{
@@ -64,7 +67,10 @@ public class EventManager
 		}
 	}
 
-	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
+	public void RemoveListenerForEvent(
+		[NotNull] EventInfo eventInfo,
+		[NotNull] Action<object> listener
+	)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var val))
 		{
@@ -87,7 +93,7 @@ public class EventManager
 		}
 	}
 
-	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] Dictionary<string, object> data)
+	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] object data)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var events))
 		{
