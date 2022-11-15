@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -37,7 +38,7 @@ public class EventManager
 		triggerEventInfo = AccessTools.DeclaredMethod(
 			eventType,
 			"TriggerEvent",
-			new[] { EventInterface.EventInfoType }
+			new[] { EventInterface.EventInfoType, typeof(Dictionary<string, object>) }
 		);
 	}
 
@@ -87,8 +88,8 @@ public class EventManager
 		removeListenerForEventInfo.Invoke(eventManagerInstance, new[] { eventInfo.EventInfoInstance, listener });
 	}
 
-	public void TriggerEvent([NotNull] EventInfo eventInfo)
+	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] Dictionary<string, object> data)
 	{
-		triggerEventInfo.Invoke(eventManagerInstance, new[] { eventInfo.EventInfoInstance });
+		triggerEventInfo.Invoke(eventManagerInstance, new[] { eventInfo.EventInfoInstance, data });
 	}
 }

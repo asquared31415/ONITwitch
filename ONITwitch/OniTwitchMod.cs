@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
@@ -15,11 +16,12 @@ public class OniTwitchMod : UserMod2
 		base.OnLoad(harmony);
 		var eventInfo = EventManager.Instance.RegisterEvent("aaa");
 		Debug.Log("Triggering event after init");
-		EventManager.Instance.TriggerEvent(eventInfo);
+		var data = new Dictionary<string, object>();
+		EventManager.Instance.TriggerEvent(eventInfo, data);
 		Debug.Log("adding one listener");
 		EventManager.Instance.AddListenerForEvent(eventInfo, _ => { Debug.Log("Listener1"); });
 		Debug.Log("triggering again");
-		EventManager.Instance.TriggerEvent(eventInfo);
+		EventManager.Instance.TriggerEvent(eventInfo, data);
 		Debug.Log("adding second listener");
 
 		void Listener2(object _)
@@ -29,21 +31,21 @@ public class OniTwitchMod : UserMod2
 
 		EventManager.Instance.AddListenerForEvent(eventInfo, Listener2);
 		Debug.Log("triggering again");
-		EventManager.Instance.TriggerEvent(eventInfo);
+		EventManager.Instance.TriggerEvent(eventInfo, data);
 		Debug.Log("unregistering event 2 via reflection");
 		var eventManager = EventInterface.GetEventManagerInstance();
-		var info = eventManager.GetEventById("aaa");
+		var info = eventManager.GetEventById("aaa")!;
 		eventManager.RemoveListenerForEvent(info, Listener2);
 
 		Debug.Log("triggering again normally");
-		EventManager.Instance.TriggerEvent(eventInfo);
+		EventManager.Instance.TriggerEvent(eventInfo, data);
 		Debug.Log("triggering again via reflection");
-		eventManager.TriggerEvent(info);
+		eventManager.TriggerEvent(info, data);
 		Debug.Log("adding third listener via reflection");
 		eventManager.AddListenerForEvent(info, _ => Debug.Log("Listener3"));
 		Debug.Log("triggering via reflection");
-		eventManager.TriggerEvent(info);
+		eventManager.TriggerEvent(info, data);
 		Debug.Log("triggering again normally");
-		EventManager.Instance.TriggerEvent(eventInfo);
+		EventManager.Instance.TriggerEvent(eventInfo, data);
 	}
 }

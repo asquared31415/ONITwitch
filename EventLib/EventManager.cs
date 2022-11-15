@@ -9,9 +9,9 @@ public class EventManager
 {
 	private class RefActionWrapper
 	{
-		public Action<object> Action;
+		public Action<Dictionary<string, object>> Action;
 
-		public RefActionWrapper(Action<object> action)
+		public RefActionWrapper(Action<Dictionary<string, object>> action)
 		{
 			Action = action;
 		}
@@ -20,7 +20,7 @@ public class EventManager
 	private static EventManager instance;
 
 	// entries in this dictionary are never null
-	private Dictionary<string, RefActionWrapper> registeredEvents = new();
+	private readonly Dictionary<string, RefActionWrapper> registeredEvents = new();
 
 	public static EventManager Instance
 	{
@@ -49,7 +49,7 @@ public class EventManager
 		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;
 	}
 
-	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
+	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var val))
 		{
@@ -64,7 +64,7 @@ public class EventManager
 		}
 	}
 
-	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
+	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<Dictionary<string, object>> listener)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var val))
 		{
@@ -87,11 +87,11 @@ public class EventManager
 		}
 	}
 
-	public void TriggerEvent([NotNull] EventInfo eventInfo)
+	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] Dictionary<string, object> data)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var events))
 		{
-			events.Action.Invoke(null);
+			events.Action.Invoke(data);
 		}
 		else
 		{
