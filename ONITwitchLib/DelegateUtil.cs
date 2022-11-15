@@ -1,12 +1,13 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
+using JetBrains.Annotations;
 
 namespace ONITwitchLib;
 
 public static class DelegateUtil
 {
-	public static T CreateDelegate<T>(MethodInfo methodInfo, object arg0)
+	public static T CreateDelegate<T>([NotNull] MethodInfo methodInfo, object arg0)
 		where T : MulticastDelegate
 	{
 		return (T) Delegate.CreateDelegate(typeof(T), arg0, methodInfo);
