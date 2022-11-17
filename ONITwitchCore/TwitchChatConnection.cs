@@ -27,7 +27,7 @@ public class TwitchChatConnection
 	private CancellationTokenSource readerCancellationToken;
 
 	private readonly Dictionary<string, CapStatus> capStatuses = new();
-	private bool isAuthenticated = false;
+	private bool isAuthenticated;
 
 	public TwitchChatConnection()
 	{
@@ -49,19 +49,9 @@ public class TwitchChatConnection
 				readerCancellationToken = new CancellationTokenSource();
 				var readerTask = StartReader(readerCancellationToken.Token);
 
-				if (!RequestCaps())
-				{
-					Debug.LogWarning("[Twitch Integration] unable to request capabilities");
-					readerCancellationToken.Cancel();
-					return;
-				}
+				RequestCaps();
 
-				if (!Authenticate())
-				{
-					Debug.LogWarning($"[Twitch Integration] Unable to send authentication to twitch");
-					readerCancellationToken.Cancel();
-					return;
-				}
+				Authenticate();
 
 				var checkCapsCount = 0;
 				while (!CheckCapsEnabled() && (checkCapsCount < 40))
@@ -91,6 +81,28 @@ public class TwitchChatConnection
 				readerTask.Wait();
 			}
 		);
+	}
+
+	public void SendMessage(IrcMessage message)
+	{
+		if (message.Command.IsKnownCommand())
+		{
+			var ircMessage = message.GetIrcString();
+			if (!message.Command.IsNumeric && (message.Command.Command.Value == IrcCommandType.PASS))
+			{
+				Debug.Log("Sending IRC message: PASS <REDACTED>");
+			}
+			else
+			{
+				Debug.Log($"Sending IRC message: {ircMessage}");
+			}
+
+			SendMessage(ircMessage);
+		}
+		else
+		{
+			Debug.LogWarning($"[Twitch Integration] Cannot send unknown command {message.Command}");
+		}
 	}
 
 	private Task StartReader(CancellationToken cancellationToken)
@@ -204,7 +216,8 @@ public class TwitchChatConnection
 					else
 					{
 						Debug.Log($"Got ping {pingArg}");
-						SendMessage($"PONG :{pingArg}");
+						var pongMsg = new IrcMessage(new IrcCommand(IrcCommandType.PONG), new List<string> { pingArg });
+						SendMessage(pongMsg);
 					}
 
 					break;
@@ -318,34 +331,25 @@ public class TwitchChatConnection
 			: new ConnectionResult { State = ConnectionResult.ResultState.Closed, CloseState = socket.CloseStatus };
 	}
 
-	private bool RequestCaps()
+	private void RequestCaps()
 	{
-		if (!RequestCap("twitch.tv/commands"))
-		{
-			return false;
-		}
-
-		if (!RequestCap("twitch.tv/tags"))
-		{
-			return false;
-		}
-
-		return true;
+		RequestCap("twitch.tv/commands");
+		RequestCap("twitch.tv/tags");
 	}
 
 	// returns whether the capability was requested
-	private bool RequestCap([NotNull] string capName)
+	private void RequestCap([NotNull] string capName)
 	{
 		if (capStatuses.TryGetValue(capName, out var capStatus) && (capStatus == CapStatus.Enabled))
 		{
 			// already requested, so exit early
-			return true;
+			return;
 		}
 
 		capStatuses[capName] = CapStatus.Requested;
 
-		const string capFormat = "CAP REQ :";
-		return SendMessage(capFormat + capName);
+		var capMsg = new IrcMessage(IrcCommandType.CAP, new List<string> { "REQ", capName });
+		SendMessage(capMsg);
 	}
 
 	private bool CheckCapsEnabled()
@@ -361,27 +365,21 @@ public class TwitchChatConnection
 		return true;
 	}
 
-	private bool Authenticate()
+	private void Authenticate()
 	{
 		// TODO: FIX THESE
 		const string oauth = "";
 		const string nick = "";
 
-		if (!SendMessage("PASS " + oauth))
-		{
-			return false;
-		}
+		var passMsg = new IrcMessage(IrcCommandType.PASS, new List<string> { oauth });
+		SendMessage(passMsg);
 
-		if (!SendMessage("NICK " + nick))
-		{
-			return false;
-		}
-
-		return true;
+		var nickMsg = new IrcMessage(IrcCommandType.NICK, new List<string> { nick });
+		SendMessage(nickMsg);
 	}
 
 	// returns true if the message was successfully sent
-	private bool SendMessage([NotNull] string message)
+	private void SendMessage([NotNull] string message)
 	{
 		if (!message.EndsWith("\r\n"))
 		{
@@ -392,7 +390,6 @@ public class TwitchChatConnection
 		var data = Encoding.UTF8.GetBytes(message);
 		try
 		{
-			Debug.Log($"sending message: {message}");
 			socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, CancellationToken.None)
 				.Wait();
 		}
@@ -402,11 +399,7 @@ public class TwitchChatConnection
 			{
 				Debug.LogWarning(ie);
 			}
-
-			return false;
 		}
-
-		return true;
 	}
 
 	[CanBeNull]

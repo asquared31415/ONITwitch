@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -76,14 +77,12 @@ public static class IrcParser
 	[NotNull]
 	private static Dictionary<string, IrcTag> ParseTags([NotNull] string tags)
 	{
-		Debug.Log($"parsing tags:{tags}");
 		var parseTags = string.Copy(tags);
 
 		var tagDict = new Dictionary<string, IrcTag>();
 
 		while (parseTags.Length > 0)
 		{
-			Debug.Log(parseTags);
 			string fullTag;
 			var tagEndIdx = parseTags.IndexOf(';');
 			if (tagEndIdx == -1)
@@ -97,7 +96,6 @@ public static class IrcParser
 				parseTags = parseTags.Substring(tagEndIdx + 1);
 			}
 
-			Debug.Log(fullTag);
 			var match = TagRegex.Match(fullTag);
 			var isClient = match.Groups["client"].Success;
 			var vendor = match.Groups["vendor"].Value;
@@ -218,6 +216,64 @@ public struct IrcMessage
 		Prefix = null;
 		Command = default;
 		Args = new List<string>();
+	}
+
+	public IrcMessage(IrcCommand command)
+	{
+		Tags = new Dictionary<string, IrcTag>();
+		Prefix = null;
+		Command = command;
+		Args = new List<string>();
+	}
+	
+	public IrcMessage(IrcCommand command, List<string> args)
+	{
+		Tags = new Dictionary<string, IrcTag>();
+		Prefix = null;
+		Command = command;
+		Args = args;
+	}
+	
+	public IrcMessage(IrcCommandType command)
+	{
+		Tags = new Dictionary<string, IrcTag>();
+		Prefix = null;
+		Command = new IrcCommand(command);
+		Args = new List<string>();
+	}
+	
+	public IrcMessage(IrcCommandType command, List<string> args)
+	{
+		Tags = new Dictionary<string, IrcTag>();
+		Prefix = null;
+		Command = new IrcCommand(command);
+		Args = args;
+	}
+
+	public string GetIrcString()
+	{
+		// TODO: tags + prefix
+		var sb = new StringBuilder();
+		sb.Append(Command.ToString());
+		sb.Append(" ");
+		
+		if (Args.Count > 1)
+		{
+			for (var idx = 0; idx < Args.Count - 1; idx++)
+			{
+				sb.Append(Args[idx]);
+				sb.Append(" ");
+			}
+			
+			// add last arg
+			sb.Append(":");
+			sb.Append(Args[Args.Count - 1]);
+		} else if (Args.Count == 1)
+		{
+			sb.Append(Args[0]);
+		}
+
+		return sb.ToString();
 	}
 
 	public override string ToString()
