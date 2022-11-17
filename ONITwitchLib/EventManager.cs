@@ -107,7 +107,7 @@ public class EventManager
 		removeListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
 	}
 
-	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] object data)
+	public void TriggerEvent([NotNull] EventInfo eventInfo, object data)
 	{
 		triggerEventDelegate(eventInfo.EventInfoInstance, data);
 	}

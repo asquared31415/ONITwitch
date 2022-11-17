@@ -93,7 +93,7 @@ public class EventManager
 		}
 	}
 
-	public void TriggerEvent([NotNull] EventInfo eventInfo, [NotNull] object data)
+	public void TriggerEvent([NotNull] EventInfo eventInfo, object data)
 	{
 		if (registeredEvents.TryGetValue(eventInfo.Id, out var events))
 		{
