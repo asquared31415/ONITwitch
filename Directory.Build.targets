@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-    <Target Name="Merge" AfterTargets="Build" Condition="'$(IsLib)' != 'true'">
+    <Target Name="Merge" AfterTargets="Build" Condition="'$(MainMod)' == 'true'">
         <ItemGroup>
             <_LocalRefs Include="$(TargetDir)/*.dll" Exclude="$(TargetPath)"/>
         </ItemGroup>
@@ -13,17 +13,17 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsLib)' != 'true'">
+        <_Anim Include="$(ProjectDir)anim/**"/>
+        <_Templates Include="$(ProjectDir)templates/**"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MainMod)' == 'true'">
         <_ModInfo Include="$(ProjectDir)/mod_info.yaml;$(ProjectDir)/mod.yaml">
             <DestFolder>$(ModsPath)</DestFolder>
         </_ModInfo>
         <_ModDLL Include="$(TargetPath)">
             <DestFolder>$(ModsPath)</DestFolder>
         </_ModDLL>
-        <_Anim Include="$(ProjectDir)anim/**"/>
-        <_Templates Include="$(ProjectDir)templates/**"/>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(MainMod)' == 'true'">
         <_Readme Include="$(ProjectDir)/README.txt"/>
         <_Readme Include="$(ProjectDir)/CREDITS.txt"/>
     </ItemGroup>

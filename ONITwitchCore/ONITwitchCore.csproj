@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <RootNamespace>ONITwitchCore</RootNamespace>
+        <PackageId>ONITwitchCore</PackageId>
+        <AssemblyName>ONITwitchCore</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\EventLib\EventLib.csproj" />
+        <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
+    </ItemGroup>
+</Project>
