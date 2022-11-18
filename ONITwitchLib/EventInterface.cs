@@ -6,9 +6,6 @@ namespace ONITwitchLib;
 
 public static class EventInterface
 {
-	private const string TwitchTypeName = "ONITwitch.OniTwitchMod, ONITwitch";
-	private static Type mainTwitchType;
-
 	private const string EventManagerTypeName = "EventLib.EventManager, ONITwitch";
 	private static Type eventManagerType;
 
@@ -17,13 +14,6 @@ public static class EventInterface
 	
 	private const string DataManagerTypeName = "EventLib.DataManager, ONITwitch";
 	private static Type dataManagerType;
-
-	/// <summary>
-	/// The Type for the main Twitch mod's UserMod2, if it exists. null if it cannot be found.
-	/// Safe to access even if the Twitch mod is not installed or active. 
-	/// </summary>
-	[CanBeNull]
-	public static Type MainTwitchModType => mainTwitchType ??= Type.GetType(TwitchTypeName);
 
 	/// <summary>
 	/// Only safe to access if the Twitch mod is active.
@@ -42,13 +32,6 @@ public static class EventInterface
 	/// </summary>
 	[NotNull]
 	public static Type DataManagerType => (dataManagerType ??= Type.GetType(DataManagerTypeName))!;
-
-
-	/// <summary>
-	/// True if the Twitch mod has been detected, false otherwise.
-	/// Safe to access even if the Twitch mod is not installed or active.
-	/// </summary>
-	public static bool TwitchIsPresent => MainTwitchModType != null;
 
 	private static Func<object> eventManagerInstanceDelegate;
 

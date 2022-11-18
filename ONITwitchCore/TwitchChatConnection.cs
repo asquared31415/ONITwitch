@@ -39,6 +39,13 @@ public class TwitchChatConnection
 		Task.Run(
 			() =>
 			{
+				var credentials = CredentialsConfig.Instance.Credentials;
+				if (!credentials.IsValid())
+				{
+					Debug.LogWarning("[Twitch Integration] Credentials are not valid");
+					return;
+				}
+				
 				var connectStatus = Connect();
 				if (connectStatus.State != ConnectionResult.ResultState.Open)
 				{
@@ -51,7 +58,7 @@ public class TwitchChatConnection
 
 				RequestCaps();
 
-				Authenticate();
+				Authenticate(credentials);
 
 				var checkCapsCount = 0;
 				while (!CheckCapsEnabled() && (checkCapsCount < 40))
@@ -365,16 +372,12 @@ public class TwitchChatConnection
 		return true;
 	}
 
-	private void Authenticate()
+	private void Authenticate(Credentials credentials)
 	{
-		// TODO: FIX THESE
-		const string oauth = "";
-		const string nick = "";
-
-		var passMsg = new IrcMessage(IrcCommandType.PASS, new List<string> { oauth });
+		var passMsg = new IrcMessage(IrcCommandType.PASS, new List<string> { credentials.Oauth });
 		SendMessage(passMsg);
 
-		var nickMsg = new IrcMessage(IrcCommandType.NICK, new List<string> { nick });
+		var nickMsg = new IrcMessage(IrcCommandType.NICK, new List<string> { credentials.Nick });
 		SendMessage(nickMsg);
 	}
 
