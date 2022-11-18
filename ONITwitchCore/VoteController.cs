@@ -1,12 +1,17 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using EventLib;
+using System.Text.RegularExpressions;
+using KSerialization;
+using ONITwitchLib;
 using UnityEngine;
+using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
+using EventManager = EventLib.EventManager;
 
 namespace ONITwitchCore;
 
-public class VoteController
+[SerializationConfig(MemberSerialization.OptIn)]
+public class VoteController : KMonoBehaviour
 {
 	public enum VotingState
 	{
@@ -18,6 +23,8 @@ public class VoteController
 	const float FIXMEVoteTime = 10;
 	private const float FIXMEVoteDelay = 30;
 
+	private TwitchChatConnection connection;
+
 	public VotingState State { get; private set; } = VotingState.NotStarted;
 
 	public float VoteTimeRemaining { get; private set; }
@@ -25,15 +32,20 @@ public class VoteController
 
 	public Vote CurrentVote { get; private set; }
 
-	public VoteController()
+	protected override void OnSpawn()
 	{
-		// TODO set up connection for vote input
+		base.OnSpawn();
+		connection = new TwitchChatConnection();
+		connection.OnTwitchMessage += OnTwitchMessage;
+		connection.Start();
 	}
 
 	public void StartVote()
 	{
 		Debug.Log("STARTING VOTE");
 		var eventInst = EventManager.Instance;
+
+		// TODO: properly generate options
 		var eventOptions = new List<EventInfo>
 		{
 			eventInst.GetEventByID(DefaultCommands.CommandNamespace + "eventA")!,
@@ -42,36 +54,18 @@ public class VoteController
 
 		CurrentVote = new Vote(eventOptions);
 
-		// FIXME: DEBUG
-		CurrentVote.AddVote(0);
-
 		VoteTimeRemaining = FIXMEVoteTime;
 		State = VotingState.VoteInProgress;
-
-		Game.Instance.StartCoroutine(UpdateVoteTimer());
-	}
-
-	private IEnumerator UpdateVoteTimer()
-	{
-		while (VoteTimeRemaining > 0)
-		{
-			VoteTimeRemaining -= Time.unscaledDeltaTime;
-			yield return null;
-		}
-
-		FinishVote();
 	}
 
 	private void FinishVote()
 	{
 		var choice = CurrentVote.GetBestVote();
 		Debug.Log("FINISHED VOTE");
-		Debug.Log(choice);
-		if (choice.HasValue)
+		if (choice != null)
 		{
-			var (eventId, count) = choice.Value;
-			var data = DataManager.Instance.GetDataForEvent(eventId);
-			EventManager.Instance.TriggerEvent(eventId, data);
+			var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
+			EventManager.Instance.TriggerEvent(choice.EventInfo, data);
 		}
 		else
 		{
@@ -79,19 +73,72 @@ public class VoteController
 			Debug.Log("No options were voted for");
 		}
 
-		State = VotingState.VoteDelay;
+		CurrentVote = null;
 		VoteDelayRemaining = FIXMEVoteDelay;
-		Game.Instance.StartCoroutine(UpdateDelayTimer());
+		State = VotingState.VoteDelay;
 	}
 
-	private IEnumerator UpdateDelayTimer()
+	private void Update()
 	{
-		while (VoteDelayRemaining > 0)
+		switch (State)
 		{
-			VoteDelayRemaining -= Time.unscaledDeltaTime;
-			yield return null;
-		}
+			case VotingState.NotStarted:
+				break;
+			case VotingState.VoteInProgress:
+			{
+				if (VoteTimeRemaining > 0)
+				{
+					VoteTimeRemaining -= Time.unscaledDeltaTime;
+				}
+				else
+				{
+					FinishVote();
+				}
 
-		StartVote();
+				break;
+			}
+			case VotingState.VoteDelay:
+			{
+				if (VoteDelayRemaining > 0)
+				{
+					VoteDelayRemaining -= Time.unscaledDeltaTime;
+				}
+				else
+				{
+					StartVote();
+				}
+
+				break;
+			}
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+	}
+
+	protected override void OnCleanUp()
+	{
+		State = VotingState.NotStarted;
+		CurrentVote = null;
+		base.OnCleanUp();
+	}
+
+	// forgive any leading whitespace, then match at least 1 number
+	private static readonly Regex StartsWithNumber = new(@"^\s*(?<num>\d+)");
+
+	private void OnTwitchMessage(TwitchMessage message)
+	{
+		if ((State == VotingState.VoteInProgress) && (CurrentVote != null))
+		{
+			var userId = message.UserInfo.UserId;
+			var match = StartsWithNumber.Match(message.Message);
+			if (match.Success)
+			{
+				var numStr = match.Groups["num"].Value;
+				if (int.TryParse(numStr, out var num))
+				{
+					CurrentVote.AddVote(userId, num);
+				}
+			}
+		}
 	}
 }

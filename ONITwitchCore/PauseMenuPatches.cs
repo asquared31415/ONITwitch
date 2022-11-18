@@ -19,11 +19,8 @@ public static class PauseMenuPatches
 		TwitchButtonInfo.isEnabled = false;
 		PauseScreen.Instance.RefreshButtons();
 
-		new TwitchChatConnection().Start();
-		/*
-		var controller = new VoteController();
+		var controller = Game.Instance.gameObject.AddOrGet<VoteController>();
 		controller.StartVote();
-		*/
 	}
 
 	[HarmonyPatch(typeof(PauseScreen), "OnPrefabInit")]

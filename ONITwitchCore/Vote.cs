@@ -8,6 +8,8 @@ namespace ONITwitchCore;
 
 public class Vote
 {
+	// map from user ID to index they voted for
+	private readonly Dictionary<string, int> userVotes = new();
 	private readonly List<VoteCount> votes = new();
 
 	public Vote(List<EventInfo> choices)
@@ -18,14 +20,32 @@ public class Vote
 		}
 	}
 
-	public void AddVote(int idx)
+	public void AddVote(string userId, int voteNum)
 	{
-		var choice = votes[idx];
-		votes[idx] = choice with { Count = choice.Count + 1 };
+		if ((voteNum <= 0) || (voteNum > votes.Count))
+		{
+			return;
+		}
+
+		// users are 1-based unfortunately
+		var voteIdx = voteNum - 1;
+		
+		// move the user's vote if they voted already
+		if (userVotes.TryGetValue(userId, out var oldIdx))
+		{
+			votes[oldIdx].Count -= 1;
+			votes[voteIdx].Count += 1;
+		}
+		else
+		{
+			votes[voteIdx].Count += 1;
+		}
+
+		userVotes[userId] = voteIdx;
 	}
 
 	[CanBeNull]
-	public VoteCount? GetBestVote()
+	public VoteCount GetBestVote()
 	{
 		var maxVotes = votes.Max(vote => vote.Count);
 		if (maxVotes == 0)
@@ -39,5 +59,15 @@ public class Vote
 		return tiedMaxVotes[randIdx];
 	}
 
-	public record struct VoteCount(EventInfo Info, int Count);
+	public class VoteCount
+	{
+		public EventInfo EventInfo { get; internal set; }
+		public int Count { get; internal set; }
+
+		public VoteCount(EventInfo eventInfo, int count)
+		{
+			EventInfo = eventInfo;
+			Count = count;
+		}
+	}
 }

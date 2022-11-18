@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using ONITwitchLib;
+using UnityEngine;
 
 namespace ONITwitchCore;
 
@@ -29,6 +30,9 @@ public class TwitchChatConnection
 	private readonly Dictionary<string, CapStatus> capStatuses = new();
 	private bool isAuthenticated;
 
+	public delegate void TwitchMessageHandler(TwitchMessage message);
+	public event TwitchMessageHandler OnTwitchMessage; 
+
 	public TwitchChatConnection()
 	{
 	}
@@ -45,7 +49,7 @@ public class TwitchChatConnection
 					Debug.LogWarning("[Twitch Integration] Credentials are not valid");
 					return;
 				}
-				
+
 				var connectStatus = Connect();
 				if (connectStatus.State != ConnectionResult.ResultState.Open)
 				{
@@ -54,7 +58,7 @@ public class TwitchChatConnection
 				}
 
 				readerCancellationToken = new CancellationTokenSource();
-				var readerTask = StartReader(readerCancellationToken.Token);
+				StartReader(readerCancellationToken.Token);
 
 				RequestCaps();
 
@@ -85,7 +89,7 @@ public class TwitchChatConnection
 					//readerCancellationToken.Cancel();
 				}
 
-				readerTask.Wait();
+				JoinRoom("asquared31415");
 			}
 		);
 	}
@@ -112,9 +116,20 @@ public class TwitchChatConnection
 		}
 	}
 
-	private Task StartReader(CancellationToken cancellationToken)
+	public void JoinRoom(string room)
 	{
-		return Task.Run(
+		if (!room.StartsWith("#"))
+		{
+			room = $"#{room}";
+		}
+
+		var joinMessage = new IrcMessage(IrcCommandType.JOIN, new List<string> { room });
+		SendMessage(joinMessage);
+	}
+
+	private void StartReader(CancellationToken cancellationToken)
+	{
+		Task.Run(
 			() =>
 			{
 				while (true)
@@ -174,6 +189,16 @@ public class TwitchChatConnection
 				{
 					break;
 				}
+				// RPL_NAMREPLY
+				case 353:
+				{
+					break;
+				}
+				// RPL_ENDOFNAMES
+				case 366:
+				{
+					break;
+				}
 				// RPL_MOTDSTART
 				case 375:
 				{
@@ -222,7 +247,6 @@ public class TwitchChatConnection
 					}
 					else
 					{
-						Debug.Log($"Got ping {pingArg}");
 						var pongMsg = new IrcMessage(new IrcCommand(IrcCommandType.PONG), new List<string> { pingArg });
 						SendMessage(pongMsg);
 					}
@@ -235,7 +259,10 @@ public class TwitchChatConnection
 					break;
 				}
 				case IrcCommandType.PRIVMSG:
+				{
+					HandlePrivMsg(message);
 					break;
+				}
 				case IrcCommandType.CAP:
 				{
 					if (message.Args.Count < 2)
@@ -303,6 +330,62 @@ public class TwitchChatConnection
 					throw new ArgumentOutOfRangeException();
 			}
 		}
+	}
+
+	private void HandlePrivMsg(IrcMessage message)
+	{
+		if (message.Args.Count < 2)
+		{
+			Debug.LogWarning("[Twitch Integration] PRIVMSG did not include all args");
+			return;
+		}
+
+		var msg = message.Args[1];
+		var tags = message.Tags;
+
+		var userId = tags["user-id"].Value;
+
+		// use the display-name tag if it exists, otherwise use the message nick
+		var displayName = message.Args[0].TrimStart('#');
+		if (tags.TryGetValue("display-name", out var displayTag))
+		{
+			if (!displayTag.Value.IsNullOrWhiteSpace())
+			{
+				displayName = displayTag.Value;
+			}
+		}
+
+		Color32? color = null;
+		if (tags.TryGetValue("color", out var colorTag) && !colorTag.Value.IsNullOrWhiteSpace())
+		{
+			var colorStr = colorTag.Value;
+			if (ColorUtility.TryParseHtmlString(colorStr, out var parsedColor))
+			{
+				color = parsedColor;
+			}
+		}
+
+		var isModerator = false;
+		if (tags.TryGetValue("mod", out var isMod))
+		{
+			isModerator = isMod.Value == "1";
+		}
+
+		var isSubscriber = false;
+		if (tags.TryGetValue("subscriber", out var isSub))
+		{
+			isSubscriber = isSub.Value == "1";
+		}
+
+		// VIP is weird, the *presence* of the key is the true/false value
+		var isVip = tags.ContainsKey("vip");
+
+		var userInfo = new TwitchUserInfo(userId, displayName, color, isModerator, isSubscriber, isVip);
+		var twitchMessage = new TwitchMessage(userInfo, msg);
+
+		// make value copy so that it doesn't race with the null check
+		var onMsg = OnTwitchMessage;
+		onMsg?.Invoke(twitchMessage);
 	}
 
 	private ConnectionResult Connect()
@@ -422,6 +505,9 @@ public class TwitchChatConnection
 		}
 		catch (AggregateException ae)
 		{
+			Debug.Log(socket.State);
+			Debug.Log(socket.CloseStatus);
+			Debug.Log(socket.CloseStatusDescription);
 			foreach (var ie in ae.InnerExceptions)
 			{
 				Debug.LogWarning(ie);

@@ -165,38 +165,30 @@ public static class IrcParser
 		var argsList = new List<string>();
 
 		var argsCopy = string.Copy(args);
-		var foundFinalArg = false;
-		while (!foundFinalArg && (argsCopy.Length > 0))
+		while (argsCopy.Length > 0)
 		{
 			// parse last argument which may contain any characters except CRLF
 			// but CRLF has already been stripped in processing
 			if (argsCopy.StartsWith(":"))
 			{
 				argsList.Add(argsCopy.Substring(1));
-				foundFinalArg = true;
+				break;
+			}
+
+			var spaceIndex = argsCopy.IndexOf(" ", StringComparison.Ordinal);
+			string arg;
+			if (spaceIndex == -1)
+			{
+				arg = argsCopy;
+				argsCopy = "";
 			}
 			else
 			{
-				var spaceIndex = argsCopy.IndexOf(" ", StringComparison.Ordinal);
-				if (spaceIndex == -1)
-				{
-					Debug.LogWarning(
-						$"[Twitch Integration] Parsing of IRC arguments \"{args}\" encountered end of string before expected"
-					);
-					return new List<string>();
-				}
-
-				var arg = argsCopy.Substring(0, spaceIndex);
+				arg = argsCopy.Substring(0, spaceIndex);
 				argsCopy = argsCopy.Substring(spaceIndex + 1);
-
-				argsList.Add(arg);
 			}
-		}
 
-		if (!foundFinalArg)
-		{
-			Debug.LogWarning($"[Twitch Integration] Parsing of IRC arguments \"{args}\" did not find the final colon");
-			return new List<string>();
+			argsList.Add(arg);
 		}
 
 		return argsList;
@@ -225,7 +217,7 @@ public struct IrcMessage
 		Command = command;
 		Args = new List<string>();
 	}
-	
+
 	public IrcMessage(IrcCommand command, List<string> args)
 	{
 		Tags = new Dictionary<string, IrcTag>();
@@ -233,7 +225,7 @@ public struct IrcMessage
 		Command = command;
 		Args = args;
 	}
-	
+
 	public IrcMessage(IrcCommandType command)
 	{
 		Tags = new Dictionary<string, IrcTag>();
@@ -241,7 +233,7 @@ public struct IrcMessage
 		Command = new IrcCommand(command);
 		Args = new List<string>();
 	}
-	
+
 	public IrcMessage(IrcCommandType command, List<string> args)
 	{
 		Tags = new Dictionary<string, IrcTag>();
@@ -256,7 +248,7 @@ public struct IrcMessage
 		var sb = new StringBuilder();
 		sb.Append(Command.ToString());
 		sb.Append(" ");
-		
+
 		if (Args.Count > 1)
 		{
 			for (var idx = 0; idx < Args.Count - 1; idx++)
@@ -264,11 +256,12 @@ public struct IrcMessage
 				sb.Append(Args[idx]);
 				sb.Append(" ");
 			}
-			
+
 			// add last arg
 			sb.Append(":");
 			sb.Append(Args[Args.Count - 1]);
-		} else if (Args.Count == 1)
+		}
+		else if (Args.Count == 1)
 		{
 			sb.Append(Args[0]);
 		}
