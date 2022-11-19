@@ -25,6 +25,7 @@ public class TwitchDeckManager
 		deck.AddAndShuffle(eventInfos);
 	}
 
+	[NotNull]
 	public EventInfo Draw()
 	{
 		return deck.DrawEntry();
