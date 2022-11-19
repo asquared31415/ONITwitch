@@ -28,7 +28,11 @@ public class TwitchChatConnection
 	private CancellationTokenSource readerCancellationToken;
 
 	private readonly Dictionary<string, CapStatus> capStatuses = new();
+	
+#pragma warning disable CS0414
+	// currently unused but may be in the future
 	private bool isAuthenticated;
+#pragma warning restore CS0414
 
 	public delegate void TwitchMessageHandler(TwitchMessage message);
 	public event TwitchMessageHandler OnTwitchMessage; 

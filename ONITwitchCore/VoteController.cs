@@ -20,6 +20,9 @@ public class VoteController : KMonoBehaviour
 		VoteDelay,
 	}
 
+	// The maximum number of times to attempt to draw
+	private const int MaxDrawAttempts = 100;
+
 	const float FIXMEVoteTime = 10;
 	private const float FIXMEVoteDelay = 30;
 
@@ -44,11 +47,37 @@ public class VoteController : KMonoBehaviour
 	{
 		Debug.Log("STARTING VOTE");
 
+		var condInst = Conditions.Instance;
+		var dataInst = DataManager.Instance;
+		
 		var eventOptions = new List<EventInfo>();
-		for (var idx = 0; idx < 3; idx++)
+		const int TODODrawCount = 3;
+		var attempts = 0;
+		var drawnCount = 0;
+		while (drawnCount < TODODrawCount)
 		{
 			var entry = TwitchDeckManager.Instance.Draw();
-			eventOptions.Add(entry);
+			var data = dataInst.GetDataForEvent(entry);
+			var condition = condInst.CheckCondition(entry, data);
+			if (condition)
+			{
+				eventOptions.Add(entry);
+				drawnCount += 1;
+			}
+
+			attempts += 1;
+			if (attempts > MaxDrawAttempts)
+			{
+				Debug.LogWarning($"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {TODODrawCount} events!");
+				break;
+			}
+		}
+		
+		if (eventOptions.Count == 0)
+		{
+			Debug.LogWarning("[Twitch Integration] Unable to draw any events! Canceling!");
+			State = VotingState.NotStarted;
+			return;
 		}
 
 		for (var idx = 0; idx < eventOptions.Count; idx++)
