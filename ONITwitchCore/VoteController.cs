@@ -43,14 +43,18 @@ public class VoteController : KMonoBehaviour
 	public void StartVote()
 	{
 		Debug.Log("STARTING VOTE");
-		var eventInst = EventManager.Instance;
 
-		// TODO: properly generate options
-		var eventOptions = new List<EventInfo>
+		var eventOptions = new List<EventInfo>();
+		for (var idx = 0; idx < 3; idx++)
 		{
-			eventInst.GetEventByID(DefaultCommands.CommandNamespace + "eventA")!,
-			eventInst.GetEventByID(DefaultCommands.CommandNamespace + "eventB")!,
-		};
+			var entry = TwitchDeckManager.Instance.Draw();
+			eventOptions.Add(entry);
+		}
+
+		for (var idx = 0; idx < eventOptions.Count; idx++)
+		{
+			Debug.Log($"{idx + 1}: {eventOptions[idx]}");
+		}
 
 		CurrentVote = new Vote(eventOptions);
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -14,6 +15,11 @@ public class Vote
 
 	public Vote(List<EventInfo> choices)
 	{
+		if (choices.Count == 0)
+		{
+			throw new ArgumentException("there must be at least one vote choice", nameof(choices));
+		}
+		
 		foreach (var choice in choices)
 		{
 			votes.Add(new VoteCount(choice, 0));

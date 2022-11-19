@@ -99,7 +99,8 @@ public class TwitchChatConnection
 		if (message.Command.IsKnownCommand())
 		{
 			var ircMessage = message.GetIrcString();
-			if (!message.Command.IsNumeric && (message.Command.Command.Value == IrcCommandType.PASS))
+			/*
+			 if (!message.Command.IsNumeric && (message.Command.Command.Value == IrcCommandType.PASS))
 			{
 				Debug.Log("Sending IRC message: PASS <REDACTED>");
 			}
@@ -107,6 +108,7 @@ public class TwitchChatConnection
 			{
 				Debug.Log($"Sending IRC message: {ircMessage}");
 			}
+			*/
 
 			SendMessage(ircMessage);
 		}
@@ -173,7 +175,7 @@ public class TwitchChatConnection
 
 	private void ProcessMessage(IrcMessage message)
 	{
-		Debug.Log($"Processing command {message}");
+		// Debug.Log($"Processing command {message}");
 		if (message.Command.IsNumeric)
 		{
 			// ReSharper disable once PossibleInvalidOperationException

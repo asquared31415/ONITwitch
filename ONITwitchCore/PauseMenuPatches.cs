@@ -20,7 +20,10 @@ public static class PauseMenuPatches
 		PauseScreen.Instance.RefreshButtons();
 
 		var controller = Game.Instance.gameObject.AddOrGet<VoteController>();
-		controller.StartVote();
+		GameScheduler.Instance.ScheduleNextFrame(
+			"ONITwitch.StartVotes",
+			_ => { controller.StartVote(); }
+		);
 	}
 
 	[HarmonyPatch(typeof(PauseScreen), "OnPrefabInit")]

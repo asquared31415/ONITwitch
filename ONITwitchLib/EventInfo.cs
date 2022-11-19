@@ -8,4 +8,9 @@ public class EventInfo
 	{
 		EventInfoInstance = instance;
 	}
+
+	public override string ToString()
+	{
+		return EventInfoInstance.ToString();
+	}
 }
