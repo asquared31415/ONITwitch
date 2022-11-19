@@ -58,12 +58,16 @@ public class VoteController : KMonoBehaviour
 		while (drawnCount < TODODrawCount)
 		{
 			var entry = TwitchDeckManager.Instance.Draw();
-			var data = dataInst.GetDataForEvent(entry);
-			var condition = condInst.CheckCondition(entry, data);
-			if (condition)
+			// Don't draw duplicates
+			if (!eventOptions.Contains(entry))
 			{
-				eventOptions.Add(entry);
-				drawnCount += 1;
+				var data = dataInst.GetDataForEvent(entry);
+				var condition = condInst.CheckCondition(entry, data);
+				if (condition)
+				{
+					eventOptions.Add(entry);
+					drawnCount += 1;
+				}
 			}
 
 			attempts += 1;
