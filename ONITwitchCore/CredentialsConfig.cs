@@ -24,7 +24,7 @@ public class CredentialsConfig
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{
 			Credentials = new Credentials();
-			File.WriteAllText(TwitchModInfo.CredentialsPath, JsonConvert.SerializeObject(Credentials));
+			File.WriteAllText(TwitchModInfo.CredentialsPath, JsonConvert.SerializeObject(Credentials, Formatting.Indented));
 		}
 		catch (Exception e)
 		{

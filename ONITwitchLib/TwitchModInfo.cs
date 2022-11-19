@@ -28,10 +28,17 @@ public static class TwitchModInfo
 	public static readonly string MainModFolder =
 		TwitchIsPresent ? Directory.GetParent(MainTwitchModType!.Assembly.Location)!.FullName : "";
 
-	public const string CredentialsFileName = "credentials.json";
+	public const string CredentialsFileName = "SECRET_credentials.json";
 	
 	/// <summary>
 	/// Only valid if the Twitch mod is active.
 	/// </summary>
 	public static readonly string CredentialsPath = Path.Combine(MainModFolder, CredentialsFileName);
+	
+	public const string ConfigName = "config.json";
+
+	/// <summary>
+	/// Only valid if the Twitch mod is active.
+	/// </summary>
+	public static readonly string ConfigPath = Path.Combine(MainModFolder, ConfigName);
 }

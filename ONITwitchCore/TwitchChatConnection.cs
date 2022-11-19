@@ -28,14 +28,14 @@ public class TwitchChatConnection
 	private CancellationTokenSource readerCancellationToken;
 
 	private readonly Dictionary<string, CapStatus> capStatuses = new();
-	
-#pragma warning disable CS0414
-	// currently unused but may be in the future
-	private bool isAuthenticated;
-#pragma warning restore CS0414
+
+	private List<IrcMessage> queuedMessages = new();
+
+	public bool IsAuthenticated { get; private set; }
 
 	public delegate void TwitchMessageHandler(TwitchMessage message);
-	public event TwitchMessageHandler OnTwitchMessage; 
+
+	public event TwitchMessageHandler OnTwitchMessage;
 
 	public TwitchChatConnection()
 	{
@@ -92,8 +92,6 @@ public class TwitchChatConnection
 					);
 					//readerCancellationToken.Cancel();
 				}
-
-				JoinRoom("asquared31415");
 			}
 		);
 	}
@@ -130,7 +128,14 @@ public class TwitchChatConnection
 		}
 
 		var privMsg = new IrcMessage(IrcCommandType.PRIVMSG, new List<string> { room, message });
-		SendIrcMessage(privMsg);
+		if (!IsAuthenticated)
+		{
+			queuedMessages.Add(privMsg);
+		}
+		else
+		{
+			SendIrcMessage(privMsg);
+		}
 	}
 
 	public void JoinRoom(string room)
@@ -141,7 +146,14 @@ public class TwitchChatConnection
 		}
 
 		var joinMessage = new IrcMessage(IrcCommandType.JOIN, new List<string> { room });
-		SendIrcMessage(joinMessage);
+		if (!IsAuthenticated)
+		{
+			queuedMessages.Add(joinMessage);
+		}
+		else
+		{
+			SendIrcMessage(joinMessage);
+		}
 	}
 
 	private void StartReader(CancellationToken cancellationToken)
@@ -328,7 +340,13 @@ public class TwitchChatConnection
 					break;
 				case IrcCommandType.GLOBALUSERSTATE:
 				{
-					isAuthenticated = true;
+					IsAuthenticated = true;
+					foreach (var queuedMessage in queuedMessages)
+					{
+						SendIrcMessage(queuedMessage);
+						// average message timeout is 20 messages per 30 seconds
+						Thread.Sleep(1500);
+					}
 					break;
 				}
 				case IrcCommandType.HOSTTARGET:

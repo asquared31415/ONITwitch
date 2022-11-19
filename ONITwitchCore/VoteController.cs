@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using KSerialization;
 using ONITwitchLib;
 using UnityEngine;
@@ -24,9 +26,6 @@ public class VoteController : KMonoBehaviour
 	// The maximum number of times to attempt to draw
 	private const int MaxDrawAttempts = 100;
 
-	const float FIXMEVoteTime = 10;
-	private const float FIXMEVoteDelay = 30;
-
 	private TwitchChatConnection connection;
 
 	public VotingState State { get; private set; } = VotingState.NotStarted;
@@ -42,20 +41,41 @@ public class VoteController : KMonoBehaviour
 		connection = new TwitchChatConnection();
 		connection.OnTwitchMessage += OnTwitchMessage;
 		connection.Start();
+		Task.Run(
+			() =>
+			{
+				while (true)
+				{
+					if (connection.IsAuthenticated)
+					{
+						connection.JoinRoom(MainConfig.Instance.Config.Channel);
+						break;
+					}
+
+					Thread.Sleep(200);
+				}
+			}
+		);
 	}
 
-	public void StartVote()
+	// returns whether the vote was successfully started
+	public bool StartVote()
 	{
+		if (!connection.IsAuthenticated)
+		{
+			Debug.LogWarning("[Twitch Integration] Not yet authenticated, unable to start vote!");
+			return false;
+		}
+		
 		Debug.Log("STARTING VOTE");
 
 		var condInst = Conditions.Instance;
 		var dataInst = DataManager.Instance;
 
 		var eventOptions = new List<EventInfo>();
-		const int TODODrawCount = 3;
 		var attempts = 0;
 		var drawnCount = 0;
-		while (drawnCount < TODODrawCount)
+		while (drawnCount < MainConfig.Instance.Config.NumVotes)
 		{
 			var entry = TwitchDeckManager.Instance.Draw();
 			// Don't draw duplicates
@@ -74,7 +94,7 @@ public class VoteController : KMonoBehaviour
 			if (attempts > MaxDrawAttempts)
 			{
 				Debug.LogWarning(
-					$"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {TODODrawCount} events!"
+					$"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {MainConfig.Instance.Config.NumVotes} events!"
 				);
 				break;
 			}
@@ -84,7 +104,7 @@ public class VoteController : KMonoBehaviour
 		{
 			Debug.LogWarning("[Twitch Integration] Unable to draw any events! Canceling!");
 			State = VotingState.NotStarted;
-			return;
+			return false;
 		}
 
 		var voteMsg = new StringBuilder("Starting new vote! ");
@@ -97,8 +117,10 @@ public class VoteController : KMonoBehaviour
 
 		connection.SendTextMessage("asquared31415", voteMsg.ToString());
 
-		VoteTimeRemaining = FIXMEVoteTime;
+		VoteTimeRemaining = MainConfig.Instance.Config.VoteTime;
 		State = VotingState.VoteInProgress;
+
+		return true;
 	}
 
 	private void FinishVote()
@@ -117,7 +139,7 @@ public class VoteController : KMonoBehaviour
 		}
 
 		CurrentVote = null;
-		VoteDelayRemaining = FIXMEVoteDelay;
+		VoteDelayRemaining = MainConfig.Instance.Config.CyclesPerVote * Constants.SECONDS_PER_CYCLE;
 		State = VotingState.VoteDelay;
 	}
 
@@ -131,6 +153,7 @@ public class VoteController : KMonoBehaviour
 			{
 				if (VoteTimeRemaining > 0)
 				{
+					// unscaled because it's real time
 					VoteTimeRemaining -= Time.unscaledDeltaTime;
 				}
 				else
@@ -144,7 +167,9 @@ public class VoteController : KMonoBehaviour
 			{
 				if (VoteDelayRemaining > 0)
 				{
-					VoteDelayRemaining -= Time.unscaledDeltaTime;
+					// explicitly using the *scaled* deltatime
+					// the time remaining is a number of seconds for some count of cycles
+					VoteDelayRemaining -= Time.deltaTime;
 				}
 				else
 				{

@@ -7,7 +7,7 @@ namespace ONITwitchCore;
 
 public static class PauseMenuPatches
 {
-	private static readonly KButtonMenu.ButtonInfo TwitchButtonInfo = new(
+	public static readonly KButtonMenu.ButtonInfo TwitchButtonInfo = new(
 		"Do the thing",
 		Action.NumActions,
 		OnTwitchButtonPressed
@@ -15,14 +15,18 @@ public static class PauseMenuPatches
 
 	private static void OnTwitchButtonPressed()
 	{
-		Debug.Log("BUTTON PRESSED");
 		TwitchButtonInfo.isEnabled = false;
 		PauseScreen.Instance.RefreshButtons();
 
 		var controller = Game.Instance.gameObject.AddOrGet<VoteController>();
 		GameScheduler.Instance.ScheduleNextFrame(
 			"ONITwitch.StartVotes",
-			_ => { controller.StartVote(); }
+			_ =>
+			{
+				var started = controller.StartVote();
+				TwitchButtonInfo.isEnabled = !started;
+				PauseScreen.Instance.RefreshButtons();
+			}
 		);
 	}
 

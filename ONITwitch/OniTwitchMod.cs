@@ -13,5 +13,7 @@ public class OniTwitchMod : UserMod2
 		base.OnLoad(harmony);
 
 		DefaultCommands.SetupCommands();
+		// load config
+		var _ = MainConfig.Instance;
 	}
 }
