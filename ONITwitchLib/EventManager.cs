@@ -12,7 +12,7 @@ public class EventManager
 
 	// delegates created to wrap various methods on the event manager without needing to use reflection
 	// and Invoke every time
-	private readonly Func<string, object> registerEventDelegate;
+	private readonly Func<string, string, object> registerEventDelegate;
 	private readonly Func<string, object> getEventByIdDelegate;
 	private readonly Action<object, Action<string>> addListenerForEventDelegate;
 	private readonly Action<object, Action<object>> removeListenerForEventDelegate;
@@ -22,8 +22,8 @@ public class EventManager
 	{
 		eventManagerInstance = instance;
 		var eventType = eventManagerInstance.GetType();
-		var registerInfo = AccessTools.DeclaredMethod(eventType, "RegisterEvent", new[] { typeof(string) });
-		registerEventDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(registerInfo, eventManagerInstance);
+		var registerInfo = AccessTools.DeclaredMethod(eventType, "RegisterEvent", new[] { typeof(string), typeof(string) });
+		registerEventDelegate = DelegateUtil.CreateDelegate<Func<string, string, object>>(registerInfo, eventManagerInstance);
 		var getByIdInfo = AccessTools.DeclaredMethod(eventType, "GetEventByID", new[] { typeof(string) });
 		getEventByIdDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(getByIdInfo, eventManagerInstance);
 		var addListenerForEventInfo = AccessTools.DeclaredMethod(
@@ -63,14 +63,14 @@ public class EventManager
 
 	[NotNull]
 	[ContractAnnotation("id:null => halt")]
-	public EventInfo RegisterEvent([NotNull] string id)
+	public EventInfo RegisterEvent([NotNull] string id, [CanBeNull] string friendlyName = null)
 	{
 		if (string.IsNullOrWhiteSpace(id))
 		{
 			throw new ArgumentException("ID must not be null or whitespace", nameof(id));
 		}
 
-		var output = registerEventDelegate(id);
+		var output = registerEventDelegate(id, friendlyName);
 		if (output.GetType() != EventInterface.EventInfoType)
 		{
 			throw new Exception("event register type");

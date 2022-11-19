@@ -12,11 +12,11 @@ public static class DefaultCommands
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
 
-		var eventA = eventInst.RegisterEvent(NamespaceId("eventA"));
+		var eventA = eventInst.RegisterEvent(NamespaceId("eventA"), "Event A");
 		eventInst.AddListenerForEvent(eventA, EventAListener);
 		dataInst.AddDataForEvent(eventA, new List<string> {"uwu", "owo"});
 
-		var eventB = eventInst.RegisterEvent(NamespaceId("eventB"));
+		var eventB = eventInst.RegisterEvent(NamespaceId("eventB"), "Event B");
 		eventInst.AddListenerForEvent(eventB, EventBListener);
 		dataInst.AddDataForEvent(eventB, 42.0d);
 	}

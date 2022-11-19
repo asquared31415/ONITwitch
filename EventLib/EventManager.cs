@@ -21,6 +21,7 @@ public class EventManager
 
 	// entries in this dictionary are never null
 	private readonly Dictionary<string, RefActionWrapper> registeredEvents = new();
+	private readonly Dictionary<string, string> idNameMap = new();
 
 	public static EventManager Instance
 	{
@@ -32,21 +33,28 @@ public class EventManager
 	}
 
 	[NotNull]
-	public EventInfo RegisterEvent([NotNull] string namespacedId)
+	public EventInfo RegisterEvent([NotNull] string namespacedId, [CanBeNull] string friendlyName = null)
 	{
-		if (!registeredEvents.ContainsKey(namespacedId))
+		if (registeredEvents.ContainsKey(namespacedId))
 		{
-			registeredEvents.Add(namespacedId, new RefActionWrapper(delegate { }));
+			throw new Exception($"id {namespacedId} already registered");
 		}
 
-		var eventInfo = new EventInfo(namespacedId);
+		registeredEvents.Add(namespacedId, new RefActionWrapper(delegate { }));
+		idNameMap.Add(namespacedId, friendlyName);
+		var eventInfo = new EventInfo(namespacedId, friendlyName);
 		return eventInfo;
 	}
 
 	[CanBeNull]
 	public EventInfo GetEventByID([NotNull] string id)
 	{
-		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;
+		if (registeredEvents.ContainsKey(id))
+		{
+			return idNameMap.TryGetValue(id, out var name) ? new EventInfo(id, name) : new EventInfo(id);
+		}
+
+		return null;
 	}
 
 	public void AddListenerForEvent(
@@ -54,17 +62,7 @@ public class EventManager
 		[NotNull] Action<object> listener
 	)
 	{
-		if (registeredEvents.TryGetValue(eventInfo.Id, out var val))
-		{
-			val.Action += listener;
-		}
-		else
-		{
-			throw new ArgumentException(
-				$"The event {eventInfo.Id} has not yet been registered with RegisterEvent",
-				nameof(eventInfo)
-			);
-		}
+		registeredEvents[eventInfo.Id].Action += listener;
 	}
 
 	public void RemoveListenerForEvent(
@@ -72,39 +70,20 @@ public class EventManager
 		[NotNull] Action<object> listener
 	)
 	{
-		if (registeredEvents.TryGetValue(eventInfo.Id, out var val))
-		{
-			if (!val.Action.GetInvocationList().Contains(listener))
-			{
-				throw new ArgumentException(
-					$"unable to remove listener from event {eventInfo.Id}",
-					nameof(listener)
-				);
-			}
-
-			val.Action -= listener;
-		}
-		else
+		var val = registeredEvents[eventInfo.Id];
+		if (!val.Action.GetInvocationList().Contains(listener))
 		{
 			throw new ArgumentException(
-				$"The event {eventInfo.Id} has not yet been registered with RegisterEvent",
-				nameof(eventInfo)
+				$"unable to remove listener from event {eventInfo.Id}",
+				nameof(listener)
 			);
 		}
+
+		val.Action -= listener;
 	}
 
 	public void TriggerEvent([NotNull] EventInfo eventInfo, object data)
 	{
-		if (registeredEvents.TryGetValue(eventInfo.Id, out var events))
-		{
-			events.Action.Invoke(data);
-		}
-		else
-		{
-			throw new ArgumentException(
-				$"The event {eventInfo.Id} has not yet been registered with RegisterEvent",
-				nameof(eventInfo)
-			);
-		}
+		registeredEvents[eventInfo.Id].Action.Invoke(data);
 	}
 }

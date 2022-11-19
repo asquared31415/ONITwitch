@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using KSerialization;
 using ONITwitchLib;
@@ -49,7 +50,7 @@ public class VoteController : KMonoBehaviour
 
 		var condInst = Conditions.Instance;
 		var dataInst = DataManager.Instance;
-		
+
 		var eventOptions = new List<EventInfo>();
 		const int TODODrawCount = 3;
 		var attempts = 0;
@@ -68,11 +69,13 @@ public class VoteController : KMonoBehaviour
 			attempts += 1;
 			if (attempts > MaxDrawAttempts)
 			{
-				Debug.LogWarning($"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {TODODrawCount} events!");
+				Debug.LogWarning(
+					$"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {TODODrawCount} events!"
+				);
 				break;
 			}
 		}
-		
+
 		if (eventOptions.Count == 0)
 		{
 			Debug.LogWarning("[Twitch Integration] Unable to draw any events! Canceling!");
@@ -80,12 +83,15 @@ public class VoteController : KMonoBehaviour
 			return;
 		}
 
+		var voteMsg = new StringBuilder("Starting new vote! ");
 		for (var idx = 0; idx < eventOptions.Count; idx++)
 		{
-			Debug.Log($"{idx + 1}: {eventOptions[idx]}");
+			voteMsg.Append($"{idx + 1}: {eventOptions[idx]} ");
 		}
 
 		CurrentVote = new Vote(eventOptions);
+
+		connection.SendTextMessage("asquared31415", voteMsg.ToString());
 
 		VoteTimeRemaining = FIXMEVoteTime;
 		State = VotingState.VoteInProgress;

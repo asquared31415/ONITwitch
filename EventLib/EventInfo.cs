@@ -3,10 +3,17 @@ namespace EventLib;
 public class EventInfo
 {
 	public string Id { get; }
+	public string FriendlyName { get; }
 
 	public EventInfo(string id)
 	{
 		Id = id;
+	}
+
+	public EventInfo(string id, string name)
+	{
+		Id = id;
+		FriendlyName = name;
 	}
 
 	protected bool Equals(EventInfo other)
@@ -31,6 +38,6 @@ public class EventInfo
 
 	public override string ToString()
 	{
-		return Id;
+		return string.IsNullOrEmpty(FriendlyName) ? Id : FriendlyName;
 	}
 }

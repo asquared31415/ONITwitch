@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using EventLib;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore;
 
-namespace ONITwitch;
+namespace ONITwitchCore;
 
 public static class DbPatches
 {

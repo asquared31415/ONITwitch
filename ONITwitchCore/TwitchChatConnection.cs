@@ -98,7 +98,7 @@ public class TwitchChatConnection
 		);
 	}
 
-	public void SendMessage(IrcMessage message)
+	public void SendIrcMessage(IrcMessage message)
 	{
 		if (message.Command.IsKnownCommand())
 		{
@@ -114,12 +114,23 @@ public class TwitchChatConnection
 			}
 			*/
 
-			SendMessage(ircMessage);
+			SendRawTextMessage(ircMessage);
 		}
 		else
 		{
 			Debug.LogWarning($"[Twitch Integration] Cannot send unknown command {message.Command}");
 		}
+	}
+
+	public void SendTextMessage([NotNull] string room, [NotNull] string message)
+	{
+		if (!room.StartsWith("#"))
+		{
+			room = $"#{room}";
+		}
+
+		var privMsg = new IrcMessage(IrcCommandType.PRIVMSG, new List<string> { room, message });
+		SendIrcMessage(privMsg);
 	}
 
 	public void JoinRoom(string room)
@@ -130,7 +141,7 @@ public class TwitchChatConnection
 		}
 
 		var joinMessage = new IrcMessage(IrcCommandType.JOIN, new List<string> { room });
-		SendMessage(joinMessage);
+		SendIrcMessage(joinMessage);
 	}
 
 	private void StartReader(CancellationToken cancellationToken)
@@ -254,7 +265,7 @@ public class TwitchChatConnection
 					else
 					{
 						var pongMsg = new IrcMessage(new IrcCommand(IrcCommandType.PONG), new List<string> { pingArg });
-						SendMessage(pongMsg);
+						SendIrcMessage(pongMsg);
 					}
 
 					break;
@@ -445,7 +456,7 @@ public class TwitchChatConnection
 		capStatuses[capName] = CapStatus.Requested;
 
 		var capMsg = new IrcMessage(IrcCommandType.CAP, new List<string> { "REQ", capName });
-		SendMessage(capMsg);
+		SendIrcMessage(capMsg);
 	}
 
 	private bool CheckCapsEnabled()
@@ -464,14 +475,14 @@ public class TwitchChatConnection
 	private void Authenticate(Credentials credentials)
 	{
 		var passMsg = new IrcMessage(IrcCommandType.PASS, new List<string> { credentials.Oauth });
-		SendMessage(passMsg);
+		SendIrcMessage(passMsg);
 
 		var nickMsg = new IrcMessage(IrcCommandType.NICK, new List<string> { credentials.Nick });
-		SendMessage(nickMsg);
+		SendIrcMessage(nickMsg);
 	}
 
 	// returns true if the message was successfully sent
-	private void SendMessage([NotNull] string message)
+	private void SendRawTextMessage([NotNull] string message)
 	{
 		if (!message.EndsWith("\r\n"))
 		{
