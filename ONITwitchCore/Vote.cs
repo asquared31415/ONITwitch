@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchLib;
@@ -12,6 +13,7 @@ public class Vote
 	// map from user ID to index they voted for
 	private readonly Dictionary<string, int> userVotes = new();
 	private readonly List<VoteCount> votes = new();
+	internal ReadOnlyCollection<VoteCount> Votes => votes.AsReadOnly();
 
 	public Vote(List<EventInfo> choices)
 	{

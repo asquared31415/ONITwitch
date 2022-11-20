@@ -12,6 +12,7 @@ public static class GamePatches
 		public static void Postfix(Game __instance)
 		{
 			__instance.gameObject.AddOrGet<VoteController>();
+			__instance.gameObject.AddOrGet<VoteFile>();
 		}
 	}
 }
