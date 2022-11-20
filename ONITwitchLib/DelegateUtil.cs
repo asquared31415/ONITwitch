@@ -78,8 +78,20 @@ public static class DelegateUtil
 
 		return Wrapper;
 	}
+	
+	private static Func<object, object, object> RuntimeTypeDelegateFuncGeneric<TArg1, TArg2, TRet>(MethodInfo methodInfo, object arg0)
+	{
+		var del = (Func<TArg1, TArg2, TRet>) Delegate.CreateDelegate(typeof(Func<TArg1, TArg2, TRet>), arg0, methodInfo);
 
-	private static readonly MethodInfo RuntimeDelegateFuncOneArg = AccessTools.DeclaredMethod(
+		object Wrapper(object arg1, object arg2)
+		{
+			return del((TArg1) arg1, (TArg2) arg2);
+		}
+
+		return Wrapper;
+	}
+
+	private static readonly MethodInfo RuntimeDelegateFuncGeneric = AccessTools.DeclaredMethod(
 		typeof(DelegateUtil),
 		nameof(RuntimeTypeDelegateFuncGeneric)
 	);
@@ -91,9 +103,23 @@ public static class DelegateUtil
 		Type retType
 	)
 	{
-		var genericMethod = RuntimeDelegateFuncOneArg.MakeGenericMethod(arg1Type, retType);
+		var genericMethod = RuntimeDelegateFuncGeneric.MakeGenericMethod(arg1Type, retType);
 		var erasedDelegate = genericMethod.Invoke(null, new[] { methodInfo, arg0 });
 
 		return (Func<object, object>) erasedDelegate;
+	}
+	
+	public static Func<object, object, object> CreateRuntimeTypeFuncDelegate(
+		MethodInfo methodInfo,
+		object arg0,
+		Type arg1Type,
+		Type arg2Type,
+		Type retType
+	)
+	{
+		var genericMethod = RuntimeDelegateFuncGeneric.MakeGenericMethod(arg1Type, arg2Type, retType);
+		var erasedDelegate = genericMethod.Invoke(null, new[] { methodInfo, arg0 });
+
+		return (Func<object, object, object>) erasedDelegate;
 	}
 }

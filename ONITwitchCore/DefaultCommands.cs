@@ -34,7 +34,7 @@ public static class DefaultCommands
 		TwitchDeckManager.Instance.AddToDeck(eventC);
 		TwitchDeckManager.Instance.AddToDeck(eventD);
 
-		var condInst = Conditions.Instance;
+		var condInst = ConditionsManager.Instance;
 		condInst.AddCondition(
 			eventA,
 			data =>

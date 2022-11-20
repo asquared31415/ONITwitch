@@ -6,13 +6,13 @@ using EventInfo = EventLib.EventInfo;
 
 namespace ONITwitchCore;
 
-public class Conditions
+public class ConditionsManager
 {
-	private static Conditions instance;
+	private static ConditionsManager instance;
 
-	public static Conditions Instance => instance ??= new Conditions();
+	public static ConditionsManager Instance => instance ??= new ConditionsManager();
 
-	private Conditions()
+	private ConditionsManager()
 	{
 	}
 

@@ -67,7 +67,7 @@ public class VoteController : KMonoBehaviour
 			return false;
 		}
 
-		var condInst = Conditions.Instance;
+		var condInst = ConditionsManager.Instance;
 		var dataInst = DataManager.Instance;
 		var dangerInst = DangerManager.Instance;
 
