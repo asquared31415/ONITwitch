@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using EventLib;
+using ONITwitchLib;
+using DataManager = EventLib.DataManager;
+using EventManager = EventLib.EventManager;
 
 namespace ONITwitchCore;
 
@@ -11,6 +13,7 @@ public static class DefaultCommands
 	{
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
+		var dangerInst = DangerManager.Instance;
 
 		var eventA = eventInst.RegisterEvent(NamespaceId("eventA"), "Event A");
 		eventInst.AddListenerForEvent(eventA, EventAListener);
@@ -19,6 +22,40 @@ public static class DefaultCommands
 		var eventB = eventInst.RegisterEvent(NamespaceId("eventB"), "Event B");
 		eventInst.AddListenerForEvent(eventB, EventBListener);
 		dataInst.AddDataForEvent(eventB, 42.0d);
+		dangerInst.SetDanger(eventB, Danger.Deadly);
+		
+		var eventC = eventInst.RegisterEvent(NamespaceId("eventC"), "Event C");
+		var eventD = eventInst.RegisterEvent(NamespaceId("eventD"), "Event D");
+		
+		// TODO: properly generate options
+
+		TwitchDeckManager.Instance.AddToDeck(eventA);
+		TwitchDeckManager.Instance.AddToDeck(eventB);
+		TwitchDeckManager.Instance.AddToDeck(eventC);
+		TwitchDeckManager.Instance.AddToDeck(eventD);
+
+		var condInst = Conditions.Instance;
+		condInst.AddCondition(
+			eventA,
+			data =>
+			{
+				Debug.Log("cond: does A contain \"uwu\"");
+				if (data is List<string> eventData)
+				{
+					return eventData.Contains("uwu");
+				}
+
+				return false;
+			}
+		);
+		condInst.AddCondition(
+			eventA,
+			_ =>
+			{
+				Debug.Log("Running cond A2 (pass)");
+				return true;
+			}
+		);
 	}
 
 	private static void EventAListener(object d)

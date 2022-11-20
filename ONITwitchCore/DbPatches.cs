@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using EventLib;
 using HarmonyLib;
 using JetBrains.Annotations;
 
@@ -13,36 +11,7 @@ public static class DbPatches
 		[UsedImplicitly]
 		public static void Postfix()
 		{
-			// TODO: properly generate options
-			var eventInst = EventManager.Instance;
-			var eventA = eventInst.GetEventByID(DefaultCommands.CommandNamespace + "eventA")!;
-			var eventB = eventInst.GetEventByID(DefaultCommands.CommandNamespace + "eventB")!;
-
-			TwitchDeckManager.Instance.AddToDeck(eventA);
-			TwitchDeckManager.Instance.AddToDeck(eventB);
-
-			var condInst = Conditions.Instance;
-			condInst.AddCondition(
-				eventA,
-				data =>
-				{
-					Debug.Log("cond: does A contain \"uwu\"");
-					if (data is List<string> eventData)
-					{
-						return eventData.Contains("uwu");
-					}
-
-					return false;
-				}
-			);
-			condInst.AddCondition(
-				eventA,
-				_ =>
-				{
-					Debug.Log("Running cond A2 (pass)");
-					return true;
-				}
-			);
+			DefaultCommands.SetupCommands();
 		}
 	}
 }

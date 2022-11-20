@@ -66,11 +66,10 @@ public class VoteController : KMonoBehaviour
 			Debug.LogWarning("[Twitch Integration] Not yet authenticated, unable to start vote!");
 			return false;
 		}
-		
-		Debug.Log("STARTING VOTE");
 
 		var condInst = Conditions.Instance;
 		var dataInst = DataManager.Instance;
+		var dangerInst = DangerManager.Instance;
 
 		var eventOptions = new List<EventInfo>();
 		var attempts = 0;
@@ -81,12 +80,18 @@ public class VoteController : KMonoBehaviour
 			// Don't draw duplicates
 			if (!eventOptions.Contains(entry))
 			{
-				var data = dataInst.GetDataForEvent(entry);
-				var condition = condInst.CheckCondition(entry, data);
-				if (condition)
+				// no danger assigned or danger within the expected range is okay
+				var danger = dangerInst.GetDanger(entry);
+				if ((danger == null) || ((MainConfig.Instance.Config.MinDanger <= danger.Value) &&
+										 (danger.Value <= MainConfig.Instance.Config.MaxDanger)))
 				{
-					eventOptions.Add(entry);
-					drawnCount += 1;
+					var data = dataInst.GetDataForEvent(entry);
+					var condition = condInst.CheckCondition(entry, data);
+					if (condition)
+					{
+						eventOptions.Add(entry);
+						drawnCount += 1;
+					}
 				}
 			}
 
@@ -115,7 +120,7 @@ public class VoteController : KMonoBehaviour
 
 		CurrentVote = new Vote(eventOptions);
 
-		connection.SendTextMessage("asquared31415", voteMsg.ToString());
+		connection.SendTextMessage(MainConfig.Instance.Config.Channel, voteMsg.ToString());
 
 		VoteTimeRemaining = MainConfig.Instance.Config.VoteTime;
 		State = VotingState.VoteInProgress;
@@ -126,17 +131,21 @@ public class VoteController : KMonoBehaviour
 	private void FinishVote()
 	{
 		var choice = CurrentVote.GetBestVote();
-		Debug.Log("FINISHED VOTE");
+		string responseText;
 		if (choice != null)
 		{
 			var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
 			EventManager.Instance.TriggerEvent(choice.EventInfo, data);
+			responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
 		}
 		else
 		{
 			// TODO: toast
 			Debug.Log("No options were voted for");
+			responseText = "No options were voted for";
 		}
+		
+		connection.SendTextMessage(MainConfig.Instance.Config.Channel, responseText);
 
 		CurrentVote = null;
 		VoteDelayRemaining = MainConfig.Instance.Config.CyclesPerVote * Constants.SECONDS_PER_CYCLE;
