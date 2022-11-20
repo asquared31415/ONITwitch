@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace ONITwitchCore;
 
 public static class PauseMenuPatches
 {
 	public static readonly KButtonMenu.ButtonInfo TwitchButtonInfo = new(
-		"Do the thing",
+		"Start Voting",
 		Action.NumActions,
 		OnTwitchButtonPressed
 	);
+
+	public static ColorStyleSetting TwitchButtonStyle;
 
 	private static void OnTwitchButtonPressed()
 	{
@@ -41,6 +44,35 @@ public static class PauseMenuPatches
 			var buttons = ___buttons.ToList();
 			buttons.Insert(4, TwitchButtonInfo);
 			___buttons = buttons;
+		}
+	}
+
+
+	public static readonly Color DisabledColor = new Color32(0x6A, 0x69, 0x66, 0xFF);
+	public static readonly Color InactiveTwitchColor = new Color32(0x91, 0x46, 0xFF, 0xFF);
+	public static readonly Color HoverTwitchColor = new Color32(0xA2, 0x56, 0xFF, 0xFF);
+	public static readonly Color PressedTwitchColor = new Color32(0xB5, 0x67, 0xFF, 0xFF);
+
+	[HarmonyPatch(typeof(KButtonMenu), nameof(KButtonMenu.RefreshButtons))]
+	public static class PauseScreen_RefreshButtons_Patch
+	{
+		[UsedImplicitly]
+		public static void Postfix(KButtonMenu __instance)
+		{
+			if (__instance is PauseScreen && (TwitchButtonInfo.uibutton != null))
+			{
+				if ((TwitchButtonStyle == null) || (TwitchButtonInfo.uibutton.bgImage.colorStyleSetting == null) ||
+					(TwitchButtonInfo.uibutton.bgImage.colorStyleSetting != TwitchButtonStyle))
+				{
+					TwitchButtonStyle = ScriptableObject.CreateInstance<ColorStyleSetting>();
+					TwitchButtonStyle.disabledColor = DisabledColor;
+					TwitchButtonStyle.inactiveColor = InactiveTwitchColor;
+					TwitchButtonStyle.hoverColor = HoverTwitchColor;
+					TwitchButtonStyle.activeColor = PressedTwitchColor;
+
+					TwitchButtonInfo.uibutton.bgImage.colorStyleSetting = TwitchButtonStyle;
+				}
+			}
 		}
 	}
 }
