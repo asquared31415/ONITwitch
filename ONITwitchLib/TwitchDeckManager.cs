@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -19,7 +20,11 @@ public class TwitchDeckManager
 		deckManagerInstance = inst;
 		var managerType = deckManagerInstance.GetType();
 
-		var addSingleItemInfo = AccessTools.DeclaredMethod(managerType, "AddToDeck", new []{EventInterface.EventInfoType});
+		var addSingleItemInfo = AccessTools.DeclaredMethod(
+			managerType,
+			"AddToDeck",
+			new[] { EventInterface.EventInfoType }
+		);
 		addSingleItemDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			addSingleItemInfo,
 			deckManagerInstance,
@@ -27,7 +32,7 @@ public class TwitchDeckManager
 		);
 
 		var enumerableType = typeof(IEnumerable<>).MakeGenericType(EventInterface.EventInfoType);
-		var addListInfo = AccessTools.DeclaredMethod(managerType, "AddToDeck", new []{enumerableType});
+		var addListInfo = AccessTools.DeclaredMethod(managerType, "AddToDeck", new[] { enumerableType });
 		addListDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			addListInfo,
 			deckManagerInstance,
@@ -43,10 +48,24 @@ public class TwitchDeckManager
 		addSingleItemDelegate(eventInfo.EventInfoInstance);
 	}
 
+	private static readonly Func<IEnumerable<object>, object> CastEventInfo =
+		DelegateUtil.CreateRuntimeTypeFuncDelegate(
+			AccessTools.Method(
+				typeof(Enumerable),
+				"Cast",
+				new[] { typeof(IEnumerable) },
+				new[] { EventInterface.EventInfoType }
+			),
+			null,
+			typeof(IEnumerable),
+			typeof(IEnumerable<>).MakeGenericType(EventInterface.EventInfoType)
+		);
+
 	public void AddToDeck([NotNull] IEnumerable<EventInfo> eventInfos)
 	{
 		var instances = eventInfos.Select(info => info.EventInfoInstance);
-		addListDelegate(instances);
+		var castInstances = CastEventInfo(instances);
+		addListDelegate(castInstances);
 	}
 
 	[NotNull]

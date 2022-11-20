@@ -21,22 +21,26 @@ public class DangerManager
 
 		var setDangerInfo = AccessTools.DeclaredMethod(
 			dangerType,
-			"SetDanger",
-			new[] { EventInterface.EventInfoType, typeof(Danger) }
+			"SetDangerWrapper",
+			new[] { EventInterface.EventInfoType, typeof(int) }
 		);
 		setDangerDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			setDangerInfo,
 			dangerManagerInstance,
 			EventInterface.EventInfoType,
-			typeof(Danger)
+			typeof(int)
 		);
 
-		var getDangerInfo = AccessTools.DeclaredMethod(dangerType, "GetDanger", new[] { EventInterface.EventInfoType });
+		var getDangerInfo = AccessTools.DeclaredMethod(
+			dangerType,
+			"GetDangerWrapper",
+			new[] { EventInterface.EventInfoType }
+		);
 		getDangerDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
 			getDangerInfo,
 			dangerManagerInstance,
 			EventInterface.EventInfoType,
-			typeof(Danger?)
+			typeof(int?)
 		);
 	}
 

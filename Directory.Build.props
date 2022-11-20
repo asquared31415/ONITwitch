@@ -83,7 +83,7 @@
         <ILRepackVersion>2.1.0-beta1</ILRepackVersion>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(MainMod)' == 'true'">
+    <ItemGroup Condition="'$(IsLib)' != 'true'">
         <Content Include="mod_info.yaml">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>

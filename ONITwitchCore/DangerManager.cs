@@ -31,4 +31,17 @@ public class DangerManager
 
 		return null;
 	}
+
+	[UsedImplicitly]
+	private void SetDangerWrapper([NotNull] EventInfo eventInfo, int danger)
+	{
+		SetDanger(eventInfo, (Danger) danger);
+	}
+
+	[CanBeNull]
+	[UsedImplicitly]
+	private int? GetDangerWrapper([NotNull] EventInfo eventInfo)
+	{
+		return (int?) GetDanger(eventInfo);
+	}
 }
