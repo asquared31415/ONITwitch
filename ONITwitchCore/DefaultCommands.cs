@@ -263,6 +263,76 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodWater",
+				"Water Flood",
+				new ElementFloodCommand(),
+				SimHashes.Water.ToString(),
+				Danger.Medium,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodPollutedWater",
+				"Polluted Water Flood",
+				new ElementFloodCommand(),
+				SimHashes.DirtyWater.ToString(),
+				Danger.Medium,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodEthanol",
+				"Ethanol Flood",
+				new ElementFloodCommand(),
+				SimHashes.Ethanol.ToString(),
+				Danger.Medium,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodOil",
+				"Oil Flood",
+				new ElementFloodCommand(),
+				SimHashes.CrudeOil.ToString(),
+				Danger.Medium,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodLava",
+				"Lava Flood",
+				new ElementFloodCommand(),
+				SimHashes.Magma.ToString(),
+				Danger.Deadly,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodGold",
+				"Gold Rain",
+				new ElementFloodCommand(),
+				SimHashes.Magma.ToString(),
+				Danger.Deadly,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"FloodNuclearWaste",
+				"Nuclear Waste Disposal Accident",
+				new ElementFloodCommand(),
+				SimHashes.NuclearWaste.ToString(),
+				Danger.High,
+				10
+			)
+		);
 	}
 
 	public record struct CommandConfig(
