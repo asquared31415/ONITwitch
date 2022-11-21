@@ -243,6 +243,26 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandConfig.Namespaced("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
 		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"SnowBedrooms",
+				"Snowy Bedrooms",
+				new FillBedroomCommand(),
+				SimHashes.Snow.ToString(),
+				Danger.Small,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"SlimeBedrooms",
+				"Slimy Bedrooms",
+				new FillBedroomCommand(),
+				SimHashes.SlimeMold.ToString(),
+				Danger.Small,
+				10
+			)
+		);
 	}
 
 	public record struct CommandConfig(

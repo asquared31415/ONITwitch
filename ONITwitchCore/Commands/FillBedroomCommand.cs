@@ -1,0 +1,55 @@
+using System.Linq;
+using ONITwitchLib;
+
+namespace ONITwitchCore.Commands;
+
+public class FillBedroomCommand : CommandBase
+{
+	private static readonly CellElementEvent SpawnEvent = new(
+		"TwitchSpawnedElement",
+		"Spawned by Twitch",
+		true
+	);
+
+	private Element element;
+
+	public override bool Condition(object data)
+	{
+		element ??= ElementUtil.FindElementByNameFast((string) data);
+
+		return ElementUtil.ElementExistsAndEnabled(element);
+	}
+
+	public override void Run(object data)
+	{
+		var db = Db.Get();
+		var bedroomType = db.RoomTypes.Bedroom;
+		var barracksType = db.RoomTypes.Barracks;
+		foreach (var bedroom in Game.Instance.roomProber.rooms.Where(
+					 room => (room.roomType == bedroomType) || (room.roomType == barracksType)
+				 ))
+		{
+			foreach (var bed in bedroom.buildings.Where(building => building.GetComponent<Bed>() != null))
+			{
+				var cell = Grid.PosToCell(bed);
+				if (Grid.IsValidCell(cell))
+				{
+					SimMessages.ReplaceAndDisplaceElement(
+						cell,
+						element.id,
+						SpawnEvent,
+						500f,
+						element.defaultValues.temperature
+					);
+				}
+			}
+		}
+
+		/*
+		ToastUiManager.InstantiateToast(
+			"Bedrooms Bombed",
+			$"Every bedroom has had {Util.StripTextFormatting(element.name)} created inside it"
+		);
+		*/
+	}
+}
