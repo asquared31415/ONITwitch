@@ -35,6 +35,8 @@ public class VoteController : KMonoBehaviour
 
 	public Vote CurrentVote { get; private set; }
 
+	public readonly Dictionary<string, TwitchUserInfo> SeenUsersById = new();
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
@@ -204,6 +206,7 @@ public class VoteController : KMonoBehaviour
 
 	private void OnTwitchMessage(TwitchMessage message)
 	{
+		SeenUsersById[message.UserInfo.UserId] = message.UserInfo;
 		if ((State == VotingState.VoteInProgress) && (CurrentVote != null))
 		{
 			var userId = message.UserInfo.UserId;

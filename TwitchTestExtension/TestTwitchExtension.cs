@@ -40,11 +40,13 @@ public static class Db_Init_Patch
 
 		dataInst.AddDataForEvent(extEvent, new ExtData(true));
 
+		/*
 		// Modify event A to have an extra entry in its data
 		var eventA = eventInst.GetEventById("ONITwitch.eventA")!;
 		var eventAData = (List<string>) dataInst.GetDataForEvent(eventA);
 		eventAData.Add("Ext data!");
-
+		*/
+		
 		// add and check conditions
 		conditionsInst.AddCondition(
 			extEvent,
@@ -60,10 +62,12 @@ public static class Db_Init_Patch
 		// set the danger to none
 		dangerInst.SetDanger(extEvent, Danger.None);
 
+		/*
 		// make sure that default event B danger is deadly
 		var eventB = eventInst.GetEventById("ONITwitch.eventB")!;
 		var eventBDanger = dangerInst.GetDanger(eventB);
 		Debug.Log(eventBDanger == Danger.Deadly);
+		*/
 	}
 }
 

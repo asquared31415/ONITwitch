@@ -1,7 +1,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ONITwitchCore;
+namespace ONITwitchCore.Patches;
 
 public static class GamePatches
 {
