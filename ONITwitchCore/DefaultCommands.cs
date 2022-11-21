@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ONITwitchCore.Commands;
+using ONITwitchCore.Content;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
 using EventManager = EventLib.EventManager;
@@ -157,6 +158,86 @@ public static class DefaultCommands
 				},
 				Danger.Small,
 				1
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeAthleticsUp",
+				"Athletics Up",
+				new EffectCommand(),
+				CustomEffects.AthleticsUpEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeAthleticsDown",
+				"Athletics Down",
+				new EffectCommand(),
+				CustomEffects.AthleticsDownEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeConstructionUp",
+				"Construction Up",
+				new EffectCommand(),
+				CustomEffects.ConstructionUpEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeConstructionDown",
+				"Construction Down",
+				new EffectCommand(),
+				CustomEffects.ConstructionDownEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeExcavationUp",
+				"Excavation Up",
+				new EffectCommand(),
+				CustomEffects.ExcavationUpEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeExcavationDown",
+				"Excavation Down",
+				new EffectCommand(),
+				CustomEffects.ExcavationDownEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeStrengthUp",
+				"Strength Up",
+				new EffectCommand(),
+				CustomEffects.StrengthUpEffect.Id,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandConfig.Namespaced(
+				"AttributeStrengthDown",
+				"Strength Down",
+				new EffectCommand(),
+				CustomEffects.StrengthDownEffect.Id,
+				Danger.None,
+				10
 			)
 		);
 	}
