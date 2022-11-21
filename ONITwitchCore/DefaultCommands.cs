@@ -240,6 +240,9 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandConfig.Namespaced("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
+		);
 	}
 
 	public record struct CommandConfig(
