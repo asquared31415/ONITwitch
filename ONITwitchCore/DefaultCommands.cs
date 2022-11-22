@@ -333,6 +333,9 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandConfig.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 10)
+		);
 	}
 
 	public record struct CommandConfig(

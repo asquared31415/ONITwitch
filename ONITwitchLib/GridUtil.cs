@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 
 namespace ONITwitchLib;
 
@@ -177,5 +178,32 @@ public static class GridUtil
 		}
 
 		return result;
+	}
+
+	public static IEnumerable<int> IterateCellRegion(Game.SimActiveRegion region)
+	{
+		return IterateCellRegion(region.region.first, region.region.second);
+	}
+
+	public static IEnumerable<int> IterateCellRegion(Vector2I min, Vector2I max)
+	{
+		for (var y = min.y; y < max.y; y++)
+		{
+			for (var x = min.x; x < max.x; x++)
+			{
+				yield return Grid.XYToCell(x, y);
+			}
+		}
+	}
+
+	private static readonly AccessTools.FieldRef<Game, List<Game.SimActiveRegion>> SimRegionsDelegate =
+		AccessTools.FieldRefAccess<Game, List<Game.SimActiveRegion>>(
+			AccessTools.DeclaredField(typeof(Game), "simActiveRegions")
+		);
+	
+	public static IEnumerable<int> ActiveSimCells()
+	{
+		var activeSimRegions = SimRegionsDelegate(Game.Instance);
+		return activeSimRegions.SelectMany(IterateCellRegion);
 	}
 }
