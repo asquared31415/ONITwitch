@@ -341,6 +341,12 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandInfo.Namespaced("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 10)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced("TileTempDown", "Icy Floors", new TileTempCommand(), -40.0d, Danger.Medium, 10)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced("TileTempUp", "Floor is Lava", new TileTempCommand(), +40.0d, Danger.Medium, 10)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
