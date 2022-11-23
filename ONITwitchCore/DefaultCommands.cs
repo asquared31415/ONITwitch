@@ -337,7 +337,8 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandInfo.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 10)
 		);
-		
+		RegisterCommand(CommandInfo.Namespaced("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 10));
+
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
