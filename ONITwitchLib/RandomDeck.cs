@@ -13,7 +13,7 @@ public class RandomDeck<T>
 	public RandomDeck([NotNull] List<T> deck)
 	{
 		this.deck = deck;
-		this.deck.ShuffleList();
+		Shuffle();
 	}
 	
 	[NotNull]
@@ -28,8 +28,7 @@ public class RandomDeck<T>
 		headIdx += 1;
 		if (headIdx >= deck.Count)
 		{
-			deck.ShuffleList();
-			headIdx = 0;
+			Shuffle();
 		}
 
 		return ret;
@@ -43,8 +42,7 @@ public class RandomDeck<T>
 	public void AddAndShuffle([NotNull] T item)
 	{
 		deck.Add(item);
-		deck.ShuffleList();
-		headIdx = 0;
+		Shuffle();
 	}
 
 	/// <summary>
@@ -54,14 +52,19 @@ public class RandomDeck<T>
 	public void AddAndShuffle([NotNull] IEnumerable<T> items)
 	{
 		deck.AddRange(items);
-		deck.ShuffleList();
-		headIdx = 0;
+		Shuffle();
 	}
 
 	public void Shuffle()
 	{
 		deck.ShuffleList();
 		headIdx = 0;
+	}
+
+	public void RemoveAllAndShuffle(T item)
+	{
+		deck.RemoveAll(e => e.Equals(item));
+		Shuffle();
 	}
 
 	public void DebugPrintDeck()

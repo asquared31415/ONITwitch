@@ -30,4 +30,9 @@ public class TwitchDeckManager
 	{
 		return deck.DrawEntry();
 	}
+
+	public void RemoveAll([NotNull] EventInfo eventInfo)
+	{
+		deck.RemoveAllAndShuffle(eventInfo);
+	}
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
 
@@ -13,6 +12,7 @@ public class EventManager
 	// delegates created to wrap various methods on the event manager without needing to use reflection
 	// and Invoke every time
 	private readonly Func<string, string, object> registerEventDelegate;
+	private readonly Action<object, object> renameEventDelegate;
 	private readonly Func<string, object> getEventByIdDelegate;
 	private readonly Action<object, Action<string>> addListenerForEventDelegate;
 	private readonly Action<object, Action<object>> removeListenerForEventDelegate;
@@ -22,8 +22,24 @@ public class EventManager
 	{
 		eventManagerInstance = instance;
 		var eventType = eventManagerInstance.GetType();
-		var registerInfo = AccessTools.DeclaredMethod(eventType, "RegisterEvent", new[] { typeof(string), typeof(string) });
-		registerEventDelegate = DelegateUtil.CreateDelegate<Func<string, string, object>>(registerInfo, eventManagerInstance);
+		var registerInfo = AccessTools.DeclaredMethod(
+			eventType,
+			"RegisterEvent",
+			new[] { typeof(string), typeof(string) }
+		);
+		registerEventDelegate =
+			DelegateUtil.CreateDelegate<Func<string, string, object>>(registerInfo, eventManagerInstance);
+		var renameEventInfo = AccessTools.DeclaredMethod(
+			eventType,
+			"RenameEvent",
+			new[] { EventInterface.EventInfoType, typeof(string) }
+		);
+		renameEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+			renameEventInfo,
+			eventManagerInstance,
+			EventInterface.EventInfoType,
+			typeof(string)
+		);
 		var getByIdInfo = AccessTools.DeclaredMethod(eventType, "GetEventByID", new[] { typeof(string) });
 		getEventByIdDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(getByIdInfo, eventManagerInstance);
 		var addListenerForEventInfo = AccessTools.DeclaredMethod(
@@ -77,6 +93,11 @@ public class EventManager
 		}
 
 		return new EventInfo(output);
+	}
+
+	public void RenameEvent([NotNull] EventInfo eventInfo, [NotNull] string friendlyName)
+	{
+		renameEventDelegate(eventInfo.EventInfoInstance, friendlyName);
 	}
 
 	[CanBeNull]

@@ -11,17 +11,14 @@ public class FillBedroomCommand : CommandBase
 		true
 	);
 
-	private Element element;
-
 	public override bool Condition(object data)
 	{
-		element ??= ElementUtil.FindElementByNameFast((string) data);
-
-		return ElementUtil.ElementExistsAndEnabled(element);
+		return ElementUtil.ElementExistsAndEnabled((string) data);
 	}
 
 	public override void Run(object data)
 	{
+		var element = ElementUtil.FindElementByNameFast((string) data);
 		var db = Db.Get();
 		var bedroomType = db.RoomTypes.Bedroom;
 		var barracksType = db.RoomTypes.Barracks;

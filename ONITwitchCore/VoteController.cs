@@ -50,7 +50,7 @@ public class VoteController : KMonoBehaviour
 				{
 					if (connection.IsAuthenticated)
 					{
-						connection.JoinRoom(MainConfig.Instance.Config.Channel);
+						connection.JoinRoom(MainConfig.Instance.ConfigData.Channel);
 						break;
 					}
 
@@ -76,7 +76,7 @@ public class VoteController : KMonoBehaviour
 		var eventOptions = new List<EventInfo>();
 		var attempts = 0;
 		var drawnCount = 0;
-		while (drawnCount < MainConfig.Instance.Config.NumVotes)
+		while (drawnCount < MainConfig.Instance.ConfigData.NumVotes)
 		{
 			var entry = TwitchDeckManager.Instance.Draw();
 			// Don't draw duplicates
@@ -84,8 +84,8 @@ public class VoteController : KMonoBehaviour
 			{
 				// no danger assigned or danger within the expected range is okay
 				var danger = dangerInst.GetDanger(entry);
-				if ((danger == null) || ((MainConfig.Instance.Config.MinDanger <= danger.Value) &&
-										 (danger.Value <= MainConfig.Instance.Config.MaxDanger)))
+				if ((danger == null) || ((MainConfig.Instance.ConfigData.MinDanger <= danger.Value) &&
+										 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
 				{
 					var data = dataInst.GetDataForEvent(entry);
 					var condition = condInst.CheckCondition(entry, data);
@@ -101,7 +101,7 @@ public class VoteController : KMonoBehaviour
 			if (attempts > MaxDrawAttempts)
 			{
 				Debug.LogWarning(
-					$"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {MainConfig.Instance.Config.NumVotes} events!"
+					$"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {MainConfig.Instance.ConfigData.NumVotes} events!"
 				);
 				break;
 			}
@@ -122,9 +122,9 @@ public class VoteController : KMonoBehaviour
 
 		CurrentVote = new Vote(eventOptions);
 
-		connection.SendTextMessage(MainConfig.Instance.Config.Channel, voteMsg.ToString());
+		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, voteMsg.ToString());
 
-		VoteTimeRemaining = MainConfig.Instance.Config.VoteTime;
+		VoteTimeRemaining = MainConfig.Instance.ConfigData.VoteTime;
 		State = VotingState.VoteInProgress;
 
 		return true;
@@ -147,10 +147,10 @@ public class VoteController : KMonoBehaviour
 			responseText = "No options were voted for";
 		}
 		
-		connection.SendTextMessage(MainConfig.Instance.Config.Channel, responseText);
+		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, responseText);
 
 		CurrentVote = null;
-		VoteDelayRemaining = MainConfig.Instance.Config.CyclesPerVote * Constants.SECONDS_PER_CYCLE;
+		VoteDelayRemaining = MainConfig.Instance.ConfigData.CyclesPerVote * Constants.SECONDS_PER_CYCLE;
 		State = VotingState.VoteDelay;
 	}
 

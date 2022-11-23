@@ -7,20 +7,20 @@ namespace ONITwitchLib;
 public class DataManager
 {
 	private readonly object dataManagerInstance;
-	private readonly Action<object, object> addDataForEventDelegate;
+	private readonly Action<object, object> setDataForEventDelegate;
 	private readonly Func<object, object> getDataForEventDelegate;
 
 	internal DataManager(object inst)
 	{
 		dataManagerInstance = inst;
 		var managerType = dataManagerInstance.GetType();
-		var addDataInfo = AccessTools.DeclaredMethod(
+		var setDataInfo = AccessTools.DeclaredMethod(
 			managerType,
-			"AddDataForEvent",
+			"SetDataForEvent",
 			new[] { EventInterface.EventInfoType, typeof(object) }
 		);
-		addDataForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			addDataInfo,
+		setDataForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+			setDataInfo,
 			dataManagerInstance,
 			EventInterface.EventInfoType,
 			typeof(object)
@@ -38,9 +38,9 @@ public class DataManager
 		);
 	}
 
-	public void AddDataForEvent([NotNull] EventInfo info, object data)
+	public void SetDataForEvent([NotNull] EventInfo info, object data)
 	{
-		addDataForEventDelegate(info.EventInfoInstance, data);
+		setDataForEventDelegate(info.EventInfoInstance, data);
 	}
 
 	[CanBeNull]

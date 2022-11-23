@@ -8,7 +8,7 @@ public class SpawnDupeCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{
-		var maxDupes = (double) ((Dictionary<string, object>) data)["MaxDupes"];
+		var maxDupes = (double) ((IDictionary<string, object>) data)["MaxDupes"];
 		return Components.MinionIdentities.Count < maxDupes;
 	}
 
@@ -51,7 +51,7 @@ public class SpawnDupeCommand : CommandBase
 		if (name != null)
 		{
 			identity.SetName(
-				MainConfig.Instance.Config.UseTwitchNameColor && color.HasValue
+				MainConfig.Instance.ConfigData.UseTwitchNameColor && color.HasValue
 					? $"<color=#{color.Value.ToHexString()}>{name}</color>"
 					: name
 			);

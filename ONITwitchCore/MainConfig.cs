@@ -12,7 +12,7 @@ public class MainConfig
 	private static MainConfig instance;
 	public static MainConfig Instance => instance ??= new MainConfig();
 
-	public Config Config { get; private set; }
+	public ConfigData ConfigData { get; private set; }
 
 	private System.DateTime lastLoadTime = System.DateTime.MinValue;
 	private readonly object loadLock = new();
@@ -43,9 +43,9 @@ public class MainConfig
 
 			lastLoadTime = now;
 
-			Config = DeserializeConfig();
+			ConfigData = DeserializeConfig();
 
-			if (Config == null)
+			if (ConfigData == null)
 			{
 				PauseMenuPatches.TwitchButtonInfo.isEnabled = false;
 				if (PauseScreen.Instance != null)
@@ -56,17 +56,17 @@ public class MainConfig
 		}
 	}
 
-	private static Config DeserializeConfig()
+	private static ConfigData DeserializeConfig()
 	{
 		try
 		{
 			var configText = File.ReadAllText(TwitchModInfo.ConfigPath);
-			var config = JsonConvert.DeserializeObject<Config>(configText);
+			var config = JsonConvert.DeserializeObject<ConfigData>(configText);
 			return config;
 		}
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{
-			var config = new Config();
+			var config = new ConfigData();
 			File.WriteAllText(TwitchModInfo.ConfigPath, JsonConvert.SerializeObject(config, Formatting.Indented));
 			return config;
 		}
@@ -75,11 +75,11 @@ public class MainConfig
 			Debug.LogException(e);
 		}
 
-		return new Config();
+		return new ConfigData();
 	}
 }
 
-public record struct Config(
+public record struct ConfigData(
 	string Channel,
 	float CyclesPerVote,
 	float VoteTime,
@@ -93,7 +93,7 @@ public record struct Config(
 	bool UseTwitchNameColor
 )
 {
-	public Config() : this(
+	public ConfigData() : this(
 		"",
 		2,
 		60,

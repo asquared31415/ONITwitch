@@ -38,7 +38,7 @@ public static class Db_Init_Patch
 			}
 		);
 
-		dataInst.AddDataForEvent(extEvent, new ExtData(true));
+		dataInst.SetDataForEvent(extEvent, new ExtData(true));
 
 		/*
 		// Modify event A to have an extra entry in its data

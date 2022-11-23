@@ -21,7 +21,7 @@ public class VoteFile : KMonoBehaviour, ISim33ms
 		{
 			count %= 10;
 
-			var filePath = Path.Combine(TwitchModInfo.MainModFolder, MainConfig.Instance.Config.VotesPath);
+			var filePath = Path.Combine(TwitchModInfo.MainModFolder, MainConfig.Instance.ConfigData.VotesPath);
 			if (Game.Instance.TryGetComponent<VoteController>(out var voteController))
 			{
 				string fileText;
@@ -36,7 +36,7 @@ public class VoteFile : KMonoBehaviour, ISim33ms
 					{
 						var sb = new StringBuilder();
 						sb.Append(
-							$"{MainConfig.Instance.Config.VoteHeader} ({Mathf.RoundToInt(voteController.VoteTimeRemaining)}s)\n"
+							$"{MainConfig.Instance.ConfigData.VoteHeader} ({Mathf.RoundToInt(voteController.VoteTimeRemaining)}s)\n"
 						);
 						var votes = voteController.CurrentVote.Votes;
 						for (var idx = 0; idx < votes.Count; idx++)

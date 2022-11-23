@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ONITwitchCore.Commands;
+using ONITwitchCore.Config;
 using ONITwitchCore.Content;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
@@ -14,7 +15,7 @@ public static class DefaultCommands
 	public static void SetupCommands()
 	{
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"SpawnDupe",
 				"Spawn Dupe",
 				new SpawnDupeCommand(),
@@ -24,7 +25,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"ElementGroupCommon",
 				"Spawn Common Element",
 				new SpawnElementPoolCommand(),
@@ -57,7 +58,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"ElementGroupExotic",
 				"Spawn Exotic Element",
 				new SpawnElementPoolCommand(),
@@ -79,7 +80,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"ElementGroupMetal",
 				"Spawn Metal",
 				new SpawnElementPoolCommand(),
@@ -98,7 +99,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"ElementGroupGas",
 				"Spawn Gas",
 				new SpawnElementPoolCommand(),
@@ -117,7 +118,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"ElementGroupLiquid",
 				"Spawn Liquid",
 				new SpawnElementPoolCommand(),
@@ -143,7 +144,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"ElementGroupDeadly",
 				"Spawn Deadly Element",
 				new SpawnElementPoolCommand(),
@@ -161,7 +162,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeAthleticsUp",
 				"Athletics Up",
 				new EffectCommand(),
@@ -171,7 +172,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeAthleticsDown",
 				"Athletics Down",
 				new EffectCommand(),
@@ -181,7 +182,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeConstructionUp",
 				"Construction Up",
 				new EffectCommand(),
@@ -191,7 +192,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeConstructionDown",
 				"Construction Down",
 				new EffectCommand(),
@@ -201,7 +202,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeExcavationUp",
 				"Excavation Up",
 				new EffectCommand(),
@@ -211,7 +212,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeExcavationDown",
 				"Excavation Down",
 				new EffectCommand(),
@@ -221,7 +222,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeStrengthUp",
 				"Strength Up",
 				new EffectCommand(),
@@ -231,7 +232,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"AttributeStrengthDown",
 				"Strength Down",
 				new EffectCommand(),
@@ -241,10 +242,10 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
+			CommandInfo.Namespaced("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"SnowBedrooms",
 				"Snowy Bedrooms",
 				new FillBedroomCommand(),
@@ -254,7 +255,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"SlimeBedrooms",
 				"Slimy Bedrooms",
 				new FillBedroomCommand(),
@@ -264,7 +265,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodWater",
 				"Water Flood",
 				new ElementFloodCommand(),
@@ -274,7 +275,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodPollutedWater",
 				"Polluted Water Flood",
 				new ElementFloodCommand(),
@@ -284,7 +285,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodEthanol",
 				"Ethanol Flood",
 				new ElementFloodCommand(),
@@ -294,7 +295,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodOil",
 				"Oil Flood",
 				new ElementFloodCommand(),
@@ -304,7 +305,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodLava",
 				"Lava Flood",
 				new ElementFloodCommand(),
@@ -314,7 +315,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodGold",
 				"Gold Rain",
 				new ElementFloodCommand(),
@@ -324,7 +325,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced(
+			CommandInfo.Namespaced(
 				"FloodNuclearWaste",
 				"Nuclear Waste Disposal Accident",
 				new ElementFloodCommand(),
@@ -334,11 +335,14 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandConfig.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 10)
+			CommandInfo.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 10)
 		);
+		
+		// update user configs
+		UserCommandConfigManager.Instance.Reload();
 	}
 
-	public record struct CommandConfig(
+	public record struct CommandInfo(
 		string Id,
 		string Name,
 		CommandBase Command,
@@ -347,7 +351,7 @@ public static class DefaultCommands
 		int Weight
 	)
 	{
-		public static CommandConfig Namespaced(
+		public static CommandInfo Namespaced(
 			string id,
 			string name,
 			CommandBase command,
@@ -356,7 +360,7 @@ public static class DefaultCommands
 			int weight
 		)
 		{
-			return new CommandConfig(NamespaceId(id), name, command, data, danger, weight);
+			return new CommandInfo(NamespaceId(id), name, command, data, danger, weight);
 		}
 	}
 
@@ -365,14 +369,32 @@ public static class DefaultCommands
 		return CommandNamespace + id;
 	}
 
-	public static void RegisterCommand(CommandConfig config)
+	public static void RegisterCommand(CommandInfo info)
 	{
 		var eventInst = EventManager.Instance;
-		var eventId = eventInst.RegisterEvent(config.Id, config.Name);
-		eventInst.AddListenerForEvent(eventId, config.Command.Run);
-		DataManager.Instance.AddDataForEvent(eventId, config.Data);
-		ConditionsManager.Instance.AddCondition(eventId, config.Command.Condition);
-		DangerManager.Instance.SetDanger(eventId, config.Danger);
-		TwitchDeckManager.Instance.AddToDeck(DeckUtils.RepeatList(eventId, config.Weight));
+		var eventId = eventInst.RegisterEvent(info.Id, info.Name);
+		eventInst.AddListenerForEvent(eventId, info.Command.Run);
+		DataManager.Instance.SetDataForEvent(eventId, info.Data);
+		ConditionsManager.Instance.AddCondition(eventId, info.Command.Condition);
+		DangerManager.Instance.SetDanger(eventId, info.Danger);
+		TwitchDeckManager.Instance.AddToDeck(DeckUtils.RepeatList(eventId, info.Weight));
+	}
+
+	public static void ReloadData(Dictionary<string, CommandConfig> userConfig)
+	{
+		Debug.LogWarning("RELOADING DATA");
+		var eventInst = EventManager.Instance;
+		var dataInst = DataManager.Instance;
+		var deckInst = TwitchDeckManager.Instance;
+		foreach (var (id, config) in userConfig)
+		{
+			var eventId = eventInst.GetEventByID(id);
+			if (eventId != null)
+			{
+				eventInst.RenameEvent(eventId, config.FriendlyName);
+				dataInst.SetDataForEvent(eventId, config.Data);
+				deckInst.AddToDeck(DeckUtils.RepeatList(eventId, config.Weight));
+			}
+		}
 	}
 }

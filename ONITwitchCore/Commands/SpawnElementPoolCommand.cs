@@ -13,19 +13,10 @@ public class SpawnElementPoolCommand : CommandBase
 		true
 	);
 
-	private List<Element> enabledElements;
-
 	public override bool Condition(object data)
 	{
-		if (enabledElements == null)
-		{
-			var pool = (List<string>) data;
-			enabledElements = pool.Select(ElementUtil.FindElementByNameFast)
-				.Where(ElementUtil.ElementExistsAndEnabled)
-				.ToList();
-		}
-
-		return (enabledElements != null) && (enabledElements.Count > 1);
+		var pool = (List<string>) data;
+		return pool.Select(ElementUtil.FindElementByNameFast).Any(ElementUtil.ElementExistsAndEnabled);
 	}
 
 	private static readonly float MaxAbyssaliteTemp =
@@ -36,6 +27,10 @@ public class SpawnElementPoolCommand : CommandBase
 
 	public override void Run(object data)
 	{
+		var pool = (List<string>) data;
+		var enabledElements = pool.Select(ElementUtil.FindElementByNameFast)
+			.Where(ElementUtil.ElementExistsAndEnabled)
+			.ToList();
 		var mouseCell = PosUtil.RandomCellNearMouse();
 		var element = enabledElements.GetRandom();
 		var abyssalite = ElementLoader.FindElementByHash(SimHashes.Katairite);

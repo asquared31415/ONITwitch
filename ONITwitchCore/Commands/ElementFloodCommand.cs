@@ -10,13 +10,9 @@ public class ElementFloodCommand : CommandBase
 		true
 	);
 	
-	private Element element;
-	
 	public override bool Condition(object data)
 	{
-		element ??= ElementUtil.FindElementByNameFast((string) data);
-
-		return ElementUtil.ElementExistsAndEnabled(element);
+		return ElementUtil.ElementExistsAndEnabled((string) data);
 	}
 
 	public override void Run(object data)
@@ -31,6 +27,7 @@ public class ElementFloodCommand : CommandBase
 			maxFloodSize
 		);
 
+		var element = ElementUtil.FindElementByNameFast((string) data);
 		// ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
 		var mass = element.id switch
 		{

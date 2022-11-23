@@ -42,19 +42,22 @@ public class EventManager
 
 		registeredEvents.Add(namespacedId, new RefActionWrapper(delegate { }));
 		idNameMap.Add(namespacedId, friendlyName);
-		var eventInfo = new EventInfo(namespacedId, friendlyName);
+		var eventInfo = new EventInfo(namespacedId);
 		return eventInfo;
+	}
+
+	public void RenameEvent([NotNull] EventInfo eventInfo, [NotNull] string friendlyName)
+	{
+		if (idNameMap.ContainsKey(eventInfo.Id))
+		{
+			idNameMap[eventInfo.Id] = friendlyName;
+		}
 	}
 
 	[CanBeNull]
 	public EventInfo GetEventByID([NotNull] string id)
 	{
-		if (registeredEvents.ContainsKey(id))
-		{
-			return idNameMap.TryGetValue(id, out var name) ? new EventInfo(id, name) : new EventInfo(id);
-		}
-
-		return null;
+		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;
 	}
 
 	public void AddListenerForEvent(

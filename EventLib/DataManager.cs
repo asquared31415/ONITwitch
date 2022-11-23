@@ -17,9 +17,9 @@ public class DataManager
 		}
 	}
 
-	public void AddDataForEvent([NotNull] EventInfo info, object data)
+	public void SetDataForEvent([NotNull] EventInfo info, object data)
 	{
-		storedData.Add(info, data);
+		storedData[info] = data;
 	}
 
 	[CanBeNull]
