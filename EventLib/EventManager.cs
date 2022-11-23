@@ -55,6 +55,12 @@ public class EventManager
 	}
 
 	[CanBeNull]
+	public string GetFriendlyName([NotNull] EventInfo eventInfo)
+	{
+		return idNameMap.TryGetValue(eventInfo.Id, out var name) ? name : null;
+	}
+
+	[CanBeNull]
 	public EventInfo GetEventByID([NotNull] string id)
 	{
 		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;

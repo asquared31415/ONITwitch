@@ -13,6 +13,7 @@ public class EventManager
 	// and Invoke every time
 	private readonly Func<string, string, object> registerEventDelegate;
 	private readonly Action<object, object> renameEventDelegate;
+	private readonly Func<object, object> getFriendlyNameDelegate;
 	private readonly Func<string, object> getEventByIdDelegate;
 	private readonly Action<object, Action<string>> addListenerForEventDelegate;
 	private readonly Action<object, Action<object>> removeListenerForEventDelegate;
@@ -36,6 +37,17 @@ public class EventManager
 		);
 		renameEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
 			renameEventInfo,
+			eventManagerInstance,
+			EventInterface.EventInfoType,
+			typeof(string)
+		);
+		var getNameInfo = AccessTools.DeclaredMethod(
+			eventType,
+			"GetFriendlyName",
+			new[] { EventInterface.EventInfoType }
+		);
+		getFriendlyNameDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
+			getNameInfo,
 			eventManagerInstance,
 			EventInterface.EventInfoType,
 			typeof(string)
@@ -98,6 +110,12 @@ public class EventManager
 	public void RenameEvent([NotNull] EventInfo eventInfo, [NotNull] string friendlyName)
 	{
 		renameEventDelegate(eventInfo.EventInfoInstance, friendlyName);
+	}
+
+	[CanBeNull]
+	public string GetFriendlyName([NotNull] EventInfo eventInfo)
+	{
+		return (string) getFriendlyNameDelegate(eventInfo.EventInfoInstance);
 	}
 
 	[CanBeNull]

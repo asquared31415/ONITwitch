@@ -28,4 +28,9 @@ public class EventInfo
 	{
 		return Id != null ? Id.GetHashCode() : 0;
 	}
+
+	public override string ToString()
+	{
+		return EventManager.Instance.GetFriendlyName(this) ?? Id;
+	}
 }

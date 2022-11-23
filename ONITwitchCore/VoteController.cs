@@ -114,10 +114,11 @@ public class VoteController : KMonoBehaviour
 			return false;
 		}
 
+		var eventInst = EventManager.Instance;
 		var voteMsg = new StringBuilder("Starting new vote! ");
 		for (var idx = 0; idx < eventOptions.Count; idx++)
 		{
-			voteMsg.Append($"{idx + 1}: {eventOptions[idx]} ");
+			voteMsg.Append($"{idx + 1}: {eventInst.GetFriendlyName(eventOptions[idx])} ");
 		}
 
 		CurrentVote = new Vote(eventOptions);
@@ -146,7 +147,7 @@ public class VoteController : KMonoBehaviour
 			Debug.Log("No options were voted for");
 			responseText = "No options were voted for";
 		}
-		
+
 		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, responseText);
 
 		CurrentVote = null;

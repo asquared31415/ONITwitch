@@ -382,7 +382,6 @@ public static class DefaultCommands
 
 	public static void ReloadData(Dictionary<string, CommandConfig> userConfig)
 	{
-		Debug.LogWarning("RELOADING DATA");
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
 		var deckInst = TwitchDeckManager.Instance;
