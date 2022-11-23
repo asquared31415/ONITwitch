@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using KSerialization;
+using ONITwitchCore.Config;
 using ONITwitchLib;
 using UnityEngine;
 using DataManager = EventLib.DataManager;

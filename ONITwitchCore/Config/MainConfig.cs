@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using ONITwitchCore.Patches;
 using ONITwitchLib;
 
-namespace ONITwitchCore;
+namespace ONITwitchCore.Config;
 
 public class MainConfig
 {

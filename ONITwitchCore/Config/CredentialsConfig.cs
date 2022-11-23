@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using ONITwitchLib;
 
-namespace ONITwitchCore;
+namespace ONITwitchCore.Config;
 
 public class CredentialsConfig
 {

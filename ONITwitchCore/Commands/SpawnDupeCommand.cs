@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ONITwitchCore.Config;
 using UnityEngine;
 
 namespace ONITwitchCore.Commands;
