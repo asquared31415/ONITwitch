@@ -347,6 +347,9 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandInfo.Namespaced("TileTempUp", "Floor is Lava", new TileTempCommand(), +40.0d, Danger.Medium, 10)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 10)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
