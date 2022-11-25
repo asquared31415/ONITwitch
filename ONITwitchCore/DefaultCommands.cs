@@ -350,6 +350,9 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandInfo.Namespaced("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 10)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 10)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
