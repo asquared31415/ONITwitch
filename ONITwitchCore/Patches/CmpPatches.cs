@@ -62,7 +62,34 @@ public static class CmpPatches
 		[UsedImplicitly]
 		public static void Postfix(GameObject go)
 		{
-			go.AddComponent<FloorTileExt>();
+			go.AddOrGet<FloorTileExt>();
+		}
+	}
+
+	[HarmonyPatch]
+	public static class AllToiletsPatch
+	{
+		[UsedImplicitly]
+		public static IEnumerable<MethodBase> TargetMethods()
+		{
+			yield return AccessTools.Method(
+				typeof(OuthouseConfig),
+				nameof(OuthouseConfig.DoPostConfigureComplete)
+			);
+			yield return AccessTools.Method(
+				typeof(FlushToiletConfig),
+				nameof(FlushToiletConfig.DoPostConfigureComplete)
+			);
+			yield return AccessTools.Method(
+				typeof(WallToiletConfig),
+				nameof(WallToiletConfig.DoPostConfigureComplete)
+			);
+		}
+
+		[UsedImplicitly]
+		public static void Postfix(GameObject go)
+		{
+			go.AddOrGet<ToiletsExt>();
 		}
 	}
 }

@@ -353,6 +353,9 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandInfo.Namespaced("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 10)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 10)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
