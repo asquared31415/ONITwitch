@@ -356,6 +356,66 @@ public static class DefaultCommands
 		RegisterCommand(
 			CommandInfo.Namespaced("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 10)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"RainPrefabGold",
+				"Gold Rain",
+				new RainPrefabCommand(),
+				new Dictionary<string, object> { { "PrefabId", SimHashes.Gold.ToString() }, { "Count", 50.0d } },
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"RainPrefabMorb",
+				"Morbin' Time",
+				new RainPrefabCommand(),
+				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
+				Danger.Small,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"RainPrefabDiamond",
+				"Diamond Rain",
+				new RainPrefabCommand(),
+				new Dictionary<string, object> { { "PrefabId", SimHashes.Diamond.ToString() }, { "Count", 25.0d } },
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"RainPrefabSlickster",
+				"Slickster Rain",
+				new RainPrefabCommand(),
+				new Dictionary<string, object> { { "PrefabId", OilFloaterConfig.ID }, { "Count", 10.0d } },
+				Danger.Small,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"RainPrefabPacu",
+				"Pacu Rain",
+				new RainPrefabCommand(),
+				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
+				Danger.Small,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"RainPrefabBee",
+				"Bee Infestation",
+				new RainPrefabCommand(),
+				new Dictionary<string, object> { { "PrefabId", BeeConfig.ID }, { "Count", 10.0d } },
+				Danger.Medium,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
