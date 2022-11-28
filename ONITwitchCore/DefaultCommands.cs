@@ -521,6 +521,16 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"Uninsulate",
+				"Uninsulate Tiles",
+				new UninsulateCommand(),
+				null,
+				Danger.Extreme,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();

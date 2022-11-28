@@ -92,4 +92,14 @@ public static class CmpPatches
 			go.AddOrGet<ToiletsExt>();
 		}
 	}
+
+	[HarmonyPatch(typeof(InsulationTileConfig), nameof(InsulationTileConfig.DoPostConfigureComplete))]
+	public static class InsulatedTilesPatch
+	{
+		[UsedImplicitly]
+		public static void Postfix(GameObject go)
+		{
+			go.AddOrGet<InsulatedTileExt>();
+		}
+	}
 }
