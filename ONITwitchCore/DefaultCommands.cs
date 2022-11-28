@@ -509,6 +509,18 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"Surprise",
+				"Surprise!!!",
+				new SurpriseCommand(),
+				null,
+				// will only choose a command that is within the expected danger range
+				// TODO: maybe handle this specially and have a "all dangers" option that makes danger ignored?
+				Danger.None,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
@@ -536,7 +548,7 @@ public static class DefaultCommands
 		}
 	}
 
-	private static string NamespaceId(string id)
+	public static string NamespaceId(string id)
 	{
 		return CommandNamespace + id;
 	}

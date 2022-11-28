@@ -68,7 +68,7 @@ public class TwitchDeckManager
 		addListDelegate(castInstances);
 	}
 
-	[NotNull]
+	[CanBeNull]
 	public EventInfo Draw()
 	{
 		var result = drawDelegate();

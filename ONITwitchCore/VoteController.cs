@@ -24,9 +24,6 @@ public class VoteController : KMonoBehaviour
 		VoteDelay,
 	}
 
-	// The maximum number of times to attempt to draw
-	private const int MaxDrawAttempts = 100;
-
 	private TwitchChatConnection connection;
 
 	public VotingState State { get; private set; } = VotingState.NotStarted;
@@ -70,41 +67,22 @@ public class VoteController : KMonoBehaviour
 			return false;
 		}
 
-		var condInst = ConditionsManager.Instance;
-		var dataInst = DataManager.Instance;
-		var dangerInst = DangerManager.Instance;
-
 		var eventOptions = new List<EventInfo>();
-		var attempts = 0;
 		var drawnCount = 0;
 		while (drawnCount < MainConfig.Instance.ConfigData.NumVotes)
 		{
-			var entry = TwitchDeckManager.Instance.Draw();
-			// Don't draw duplicates
-			if (!eventOptions.Contains(entry))
+			var attempt = TwitchDeckManager.Instance.Draw();
+			// if we fail to draw, exit early
+			if (attempt == null)
 			{
-				// no danger assigned or danger within the expected range is okay
-				var danger = dangerInst.GetDanger(entry);
-				if ((danger == null) || ((MainConfig.Instance.ConfigData.MinDanger <= danger.Value) &&
-										 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
-				{
-					var data = dataInst.GetDataForEvent(entry);
-					var condition = condInst.CheckCondition(entry, data);
-					if (condition)
-					{
-						eventOptions.Add(entry);
-						drawnCount += 1;
-					}
-				}
+				break;
 			}
 
-			attempts += 1;
-			if (attempts > MaxDrawAttempts)
+			// Don't add duplicates
+			if (!eventOptions.Contains(attempt))
 			{
-				Debug.LogWarning(
-					$"[Twitch Integration] Reached maximum draw attempts of {MaxDrawAttempts} without drawing {MainConfig.Instance.ConfigData.NumVotes} events!"
-				);
-				break;
+				eventOptions.Add(attempt);
+				drawnCount += 1;
 			}
 		}
 
