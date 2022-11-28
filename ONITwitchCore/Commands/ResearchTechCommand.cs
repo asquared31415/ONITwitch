@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -26,10 +27,8 @@ public class ResearchTechCommand : CommandBase
 			techInstance.Purchased();
 			Game.Instance.Trigger((int) GameHashes.ResearchComplete, tech);
 
-			/*
 			var techName = Strings.Get("STRINGS.RESEARCH.TECHS." + tech.Id.ToUpper() + ".NAME").ToString();
-			ToastUiManager.InstantiateToast("Innovation Nation", $"{techName} has been researched");
-			*/
+			ToastManager.InstantiateToast("Innovation Nation", $"{techName} has been researched");
 		}
 	}
 	

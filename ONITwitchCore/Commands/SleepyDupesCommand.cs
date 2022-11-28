@@ -1,8 +1,10 @@
 using Klei.AI;
 using ONITwitchCore.Content;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
+// TODO: this is EffectCommand but with a different toast, can this be merged?
 public class SleepyDupesCommand : CommandBase
 {
 	public override bool Condition(object data)
@@ -20,6 +22,6 @@ public class SleepyDupesCommand : CommandBase
 			}
 		}
 
-		/*ToastUiManager.InstantiateToast("Sleepy Dupes", "All of your dupes have become extremely exhausted");*/
+		ToastManager.InstantiateToast("Sleepy Dupes", "All of your dupes have become extremely exhausted");
 	}
 }

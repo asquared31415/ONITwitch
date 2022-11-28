@@ -12,6 +12,7 @@ public static class DbPatches
 		[UsedImplicitly]
 		public static void Postfix()
 		{
+			ModAssets.LoadAssets();
 			DefaultCommands.SetupCommands();
 			CustomEffects.SetupEffects();
 		}

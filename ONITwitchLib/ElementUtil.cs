@@ -23,6 +23,7 @@ public static class ElementUtil
 		return (element != null) && DlcManager.IsContentActive(element.dlcId) && !element.disabled;
 	}
 
+	[ContractAnnotation("element:null => false")]
 	public static bool ElementExistsAndEnabled(Element element)
 	{
 		return (element != null) && DlcManager.IsContentActive(element.dlcId) && !element.disabled;

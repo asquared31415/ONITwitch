@@ -1,4 +1,5 @@
 using System.Linq;
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 
 namespace ONITwitchCore.Commands;
@@ -19,6 +20,12 @@ public class FillBedroomCommand : CommandBase
 	public override void Run(object data)
 	{
 		var element = ElementUtil.FindElementByNameFast((string) data);
+		if (!ElementUtil.ElementExistsAndEnabled(element))
+		{
+			Debug.LogWarning($"[Twitch Integration] Unable to spawn element {(string) data}");
+			return;
+		}
+
 		var db = Db.Get();
 		var bedroomType = db.RoomTypes.Bedroom;
 		var barracksType = db.RoomTypes.Barracks;
@@ -42,11 +49,9 @@ public class FillBedroomCommand : CommandBase
 			}
 		}
 
-		/*
-		ToastUiManager.InstantiateToast(
+		ToastManager.InstantiateToast(
 			"Bedrooms Bombed",
 			$"Every bedroom has had {Util.StripTextFormatting(element.name)} created inside it"
 		);
-		*/
 	}
 }

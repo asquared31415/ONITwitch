@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
+using ONITwitchCore;
 using ONITwitchCore.Config;
 
 namespace ONITwitch;

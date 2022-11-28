@@ -1,5 +1,6 @@
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Patches;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -12,5 +13,10 @@ public class PartyTimeCommand : CommandBase
 		partyTime.TimeRemaining = time;
 		partyTime.enabled = true;
 		PartyTimePatch.Enabled = true;
+		
+		ToastManager.InstantiateToast(
+			"Party Time!",
+			"The dupes have decided it's time for a party and made everything rainbow!"
+		);
 	}
 }

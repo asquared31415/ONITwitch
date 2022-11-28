@@ -1,3 +1,4 @@
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 
 namespace ONITwitchCore.Commands;
@@ -47,12 +48,10 @@ public class ElementFloodCommand : CommandBase
 			);
 		}
 
-		/*
-		ToastUiManager.InstantiateToastWithPosTarget(
+		ToastManager.InstantiateToastWithPosTarget(
 			"Flood",
 			$"A flood of {Util.StripTextFormatting(element.name)} has spawned",
 			Grid.CellToPos(nearestCell)
 		);
-		*/
 	}
 }

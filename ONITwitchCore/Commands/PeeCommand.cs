@@ -1,3 +1,5 @@
+using ONITwitchCore.Toasts;
+
 namespace ONITwitchCore.Commands;
 
 public class PeeCommand : CommandBase
@@ -19,5 +21,10 @@ public class PeeCommand : CommandBase
 				provider.AddChore(new PeeChore(identity.gameObject.GetComponent<StateMachineController>()));
 			}
 		}
+
+		ToastManager.InstantiateToast(
+			"Pee Everywhere",
+			"All of your duplicants suddenly had the urge to relieve themselves"
+		);
 	}
 }

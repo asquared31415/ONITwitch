@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitchCore.Config;
+using ONITwitchCore.Toasts;
 using UnityEngine;
 
 namespace ONITwitchCore.Commands;
@@ -67,13 +68,11 @@ public class SpawnDupeCommand : CommandBase
 		var pos = Components.LiveMinionIdentities.Items.GetRandom();
 		minion.transform.SetLocalPosition(pos.transform.position);
 
-		/*
-		ToastUiManager.InstantiateToastWithGoTarget(
+		ToastManager.InstantiateToastWithGoTarget(
 			"Spawning Duplicant",
 			$"{identity.name} has been brought into the world!",
 			minion
 		);
-		*/
 
 		Debug.Log($"[Twitch Integration] Spawned duplicant {identity.name}");
 	}

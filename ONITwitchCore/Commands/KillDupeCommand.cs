@@ -1,5 +1,6 @@
 using System;
 using HarmonyLib;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -21,13 +22,11 @@ public class KillDupeCommand : CommandBase
 			var rand = items.GetRandom();
 			HealthKillDelegate(rand.gameObject.GetComponent<Health>());
 
-			/*
-			ToastUiManager.InstantiateToastWithGoTarget(
+			ToastManager.InstantiateToastWithGoTarget(
 				"Killing Duplicant",
 				$"{rand.name} has been killed :(",
 				rand.gameObject
 			);
-			*/
 
 			Debug.Log($"[Twitch Integration] Killed {rand.name}");
 		}

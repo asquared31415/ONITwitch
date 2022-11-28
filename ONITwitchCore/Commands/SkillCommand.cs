@@ -1,4 +1,5 @@
 using System.Linq;
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -28,11 +29,9 @@ public class SkillCommand : CommandBase
 			}
 		}
 
-		/*
-		ToastUiManager.InstantiateToast(
+		ToastManager.InstantiateToast(
 			"Skilling Spree",
 			"Some duplicants have been inspired and instantly gained a skill point"
 		);
-		*/
 	}
 }

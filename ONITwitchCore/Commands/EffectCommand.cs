@@ -1,4 +1,5 @@
 using Klei.AI;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -13,15 +14,16 @@ public class EffectCommand : CommandBase
 
 	public override void Run(object data)
 	{
-		var minion = Components.LiveMinionIdentities.Items.GetRandom();
-		if (minion != null)
+		var effectId = (string) data;
+		var effect = Db.Get().effects.TryGet(effectId);
+		foreach (var minion in Components.LiveMinionIdentities.Items)
 		{
 			if (minion.TryGetComponent<Effects>(out var effects))
 			{
-				var effectId = (string) data;
-				var effect = Db.Get().effects.TryGet(effectId);
 				effects.Add(effect, true);
 			}
 		}
+
+		ToastManager.InstantiateToast("Effect Applied", $"All dupes have had the {effect.Name} effect applied");
 	}
 }

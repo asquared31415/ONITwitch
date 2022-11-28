@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitchCore.Cmps;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -41,9 +42,14 @@ public class RainPrefabCommand : CommandBase
 				break;
 			}
 		}
-		
+
 		var rainPrefab = Game.Instance.gameObject.AddOrGet<RainPrefab>();
 		rainPrefab.Initialize(TimePerItem, count, prefabs);
+
+		ToastManager.InstantiateToast(
+			"Rain",
+			$"A rain of {Util.StripTextFormatting(Assets.GetPrefab(prefabs.First()).GetProperName())} is starting!"
+		);
 	}
 
 

@@ -1,4 +1,5 @@
 using System.Linq;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -20,21 +21,19 @@ public class StressCommand : CommandBase
 			s.ApplyDelta((float) stressPercent * 100);
 		}
 
-		/*
 		if (stressPercent >= 0)
 		{
-			ToastUiManager.InstantiateToast(
+			ToastManager.InstantiateToast(
 				"Stress Wave",
 				"All duplicants have become suddenly stressed about life in the colony"
 			);
 		}
 		else
 		{
-			ToastUiManager.InstantiateToast(
+			ToastManager.InstantiateToast(
 				"Calming Wave",
 				"All duplicants have been calmed about the stressful situation which is life in an asteroid"
 			);
 		}
-		*/
 	}
 }

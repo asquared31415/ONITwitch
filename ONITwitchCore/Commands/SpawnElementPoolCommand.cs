@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -105,12 +106,10 @@ public class SpawnElementPoolCommand : CommandBase
 			}
 		}
 
-		/*
-		ToastUiManager.InstantiateToastWithPosTarget(
+		ToastManager.InstantiateToastWithPosTarget(
 			"Element Created",
 			$"{Util.StripTextFormatting(element.name)} was placed!",
 			Grid.CellToPos(cell)
 		);
-		*/
 	}
 }

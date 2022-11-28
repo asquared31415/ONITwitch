@@ -1,5 +1,6 @@
 using System.Linq;
 using ONITwitchCore.Cmps;
+using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
@@ -24,11 +25,9 @@ public class PoisonDupesCommand : CommandBase
 			dot.enabled = true;
 		}
 
-		/*
-		ToastUiManager.InstantiateToast(
+		ToastManager.InstantiateToast(
 			"Poisoned Dupes",
 			"All duplicants have been poisoned and will take some damage over time"
 		);
-		*/
 	}
 }

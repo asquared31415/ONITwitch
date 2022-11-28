@@ -12,4 +12,7 @@
         <ProjectReference Include="..\EventLib\EventLib.csproj" />
         <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
     </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\toast" />
+    </ItemGroup>
 </Project>

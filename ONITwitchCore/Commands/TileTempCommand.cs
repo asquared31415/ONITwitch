@@ -1,4 +1,5 @@
 using ONITwitchCore.Content;
+using ONITwitchCore.Toasts;
 using UnityEngine;
 
 namespace ONITwitchCore.Commands;
@@ -28,14 +29,13 @@ public class TileTempCommand : CommandBase
 			);
 		}
 
-		/*
-		if (TempMod > 0)
+		if (tempMod > 0)
 		{
-			ToastUiManager.InstantiateToast("The Floor is Lava", "All non-natural tiles have been heated");
+			ToastManager.InstantiateToast("The Floor is Lava", "All non-natural tiles have been heated");
 		}
 		else
 		{
-			ToastUiManager.InstantiateToast("Icy Tiles", "All non-natural tiles have been cooled");
-		}*/
+			ToastManager.InstantiateToast("Icy Tiles", "All non-natural tiles have been cooled");
+		}
 	}
 }

@@ -1,3 +1,4 @@
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -29,5 +30,7 @@ public class IceAgeCommand : CommandBase
 				SimMessages.ModifyEnergy(cell, dQ, 9_999f, SimMessages.EnergySourceID.DebugCool);
 			}
 		}
+		
+		ToastManager.InstantiateToast("Ice Age", "All liquids in the game have frozen");
 	}
 }

@@ -6,7 +6,7 @@ public static class CustomEffects
 {
 	public static readonly Effect AthleticsUpEffect = new(
 		"ONITwitch.AttributeAthleticsUp",
-		"TODO",
+		"Athletics Up",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -16,7 +16,7 @@ public static class CustomEffects
 
 	public static readonly Effect AthleticsDownEffect = new(
 		"ONITwitch.AttributeAthleticsDown",
-		"TODO",
+		"Athletics Down",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -26,7 +26,7 @@ public static class CustomEffects
 
 	public static readonly Effect ConstructionUpEffect = new(
 		"ONITwitch.AttributeConstructionUp",
-		"TODO",
+		"Construction Up",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -36,7 +36,7 @@ public static class CustomEffects
 
 	public static readonly Effect ConstructionDownEffect = new(
 		"ONITwitch.AttributeConstructionDown",
-		"TODO",
+		"Construction Down",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -46,7 +46,7 @@ public static class CustomEffects
 
 	public static readonly Effect ExcavationUpEffect = new(
 		"ONITwitch.AttributeExcavationUp",
-		"TODO",
+		"Excavation Up",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -56,7 +56,7 @@ public static class CustomEffects
 
 	public static readonly Effect ExcavationDownEffect = new(
 		"ONITwitch.AttributeExcavationDown",
-		"TODO",
+		"Excavation Down",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -66,7 +66,7 @@ public static class CustomEffects
 
 	public static readonly Effect StrengthUpEffect = new(
 		"ONITwitch.AttributeStrengthUp",
-		"TODO",
+		"Strength Up",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
@@ -76,7 +76,7 @@ public static class CustomEffects
 
 	public static readonly Effect StrengthDownEffect = new(
 		"ONITwitch.AttributeStrengthDown",
-		"TODO",
+		"Strength Down",
 		"TODO",
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,

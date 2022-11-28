@@ -1,4 +1,6 @@
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
+using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
@@ -34,12 +36,10 @@ public class ReduceOxygenCommand : CommandBase
 				}
 			}
 		}
-		
-		/*
-		ToastUiManager.InstantiateToast(
+
+		ToastManager.InstantiateToast(
 			"Oxygen Reduced",
-			$"Breathable cells have been reduced by {Mathf.RoundToInt((1 - TargetPercent) * 100)}% across the game"
+			$"Breathable cells have been reduced by {Mathf.RoundToInt((float) ((1 - targetFraction) * 100))}% across the game"
 		);
-		*/
 	}
 }

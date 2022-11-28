@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ONITwitchCore.Content;
+using ONITwitchCore.Toasts;
 using UnityEngine;
 
 namespace ONITwitchCore.Commands;
@@ -52,6 +53,7 @@ public class UninsulateCommand : CommandBase
 							{
 								temp = 20f + Constants.CELSIUS2KELVIN;
 							}
+
 							baseTile.Build(
 								cell,
 								Orientation.Neutral,
@@ -67,11 +69,9 @@ public class UninsulateCommand : CommandBase
 			}
 		}
 
-		/*
-		ToastUiManager.InstantiateToast(
+		ToastManager.InstantiateToast(
 			"Tiles Uninsulated",
 			"Several insulated tiles have been replaced with their not insulated counterparts"
 		);
-		*/
 	}
 }

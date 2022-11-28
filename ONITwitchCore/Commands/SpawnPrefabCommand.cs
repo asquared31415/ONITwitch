@@ -1,3 +1,4 @@
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 
 namespace ONITwitchCore.Commands;
@@ -29,13 +30,11 @@ public class SpawnPrefabCommand : CommandBase
 		if (go != null)
 		{
 			go.SetActive(true);
-			/*
-			ToastUiManager.InstantiateToastWithGoTarget(
+			ToastManager.InstantiateToastWithGoTarget(
 				"Spawning Object",
 				$"A new {Util.StripTextFormatting(prefab.GetProperName())} has been created",
 				go
 			);
-			*/
 		}
 		else
 		{

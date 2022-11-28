@@ -1,3 +1,4 @@
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 
 namespace ONITwitchCore.Commands;
@@ -28,13 +29,11 @@ public class SnazzySuitCommand : CommandBase
 			var randomFacade = Db.Get().EquippableFacades.resources.GetRandom();
 			EquippableFacade.AddFacadeToEquippable(go.GetComponent<Equippable>(), randomFacade.Id);
 
-			/*
-			ToastUiManager.InstantiateToastWithGoTarget(
+			ToastManager.InstantiateToastWithGoTarget(
 				"Spawning Object",
 				$"A new {Util.StripTextFormatting(prefab.GetProperName())} has been created",
 				go
 			);
-			*/
 		}
 		else
 		{

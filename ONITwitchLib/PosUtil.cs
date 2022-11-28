@@ -111,4 +111,27 @@ public static class PosUtil
 
 		return Vector3.zero;
 	}
+
+	public static Vector3 EaseOutLerp(Vector3 a, Vector3 b, float x)
+	{
+		return Vector3.LerpUnclamped(a, b, EaseOutBack(x));
+	}
+
+	public static Vector2 EaseOutLerp(Vector2 a, Vector2 b, float x)
+	{
+		return Vector2.LerpUnclamped(a, b, EaseOutBack(x));
+	}
+
+	public static float EaseOutLerp(float a, float b, float x)
+	{
+		return Mathf.LerpUnclamped(a, b, EaseOutBack(x));
+	}
+
+	public static float EaseOutBack(float x)
+	{
+		const float c1 = 0.8f;
+		const float c2 = c1 + 1;
+
+		return 1 + c2 * Mathf.Pow(x - 1, 3) + c1 * Mathf.Pow(x - 1, 2);
+	}
 }

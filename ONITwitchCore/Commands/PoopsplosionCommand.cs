@@ -1,5 +1,6 @@
 using System.Linq;
 using ONITwitchCore.Content;
+using ONITwitchCore.Toasts;
 using ONITwitchLib;
 
 namespace ONITwitchCore.Commands;
@@ -45,6 +46,6 @@ public class PoopsplosionCommand : CommandBase
 			}
 		}
 
-		/*ToastUiManager.InstantiateToast("Poop Explosion", "All toilets have exploded with poop");*/
+		ToastManager.InstantiateToast("Poop Explosion", "All toilets have exploded with poop");
 	}
 }
