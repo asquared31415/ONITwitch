@@ -449,6 +449,46 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"SpawnVacillatorCharge",
+				"Spawn Vacillator Charge",
+				new SpawnPrefabCommand(),
+				GeneShufflerRechargeConfig.ID,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"SpawnAtmoSuit",
+				"Spawn Atmo Suit",
+				new SpawnPrefabCommand(),
+				AtmoSuitConfig.ID,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"SpawnCrab",
+				"Spawn Pokeshell",
+				new SpawnPrefabCommand(),
+				CrabConfig.ID,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"SpawnMooComet",
+				"Spawn Gassy Moo Comet",
+				new SpawnPrefabCommand(),
+				GassyMooCometConfig.ID,
+				Danger.None,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
