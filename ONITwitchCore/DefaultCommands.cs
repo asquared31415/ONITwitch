@@ -489,6 +489,26 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"StressAdd",
+				"Add Stress",
+				new StressCommand(),
+				+0.75d,
+				Danger.Medium,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"StressRemove",
+				"Remove Stress",
+				new StressCommand(),
+				-0.75d,
+				Danger.None,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
