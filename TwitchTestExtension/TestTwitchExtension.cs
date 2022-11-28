@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
