@@ -2,6 +2,7 @@ using System.Linq;
 using ONITwitchCore.Content;
 using ONITwitchCore.Toasts;
 using ONITwitchLib;
+using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 

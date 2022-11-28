@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Config;
 using UnityEngine;
@@ -5,11 +6,12 @@ using UnityEngine.UI;
 
 namespace ONITwitchCore.Toasts;
 
-public class ToastManager
+public static class ToastManager
 {
 	private static GameObject canvas;
 
-	private static GameObject InstantiateToastCommon(string title, string body)
+	[CanBeNull]
+	private static GameObject InstantiateToastCommon([CanBeNull] string title, [CanBeNull] string body)
 	{
 		if (MainConfig.Instance.ConfigData.DisableToasts)
 		{
@@ -45,14 +47,20 @@ public class ToastManager
 		return toast;
 	}
 
-	public static GameObject InstantiateToast(string title, string body)
+	[CanBeNull]
+	public static GameObject InstantiateToast([CanBeNull] string title, [CanBeNull] string body)
 	{
 		var toast = InstantiateToastCommon(title, body);
 		toast.SetActive(true);
 		return toast;
 	}
 
-	public static GameObject InstantiateToastWithPosTarget(string title, string body, Vector3 target)
+	[CanBeNull]
+	public static GameObject InstantiateToastWithPosTarget(
+		[CanBeNull] string title,
+		[CanBeNull] string body,
+		Vector3 target
+	)
 	{
 		var go = InstantiateToastCommon(title, body);
 		var toastCmp = go.GetComponent<Toast>();
@@ -64,7 +72,12 @@ public class ToastManager
 		return go;
 	}
 
-	public static GameObject InstantiateToastWithGoTarget(string title, string body, GameObject target)
+	[CanBeNull]
+	public static GameObject InstantiateToastWithGoTarget(
+		[CanBeNull] string title,
+		[CanBeNull] string body,
+		GameObject target
+	)
 	{
 		var go = InstantiateToastCommon(title, body);
 		var toastCmp = go.GetComponent<Toast>();

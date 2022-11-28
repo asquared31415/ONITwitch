@@ -3,6 +3,7 @@ using System.Linq;
 using ONITwitchCore.Toasts;
 using ONITwitchLib;
 using UnityEngine;
+using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
