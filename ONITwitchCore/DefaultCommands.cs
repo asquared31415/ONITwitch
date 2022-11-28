@@ -439,6 +439,16 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"SnazzySuit",
+				"Spawn Snazzy Suit",
+				new SnazzySuitCommand(),
+				null,
+				Danger.None,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
