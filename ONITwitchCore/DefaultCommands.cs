@@ -531,6 +531,16 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"ResearchTech",
+				"Research Technology",
+				new ResearchTechCommand(),
+				null,
+				Danger.None,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
