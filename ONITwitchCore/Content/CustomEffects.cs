@@ -84,10 +84,21 @@ public static class CustomEffects
 		true
 	);
 
+	public static readonly Effect SleepyEffect = new(
+		"ONITwitch.SleepyDupesEffect",
+		"Incredibly Sleepy",
+		"TODO",
+		0.5f * Constants.SECONDS_PER_CYCLE,
+		true,
+		true,
+		true
+	);
+
 	public static void SetupEffects()
 	{
 		var effects = Db.Get().effects;
 		var attributes = Db.Get().Attributes;
+		var amounts = Db.Get().Amounts;
 		AthleticsUpEffect.Add(new AttributeModifier(attributes.Athletics.Id, 5));
 		effects.Add(AthleticsUpEffect);
 		AthleticsDownEffect.Add(new AttributeModifier(attributes.Athletics.Id, -5));
@@ -104,5 +115,7 @@ public static class CustomEffects
 		effects.Add(StrengthUpEffect);
 		StrengthDownEffect.Add(new AttributeModifier(attributes.Strength.Id, -5));
 		effects.Add(StrengthDownEffect);
+		SleepyEffect.Add(new AttributeModifier(amounts.Stamina.deltaAttribute.Id, -10f, "Incredibly Exhausted"));
+		effects.Add(SleepyEffect);
 	}
 }
