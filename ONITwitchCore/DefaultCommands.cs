@@ -426,6 +426,9 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced("SkillPoints", "Skilling Spree", new SkillCommand(), 0.33d, Danger.None, 10)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
