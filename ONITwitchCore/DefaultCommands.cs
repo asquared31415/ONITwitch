@@ -416,6 +416,16 @@ public static class DefaultCommands
 				10
 			)
 		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"ReduceOxygen",
+				"Un-include Oxygen",
+				new ReduceOxygenCommand(),
+				0.20d,
+				Danger.High,
+				10
+			)
+		);
 
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
