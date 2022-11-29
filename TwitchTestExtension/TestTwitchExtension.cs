@@ -1,20 +1,17 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
 
 namespace TwitchTestExtension;
 
+[UsedImplicitly]
 public class TestTwitchExtension : UserMod2
 {
-}
-
-[HarmonyPatch(typeof(Db), nameof(Db.Initialize))]
-public static class Db_Init_Patch
-{
-	[UsedImplicitly]
-	public static void Postfix()
+	public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
 	{
+		base.OnAllModsLoaded(harmony, mods);
 		if (!TwitchModInfo.TwitchIsPresent)
 		{
 			Debug.LogWarning("Twitch not enabled");
@@ -39,20 +36,11 @@ public static class Db_Init_Patch
 
 		dataInst.SetDataForEvent(extEvent, new ExtData(true));
 
-		/*
-		// Modify event A to have an extra entry in its data
-		var eventA = eventInst.GetEventById("ONITwitch.eventA")!;
-		var eventAData = (List<string>) dataInst.GetDataForEvent(eventA);
-		eventAData.Add("Ext data!");
-		*/
-		
-		// add and check conditions
+		// add condition
 		conditionsInst.AddCondition(
 			extEvent,
-			data => data is ExtData
+			data => data is ExtData { Thing: true }
 		);
-		var eventEnabled = conditionsInst.CheckCondition(extEvent, dataInst.GetDataForEvent(extEvent));
-		Debug.Log($"is ext event condition pass: {eventEnabled}");
 
 		// add 1 copy and then 3 more copies to the deck
 		deckInst.AddToDeck(extEvent);
@@ -60,13 +48,6 @@ public static class Db_Init_Patch
 
 		// set the danger to none
 		dangerInst.SetDanger(extEvent, Danger.None);
-
-		/*
-		// make sure that default event B danger is deadly
-		var eventB = eventInst.GetEventById("ONITwitch.eventB")!;
-		var eventBDanger = dangerInst.GetDanger(eventB);
-		Debug.Log(eventBDanger == Danger.Deadly);
-		*/
 	}
 }
 
