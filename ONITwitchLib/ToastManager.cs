@@ -25,12 +25,25 @@ public static class ToastManager
 			null
 		);
 
+	/// <summary>
+	/// Creates a toast with a tile and a body.
+	/// </summary>
+	/// <param name="title">The title for the toast</param>
+	/// <param name="body">The body for the toast</param>
+	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
 	[CanBeNull]
 	public static GameObject InstantiateToast([CanBeNull] string title, [CanBeNull] string body)
 	{
 		return InstantiateToastDelegate(title, body);
 	}
 
+	/// <summary>
+	/// Creates a toast with a tile and a body, that targets a position when clicked.
+	/// </summary>
+	/// <param name="title">The title for the toast</param>
+	/// <param name="body">The body for the toast</param>
+	/// <param name="pos">The position to target on click</param>
+	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
 	[CanBeNull]
 	public static GameObject InstantiateToastWithPosTarget(
 		[CanBeNull] string title,
@@ -41,6 +54,13 @@ public static class ToastManager
 		return InstantiateToastWithPosDelegate(title, body, pos);
 	}
 
+	/// <summary>
+	/// Creates a toast with a tile and a body, that selects a <see cref="GameObject"/> when clicked.
+	/// </summary>
+	/// <param name="title">The title for the toast</param>
+	/// <param name="body">The body for the toast</param>
+	/// <param name="target">The <see cref="GameObject"/> to target on click</param>
+	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
 	[CanBeNull]
 	public static GameObject InstantiateToastWithGoTarget(
 		[CanBeNull] string title,

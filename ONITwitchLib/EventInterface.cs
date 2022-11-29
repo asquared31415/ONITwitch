@@ -4,6 +4,9 @@ using JetBrains.Annotations;
 
 namespace ONITwitchLib;
 
+/// <summary>
+/// The main interface to the Twitch mod.
+/// </summary>
 public static class EventInterface
 {
 	private const string EventManagerTypeName = "EventLib.EventManager, ONITwitch";

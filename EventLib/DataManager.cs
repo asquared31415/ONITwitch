@@ -17,11 +17,21 @@ public class DataManager
 		}
 	}
 
+	/// <summary>
+	/// Sets the data for an event.
+	/// </summary>
+	/// <param name="info">The <see cref="EventInfo"/> for the event to modify</param>
+	/// <param name="data">The new data for the event</param>
 	public void SetDataForEvent([NotNull] EventInfo info, object data)
 	{
 		storedData[info] = data;
 	}
 
+	/// <summary>
+	/// Gets the data for an event.
+	/// </summary>
+	/// <param name="info">The <see cref="EventInfo"/> for the event to get data for</param>
+	/// <returns>The data for the event, if it exists, or <c>null</c> otherwise.</returns>
 	[CanBeNull]
 	public object GetDataForEvent([NotNull] EventInfo info)
 	{

@@ -8,6 +8,9 @@
     <PropertyGroup>
         <IsLib>true</IsLib>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\net48\ONITwitchCore.xml</DocumentationFile>
+    </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\EventLib\EventLib.csproj" />
         <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />

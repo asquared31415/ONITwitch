@@ -4,6 +4,9 @@ using JetBrains.Annotations;
 
 namespace ONITwitchLib;
 
+/// <summary>
+/// Various information about the Twitch mod, primarily for integrations.
+/// </summary>
 public static class TwitchModInfo
 {
 	// suboptimal, but required for save compat, might be able to fix to "ONITwitch." later
@@ -26,6 +29,7 @@ public static class TwitchModInfo
 	public static Type MainTwitchModType => mainTwitchType ??= Type.GetType(TwitchTypeName);
 
 	/// <summary>
+	/// The mod folder containing the Twitch mod dll.
 	/// Only valid if the Twitch mod is active.
 	/// </summary>
 	public static readonly string MainModFolder =

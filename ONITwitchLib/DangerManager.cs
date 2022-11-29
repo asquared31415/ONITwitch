@@ -44,11 +44,22 @@ public class DangerManager
 		);
 	}
 
+	/// <summary>
+	/// Sets the danger for an event.
+	/// </summary>
+	/// <param name="eventInfo">The <see cref="EventInfo"/> to set the danger for</param>
+	/// <param name="danger">The new <see cref="Danger"/> for the event</param>
 	public void SetDanger([NotNull] EventInfo eventInfo, Danger danger)
 	{
 		setDangerDelegate(eventInfo.EventInfoInstance, danger);
 	}
 
+	/// <summary>
+	/// Gets the danger for an event.
+	/// </summary>
+	/// <param name="eventInfo">The <see cref="EventInfo"/> to get the danger of</param>
+	/// <returns>The <see cref="Danger"/> of the event, if it exists, otherwise <c>null</c></returns>
+	[CanBeNull]
 	public Danger? GetDanger([NotNull] EventInfo eventInfo)
 	{
 		return (Danger?) getDangerDelegate(eventInfo.EventInfoInstance);

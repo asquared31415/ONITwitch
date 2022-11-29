@@ -46,11 +46,22 @@ public class ConditionsManager
 		);
 	}
 
+	/// <summary>
+	/// Adds a condition for the specified event.
+	/// </summary>
+	/// <param name="eventInfo">The <see cref="EventInfo"/> of the event to add a condition to</param>
+	/// <param name="condition">The condition to be run to determine if the event is active</param>
 	public void AddCondition([NotNull] EventInfo eventInfo, [NotNull] Func<object, bool> condition)
 	{
 		addConditionDelegate(eventInfo.EventInfoInstance, condition);
 	}
 
+	/// <summary>
+	/// Runs the conditions for an event to determine if the event is active
+	/// </summary>
+	/// <param name="eventInfo">The <see cref="EventInfo"/> for the event to check</param>
+	/// <param name="data">The data to pass to each condition</param>
+	/// <returns><c>true</c> if no conditions exist or if all conditions passed, <c>false</c> if any condition failed.</returns>
 	public bool CheckCondition([NotNull] EventInfo eventInfo, object data)
 	{
 		return (bool) checkConditionDelegate(eventInfo.EventInfoInstance, data);

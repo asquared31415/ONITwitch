@@ -47,31 +47,61 @@ public static class ToastManager
 		return toast;
 	}
 
+	/// <summary>
+	/// Creates a toast with a tile and a body.
+	/// </summary>
+	/// <param name="title">The title for the toast</param>
+	/// <param name="body">The body for the toast</param>
+	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
 	[CanBeNull]
 	public static GameObject InstantiateToast([CanBeNull] string title, [CanBeNull] string body)
 	{
-		var toast = InstantiateToastCommon(title, body);
-		toast.SetActive(true);
-		return toast;
-	}
-
-	[CanBeNull]
-	public static GameObject InstantiateToastWithPosTarget(
-		[CanBeNull] string title,
-		[CanBeNull] string body,
-		Vector3 target
-	)
-	{
 		var go = InstantiateToastCommon(title, body);
-		var toastCmp = go.GetComponent<Toast>();
-
-		toastCmp.Focus = Toast.FocusKind.Position;
-		toastCmp.FocusPos = target;
+		if (go == null)
+		{
+			return null;
+		}
 
 		go.SetActive(true);
 		return go;
 	}
 
+	/// <summary>
+	/// Creates a toast with a tile and a body, that targets a position when clicked.
+	/// </summary>
+	/// <param name="title">The title for the toast</param>
+	/// <param name="body">The body for the toast</param>
+	/// <param name="pos">The position to target on click</param>
+	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
+	[CanBeNull]
+	public static GameObject InstantiateToastWithPosTarget(
+		[CanBeNull] string title,
+		[CanBeNull] string body,
+		Vector3 pos
+	)
+	{
+		var go = InstantiateToastCommon(title, body);
+		if (go == null)
+		{
+			return null;
+		}
+
+		var toastCmp = go.GetComponent<Toast>();
+
+		toastCmp.Focus = Toast.FocusKind.Position;
+		toastCmp.FocusPos = pos;
+
+		go.SetActive(true);
+		return go;
+	}
+
+	/// <summary>
+	/// Creates a toast with a tile and a body, that selects a <see cref="GameObject"/> when clicked.
+	/// </summary>
+	/// <param name="title">The title for the toast</param>
+	/// <param name="body">The body for the toast</param>
+	/// <param name="target">The <see cref="GameObject"/> to target on click</param>
+	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
 	[CanBeNull]
 	public static GameObject InstantiateToastWithGoTarget(
 		[CanBeNull] string title,
@@ -80,6 +110,11 @@ public static class ToastManager
 	)
 	{
 		var go = InstantiateToastCommon(title, body);
+		if (go == null)
+		{
+			return null;
+		}
+
 		var toastCmp = go.GetComponent<Toast>();
 
 		toastCmp.Focus = Toast.FocusKind.Object;
