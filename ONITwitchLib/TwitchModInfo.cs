@@ -6,6 +6,9 @@ namespace ONITwitchLib;
 
 public static class TwitchModInfo
 {
+	// suboptimal, but required for save compat, might be able to fix to "ONITwitch." later
+	public const string ModPrefix = "TI.";
+	
 	private const string TwitchTypeName = "ONITwitch.OniTwitchMod, ONITwitch";
 	private static Type mainTwitchType;
 	
