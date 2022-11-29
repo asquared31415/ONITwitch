@@ -2,6 +2,7 @@
 using ONITwitchCore.Commands;
 using ONITwitchCore.Config;
 using ONITwitchCore.Content;
+using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
 using EventManager = EventLib.EventManager;
@@ -445,6 +446,16 @@ public static class DefaultCommands
 				"Spawn Snazzy Suit",
 				new SnazzySuitCommand(),
 				null,
+				Danger.None,
+				10
+			)
+		);
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"SpawnGlitterPuft",
+				"Spawn Glitter Puft",
+				new SpawnPrefabCommand(),
+				GlitterPuftConfig.Id,
 				Danger.None,
 				10
 			)
