@@ -11,6 +11,7 @@ using UnityEngine;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
 using EventManager = EventLib.EventManager;
+using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore;
 
@@ -104,6 +105,17 @@ public class VoteController : KMonoBehaviour
 
 		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, voteMsg.ToString());
 
+		if (MainConfig.Instance.ConfigData.ShowVoteStartToasts)
+		{
+			var toastMsg = new StringBuilder();
+			for (var idx = 0; idx < eventOptions.Count; idx++)
+			{
+				toastMsg.Append($"{idx + 1}: {eventInst.GetFriendlyName(eventOptions[idx])}\n");
+			}
+
+			ToastManager.InstantiateToast("Starting Vote", toastMsg.ToString());
+		}
+
 		VoteTimeRemaining = MainConfig.Instance.ConfigData.VoteTime;
 		State = VotingState.VoteInProgress;
 
@@ -122,7 +134,7 @@ public class VoteController : KMonoBehaviour
 		}
 		else
 		{
-			// TODO: toast
+			ToastManager.InstantiateToast("Vote Complete", "No options were voted for");
 			Debug.Log("No options were voted for");
 			responseText = "No options were voted for";
 		}
