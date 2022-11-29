@@ -9,3 +9,6 @@ riderModule.iml
 
 Directory.Build.props.user
 ONITwitch.sln.DotSettings.user
+
+# rust target folder
+target/
