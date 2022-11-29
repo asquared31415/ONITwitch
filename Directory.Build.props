@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Condition=" Exists('Directory.Build.props.user') " Project="Directory.Build.props.user" />
     <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
+        <TargetFramework>net471</TargetFramework>
         <LangVersion>preview</LangVersion>
         <OutputType>Library</OutputType>
     </PropertyGroup>

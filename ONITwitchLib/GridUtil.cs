@@ -149,7 +149,7 @@ public static class GridUtil
 		var result = new HashSet<int>();
 
 		const int cellsDefaultCapacity = 64;
-		var visitedCells = new HashSet<int>(cellsDefaultCapacity);
+		var visitedCells = new HashSet<int>();
 		var toVisit = new Queue<int>(cellsDefaultCapacity);
 		toVisit.Enqueue(startCell);
 
