@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KSerialization;
+using ONITwitchCore.Integration.DecorPackA;
 using ONITwitchLib;
 using TUNING;
 using UnityEngine;
@@ -14,7 +15,9 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 {
 	// group of the *trackers* not of the pufts
 	public readonly List<GameObject> PuftGroup = new();
-	public const float BaseFrequency = 1f / 10f;
+
+	// 7s from Aki's Decor Pack I glitter puft lamp
+	public const float BaseFrequency = 1f / 7f;
 
 	[Serialize] [SerializeField] private float t;
 
@@ -102,16 +105,29 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 			var selfCell = Grid.PosToCell(gameObject);
 			foreach (var otherPuft in PuftGroup.Select(otherTracker => otherTracker.transform.parent))
 			{
-				if ((otherPuft != null) && otherPuft.TryGetComponent<GlitterPuft>(out var otherGlitter))
+				if ((otherPuft != null) && Grid.VisibilityTest(selfCell, Grid.PosToCell(otherPuft.gameObject)))
 				{
-					if (Grid.VisibilityTest(selfCell, Grid.PosToCell(otherPuft.gameObject)))
+					float? otherVal = null;
+					if (otherPuft.TryGetComponent<GlitterPuft>(out var otherGlitter))
 					{
-						sumPhaseDiffs += MathUtils.ShortestDistanceModuloOne(prevT, otherGlitter.prevT);
+						otherVal = otherGlitter.prevT;
+					}
+					else if (otherPuft.TryGetComponent<GlitterMoodLampAccessor>(out var glitterMoodLampAccessor))
+					{
+						if (glitterMoodLampAccessor.IsActiveGlitterLamp())
+						{
+							otherVal = glitterMoodLampAccessor.GetFractionElapsed();
+						}
+					}
+
+					if (otherVal.HasValue)
+					{
+						sumPhaseDiffs += MathUtils.ShortestDistanceModuloOne(prevT, otherVal.Value);
 					}
 				}
 			}
 
-			const float phaseDiffAdjustmentMul = 0.05f;
+			const float phaseDiffAdjustmentMul = 0.075f;
 
 			// Targeting a frequency based off the distance to other pufts lets them all come together
 			// The multiplier is tuning, higher values cause larger changes, but may cause instability or overshooting

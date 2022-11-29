@@ -1,4 +1,5 @@
 using KSerialization;
+using ONITwitchCore.Integration.DecorPackA;
 using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
@@ -36,26 +37,43 @@ public class GlitterPuftTracker : KMonoBehaviour
 		thisPuft = go.transform.parent.GetComponent<GlitterPuft>();
 	}
 
+	// track other glitter pufts or mood lamps
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if ((other == collider2D) || !other.transform.parent.TryGetComponent<GlitterPuft>(out _))
+		// if this is not a puft, don't try anything, it's just a marker
+		if (thisPuft == null)
 		{
 			return;
 		}
 
-		thisPuft.PuftGroup.Add(other.gameObject);
+		if (other != collider2D)
+		{
+			if ((other.transform.parent.GetComponent<GlitterPuft>() != null) ||
+				(other.transform.parent.GetComponent<GlitterMoodLampAccessor>() != null))
+			{
+				thisPuft.PuftGroup.Add(other.gameObject);
+			}
+		}
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if ((other == collider2D) || !other.transform.parent.TryGetComponent<GlitterPuft>(out _))
+		// if this is not a puft, don't try anything, it's just a marker
+		if (thisPuft == null)
 		{
 			return;
 		}
 
-		if (!thisPuft.PuftGroup.Remove(other.gameObject))
+		if (other != collider2D)
 		{
-			Debug.LogWarning("[Twitch Integration] Glitter Puft left collider without entering");
+			if ((other.transform.parent.GetComponent<GlitterPuft>() != null) ||
+				(other.transform.parent.GetComponent<GlitterMoodLampAccessor>() != null))
+			{
+				if (!thisPuft.PuftGroup.Remove(other.gameObject))
+				{
+					Debug.LogWarning("[Twitch Integration] Glitter Puft left collider without entering");
+				}
+			}
 		}
 	}
 }
