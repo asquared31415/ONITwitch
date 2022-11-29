@@ -13,7 +13,7 @@ public static class ToastManager
 	[CanBeNull]
 	private static GameObject InstantiateToastCommon([CanBeNull] string title, [CanBeNull] string body)
 	{
-		if (MainConfig.Instance.ConfigData.DisableToasts)
+		if (!MainConfig.Instance.ConfigData.ShowToasts)
 		{
 			return null;
 		}

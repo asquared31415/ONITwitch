@@ -62,12 +62,21 @@ public class MainConfig
 		{
 			var configText = File.ReadAllText(TwitchModInfo.ConfigPath);
 			var config = JsonConvert.DeserializeObject<ConfigData>(configText);
+
+			// The old data has been removed and the new fields are the default for the *type*
+			if (configText.Contains("DisableToasts"))
+			{
+				config.ShowToasts = true;
+				config.ShowVoteStartToasts = true;
+				WriteConfig(config);
+			}
+
 			return config;
 		}
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{
 			var config = new ConfigData();
-			File.WriteAllText(TwitchModInfo.ConfigPath, JsonConvert.SerializeObject(config, Formatting.Indented));
+			WriteConfig(config);
 			return config;
 		}
 		catch (Exception e)
@@ -76,6 +85,11 @@ public class MainConfig
 		}
 
 		return new ConfigData();
+	}
+
+	private static void WriteConfig(ConfigData config)
+	{
+		File.WriteAllText(TwitchModInfo.ConfigPath, JsonConvert.SerializeObject(config, Formatting.Indented));
 	}
 }
 
@@ -88,8 +102,8 @@ public record struct ConfigData(
 	Danger MaxDanger,
 	string VotesPath,
 	string VoteHeader,
-	bool DisableToasts,
-	bool DisableVoteStartToasts,
+	bool ShowToasts,
+	bool ShowVoteStartToasts,
 	bool UseTwitchNameColor
 )
 {
@@ -102,7 +116,7 @@ public record struct ConfigData(
 		Danger.High,
 		"votes.txt",
 		"Current Vote",
-		false,
+		true,
 		true,
 		true
 	)
