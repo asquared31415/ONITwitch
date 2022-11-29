@@ -18,6 +18,9 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 
 	[Serialize] [SerializeField] private float t;
 
+	// the t value at the start of the update, used for syncing
+	private float prevT;
+
 #pragma warning disable 649
 	[MyCmpGet] private KBatchedAnimController animController;
 	[MyCmpGet] private Light2D light;
@@ -83,6 +86,7 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 			t = Random.value;
 		}
 
+		prevT = t;
 		SetColorFromTime(t);
 	}
 
@@ -102,12 +106,10 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 				{
 					if (Grid.VisibilityTest(selfCell, Grid.PosToCell(otherPuft.gameObject)))
 					{
-						sumPhaseDiffs += MathUtils.ShortestDistanceModuloOne(t, otherGlitter.t);
+						sumPhaseDiffs += MathUtils.ShortestDistanceModuloOne(prevT, otherGlitter.prevT);
 					}
 				}
 			}
-
-			Debug.Log($"Sum phase diffs {sumPhaseDiffs}");
 
 			const float phaseDiffAdjustmentMul = 0.05f;
 
@@ -120,12 +122,15 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 			targetFrequency = BaseFrequency;
 		}
 
-		Debug.Log($"target freq: {targetFrequency}");
-
 		t += dt * targetFrequency;
 		t %= 1;
 
 		SetColorFromTime(t);
+	}
+
+	private void LateUpdate()
+	{
+		prevT = t;
 	}
 
 	private void SetColorFromTime(float time)
