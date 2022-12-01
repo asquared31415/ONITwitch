@@ -44,8 +44,11 @@ public static class PosUtil
 		{
 			var clampedMouseScreenPos = ClampedMousePos();
 			var worldPoint = Camera.main.ScreenToWorldPoint(ClampedMousePos());
-			var randomOffset = range * Random.insideUnitCircle;
-			var randomPoint = worldPoint + (Vector3) randomOffset;
+
+			var theta = Random.value * Mathf.PI * 2;
+			var radius = range * Mathf.Sqrt(Random.value);
+			var randomOffset = radius * new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), 0);
+			var randomPoint = worldPoint + randomOffset;
 
 			var currentWorldMin = ClusterManager.Instance.activeWorld.minimumBounds;
 			var currentWorldMax = ClusterManager.Instance.activeWorld.maximumBounds;

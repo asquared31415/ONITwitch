@@ -225,6 +225,14 @@ public struct IrcMessage
 		Args = args;
 	}
 
+	public IrcMessage(string prefix, IrcCommand command, List<string> args)
+	{
+		Tags = new Dictionary<string, IrcTag>();
+		Prefix = prefix;
+		Command = command;
+		Args = args;
+	}
+
 	public IrcMessage(IrcCommandType command)
 	{
 		Tags = new Dictionary<string, IrcTag>();
@@ -241,10 +249,23 @@ public struct IrcMessage
 		Args = args;
 	}
 
+	public IrcMessage(string prefix, IrcCommandType command, List<string> args)
+	{
+		Tags = new Dictionary<string, IrcTag>();
+		Prefix = prefix;
+		Command = new IrcCommand(command);
+		Args = args;
+	}
+
 	public string GetIrcString()
 	{
 		// TODO: tags + prefix
 		var sb = new StringBuilder();
+		if (Prefix != null)
+		{
+			sb.Append($"{Prefix} ");
+		}
+
 		sb.Append(Command.ToString());
 		sb.Append(" ");
 

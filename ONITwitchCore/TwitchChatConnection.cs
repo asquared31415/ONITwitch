@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,11 +27,11 @@ public class TwitchChatConnection
 
 	private readonly ClientWebSocket socket = new();
 
-	private CancellationTokenSource readerCancellationToken;
+	private CancellationTokenSource socketCancellationTokenSource;
 
 	private readonly Dictionary<string, CapStatus> capStatuses = new();
 
-	private List<IrcMessage> queuedMessages = new();
+	private ConcurrentQueue<IrcMessage> messageQueue = new();
 
 	public bool IsAuthenticated { get; private set; }
 
@@ -44,7 +45,29 @@ public class TwitchChatConnection
 
 	public void Start()
 	{
+		Task.Run(
+			async () =>
+			{
+				var credentials = CredentialsConfig.Instance.Credentials;
+				if (!credentials.IsValid())
+				{
+					Debug.LogWarning("[Twitch Integration] Credentials are not valid");
+					return;
+				}
+
+				await Connect();
+				socketCancellationTokenSource = new CancellationTokenSource();
+				StartReader(socketCancellationTokenSource.Token);
+				StartWriter(socketCancellationTokenSource.Token);
+
+				RequestCaps();
+				Authenticate(CredentialsConfig.Instance.Credentials);
+			}
+		);
+
+
 		// all processing should be done on another thread
+		/*
 		Task.Run(
 			() =>
 			{
@@ -95,78 +118,19 @@ public class TwitchChatConnection
 				}
 			}
 		);
-	}
-
-	public void SendIrcMessage(IrcMessage message)
-	{
-		if (message.Command.IsKnownCommand())
-		{
-			var ircMessage = message.GetIrcString();
-			/*
-			 if (!message.Command.IsNumeric && (message.Command.Command.Value == IrcCommandType.PASS))
-			{
-				Debug.Log("Sending IRC message: PASS <REDACTED>");
-			}
-			else
-			{
-				Debug.Log($"Sending IRC message: {ircMessage}");
-			}
-			*/
-
-			SendRawTextMessage(ircMessage);
-		}
-		else
-		{
-			Debug.LogWarning($"[Twitch Integration] Cannot send unknown command {message.Command}");
-		}
-	}
-
-	public void SendTextMessage([NotNull] string room, [NotNull] string message)
-	{
-		if (!room.StartsWith("#"))
-		{
-			room = $"#{room}";
-		}
-
-		var privMsg = new IrcMessage(IrcCommandType.PRIVMSG, new List<string> { room, message });
-		if (!IsAuthenticated)
-		{
-			queuedMessages.Add(privMsg);
-		}
-		else
-		{
-			SendIrcMessage(privMsg);
-		}
-	}
-
-	public void JoinRoom(string room)
-	{
-		if (!room.StartsWith("#"))
-		{
-			room = $"#{room}";
-		}
-
-		var joinMessage = new IrcMessage(IrcCommandType.JOIN, new List<string> { room });
-		if (!IsAuthenticated)
-		{
-			queuedMessages.Add(joinMessage);
-		}
-		else
-		{
-			SendIrcMessage(joinMessage);
-		}
+		*/
 	}
 
 	private void StartReader(CancellationToken cancellationToken)
 	{
 		Task.Run(
-			() =>
+			async () =>
 			{
 				while (true)
 				{
 					cancellationToken.ThrowIfCancellationRequested();
 
-					var result = GetMessage();
+					var result = await GetMessage();
 					if (result == null)
 					{
 						Debug.LogWarning("[Twitch Integration] Unable to read message");
@@ -201,9 +165,77 @@ public class TwitchChatConnection
 		);
 	}
 
+	private void StartWriter(CancellationToken cancellationToken)
+	{
+		Task.Run(
+			async () =>
+			{
+				while (true)
+				{
+					while (messageQueue.TryDequeue(out var message))
+					{
+						var textMessage = message.GetIrcString();
+						/*
+						if (!message.Command.IsNumeric && (message.Command.Command.Value == IrcCommandType.PASS))
+						{
+							Debug.Log("Sending IRC message: PASS <REDACTED>");
+						}
+						else
+						{
+							Debug.Log($"Sending IRC message: {textMessage}");
+						}
+						*/
+
+						await SendRawTextMessage(textMessage);
+					}
+
+					await Task.Delay(50, cancellationToken);
+				}
+			},
+			cancellationToken
+		);
+	}
+
+	public void SendIrcMessage(IrcMessage message)
+	{
+		if (message.Command.IsKnownCommand())
+		{
+			messageQueue.Enqueue(message);
+		}
+		else
+		{
+			Debug.LogWarning($"[Twitch Integration] Cannot send unknown command {message.Command}");
+		}
+	}
+
+	public void SendTextMessage([NotNull] string room, [NotNull] string message)
+	{
+		if (!room.StartsWith("#"))
+		{
+			room = $"#{room}";
+		}
+
+		room = room.ToLowerInvariant();
+
+		var privMsg = new IrcMessage(IrcCommandType.PRIVMSG, new List<string> { room, message });
+		SendIrcMessage(privMsg);
+	}
+
+	public void JoinRoom(string room)
+	{
+		if (!room.StartsWith("#"))
+		{
+			room = $"#{room}";
+		}
+
+		room = room.ToLowerInvariant();
+
+		var joinMessage = new IrcMessage(IrcCommandType.JOIN, new List<string> { room });
+		messageQueue.Enqueue(joinMessage);
+	}
+
 	private void ProcessMessage(IrcMessage message)
 	{
-		// Debug.Log($"Processing command {message}");
 		if (message.Command.IsNumeric)
 		{
 			// ReSharper disable once PossibleInvalidOperationException
@@ -342,12 +374,6 @@ public class TwitchChatConnection
 				case IrcCommandType.GLOBALUSERSTATE:
 				{
 					IsAuthenticated = true;
-					foreach (var queuedMessage in queuedMessages)
-					{
-						SendIrcMessage(queuedMessage);
-						// average message timeout is 20 messages per 30 seconds
-						Thread.Sleep(1500);
-					}
 					break;
 				}
 				case IrcCommandType.HOSTTARGET:
@@ -395,9 +421,9 @@ public class TwitchChatConnection
 		if (tags.TryGetValue("color", out var colorTag) && !colorTag.Value.IsNullOrWhiteSpace())
 		{
 			var colorStr = colorTag.Value;
-			if (ColorUtility.TryParseHtmlString(colorStr, out var parsedColor))
+			if (ColorUtil.TryParseHexString(colorStr, out var parsed))
 			{
-				color = parsedColor;
+				color = parsed;
 			}
 		}
 
@@ -418,43 +444,52 @@ public class TwitchChatConnection
 
 		var userInfo = new TwitchUserInfo(userId, displayName, color, isModerator, isSubscriber, isVip);
 		var twitchMessage = new TwitchMessage(userInfo, msg);
-
-		// make value copy so that it doesn't race with the null check
-		var onMsg = OnTwitchMessage;
-		onMsg?.Invoke(twitchMessage);
+		MainThreadScheduler.Schedule(
+			() =>
+			{
+				// make value copy so that it doesn't race with the null check	
+				var onMsg = OnTwitchMessage;
+				onMsg?.Invoke(twitchMessage);
+			}
+		);
 	}
 
-	private ConnectionResult Connect()
+	private async Task Connect()
 	{
-		try
+		// maximum number of attempts to make to connect to Twitch, backing off exponentially each time
+		const int maxConnectAttempts = 10;
+		for (var attempt = 0; attempt < maxConnectAttempts; attempt++)
 		{
-			socket.ConnectAsync(TwitchChatUri, CancellationToken.None).Wait();
-		}
-		catch (AggregateException ae)
-		{
-			foreach (var ie in ae.InnerExceptions)
+			try
 			{
-				switch (ie)
+				await socket.ConnectAsync(TwitchChatUri, CancellationToken.None);
+				break;
+			}
+			catch (AggregateException ae)
+			{
+				foreach (var ie in ae.InnerExceptions)
 				{
-					case WebSocketException we:
+					switch (ie)
 					{
-						return new ConnectionResult { State = ConnectionResult.ResultState.Error, ErrorException = we };
-					}
-					case Exception e:
-					{
-						Debug.LogWarning("An unexpected exception occurred when connecting");
-						Debug.Log(e.GetType());
-						Debug.Log(e.Message);
-						Debug.Log(e.StackTrace);
-						return new ConnectionResult { State = ConnectionResult.ResultState.UnknownException };
+						case WebSocketException we:
+						{
+							Debug.Log(we);
+							break;
+						}
+						case Exception e:
+						{
+							Debug.LogWarning("An unexpected exception occurred when connecting");
+							Debug.Log(e.GetType());
+							Debug.Log(e.Message);
+							Debug.Log(e.StackTrace);
+							return;
+						}
 					}
 				}
 			}
-		}
 
-		return socket.State == WebSocketState.Open
-			? new ConnectionResult { State = ConnectionResult.ResultState.Open }
-			: new ConnectionResult { State = ConnectionResult.ResultState.Closed, CloseState = socket.CloseStatus };
+			await Task.Delay(Mathf.FloorToInt(500 * Mathf.Pow(2, attempt)));
+		}
 	}
 
 	private void RequestCaps()
@@ -496,24 +531,27 @@ public class TwitchChatConnection
 		var passMsg = new IrcMessage(IrcCommandType.PASS, new List<string> { credentials.Oauth });
 		SendIrcMessage(passMsg);
 
-		var nickMsg = new IrcMessage(IrcCommandType.NICK, new List<string> { credentials.Nick });
+		var nickMsg = new IrcMessage(IrcCommandType.NICK, new List<string> { credentials.Nick.ToLowerInvariant() });
 		SendIrcMessage(nickMsg);
 	}
 
-	// returns true if the message was successfully sent
-	private void SendRawTextMessage([NotNull] string message)
+	private async Task SendRawTextMessage([NotNull] string message)
 	{
 		if (!message.EndsWith("\r\n"))
 		{
 			// remove all counts of either \r or \n and then readd to normalize it
-			message = message.TrimEnd('\r', 'n') + "\r\n";
+			message = message.TrimEnd('\r', '\n') + "\r\n";
 		}
 
 		var data = Encoding.UTF8.GetBytes(message);
 		try
 		{
-			socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, CancellationToken.None)
-				.Wait();
+			await socket.SendAsync(
+				new ArraySegment<byte>(data),
+				WebSocketMessageType.Text,
+				true,
+				CancellationToken.None
+			);
 		}
 		catch (AggregateException ae)
 		{
@@ -524,8 +562,7 @@ public class TwitchChatConnection
 		}
 	}
 
-	[CanBeNull]
-	private string GetMessage()
+	private async Task<string> GetMessage()
 	{
 		var buffer = new ArraySegment<byte>(new byte[8192]);
 
@@ -535,7 +572,7 @@ public class TwitchChatConnection
 			WebSocketReceiveResult result;
 			do
 			{
-				result = socket.ReceiveAsync(buffer, CancellationToken.None).Result;
+				result = await socket.ReceiveAsync(buffer, CancellationToken.None);
 				s.Write(buffer.Array!, buffer.Offset, result.Count);
 			} while (result.EndOfMessage != true);
 		}

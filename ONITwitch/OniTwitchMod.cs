@@ -6,6 +6,7 @@ using KMod;
 using ONITwitchCore;
 using ONITwitchCore.Config;
 using ONITwitchCore.Integration.DecorPackA;
+using UnityEngine;
 
 namespace ONITwitch;
 
@@ -20,6 +21,10 @@ public class OniTwitchMod : UserMod2
 		// load config
 		var unusedConfig = MainConfig.Instance;
 		var unusedCommandConfig = UserCommandConfigManager.Instance;
+
+		var mainThreadObject = new GameObject("MainThreadScheduler");
+		mainThreadObject.AddOrGet<MainThreadScheduler>();
+		Object.DontDestroyOnLoad(mainThreadObject);
 	}
 
 	public const string DecorPackOneStaticID = "DecorPackA";
