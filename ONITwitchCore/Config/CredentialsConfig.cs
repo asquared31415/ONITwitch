@@ -20,6 +20,10 @@ public class CredentialsConfig
 		{
 			var text = File.ReadAllText(TwitchModInfo.CredentialsPath);
 			Credentials = JsonConvert.DeserializeObject<Credentials>(text);
+			if (!Credentials.Oauth.StartsWith("oauth:"))
+			{
+				Credentials.Oauth = "oauth:" + Credentials.Oauth;
+			}
 		}
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{

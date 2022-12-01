@@ -64,61 +64,6 @@ public class TwitchChatConnection
 				Authenticate(CredentialsConfig.Instance.Credentials);
 			}
 		);
-
-
-		// all processing should be done on another thread
-		/*
-		Task.Run(
-			() =>
-			{
-				var credentials = CredentialsConfig.Instance.Credentials;
-				if (!credentials.IsValid())
-				{
-					Debug.LogWarning("[Twitch Integration] Credentials are not valid");
-					return;
-				}
-
-				var connectStatus = Connect();
-				if (connectStatus.State != ConnectionResult.ResultState.Open)
-				{
-					Debug.LogWarning($"[Twitch Integration] socket in unsuccessful status {connectStatus.State}");
-					return;
-				}
-
-				readerCancellationToken = new CancellationTokenSource();
-				StartReader(readerCancellationToken.Token);
-
-				RequestCaps();
-
-				Authenticate(credentials);
-
-				var checkCapsCount = 0;
-				while (!CheckCapsEnabled() && (checkCapsCount < 40))
-				{
-					checkCapsCount += 1;
-					Thread.Sleep(50);
-				}
-
-				if (checkCapsCount >= 40)
-				{
-					var sb = new StringBuilder();
-					foreach (var (key, status) in capStatuses)
-					{
-						if (status != CapStatus.Enabled)
-						{
-							sb.Append(key);
-							sb.Append(" ");
-						}
-					}
-
-					Debug.LogWarning(
-						$"[Twitch Integration] the following capabilities were not able to be requested:\n\t{sb}"
-					);
-					//readerCancellationToken.Cancel();
-				}
-			}
-		);
-		*/
 	}
 
 	private void StartReader(CancellationToken cancellationToken)
