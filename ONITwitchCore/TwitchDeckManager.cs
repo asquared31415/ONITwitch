@@ -24,6 +24,17 @@ public class TwitchDeckManager
 		deck.AddAndShuffle(eventInfo);
 	}
 
+	public void AddToDeck([NotNull] EventInfo eventInfo, int count)
+	{
+		var list = new List<EventInfo>(count);
+		for (var idx = 0; idx < count; idx++)
+		{
+			list.Add(eventInfo);
+		}
+		
+		AddToDeck(list);
+	}
+
 	public void AddToDeck([NotNull] IEnumerable<EventInfo> eventInfos)
 	{
 		deck.AddAndShuffle(eventInfos);

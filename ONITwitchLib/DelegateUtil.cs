@@ -39,6 +39,21 @@ public static class DelegateUtil
 
 		return Wrapper;
 	}
+	
+	private static Action<object, object, object> RuntimeTypeDelegateActionGenericThreeArgs<TArg1, TArg2, TArg3>(
+		MethodInfo methodInfo,
+		object arg0
+	)
+	{
+		var del = (Action<TArg1, TArg2, TArg3>) Delegate.CreateDelegate(typeof(Action<TArg1, TArg2, TArg3>), arg0, methodInfo);
+
+		void Wrapper(object arg1, object arg2, object arg3)
+		{
+			del((TArg1) arg1, (TArg2) arg2, (TArg3) arg3);
+		}
+
+		return Wrapper;
+	}
 
 	public static Action<object> CreateRuntimeTypeActionDelegate(
 		MethodInfo methodInfo,
@@ -73,6 +88,25 @@ public static class DelegateUtil
 		var erasedDelegate = genericMethod.Invoke(null, new[] { methodInfo, arg0 });
 
 		return (Action<object, object>) erasedDelegate;
+	}
+	
+	public static Action<object, object, object> CreateRuntimeTypeActionDelegate(
+		MethodInfo methodInfo,
+		object arg0,
+		Type arg1Type,
+		Type arg2Type,
+		Type arg3Type
+	)
+	{
+		var genericMethod = AccessTools.DeclaredMethod(
+			typeof(DelegateUtil),
+			nameof(RuntimeTypeDelegateActionGenericThreeArgs),
+			new[] { typeof(MethodInfo), typeof(object) },
+			new[] { arg1Type, arg2Type, arg3Type }
+		);
+		var erasedDelegate = genericMethod.Invoke(null, new[] { methodInfo, arg0 });
+
+		return (Action<object, object, object>) erasedDelegate;
 	}
 
 	private static Func<object, object> RuntimeTypeDelegateFuncGenericOneArg<TArg1, TRet>(

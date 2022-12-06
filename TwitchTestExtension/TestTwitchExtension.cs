@@ -46,7 +46,7 @@ public class TestTwitchExtension : UserMod2
 
 		// add 1 copy and then 3 more copies to the deck
 		deckInst.AddToDeck(extEvent);
-		deckInst.AddToDeck(DeckUtils.RepeatList(extEvent, 3));
+		deckInst.AddToDeck(extEvent, 3);
 
 		// set the danger to none
 		dangerInst.SetDanger(extEvent, Danger.None);
@@ -58,7 +58,7 @@ public class TestTwitchExtension : UserMod2
 
 		var customEvent = eventInst.RegisterEvent("CustomSpawnEvent", "Custom Spawn Event");
 		eventInst.AddListenerForEvent(customEvent, action);
-		deckInst.AddToDeck(DeckUtils.RepeatList(customEvent, 10));
+		deckInst.AddToDeck(customEvent, 10);
 	}
 }
 

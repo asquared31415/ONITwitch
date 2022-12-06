@@ -11,41 +11,66 @@ public class TwitchDeckManager
 {
 	private readonly object deckManagerInstance;
 
-	private readonly Action<object> addSingleItemDelegate;
-	private readonly Action<object> addListDelegate;
-	private readonly Func<object> drawDelegate;
+	private static readonly Action<object, object> AddSingleItemDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+		AccessTools.DeclaredMethod(
+			EventInterface.TwitchDeckManagerType,
+			"AddToDeck",
+			new[] { EventInterface.EventInfoType }
+		),
+		null,
+		EventInterface.TwitchDeckManagerType,
+		EventInterface.EventInfoType
+	);
+
+	private static readonly Action<object, object, object> AddMultipleItemsDelegate =
+		DelegateUtil.CreateRuntimeTypeActionDelegate(
+			AccessTools.DeclaredMethod(
+				EventInterface.TwitchDeckManagerType,
+				"AddToDeck",
+				new[] { EventInterface.EventInfoType, typeof(int) }
+			),
+			null,
+			EventInterface.TwitchDeckManagerType,
+			EventInterface.EventInfoType,
+			typeof(int)
+		);
+
+	private static readonly Type EventInfoEnumerableType = typeof(IEnumerable<>).MakeGenericType(
+		EventInterface.EventInfoType
+	);
+
+	private static readonly Action<object, object> AddListDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+		AccessTools.DeclaredMethod(
+			EventInterface.TwitchDeckManagerType,
+			"AddToDeck",
+			new[] { EventInfoEnumerableType }
+		),
+		null,
+		EventInterface.TwitchDeckManagerType,
+		EventInfoEnumerableType
+	);
+
+	private static readonly Func<object, object> DrawDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
+		AccessTools.DeclaredMethod(EventInterface.TwitchDeckManagerType, "Draw"),
+		null,
+		EventInterface.TwitchDeckManagerType,
+		EventInterface.EventInfoType
+	);
+
 
 	internal TwitchDeckManager(object inst)
 	{
 		deckManagerInstance = inst;
-		var managerType = deckManagerInstance.GetType();
-
-		var addSingleItemInfo = AccessTools.DeclaredMethod(
-			managerType,
-			"AddToDeck",
-			new[] { EventInterface.EventInfoType }
-		);
-		addSingleItemDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			addSingleItemInfo,
-			deckManagerInstance,
-			EventInterface.EventInfoType
-		);
-
-		var enumerableType = typeof(IEnumerable<>).MakeGenericType(EventInterface.EventInfoType);
-		var addListInfo = AccessTools.DeclaredMethod(managerType, "AddToDeck", new[] { enumerableType });
-		addListDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			addListInfo,
-			deckManagerInstance,
-			enumerableType
-		);
-
-		var drawInfo = AccessTools.DeclaredMethod(managerType, "Draw");
-		drawDelegate = DelegateUtil.CreateDelegate<Func<object>>(drawInfo, deckManagerInstance);
 	}
 
 	public void AddToDeck([NotNull] EventInfo eventInfo)
 	{
-		addSingleItemDelegate(eventInfo.EventInfoInstance);
+		AddSingleItemDelegate(deckManagerInstance, eventInfo.EventInfoInstance);
+	}
+
+	public void AddToDeck([NotNull] EventInfo eventInfo, int count)
+	{
+		AddMultipleItemsDelegate(deckManagerInstance, eventInfo.EventInfoInstance, count);
 	}
 
 	private static readonly Func<IEnumerable<object>, object> CastEventInfo =
@@ -65,13 +90,13 @@ public class TwitchDeckManager
 	{
 		var instances = eventInfos.Select(info => info.EventInfoInstance);
 		var castInstances = CastEventInfo(instances);
-		addListDelegate(castInstances);
+		AddListDelegate(deckManagerInstance, castInstances);
 	}
 
 	[CanBeNull]
 	public EventInfo Draw()
 	{
-		var result = drawDelegate();
+		var result = DrawDelegate(deckManagerInstance);
 		return new EventInfo(result);
 	}
 }

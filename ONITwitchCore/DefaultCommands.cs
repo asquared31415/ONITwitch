@@ -592,7 +592,7 @@ public static class DefaultCommands
 		DataManager.Instance.SetDataForEvent(eventId, info.Data);
 		ConditionsManager.Instance.AddCondition(eventId, info.Command.Condition);
 		DangerManager.Instance.SetDanger(eventId, info.Danger);
-		TwitchDeckManager.Instance.AddToDeck(DeckUtils.RepeatList(eventId, info.Weight));
+		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight);
 	}
 
 	public static void ReloadData(Dictionary<string, CommandConfig> userConfig)
@@ -607,7 +607,7 @@ public static class DefaultCommands
 			{
 				eventInst.RenameEvent(eventId, config.FriendlyName);
 				dataInst.SetDataForEvent(eventId, config.Data);
-				deckInst.AddToDeck(DeckUtils.RepeatList(eventId, config.Weight));
+				deckInst.AddToDeck(eventId, config.Weight);
 			}
 		}
 	}
