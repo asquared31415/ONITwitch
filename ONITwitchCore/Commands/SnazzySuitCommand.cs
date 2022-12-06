@@ -25,8 +25,8 @@ public class SnazzySuitCommand : CommandBase
 			go.SetActive(true);
 
 			// Add a random facade to the clothing from all loaded facades
-			// This chooses one of the pretty new fancy suits
-			var randomFacade = Db.Get().EquippableFacades.resources.GetRandom();
+			// This can choose from the fancy suits or the player's unlocked skins
+			var randomFacade = Db.GetEquippableFacades().resources.GetRandom();
 			EquippableFacade.AddFacadeToEquippable(go.GetComponent<Equippable>(), randomFacade.Id);
 
 			ToastManager.InstantiateToastWithGoTarget(
