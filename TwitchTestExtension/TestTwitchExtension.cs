@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
+using ONITwitchLib.Core;
 
 namespace TwitchTestExtension;
 
@@ -48,6 +50,15 @@ public class TestTwitchExtension : UserMod2
 
 		// set the danger to none
 		dangerInst.SetDanger(extEvent, Danger.None);
+
+		var x = Type.GetType("ONITwitchCore.Commands.SpawnDupeCommand, ONITwitch");
+		var commandInst = Activator.CreateInstance(x);
+		var commandBase = new CommandBase(commandInst);
+		var action = commandBase.GetRunAction();
+
+		var customEvent = eventInst.RegisterEvent("CustomSpawnEvent", "Custom Spawn Event");
+		eventInst.AddListenerForEvent(customEvent, action);
+		deckInst.AddToDeck(DeckUtils.RepeatList(customEvent, 10));
 	}
 }
 
