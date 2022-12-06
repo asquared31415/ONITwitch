@@ -51,14 +51,20 @@ public class TestTwitchExtension : UserMod2
 		// set the danger to none
 		dangerInst.SetDanger(extEvent, Danger.None);
 
-		var x = Type.GetType("ONITwitchCore.Commands.SpawnDupeCommand, ONITwitch");
-		var commandInst = Activator.CreateInstance(x);
-		var commandBase = new CommandBase(commandInst);
-		var action = commandBase.GetRunAction();
+		var rainPrefabType = Type.GetType("ONITwitchCore.Commands.RainPrefabCommand, ONITwitch");
+		var commandBase = new CommandBase(rainPrefabType);
 
 		var customEvent = eventInst.RegisterEvent("CustomSpawnEvent", "Custom Spawn Event");
+
+		var action = commandBase.GetRunAction();
 		eventInst.AddListenerForEvent(customEvent, action);
-		deckInst.AddToDeck(customEvent, 10);
+
+		dataInst.SetDataForEvent(
+			customEvent,
+			new Dictionary<string, object> { { "PrefabId", "PropFacilityCouch" }, { "Count", 10.0d } }
+		);
+
+		deckInst.AddToDeck(customEvent, 1);
 	}
 }
 

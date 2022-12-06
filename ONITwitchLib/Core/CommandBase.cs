@@ -21,6 +21,19 @@ public class CommandBase
 
 	private readonly object commandInst;
 
+	public CommandBase(Type commandType, params object[] args)
+	{
+		if (!CoreTypes.CoreCommandType.IsAssignableFrom(commandType))
+		{
+			throw new ArgumentException(
+				$"[Twitch Integration] lib attempted to create a CommandBase with invalid type {commandType}",
+				nameof(commandType)
+			);
+		}
+
+		commandInst = Activator.CreateInstance(commandType, args);
+	}
+
 	public CommandBase(object inst)
 	{
 		commandInst = inst;
