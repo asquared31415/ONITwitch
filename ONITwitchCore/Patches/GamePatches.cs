@@ -1,5 +1,6 @@
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchCore.Cmps;
 
 namespace ONITwitchCore.Patches;
 
@@ -13,6 +14,8 @@ public static class GamePatches
 		{
 			__instance.gameObject.AddOrGet<VoteController>();
 			__instance.gameObject.AddOrGet<VoteFile>();
+
+			__instance.gameObject.AddOrGet<Eclipse>();
 		}
 	}
 }

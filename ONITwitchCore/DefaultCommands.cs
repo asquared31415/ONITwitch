@@ -553,6 +553,17 @@ public static class DefaultCommands
 			)
 		);
 
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"Eclipse",
+				"Eclipse",
+				new EclipseCommand(),
+				(double) (3 * Constants.SECONDS_PER_CYCLE),
+				Danger.Small,
+				10
+			)
+		);
+
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
