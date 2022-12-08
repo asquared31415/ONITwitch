@@ -1,6 +1,8 @@
 using System.Linq;
 using HarmonyLib;
 using KSerialization;
+using ONITwitchCore.Content;
+using ONITwitchLib;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +11,12 @@ namespace ONITwitchCore.Cmps.PocketDimension;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 {
-	public const string BorderTemplate = "TwitchIntegration/border";
+	public const string BorderTemplate = "TwitchIntegration/PocketDimensionBorder";
 	public const string MeepTemplate = "TwitchIntegration/MeepFace";
 	public static readonly Vector2I DimensionSize = new(32, 32);
 	public static readonly Vector2I InternalOffset = new(1, 1);
 	public static readonly Vector2I InternalSize = new(30, 30);
-	
+
 	public const float MaxCyclesLifetime = 0.5f;
 
 	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
@@ -40,12 +42,10 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			DestroyWorld();
 		}
 
-		/*
 		WorldUtils.AddDiagnostic(
 			world.id,
 			new DimensionClosingDiagnostic(world.id)
 		);
-		*/
 	}
 
 	// The fraction of the lifetime remaining, clamped between 0 and 1
@@ -84,7 +84,9 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 		if (!WorldSelector.Instance.worldRows.TryGetValue(world.id, out var worldRow))
 		{
-			Debug.LogWarning($"[Twitch Integration] World selector did not have a row for world {world} (idx {world.id})");
+			Debug.LogWarning(
+				$"[Twitch Integration] World selector did not have a row for world {world} (idx {world.id})"
+			);
 			return;
 		}
 
