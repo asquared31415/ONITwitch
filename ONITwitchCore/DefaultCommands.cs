@@ -564,6 +564,17 @@ public static class DefaultCommands
 			)
 		);
 
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"PocketDimension",
+				"Spawn Pocket Dimension",
+				new PocketDimensionCommand(),
+				null,
+				Danger.None,
+				1000000
+			)
+		);
+
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
