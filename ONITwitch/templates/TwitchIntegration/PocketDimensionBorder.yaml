@@ -9,624 +9,624 @@ info:
 cells:
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
+  location_x: -16
+  location_y: -15
+- element: Unobtanium
+  mass: 20000
+  temperature: 1
   location_x: -16
   location_y: -14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -13
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -12
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -11
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -10
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -9
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -8
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -7
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -6
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -5
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -4
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -3
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -2
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: -1
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 0
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 1
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 2
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 3
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 4
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 5
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 6
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 7
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 8
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 9
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 10
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 11
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 12
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 13
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -16
   location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
-  location_x: -16
-  location_y: 15
-- element: Unobtanium
-  mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -15
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -14
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -13
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -12
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -11
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -10
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -9
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -8
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -7
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -6
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -5
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -4
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -3
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -2
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: -1
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 0
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 1
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 2
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 3
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 4
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 5
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 6
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 7
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 8
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 9
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 10
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 11
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 12
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
   mass: 20000
-  temperature: 0
+  temperature: 1
   location_x: 13
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 14
-  location_y: 15
+  location_y: 14
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
+  location_x: 15
+  location_y: -17
+- element: Unobtanium
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -16
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -15
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -14
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -13
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -12
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -11
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -10
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -9
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -8
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -7
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -6
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -5
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -4
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -3
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -2
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: -1
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 0
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 1
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 2
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 3
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 4
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 5
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 6
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 7
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 8
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 9
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 10
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 11
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 12
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 13
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 15
   location_y: 14
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
-  location_x: 15
-  location_y: 15
-- element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -16
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -15
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -14
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -13
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -12
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -11
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -10
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -9
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -8
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -7
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -6
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -5
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -4
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -3
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -2
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -1
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 0
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 1
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 2
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 3
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 4
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 5
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 6
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 7
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 8
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 9
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 10
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 11
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 12
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 13
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: 14
-  location_y: -16
+  location_y: -17
 - element: Unobtanium
-  mass: 9999
-  temperature: 1.1499939
+  mass: 20000
+  temperature: 1
   location_x: -16
-  location_y: -15
+  location_y: -16
 buildings: []
 pickupables: []
 elementalOres: []

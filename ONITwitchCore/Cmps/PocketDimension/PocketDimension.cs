@@ -13,8 +13,8 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 {
 	public const string BorderTemplate = "TwitchIntegration/PocketDimensionBorder";
 	public const string MeepTemplate = "TwitchIntegration/MeepFace";
-	public static readonly Vector2I DimensionSize = new(32, 32);
-	public static readonly Vector2I InternalOffset = new(1, 1);
+	public static readonly Vector2I DimensionSize = new(36, 38);
+	public static readonly Vector2I InternalOffset = new(3, 3);
 	public static readonly Vector2I InternalSize = new(30, 30);
 
 	public const float MaxCyclesLifetime = 0.5f;
