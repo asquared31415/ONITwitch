@@ -48,21 +48,6 @@ public class MainConfig
 			if (config.HasValue)
 			{
 				ConfigData = config.Value;
-				if (ConfigData.MinDanger == Danger.Any)
-				{
-					Debug.LogWarning(
-						"[Twitch Integration] Use of the Any danger (-1) as a min danger in config is not supported"
-					);
-					ConfigData = ConfigData with { MinDanger = Danger.None };
-				}
-
-				if (ConfigData.MaxDanger == Danger.Any)
-				{
-					Debug.LogWarning(
-						"[Twitch Integration] Use of the Any danger (-1) as a max danger in config is not supported"
-					);
-					ConfigData = ConfigData with { MaxDanger = Danger.High };
-				}
 			}
 			else
 			{

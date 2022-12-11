@@ -528,7 +528,7 @@ public static class DefaultCommands
 				null,
 				// will only choose a command that is within the expected danger range
 				// but this command should ignore danger settings
-				Danger.Any,
+				null,
 				10
 			)
 		);
@@ -584,7 +584,7 @@ public static class DefaultCommands
 		string Name,
 		CommandBase Command,
 		object Data,
-		Danger Danger,
+		Danger? Danger,
 		int Weight
 	)
 	{
@@ -593,7 +593,7 @@ public static class DefaultCommands
 			string name,
 			CommandBase command,
 			object data,
-			Danger danger,
+			Danger? danger,
 			int weight
 		)
 		{
@@ -613,7 +613,10 @@ public static class DefaultCommands
 		eventInst.AddListenerForEvent(eventId, info.Command.Run);
 		DataManager.Instance.SetDataForEvent(eventId, info.Data);
 		ConditionsManager.Instance.AddCondition(eventId, info.Command.Condition);
-		DangerManager.Instance.SetDanger(eventId, info.Danger);
+		if (info.Danger.HasValue)
+		{
+			DangerManager.Instance.SetDanger(eventId, info.Danger.Value);
+		}
 		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight);
 	}
 
