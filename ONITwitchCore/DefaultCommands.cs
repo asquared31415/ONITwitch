@@ -633,6 +633,9 @@ public static class DefaultCommands
 			{
 				eventInst.RenameEvent(eventId, config.FriendlyName);
 				dataInst.SetDataForEvent(eventId, config.Data);
+
+				// replace weights by removing and then adding
+				deckInst.RemoveAll(eventId);
 				deckInst.AddToDeck(eventId, config.Weight);
 			}
 		}
