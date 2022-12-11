@@ -19,6 +19,10 @@ impl<T: Clone> Deck<T> {
     }
 
     pub fn draw(&mut self) -> T {
+        if self.deck.len() == 0 {
+            panic!("Cannot draw from empty deck");
+        }
+
         if self.head_idx == self.deck.len() {
             self.deck.shuffle(&mut thread_rng());
             self.head_idx = 0;
@@ -51,10 +55,10 @@ impl<T: Clone> Deck<T> {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-struct Item(usize);
+struct Item(&'static str);
 
 impl Item {
-    pub fn new(id: usize) -> Self {
+    pub fn new(id: &'static str) -> Self {
         Self(id)
     }
 }
@@ -97,31 +101,82 @@ fn draw_stats<T: PartialEq + Eq + core::hash::Hash + Clone + core::fmt::Debug>(
     count_map
 }
 
-fn main() {
-    let mut deck = Deck::new(Vec::<Item>::new());
-    deck.insert_count(Item::new(1), 499);
-    deck.insert_count(Item::new(2), 499);
-    deck.insert_count(Item::new(3), 1);
-    deck.insert_count(Item::new(4), 1);
-    deck.insert_count(Item::new(5), 10);
-    deck.insert_count(Item::new(6), 10);
-    deck.insert_count(Item::new(7), 10);
-    deck.insert_count(Item::new(8), 10);
-    deck.insert_count(Item::new(9), 10);
-    deck.insert_count(Item::new(10), 10);
-    deck.insert_count(Item::new(11), 10);
-    deck.insert_count(Item::new(12), 10);
-    deck.insert_count(Item::new(13), 10);
-    deck.insert_count(Item::new(14), 10);
-    deck.insert_count(Item::new(15), 10);
-    deck.insert_count(Item::new(16), 10);
-
-    const DRAW_ITERATIONS: usize = 100_000;
-    let mut stats = draw_stats(&mut deck, DRAW_ITERATIONS)
+fn simulate_deck(mut deck: Deck<Item>, draw_iters: usize) {
+    let mut stats = draw_stats(&mut deck, draw_iters)
         .into_iter()
         .collect::<Vec<_>>();
-    stats.sort_unstable();
+    stats.sort_unstable_by(|(_, count), (_, other_count)| other_count.cmp(count));
+    let mut total = 0_f32;
     for (item, count) in stats {
-        println!("{item:?}: {}", (count as f32) / DRAW_ITERATIONS as f32);
+        let frac = (count as f32) / draw_iters as f32;
+        println!("{}: {}", item.0, frac);
+        total += frac;
     }
+
+    println!("Total: {total}");
+}
+
+fn main() {
+    let mut deck = Deck::new(Vec::<Item>::new());
+
+    // add weights to deck
+    deck.insert_count(Item("ONITwitch.SpawnDupe"), 50);
+    deck.insert_count(Item("ONITwitch.ElementGroupCommon"), 100);
+    deck.insert_count(Item("ONITwitch.ElementGroupExotic"), 10);
+    deck.insert_count(Item("ONITwitch.ElementGroupMetal"), 50);
+    deck.insert_count(Item("ONITwitch.ElementGroupGas"), 50);
+    deck.insert_count(Item("ONITwitch.ElementGroupLiquid"), 50);
+    deck.insert_count(Item("ONITwitch.ElementGroupDeadly"), 10);
+    deck.insert_count(Item("ONITwitch.AttributeAthleticsUp"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeAthleticsDown"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeConstructionUp"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeConstructionDown"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeExcavationUp"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeExcavationDown"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeStrengthUp"), 20);
+    deck.insert_count(Item("ONITwitch.AttributeStrengthDown"), 20);
+    deck.insert_count(Item("ONITwitch.BansheeWail"), 10);
+    deck.insert_count(Item("ONITwitch.SnowBedrooms"), 20);
+    deck.insert_count(Item("ONITwitch.SlimeBedrooms"), 20);
+    deck.insert_count(Item("ONITwitch.FloodWater"), 30);
+    deck.insert_count(Item("ONITwitch.FloodPollutedWater"), 30);
+    deck.insert_count(Item("ONITwitch.FloodEthanol"), 10);
+    deck.insert_count(Item("ONITwitch.FloodOil"), 10);
+    deck.insert_count(Item("ONITwitch.FloodLava"), 2);
+    deck.insert_count(Item("ONITwitch.FloodGold"), 2);
+    deck.insert_count(Item("ONITwitch.FloodNuclearWaste"), 2);
+    deck.insert_count(Item("ONITwitch.IceAge"), 1);
+    deck.insert_count(Item("ONITwitch.Pee"), 30);
+    deck.insert_count(Item("ONITwitch.Kill"), 1);
+    deck.insert_count(Item("ONITwitch.TileTempDown"), 10);
+    deck.insert_count(Item("ONITwitch.TileTempUp"), 10);
+    deck.insert_count(Item("ONITwitch.PartyTime"), 30);
+    deck.insert_count(Item("ONITwitch.PoisonDupes"), 20);
+    deck.insert_count(Item("ONITwitch.Poopsplosion"), 50);
+    deck.insert_count(Item("ONITwitch.RainPrefabGold"), 30);
+    deck.insert_count(Item("ONITwitch.RainPrefabMorb"), 30);
+    deck.insert_count(Item("ONITwitch.RainPrefabDiamond"), 10);
+    deck.insert_count(Item("ONITwitch.RainPrefabSlickster"), 20);
+    deck.insert_count(Item("ONITwitch.RainPrefabPacu"), 20);
+    deck.insert_count(Item("ONITwitch.RainPrefabBee"), 10);
+    deck.insert_count(Item("ONITwitch.ReduceOxygen"), 10);
+    deck.insert_count(Item("ONITwitch.SkillPoints"), 20);
+    deck.insert_count(Item("ONITwitch.SleepyDupes"), 20);
+    deck.insert_count(Item("ONITwitch.SnazzySuit"), 20);
+    deck.insert_count(Item("ONITwitch.SpawnGlitterPuft"), 20);
+    deck.insert_count(Item("ONITwitch.SpawnVacillatorCharge"), 5);
+    deck.insert_count(Item("ONITwitch.SpawnAtmoSuit"), 5);
+    deck.insert_count(Item("ONITwitch.SpawnCrab"), 10);
+    deck.insert_count(Item("ONITwitch.SpawnMooComet"), 10);
+    deck.insert_count(Item("ONITwitch.StressAdd"), 20);
+    deck.insert_count(Item("ONITwitch.StressRemove"), 20);
+    deck.insert_count(Item("ONITwitch.Surprise"), 50);
+    deck.insert_count(Item("ONITwitch.Uninsulate"), 5);
+    deck.insert_count(Item("ONITwitch.ResearchTech"), 10);
+    deck.insert_count(Item("ONITwitch.Eclipse"), 10);
+    deck.insert_count(Item("ONITwitch.PocketDimension"), 20);
+
+    // simulate and report drawn chances
+    const DRAW_ITERATIONS: usize = 1_000_000;
+    simulate_deck(deck, DRAW_ITERATIONS);
 }

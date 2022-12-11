@@ -22,7 +22,7 @@ public static class DefaultCommands
 				new SpawnDupeCommand(),
 				new Dictionary<string, object> { { "MaxDupes", 50.0d } },
 				Danger.Small,
-				1
+				50
 			)
 		);
 		RegisterCommand(
@@ -55,7 +55,7 @@ public static class DefaultCommands
 					SimHashes.Katairite.ToString(),
 				},
 				Danger.Small,
-				1
+				100
 			)
 		);
 		RegisterCommand(
@@ -77,7 +77,7 @@ public static class DefaultCommands
 					SimHashes.Resin.ToString(),
 				},
 				Danger.Small,
-				1
+				10
 			)
 		);
 		RegisterCommand(
@@ -96,7 +96,7 @@ public static class DefaultCommands
 					SimHashes.AluminumOre.ToString(),
 				},
 				Danger.Small,
-				1
+				50
 			)
 		);
 		RegisterCommand(
@@ -115,7 +115,7 @@ public static class DefaultCommands
 					SimHashes.EthanolGas.ToString(),
 				},
 				Danger.Small,
-				1
+				50
 			)
 		);
 		RegisterCommand(
@@ -141,7 +141,7 @@ public static class DefaultCommands
 					SimHashes.MoltenSucrose.ToString(),
 				},
 				Danger.Small,
-				1
+				50
 			)
 		);
 		RegisterCommand(
@@ -159,7 +159,7 @@ public static class DefaultCommands
 					SimHashes.SuperCoolantGas.ToString(),
 				},
 				Danger.Small,
-				1
+				10
 			)
 		);
 		RegisterCommand(
@@ -169,7 +169,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.AthleticsUpEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -179,7 +179,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.AthleticsDownEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -189,7 +189,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ConstructionUpEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -199,7 +199,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ConstructionDownEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -209,7 +209,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ExcavationUpEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -219,7 +219,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ExcavationDownEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -229,7 +229,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.StrengthUpEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -239,7 +239,7 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.StrengthDownEffect.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -252,7 +252,7 @@ public static class DefaultCommands
 				new FillBedroomCommand(),
 				SimHashes.Snow.ToString(),
 				Danger.Small,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -262,7 +262,7 @@ public static class DefaultCommands
 				new FillBedroomCommand(),
 				SimHashes.SlimeMold.ToString(),
 				Danger.Small,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -272,7 +272,7 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Water.ToString(),
 				Danger.Medium,
-				10
+				30
 			)
 		);
 		RegisterCommand(
@@ -282,7 +282,7 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.DirtyWater.ToString(),
 				Danger.Medium,
-				10
+				30
 			)
 		);
 		RegisterCommand(
@@ -312,7 +312,7 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Magma.ToString(),
 				Danger.Deadly,
-				10
+				2
 			)
 		);
 		RegisterCommand(
@@ -322,7 +322,7 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Magma.ToString(),
 				Danger.Deadly,
-				10
+				2
 			)
 		);
 		RegisterCommand(
@@ -332,15 +332,15 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.NuclearWaste.ToString(),
 				Danger.High,
-				10
+				2
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 10)
+			CommandInfo.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 1)
 		);
-		RegisterCommand(CommandInfo.Namespaced("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 10));
+		RegisterCommand(CommandInfo.Namespaced("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 30));
 		RegisterCommand(
-			CommandInfo.Namespaced("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 10)
+			CommandInfo.Namespaced("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 1)
 		);
 		RegisterCommand(
 			CommandInfo.Namespaced("TileTempDown", "Icy Floors", new TileTempCommand(), -40.0d, Danger.Medium, 10)
@@ -349,13 +349,13 @@ public static class DefaultCommands
 			CommandInfo.Namespaced("TileTempUp", "Floor is Lava", new TileTempCommand(), +40.0d, Danger.Medium, 10)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 10)
+			CommandInfo.Namespaced("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 30)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 10)
+			CommandInfo.Namespaced("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 20)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 10)
+			CommandInfo.Namespaced("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 50)
 		);
 		RegisterCommand(
 			CommandInfo.Namespaced(
@@ -364,7 +364,7 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Gold.ToString() }, { "Count", 50.0d } },
 				Danger.None,
-				10
+				30
 			)
 		);
 		RegisterCommand(
@@ -374,7 +374,7 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				10
+				30
 			)
 		);
 		RegisterCommand(
@@ -394,7 +394,7 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", OilFloaterConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -404,7 +404,7 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -428,7 +428,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("SkillPoints", "Skilling Spree", new SkillCommand(), 0.33d, Danger.None, 10)
+			CommandInfo.Namespaced("SkillPoints", "Skilling Spree", new SkillCommand(), 0.33d, Danger.None, 20)
 		);
 		RegisterCommand(
 			CommandInfo.Namespaced(
@@ -437,7 +437,7 @@ public static class DefaultCommands
 				new SleepyDupesCommand(),
 				null,
 				Danger.Medium,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -447,7 +447,7 @@ public static class DefaultCommands
 				new SnazzySuitCommand(),
 				null,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -457,7 +457,7 @@ public static class DefaultCommands
 				new SpawnPrefabCommand(),
 				GlitterPuftConfig.Id,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -467,7 +467,7 @@ public static class DefaultCommands
 				new SpawnPrefabCommand(),
 				GeneShufflerRechargeConfig.ID,
 				Danger.None,
-				10
+				5
 			)
 		);
 		RegisterCommand(
@@ -477,7 +477,7 @@ public static class DefaultCommands
 				new SpawnPrefabCommand(),
 				AtmoSuitConfig.ID,
 				Danger.None,
-				10
+				5
 			)
 		);
 		RegisterCommand(
@@ -507,7 +507,7 @@ public static class DefaultCommands
 				new StressCommand(),
 				+0.75d,
 				Danger.Medium,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -517,7 +517,7 @@ public static class DefaultCommands
 				new StressCommand(),
 				-0.75d,
 				Danger.None,
-				10
+				20
 			)
 		);
 		RegisterCommand(
@@ -529,7 +529,7 @@ public static class DefaultCommands
 				// will only choose a command that is within the expected danger range
 				// but this command should ignore danger settings
 				null,
-				10
+				50
 			)
 		);
 		RegisterCommand(
@@ -539,7 +539,7 @@ public static class DefaultCommands
 				new UninsulateCommand(),
 				null,
 				Danger.Extreme,
-				10
+				5
 			)
 		);
 		RegisterCommand(
@@ -571,7 +571,7 @@ public static class DefaultCommands
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
-				10
+				20
 			)
 		);
 
@@ -617,6 +617,7 @@ public static class DefaultCommands
 		{
 			DangerManager.Instance.SetDanger(eventId, info.Danger.Value);
 		}
+
 		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight);
 	}
 
