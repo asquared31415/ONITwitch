@@ -21,10 +21,7 @@ public class SpawnElementPoolCommand : CommandBase
 		return pool.Select(ElementUtil.FindElementByNameFast).Any(ElementUtil.ElementExistsAndEnabled);
 	}
 
-	private static readonly float MaxAbyssaliteTemp =
-		GameUtil.GetTemperatureConvertedToKelvin(600f, GameUtil.TemperatureUnit.Celsius);
-
-	private static readonly float UseAbyssaliteThreshold =
+	private static readonly float UseInsulationThreshold =
 		GameUtil.GetTemperatureConvertedToKelvin(200f, GameUtil.TemperatureUnit.Celsius);
 
 	public override void Run(object data)
@@ -35,7 +32,7 @@ public class SpawnElementPoolCommand : CommandBase
 			.ToList();
 		var mouseCell = PosUtil.RandomCellNearMouse();
 		var element = enabledElements.GetRandom();
-		var abyssalite = ElementLoader.FindElementByHash(SimHashes.Katairite);
+		var insulation = ElementLoader.FindElementByHash(SimHashes.SuperInsulator);
 
 		const float gasMass = 50f;
 		const float liquidMass = 500f;
@@ -49,7 +46,7 @@ public class SpawnElementPoolCommand : CommandBase
 			_ => 0f,
 		};
 
-		// NOTE: when tuning these, make sure that the mass cannot cause pressure damage to the surrounding abyssalite
+		// NOTE: when tuning these, make sure that the mass cannot cause pressure damage to the surrounding tiles
 		// ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
 		// ReSharper disable once ConvertSwitchStatementToSwitchExpression
 		switch (element.id)
@@ -75,23 +72,22 @@ public class SpawnElementPoolCommand : CommandBase
 
 		foreach (var neighborCell in GridUtil.GetNeighborsInBounds(cell))
 		{
-			// surround tiles with abyssalite if it's >200C
+			// surround tiles with insulation if it's >200C
 
 			// This uses the TARGET element's temperature, so the elements don't solidify
-			// But also abyssalite can melt, so cap at 600C so that it's not too bad
 			var targetTemp = Mathf.Clamp(
 				element.defaultValues.temperature,
 				0f,
-				MaxAbyssaliteTemp
+				9_999f
 			);
 
-			if (element.defaultValues.temperature > UseAbyssaliteThreshold)
+			if (element.defaultValues.temperature > UseInsulationThreshold)
 			{
 				SimMessages.ReplaceAndDisplaceElement(
 					neighborCell,
-					abyssalite.id,
+					insulation.id,
 					SpawnEvent,
-					abyssalite.defaultValues.mass,
+					float.Epsilon,
 					targetTemp
 				);
 			}
