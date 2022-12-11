@@ -64,4 +64,11 @@ public class VoteFile : KMonoBehaviour, ISim33ms
 			}
 		}
 	}
+
+	protected override void OnCleanUp()
+	{
+		var filePath = Path.Combine(TwitchModInfo.MainModFolder, MainConfig.Instance.ConfigData.VotesPath);
+		File.WriteAllText(filePath, "Voting not yet started");
+		base.OnCleanUp();
+	}
 }
