@@ -527,8 +527,8 @@ public static class DefaultCommands
 				new SurpriseCommand(),
 				null,
 				// will only choose a command that is within the expected danger range
-				// TODO: maybe handle this specially and have a "all dangers" option that makes danger ignored?
-				Danger.None,
+				// but this command should ignore danger settings
+				Danger.Any,
 				10
 			)
 		);
@@ -571,7 +571,7 @@ public static class DefaultCommands
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
-				1000000
+				10
 			)
 		);
 

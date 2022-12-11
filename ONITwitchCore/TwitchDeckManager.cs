@@ -31,7 +31,7 @@ public class TwitchDeckManager
 		{
 			list.Add(eventInfo);
 		}
-		
+
 		AddToDeck(list);
 	}
 
@@ -54,8 +54,9 @@ public class TwitchDeckManager
 			var entry = deck.DrawEntry();
 			// no danger assigned or danger within the expected range is okay
 			var danger = dangerInst.GetDanger(entry);
-			if ((danger == null) || ((MainConfig.Instance.ConfigData.MinDanger <= danger.Value) &&
-									 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
+			if ((danger == null) || (danger.Value == Danger.Any) ||
+				((MainConfig.Instance.ConfigData.MinDanger <= danger.Value) &&
+				 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
 			{
 				var data = dataInst.GetDataForEvent(entry);
 				var condition = condInst.CheckCondition(entry, data);

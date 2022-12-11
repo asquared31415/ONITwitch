@@ -12,7 +12,8 @@ public class MainConfig
 	private static MainConfig instance;
 	public static MainConfig Instance => instance ??= new MainConfig();
 
-	public ConfigData ConfigData { get; private set; }
+	// explicitly call the constructor so that the defaults are set
+	public ConfigData ConfigData { get; private set; } = new();
 
 	private System.DateTime lastLoadTime = System.DateTime.MinValue;
 	private readonly object loadLock = new();
@@ -43,9 +44,27 @@ public class MainConfig
 
 			lastLoadTime = now;
 
-			ConfigData = DeserializeConfig();
+			var config = DeserializeConfig();
+			if (config.HasValue)
+			{
+				ConfigData = config.Value;
+				if (ConfigData.MinDanger == Danger.Any)
+				{
+					Debug.LogWarning(
+						"[Twitch Integration] Use of the Any danger (-1) as a min danger in config is not supported"
+					);
+					ConfigData = ConfigData with { MinDanger = Danger.None };
+				}
 
-			if (ConfigData == null)
+				if (ConfigData.MaxDanger == Danger.Any)
+				{
+					Debug.LogWarning(
+						"[Twitch Integration] Use of the Any danger (-1) as a max danger in config is not supported"
+					);
+					ConfigData = ConfigData with { MaxDanger = Danger.High };
+				}
+			}
+			else
 			{
 				PauseMenuPatches.TwitchButtonInfo.isEnabled = false;
 				if (PauseScreen.Instance != null)
@@ -56,7 +75,7 @@ public class MainConfig
 		}
 	}
 
-	private static ConfigData DeserializeConfig()
+	private static ConfigData? DeserializeConfig()
 	{
 		try
 		{
@@ -82,9 +101,8 @@ public class MainConfig
 		catch (Exception e)
 		{
 			Debug.LogException(e);
+			return null;
 		}
-
-		return new ConfigData();
 	}
 
 	private static void WriteConfig(ConfigData config)
