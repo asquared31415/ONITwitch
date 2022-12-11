@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
 /// <summary>
 /// Utilities for finding and working with elements.

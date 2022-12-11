@@ -122,7 +122,7 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 
 					if (otherVal.HasValue)
 					{
-						sumPhaseDiffs += MathUtils.ShortestDistanceModuloOne(prevT, otherVal.Value);
+						sumPhaseDiffs += ONITwitchLib.Utils.MathUtil.ShortestDistanceModuloOne(prevT, otherVal.Value);
 					}
 				}
 			}

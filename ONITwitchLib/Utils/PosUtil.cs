@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
 public static class PosUtil
 {

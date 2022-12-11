@@ -8,6 +8,7 @@ using ONITwitchCore.Cmps.PocketDimension;
 using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class PocketDimensionCommand : CommandBase
 	{
 		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
 		dimension.SetActive(true);
-		var world = WorldUtils.CreateWorldWithTemplate(
+		var world = WorldUtil.CreateWorldWithTemplate(
 			dimension,
 			PocketDimension.DimensionSize,
 			PocketDimension.BorderTemplate,

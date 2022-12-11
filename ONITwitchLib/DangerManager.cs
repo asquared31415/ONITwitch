@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
 

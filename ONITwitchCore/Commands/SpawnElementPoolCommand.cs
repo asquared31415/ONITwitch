@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 using UnityEngine;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 

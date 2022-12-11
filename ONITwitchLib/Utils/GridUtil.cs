@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
 public static class GridUtil
 {

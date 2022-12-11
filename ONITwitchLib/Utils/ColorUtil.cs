@@ -2,7 +2,7 @@ using System.Globalization;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
 public static class ColorUtil
 {

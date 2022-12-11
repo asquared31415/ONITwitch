@@ -1,5 +1,6 @@
 using System;
 using HarmonyLib;
+using ONITwitchLib.Utils;
 
 namespace ONITwitchLib.Core;
 

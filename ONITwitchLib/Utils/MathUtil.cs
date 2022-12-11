@@ -1,6 +1,6 @@
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
-public static class MathUtils
+public static class MathUtil
 {
 	public static float ShortestDistanceModuloOne(float a, float b)
 	{

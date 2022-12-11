@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
-public static class WorldUtils
+public static class WorldUtil
 {
 	public static WorldContainer CreateWorldWithTemplate(
 		[NotNull] GameObject worldGo,

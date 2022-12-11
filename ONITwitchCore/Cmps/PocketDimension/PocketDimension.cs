@@ -3,6 +3,7 @@ using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Content;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,7 +43,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			DestroyWorld();
 		}
 
-		WorldUtils.AddDiagnostic(
+		WorldUtil.AddDiagnostic(
 			world.id,
 			new DimensionClosingDiagnostic(world.id)
 		);

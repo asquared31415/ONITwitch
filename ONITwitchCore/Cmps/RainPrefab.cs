@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using KSerialization;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

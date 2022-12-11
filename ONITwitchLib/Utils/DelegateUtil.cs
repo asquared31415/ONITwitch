@@ -3,7 +3,7 @@ using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.Utils;
 
 public static class DelegateUtil
 {

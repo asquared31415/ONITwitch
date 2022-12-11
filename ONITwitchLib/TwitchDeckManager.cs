@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
 

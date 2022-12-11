@@ -1,5 +1,6 @@
 using KSerialization;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 
 namespace ONITwitchCore.Cmps.PocketDimension;
 
