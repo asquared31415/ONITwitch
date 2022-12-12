@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Delaunay.Geo;
@@ -5,14 +6,14 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using Klei;
 using ONITwitchCore.Cmps.PocketDimension;
-using ONITwitchCore.Content;
 using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Content.Entities;
+using ONITwitchLib;
+using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace ONITwitchCore.Commands;
 
@@ -24,6 +25,41 @@ public class PocketDimensionCommand : CommandBase
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
 	private static readonly List<PocketDimensionGenerationSettings> PocketDimensionSettings = new()
 	{
+		// Meep face
+		new PocketDimensionGenerationSettings(
+			1f,
+			null,
+			SubWorld.ZoneType.CrystalCaverns,
+			PocketDimension.MeepTemplate
+		),
+		// Aquarium
+		new PocketDimensionGenerationSettings(
+			5f,
+			null,
+			SubWorld.ZoneType.Ocean,
+			new List<SimHashes> { SimHashes.Water },
+			0.2f,
+			0.2f,
+			new List<string>
+			{
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+				PacuConfig.ID,
+			}
+		),
+		// Sandstone, algae, dirt
 		new PocketDimensionGenerationSettings(
 			3f,
 			null,
@@ -40,6 +76,7 @@ public class PocketDimensionCommand : CommandBase
 			0.05f,
 			0.15f
 		),
+		// Obsidian, niobium
 		new PocketDimensionGenerationSettings(
 			4f,
 			"Mining3",
@@ -82,21 +119,54 @@ public class PocketDimensionCommand : CommandBase
 					.First();
 				// .GetRandom();
 
-				const int percentMeep = 5;
-				if (Random.Range(0, 100 / percentMeep) == 0)
+				switch (settings.Kind)
 				{
-					world.PlaceInteriorTemplate(PocketDimension.MeepTemplate, () => { });
+					case PocketDimensionGenerationSettings.GenerationKind.Noise:
+					{
+						FillWithNoise(
+							world.WorldOffset + PocketDimension.InternalOffset,
+							PocketDimension.InternalSize,
+							settings.Hashes,
+							settings.XFrequency,
+							settings.YFrequency
+						);
+						break;
+					}
+					case PocketDimensionGenerationSettings.GenerationKind.Template:
+					{
+						var template = TemplateCache.GetTemplate(settings.Template);
+						var pos = new Vector2I(
+							world.WorldSize.x / 2 + world.WorldOffset.x,
+							world.WorldSize.y / 2 + world.WorldOffset.y
+						);
+						TemplateLoader.Stamp(template, pos, () => { });
+						break;
+					}
+					default:
+						throw new ArgumentOutOfRangeException();
 				}
-				else
+
+				if (settings.PrefabIds != null)
 				{
-					// TODO: the logic
-					FillWithNoise(
-						world.WorldOffset + PocketDimension.InternalOffset,
-						PocketDimension.InternalSize,
-						settings.Hashes,
-						settings.XFrequency,
-						settings.YFrequency
-					);
+					foreach (var prefabId in settings.PrefabIds)
+					{
+						var prefab = Assets.GetPrefab(prefabId);
+						if (prefab != null)
+						{
+							var randomX = ThreadRandom.Next(
+								PocketDimension.InternalOffset.x,
+								PocketDimension.InternalOffset.x + PocketDimension.InternalSize.x
+							);
+							var randomY = ThreadRandom.Next(
+								PocketDimension.InternalOffset.y,
+								PocketDimension.InternalOffset.y + PocketDimension.InternalSize.y
+							);
+
+							var pos = new Vector2(world.WorldOffset.x + randomX, world.WorldOffset.y + randomY);
+							var go = Util.KInstantiate(prefab, pos);
+							go.SetActive(true);
+						}
+					}
 				}
 
 				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
@@ -105,11 +175,11 @@ public class PocketDimensionCommand : CommandBase
 				// remove the old polygons and re-add the one we want.
 				var overworldCell = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
 
-				var internalStart = world.WorldOffset + PocketDimension.InternalOffset - Vector2I.one * 3;
+				var internalStart = world.WorldOffset + PocketDimension.InternalOffset - Vector2I.one;
 				var internalEnd = world.WorldOffset +
 								  PocketDimension.InternalOffset +
 								  PocketDimension.InternalSize +
-								  Vector2I.one * 2;
+								  Vector2I.one;
 				var verts = new List<Vector2>
 				{
 					internalStart,
@@ -304,11 +374,11 @@ public class PocketDimensionCommand : CommandBase
 				var val = (PerlinSimplexNoise.noise(x * xFrequency, y * yFrequency, seed) + 1) / 2;
 				var idx = (int) Mathf.Floor(val * numElements);
 				var defaultValues = elements[idx].defaultValues;
-				var mass = elements[idx].state switch
+				var mass = (elements[idx].state & (Element.State) Element.StateMask) switch
 				{
 					Element.State.Vacuum => 0f,
 					Element.State.Gas => 5f,
-					Element.State.Liquid => 750f,
+					Element.State.Liquid => 850f,
 					Element.State.Solid => 2000f,
 					_ => 0f,
 				};

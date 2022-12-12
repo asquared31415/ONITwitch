@@ -40,3 +40,22 @@ public class OniTwitchMod : UserMod2
 		}
 	}
 }
+
+
+[HarmonyPatch(typeof(HoverTextConfiguration), "DrawTitle")]
+public static class CellNumInTitle
+{
+	[UsedImplicitly]
+	public static void Postfix(HoverTextDrawer drawer, HoverTextConfiguration __instance)
+	{
+		if (Camera.main != null)
+		{
+			var cell = Grid.PosToCell(Camera.main.ScreenToWorldPoint(KInputManager.GetMousePos()));
+			var pos = Grid.CellToPos(cell);
+			drawer.NewLine();
+			drawer.DrawText($"({pos.x}, {pos.y})", __instance.ToolTitleTextStyle);
+			drawer.NewLine();
+			drawer.DrawText($"Cell {cell}", __instance.ToolTitleTextStyle);
+		}
+	}
+}
