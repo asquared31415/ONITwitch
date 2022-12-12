@@ -5,3 +5,7 @@ Aki:
  - Designing a secret formation
  - Helped creating the informational toast popup
  - Pocket Dimension portal animation
+ - Testing beta versions for mod integration
+
+pether.pg:
+ - Testing beta versions for mod integration
