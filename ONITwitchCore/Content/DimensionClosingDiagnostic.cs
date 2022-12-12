@@ -27,9 +27,6 @@ public class DimensionClosingDiagnostic : ColonyDiagnostic
 		"Low Time Remaining"
 	);
 
-	// Warn at 0.5 cycles remaining
-	public const float RemainingFractionThreshold = 0.5f / PocketDimension.MaxCyclesLifetime;
-
 	private DiagnosticResult EvaluateDiagnostic()
 	{
 		var world = ClusterManager.Instance.GetWorld(worldID);
@@ -47,9 +44,8 @@ public class DimensionClosingDiagnostic : ColonyDiagnostic
 			return ErrorDiagnostic;
 		}
 
-		var remaining = pocketDimension.GetFractionLifetimeRemaining();
-
-		return remaining <= RemainingFractionThreshold ? LowTimeDiagnostic : NormalDiagnostic;
+		// warn at 0.5 cycles remaining
+		return pocketDimension.Lifetime <= 0.5 * Constants.SECONDS_PER_CYCLE ? LowTimeDiagnostic : NormalDiagnostic;
 	}
 
 	public override string[] GetDlcIds()

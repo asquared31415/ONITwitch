@@ -5,9 +5,9 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using Klei;
 using ONITwitchCore.Cmps.PocketDimension;
+using ONITwitchCore.Content;
 using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Content.Entities;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
@@ -21,6 +21,46 @@ public class PocketDimensionCommand : CommandBase
 	private static readonly AccessTools.FieldRef<WorldContainer, WorldDetailSave.OverworldCell> OverworldCellAccess =
 		AccessTools.FieldRefAccess<WorldContainer, WorldDetailSave.OverworldCell>("overworldCell");
 
+	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
+	private static readonly List<PocketDimensionGenerationSettings> PocketDimensionSettings = new()
+	{
+		new PocketDimensionGenerationSettings(
+			3f,
+			null,
+			SubWorld.ZoneType.Sandstone,
+			new List<SimHashes>
+			{
+				SimHashes.SandStone,
+				SimHashes.SandStone,
+				SimHashes.SandStone,
+				SimHashes.Algae,
+				SimHashes.Fertilizer,
+				SimHashes.Dirt,
+			},
+			0.05f,
+			0.15f
+		),
+		new PocketDimensionGenerationSettings(
+			4f,
+			"Mining3",
+			SubWorld.ZoneType.Wasteland,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Obsidian,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Obsidian,
+				SimHashes.Niobium,
+			},
+			0.1f,
+			0.1f
+		),
+	};
+
 	public override void Run(object data)
 	{
 		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
@@ -31,6 +71,17 @@ public class PocketDimensionCommand : CommandBase
 			PocketDimension.BorderTemplate,
 			world =>
 			{
+				var pocketDim = world.GetComponent<PocketDimension>();
+
+				var settings = PocketDimensionSettings.Where(
+						setting => (setting.RequiredSkillId == null) || Components.LiveMinionIdentities.Items.Any(
+							minion => minion.TryGetComponent(out MinionResume resume) &&
+									  resume.HasMasteredSkill(setting.RequiredSkillId)
+						)
+					)
+					.First();
+				// .GetRandom();
+
 				const int percentMeep = 5;
 				if (Random.Range(0, 100 / percentMeep) == 0)
 				{
@@ -42,27 +93,23 @@ public class PocketDimensionCommand : CommandBase
 					FillWithNoise(
 						world.WorldOffset + PocketDimension.InternalOffset,
 						PocketDimension.InternalSize,
-						new List<SimHashes>()
-						{
-							SimHashes.SandStone,
-							SimHashes.SandStone,
-							SimHashes.SandStone,
-							SimHashes.Algae,
-							SimHashes.Fertilizer,
-							SimHashes.Dirt,
-						}
+						settings.Hashes,
+						settings.XFrequency,
+						settings.YFrequency
 					);
 				}
 
-				// remove the old polygons and re-add the one we want.
-				var clusterSave = SaveLoader.Instance.clusterDetailSave;
-				clusterSave.overworldCells.Remove(OverworldCellAccess(world));
+				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
+				pocketDim.MaxLifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
 
-				var internalStart = world.WorldOffset + PocketDimension.InternalOffset - Vector2I.one;
+				// remove the old polygons and re-add the one we want.
+				var overworldCell = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
+
+				var internalStart = world.WorldOffset + PocketDimension.InternalOffset - Vector2I.one * 3;
 				var internalEnd = world.WorldOffset +
 								  PocketDimension.InternalOffset +
 								  PocketDimension.InternalSize +
-								  Vector2I.one;
+								  Vector2I.one * 2;
 				var verts = new List<Vector2>
 				{
 					internalStart,
@@ -70,14 +117,8 @@ public class PocketDimensionCommand : CommandBase
 					internalEnd,
 					internalStart with { x = internalEnd.x },
 				};
-				ref var overworldCell = ref OverworldCellAccess(world);
-				overworldCell = new WorldDetailSave.OverworldCell
-				{
-					poly = new Polygon(verts),
-					zoneType = SubWorld.ZoneType.Barren,
-				};
-
-				clusterSave.overworldCells.Add(overworldCell);
+				overworldCell.Value.poly = new Polygon(verts);
+				overworldCell.Value.zoneType = settings.ZoneType;
 
 				// fill area around the world with void
 
@@ -128,12 +169,6 @@ public class PocketDimensionCommand : CommandBase
 						Grid.PreventFogOfWarReveal[cell] = true;
 					}
 				}
-				
-				// no light or rads
-				world.sunlightFixedTrait = FIXEDTRAITS.SUNLIGHT.NAME.NONE;
-				world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
-				world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
-				world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
 
 				var portalPos = world.WorldOffset + PocketDimension.InternalOffset;
 
@@ -155,6 +190,8 @@ public class PocketDimensionCommand : CommandBase
 				);
 			}
 		);
+
+		// This setup happens immediately, before the world spawns, and before the template is placed
 
 		// Find a valid location for the building
 		static bool IsValidPortalCell(int cell)
@@ -211,9 +248,7 @@ public class PocketDimensionCommand : CommandBase
 			exteriorBuildingDef.BuildingComplete
 		);
 
-		// place interior door at known position inside world
 		var portalPos = world.WorldOffset + PocketDimension.InternalOffset;
-
 		var interiorBuildingDef = Assets.GetBuildingDef(PocketDimensionInteriorPortalConfig.Id);
 		var interiorDoor = interiorBuildingDef.Create(
 			new Vector3(portalPos.x, portalPos.y),
@@ -234,12 +269,20 @@ public class PocketDimensionCommand : CommandBase
 		interiorPortal.ExteriorPortal = exteriorPortalRef;
 
 		world.GetComponent<PocketDimension>().ExteriorPortal = exteriorPortalRef;
+
+		// no light or rads
+		world.sunlightFixedTrait = FIXEDTRAITS.SUNLIGHT.NAME.NONE;
+		world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
+		world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
+		world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
 	}
 
 	public static void FillWithNoise(
 		Vector2I offset,
 		Vector2I size,
 		[NotNull] List<SimHashes> hashes,
+		float xFrequency,
+		float yFrequency,
 		float seed = float.NaN
 	)
 	{
@@ -257,9 +300,6 @@ public class PocketDimensionCommand : CommandBase
 			var maxY = offset.y + size.y;
 			for (var y = offset.y; y < maxY; y++)
 			{
-				// lower = more stretched out along the corresponding axis
-				const float xFrequency = 0.05f;
-				const float yFrequency = 0.15f;
 				// Transform from (-1,1) to (0,1)
 				var val = (PerlinSimplexNoise.noise(x * xFrequency, y * yFrequency, seed) + 1) / 2;
 				var idx = (int) Mathf.Floor(val * numElements);

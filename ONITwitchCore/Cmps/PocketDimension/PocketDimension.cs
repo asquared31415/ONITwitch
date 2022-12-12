@@ -2,7 +2,6 @@ using System.Linq;
 using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Content;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +17,11 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	public static readonly Vector2I InternalOffset = new(3, 3);
 	public static readonly Vector2I InternalSize = new(30, 30);
 
-	public const float MaxCyclesLifetime = 0.5f;
-
 	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
-	[Serialize] private float lifetime = MaxCyclesLifetime * Constants.SECONDS_PER_CYCLE;
+	
+	// defaults to make sure that it doesn't think it's dead on spawn
+	[Serialize] public float Lifetime = 1;
+	[Serialize] public float MaxLifetime = 1;
 
 #pragma warning disable 649
 	[MyCmpGet] private WorldContainer world;
@@ -52,7 +52,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	// The fraction of the lifetime remaining, clamped between 0 and 1
 	public float GetFractionLifetimeRemaining()
 	{
-		return Mathf.Clamp01(lifetime / (MaxCyclesLifetime * Constants.SECONDS_PER_CYCLE));
+		return Mathf.Clamp01(Lifetime / MaxLifetime);
 	}
 
 	public void Sim200ms(float dt)
@@ -63,12 +63,12 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			return;
 		}
 
-		if (lifetime > 0)
+		if (Lifetime > 0)
 		{
-			lifetime -= dt;
+			Lifetime -= dt;
 		}
 
-		if (lifetime <= 0)
+		if (Lifetime <= 0)
 		{
 			DestroyWorld();
 		}

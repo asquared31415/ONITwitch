@@ -571,7 +571,7 @@ public static class DefaultCommands
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
-				20
+				20000
 			)
 		);
 
