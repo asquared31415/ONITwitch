@@ -18,7 +18,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	public static readonly Vector2I InternalSize = new(30, 30);
 
 	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
-	
+
 	// defaults to make sure that it doesn't think it's dead on spawn
 	[Serialize] public float Lifetime = 1;
 	[Serialize] public float MaxLifetime = 1;
@@ -31,13 +31,8 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	{
 		base.OnSpawn();
 
-		// set parent to the world the door is in
 		var door = ExteriorPortal.Get();
-		if (door != null)
-		{
-			world.SetParentIdx(door.GetMyWorldId());
-		}
-		else
+		if (door == null)
 		{
 			Debug.LogWarning("[Twitch Integration] no exterior door linked to pocket dimension");
 			DestroyWorld();
