@@ -32,7 +32,13 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 		base.OnSpawn();
 
 		var door = ExteriorPortal.Get();
-		if (door == null)
+		if (door != null)
+		{
+			// set parent to the world the door is in
+			// This has to be here on spawn, because parent worlds aren't saved
+			world.SetParentIdx(door.GetMyWorldId());
+		}
+		else
 		{
 			Debug.LogWarning("[Twitch Integration] no exterior door linked to pocket dimension");
 			DestroyWorld();

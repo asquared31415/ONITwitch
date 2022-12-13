@@ -23,7 +23,7 @@ public static class PocketDimensionGeneration
 	private static readonly List<PocketDimensionGenerationSettings> PocketDimensionSettings = new()
 	{
 		new PocketDimensionGenerationSettings(
-			5f,
+			0.75f,
 			null,
 			SubWorld.ZoneType.Barren,
 			new List<SimHashes> { SimHashes.SandStone },
@@ -79,7 +79,7 @@ public static class PocketDimensionGeneration
 		*/
 		// Sandstone, algae, dirt
 		new PocketDimensionGenerationSettings(
-			3f,
+			0.2f,
 			null,
 			SubWorld.ZoneType.Sandstone,
 			new List<SimHashes>
@@ -310,9 +310,6 @@ public static class PocketDimensionGeneration
 		interiorPortal.ExteriorPortal = exteriorPortalRef;
 
 		world.GetComponent<PocketDimension>().ExteriorPortal = exteriorPortalRef;
-
-		// set parent to the world the door is in
-		world.SetParentIdx(exteriorPortal.GetMyWorldId());
 
 		// no light or rads
 		world.sunlightFixedTrait = FIXEDTRAITS.SUNLIGHT.NAME.NONE;
