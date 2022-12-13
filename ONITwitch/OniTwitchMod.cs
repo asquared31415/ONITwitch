@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
@@ -41,7 +42,6 @@ public class OniTwitchMod : UserMod2
 	}
 }
 
-
 [HarmonyPatch(typeof(HoverTextConfiguration), "DrawTitle")]
 public static class CellNumInTitle
 {
@@ -57,5 +57,15 @@ public static class CellNumInTitle
 			drawer.NewLine();
 			drawer.DrawText($"Cell {cell}", __instance.ToolTitleTextStyle);
 		}
+	}
+}
+
+[HarmonyPatch(typeof(KImGuiUtil), nameof(KImGuiUtil.SetKAssertCB))]
+public static class ImGui_Patch
+{
+	[UsedImplicitly]
+	public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig)
+	{
+		return new[] { new CodeInstruction(OpCodes.Ret) };
 	}
 }
