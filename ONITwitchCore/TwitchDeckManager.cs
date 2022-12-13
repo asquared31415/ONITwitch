@@ -43,7 +43,7 @@ public class TwitchDeckManager
 	[CanBeNull]
 	public EventInfo Draw()
 	{
-		const int maxDrawAttempts = 100;
+		const int maxDrawAttempts = 1000;
 
 		var condInst = ConditionsManager.Instance;
 		var dataInst = DataManager.Instance;

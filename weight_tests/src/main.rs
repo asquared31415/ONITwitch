@@ -85,7 +85,7 @@ fn draw_stats<T: PartialEq + Eq + core::hash::Hash + Clone + core::fmt::Debug>(
 
             attempts += 1;
 
-            if attempts > 10_000 {
+            if attempts > 1_000 {
                 panic!("Unable to draw enough entries");
             }
         }
@@ -175,6 +175,7 @@ fn main() {
     deck.insert_count(Item("ONITwitch.ResearchTech"), 10);
     deck.insert_count(Item("ONITwitch.Eclipse"), 10);
     deck.insert_count(Item("ONITwitch.PocketDimension"), 20);
+    deck.insert_count(Item("ONITwitch.MeltMagma"), 20000);
 
     // simulate and report drawn chances
     const DRAW_ITERATIONS: usize = 1_000_000;

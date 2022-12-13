@@ -571,6 +571,17 @@ public static class DefaultCommands
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
+				20
+			)
+		);
+
+		RegisterCommand(
+			CommandInfo.Namespaced(
+				"MeltMagma",
+				"Melt Frozen Magma",
+				new MeltMagmaCommand(),
+				null,
+				Danger.None,
 				20000
 			)
 		);
