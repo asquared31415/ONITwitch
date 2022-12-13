@@ -11,16 +11,18 @@ public class PocketDimensionGenerationSettings
 	public SubWorld.ZoneType ZoneType;
 
 	public readonly GenerationKind Kind;
-	
+
 	// noise generation
 	public List<SimHashes> Hashes;
 	public float XFrequency;
 	public float YFrequency;
-	
+
 	// template generation
 	public string Template;
-	
+
 	[CanBeNull] public List<string> PrefabIds;
+
+	public bool CanSpawnSubDimensions;
 
 	public PocketDimensionGenerationSettings(
 		float cyclesLifetime,
@@ -29,7 +31,8 @@ public class PocketDimensionGenerationSettings
 		List<SimHashes> hashes,
 		float xFrequency,
 		float yFrequency,
-		[CanBeNull] List<string> prefabIds = null
+		[CanBeNull] List<string> prefabIds = null,
+		bool canSpawnSubDimensions = true
 	)
 	{
 		CyclesLifetime = cyclesLifetime;
@@ -40,14 +43,16 @@ public class PocketDimensionGenerationSettings
 		XFrequency = xFrequency;
 		YFrequency = yFrequency;
 		PrefabIds = prefabIds;
+		CanSpawnSubDimensions = canSpawnSubDimensions;
 	}
-	
+
 	public PocketDimensionGenerationSettings(
 		float cyclesLifetime,
 		[CanBeNull] string requiredSkillId,
 		SubWorld.ZoneType zoneType,
 		string template,
-		[CanBeNull] List<string> prefabIds = null
+		[CanBeNull] List<string> prefabIds = null,
+		bool canSpawnSubDimensions = true
 	)
 	{
 		CyclesLifetime = cyclesLifetime;
@@ -56,6 +61,7 @@ public class PocketDimensionGenerationSettings
 		Kind = GenerationKind.Template;
 		Template = template;
 		PrefabIds = prefabIds;
+		CanSpawnSubDimensions = canSpawnSubDimensions;
 	}
 
 	public enum GenerationKind

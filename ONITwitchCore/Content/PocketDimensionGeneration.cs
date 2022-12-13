@@ -22,19 +22,6 @@ public static class PocketDimensionGeneration
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
 	private static readonly List<PocketDimensionGenerationSettings> PocketDimensionSettings = new()
 	{
-		new PocketDimensionGenerationSettings(
-			0.75f,
-			null,
-			SubWorld.ZoneType.Barren,
-			new List<SimHashes> { SimHashes.SandStone },
-			0.1f,
-			0.1f,
-			new List<string>
-			{
-				PocketDimensionGeneratorConfig.Id,
-			}
-		),
-		/*
 		// Trollface indestructible border
 		new PocketDimensionGenerationSettings(
 			1f,
@@ -76,7 +63,6 @@ public static class PocketDimensionGeneration
 				PacuConfig.ID,
 			}
 		),
-		*/
 		// Sandstone, algae, dirt
 		new PocketDimensionGenerationSettings(
 			0.2f,
@@ -116,7 +102,7 @@ public static class PocketDimensionGeneration
 		),
 	};
 
-	public static void GenerateDimension(int foundCell)
+	public static void GenerateDimension(int exteriorPortalCell)
 	{
 		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
 		dimension.SetActive(true);
@@ -170,20 +156,19 @@ public static class PocketDimensionGeneration
 						var prefab = Assets.GetPrefab(prefabId);
 						if (prefab != null)
 						{
-							var randomX = ThreadRandom.Next(
-								PocketDimension.InternalOffset.x + 1,
-								PocketDimension.InternalOffset.x + PocketDimension.InternalSize.x - 1
-							);
-							var randomY = ThreadRandom.Next(
-								PocketDimension.InternalOffset.y + 1,
-								PocketDimension.InternalOffset.y + PocketDimension.InternalSize.y - 1
-							);
-
-							var pos = new Vector2(world.WorldOffset.x + randomX, world.WorldOffset.y + randomY);
-							var go = Util.KInstantiate(prefab, pos);
+							var pos = world.WorldOffset + GetRandomInteriorOffset();
+							var go = Util.KInstantiate(prefab, (Vector2) pos);
 							go.SetActive(true);
 						}
 					}
+				}
+
+				// 5% chance to spawn another pocket dimension inside
+				if (ThreadRandom.Next(20) == 0)
+				{
+					var pos = world.WorldOffset + GetRandomInteriorOffset();
+					var go = Util.KInstantiate(Assets.GetPrefab(PocketDimensionGeneratorConfig.Id), (Vector2) pos);
+					go.SetActive(true);
 				}
 
 				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
@@ -281,7 +266,7 @@ public static class PocketDimensionGeneration
 		// This setup happens immediately, before the world spawns, and before the template is placed
 		var exteriorBuildingDef = Assets.GetBuildingDef(PocketDimensionExteriorPortalConfig.Id);
 		var exteriorDoor = exteriorBuildingDef.Create(
-			Grid.CellToPosCBC(foundCell, exteriorBuildingDef.SceneLayer),
+			Grid.CellToPosCBC(exteriorPortalCell, exteriorBuildingDef.SceneLayer),
 			null,
 			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
 			null,
@@ -316,6 +301,20 @@ public static class PocketDimensionGeneration
 		world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
 		world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
 		world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
+	}
+
+	public static Vector2I GetRandomInteriorOffset()
+	{
+		var randomX = ThreadRandom.Next(
+			PocketDimension.InternalOffset.x + 1,
+			PocketDimension.InternalOffset.x + PocketDimension.InternalSize.x - 1
+		);
+		var randomY = ThreadRandom.Next(
+			PocketDimension.InternalOffset.y + 1,
+			PocketDimension.InternalOffset.y + PocketDimension.InternalSize.y - 1
+		);
+
+		return new Vector2I(randomX, randomY);
 	}
 
 	public static void FillWithNoise(
