@@ -14,7 +14,9 @@
 
     <ItemGroup Condition="'$(IsLib)' != 'true'">
         <_Anim Include="$(ProjectDir)anim/**"/>
+        <_Assets Include="$(ProjectDir)assets/**"/>
         <_Templates Include="$(ProjectDir)templates/**"/>
+        <_Elements Include="$(ProjectDir)elements/**"/>
         <_ModInfo Include="$(ProjectDir)/mod_info.yaml;$(ProjectDir)/mod.yaml">
             <DestFolder>$(ModsPath)</DestFolder>
         </_ModInfo>
@@ -32,7 +34,9 @@
         <Copy SourceFiles="@(_ModDLL)" DestinationFolder="%(_ModDLL.DestFolder)"/>
         <Copy SourceFiles="@(_ModInfo)" DestinationFolder="%(_ModInfo.DestFolder)"/>
         <Copy SourceFiles="@(_Anim)" DestinationFolder="$(ModsPath)/anim/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(_Assets)" DestinationFolder="$(ModsPath)/assets/%(RecursiveDir)"/>
         <Copy SourceFiles="@(_Templates)" DestinationFolder="$(ModsPath)/templates/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(_Elements)" DestinationFolder="$(ModsPath)/elements/%(RecursiveDir)"/>
         <Copy SourceFiles="@(_Readme)" DestinationFolder="$(ModsPath)/%(RecursiveDir)"/>
         <Copy SourceFiles="@(CopyFolder)" DestinationFolder="$(ModsPath)/%(CopyFolder.DestName)/%(RecursiveDir)"/>
     </Target>

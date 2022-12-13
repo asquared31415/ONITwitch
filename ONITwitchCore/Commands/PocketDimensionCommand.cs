@@ -25,6 +25,13 @@ public class PocketDimensionCommand : CommandBase
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
 	private static readonly List<PocketDimensionGenerationSettings> PocketDimensionSettings = new()
 	{
+		// Trollface indestructible border
+		new PocketDimensionGenerationSettings(
+			1f,
+			null,
+			SubWorld.ZoneType.Space,
+			"TwitchIntegration/TrollFace"
+		),
 		// Meep face
 		new PocketDimensionGenerationSettings(
 			1f,
