@@ -20,7 +20,7 @@ public abstract class BasePocketDimensionGeneration
 	[CanBeNull] private readonly List<string> prefabIds;
 
 	private readonly bool canSpawnSubDimensions;
-	
+
 	// TODO: enable once sub-dimensions are less totally broken
 	private const bool DEBUG_BROKEN_AllowNestedDimensions = false;
 
@@ -121,10 +121,7 @@ public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
 	protected override void GenerateTiles(WorldContainer world)
 	{
 		var templateContainer = TemplateCache.GetTemplate(template);
-		var pos = new Vector2I(
-			world.WorldSize.x / 2 + world.WorldOffset.x,
-			world.WorldSize.y / 2 + world.WorldOffset.y
-		);
+		var pos = world.WorldOffset + PocketDimension.InternalOffset + PocketDimension.InternalSize / 2 - Vector2I.one;
 		TemplateLoader.Stamp(templateContainer, pos, () => { });
 	}
 }

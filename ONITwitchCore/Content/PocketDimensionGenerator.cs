@@ -36,6 +36,18 @@ public static class PocketDimensionGenerator
 			SubWorld.ZoneType.CrystalCaverns,
 			PocketDimension.MeepTemplate
 		),
+		// Aquarium
+		new TemplatePocketDimensionGeneration(
+			5f,
+			SubWorld.ZoneType.Ocean,
+			"TwitchIntegration/PacuTank"
+		),
+		// Sus
+		new TemplatePocketDimensionGeneration(
+			5f,
+			SubWorld.ZoneType.Ocean,
+			"TwitchIntegration/Sus"
+		),
 
 		// ========================================
 		// World Themes
@@ -120,6 +132,8 @@ public static class PocketDimensionGenerator
 				SimHashes.Vacuum,
 				SimHashes.Hydrogen,
 				SimHashes.Vacuum,
+				SimHashes.SaltWater,
+				SimHashes.SaltWater,
 				SimHashes.Sand,
 				SimHashes.Sand,
 				SimHashes.Salt,
@@ -132,7 +146,20 @@ public static class PocketDimensionGenerator
 			},
 			// very wide
 			0.04f,
-			0.2f
+			0.2f,
+			prefabIds: new List<string>
+			{
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+			}
 		),
 		// metallic biome
 		new NoisePocketDimensionGeneration(
@@ -215,37 +242,6 @@ public static class PocketDimensionGenerator
 			0.1f,
 			0.1f,
 			"Mining3"
-		),
-
-		// ========================================
-		// Random Fun
-		// ========================================
-
-		// Aquarium
-		new NoisePocketDimensionGeneration(
-			5f,
-			SubWorld.ZoneType.Ocean,
-			new List<SimHashes> { SimHashes.Water },
-			0.2f,
-			0.2f,
-			prefabIds: new List<string>
-			{
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-				PacuConfig.ID,
-			}
 		),
 	};
 
