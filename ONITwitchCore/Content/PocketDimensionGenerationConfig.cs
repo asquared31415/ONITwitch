@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Content;
 
-public abstract class PocketDimensionGenerationConfig
+public abstract class BasePocketDimensionGeneration
 {
 	public float CyclesLifetime;
 	public SubWorld.ZoneType ZoneType;
@@ -24,7 +24,7 @@ public abstract class PocketDimensionGenerationConfig
 	// TODO: enable once sub-dimensions are less totally broken
 	private const bool DEBUG_BROKEN_AllowNestedDimensions = false;
 
-	public PocketDimensionGenerationConfig(
+	public BasePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		[CanBeNull] string requiredSkillId = null,
@@ -102,11 +102,11 @@ public abstract class PocketDimensionGenerationConfig
 	}
 }
 
-public class PocketDimensionTemplateGeneration : PocketDimensionGenerationConfig
+public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
 {
 	private readonly string template;
 
-	public PocketDimensionTemplateGeneration(
+	public TemplatePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		string template,
@@ -129,14 +129,14 @@ public class PocketDimensionTemplateGeneration : PocketDimensionGenerationConfig
 	}
 }
 
-public class PocketDimensionNoiseGeneration : PocketDimensionGenerationConfig
+public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 {
 	[NotNull] private readonly List<SimHashes> hashes;
 
 	private readonly float xFrequency;
 	private readonly float yFrequency;
 
-	public PocketDimensionNoiseGeneration(
+	public NoisePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		[NotNull] List<SimHashes> hashes,
@@ -190,8 +190,9 @@ public class PocketDimensionNoiseGeneration : PocketDimensionGenerationConfig
 }
 
 // Delegates the call to GenerateTiles to an action passed
-// Used for mod compatibility
-public class CustomPocketDimensionGeneration : PocketDimensionGenerationConfig
+// Used for mod compatibility via reflection
+[UsedImplicitly]
+public class CustomPocketDimensionGeneration : BasePocketDimensionGeneration
 {
 	private readonly Action<WorldContainer> generateTilesAction;
 

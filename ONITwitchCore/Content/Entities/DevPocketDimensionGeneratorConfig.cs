@@ -29,7 +29,7 @@ public class DevPocketDimensionGeneratorConfig : IEntityConfig
 	public void OnSpawn(GameObject inst)
 	{
 		var cell = Grid.PosToCell(inst);
-		PocketDimensionGeneration.GenerateDimension(cell);
+		PocketDimensionGenerator.GenerateDimension(cell);
 		Object.Destroy(inst);
 	}
 

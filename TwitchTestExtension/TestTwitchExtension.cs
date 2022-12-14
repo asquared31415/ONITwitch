@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
 using ONITwitchLib.Core;
+using ProcGen;
 
 namespace TwitchTestExtension;
 
@@ -65,6 +66,20 @@ public class TestTwitchExtension : UserMod2
 		);
 
 		deckInst.AddToDeck(customEvent, 1);
+
+		var genConfig = new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.Metallic,
+			new List<SimHashes>
+			{
+				SimHashes.Gold,
+				SimHashes.Aluminum,
+				SimHashes.Copper,
+			},
+			0.1f,
+			0.1f
+		);
+		PocketDimensionGenerator.AddGenerationConfig(genConfig);
 	}
 }
 

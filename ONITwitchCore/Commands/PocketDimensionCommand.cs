@@ -57,6 +57,6 @@ public class PocketDimensionCommand : CommandBase
 			foundCell = startCell;
 		}
 
-		PocketDimensionGeneration.GenerateDimension(foundCell);
+		PocketDimensionGenerator.GenerateDimension(foundCell);
 	}
 }

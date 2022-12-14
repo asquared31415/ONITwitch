@@ -7,7 +7,6 @@ using Klei;
 using ONITwitchCore.Cmps.PocketDimension;
 using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Content.Entities;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
@@ -15,24 +14,24 @@ using UnityEngine;
 
 namespace ONITwitchCore.Content;
 
-public static class PocketDimensionGeneration
+public static class PocketDimensionGenerator
 {
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
-	private static readonly List<PocketDimensionGenerationConfig> PocketDimensionSettings = new()
+	private static readonly List<BasePocketDimensionGeneration> PocketDimensionSettings = new()
 	{
 		// ========================================
 		// Templates
 		// ========================================
 
 		// Trollface indestructible border
-		new PocketDimensionTemplateGeneration(
+		new TemplatePocketDimensionGeneration(
 			1f,
 			SubWorld.ZoneType.Space,
 			"TwitchIntegration/TrollFace",
 			canSpawnSubDimensions: false
 		),
 		// Meep face
-		new PocketDimensionTemplateGeneration(
+		new TemplatePocketDimensionGeneration(
 			1f,
 			SubWorld.ZoneType.CrystalCaverns,
 			PocketDimension.MeepTemplate
@@ -43,7 +42,7 @@ public static class PocketDimensionGeneration
 		// ========================================
 
 		// Sandstone, algae, dirt
-		new PocketDimensionNoiseGeneration(
+		new NoisePocketDimensionGeneration(
 			3f,
 			SubWorld.ZoneType.Sandstone,
 			new List<SimHashes>
@@ -59,7 +58,7 @@ public static class PocketDimensionGeneration
 			0.15f
 		),
 		// Obsidian, niobium
-		new PocketDimensionNoiseGeneration(
+		new NoisePocketDimensionGeneration(
 			4f,
 			SubWorld.ZoneType.Wasteland,
 			new List<SimHashes>
@@ -84,7 +83,7 @@ public static class PocketDimensionGeneration
 		// ========================================
 
 		// Aquarium
-		new PocketDimensionNoiseGeneration(
+		new NoisePocketDimensionGeneration(
 			5f,
 			SubWorld.ZoneType.Ocean,
 			new List<SimHashes> { SimHashes.Water },
@@ -110,6 +109,13 @@ public static class PocketDimensionGeneration
 			}
 		),
 	};
+
+	// used via reflection for mod compatibility
+	[UsedImplicitly]
+	public static void AddGenerationConfig(BasePocketDimensionGeneration config)
+	{
+		PocketDimensionSettings.Add(config);
+	}
 
 	public static void GenerateDimension(int exteriorPortalCell)
 	{

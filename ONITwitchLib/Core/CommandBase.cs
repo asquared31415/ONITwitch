@@ -7,16 +7,16 @@ namespace ONITwitchLib.Core;
 public class CommandBase
 {
 	private static readonly Func<object, object> GetRunActionDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-		AccessTools.DeclaredMethod(CoreTypes.CoreCommandExtType, "GetRunAction"),
+		AccessTools.DeclaredMethod(CoreTypes.CommandExtType, "GetRunAction"),
 		null,
-		CoreTypes.CoreCommandType,
+		CoreTypes.CommandType,
 		typeof(Action<object>)
 	);
 
 	private static readonly Func<object, object> GetConditionFuncDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-		AccessTools.DeclaredMethod(CoreTypes.CoreCommandExtType, "GetConditionFunc"),
+		AccessTools.DeclaredMethod(CoreTypes.CommandExtType, "GetConditionFunc"),
 		null,
-		CoreTypes.CoreCommandType,
+		CoreTypes.CommandType,
 		typeof(Func<object, bool>)
 	);
 
@@ -24,7 +24,7 @@ public class CommandBase
 
 	public CommandBase(Type commandType, params object[] args)
 	{
-		if (!CoreTypes.CoreCommandType.IsAssignableFrom(commandType))
+		if (!CoreTypes.CommandType.IsAssignableFrom(commandType))
 		{
 			throw new ArgumentException(
 				$"[Twitch Integration] lib attempted to create a CommandBase with invalid type {commandType}",
@@ -40,7 +40,7 @@ public class CommandBase
 		commandInst = inst;
 
 		var instType = commandInst.GetType();
-		if (!CoreTypes.CoreCommandType.IsAssignableFrom(instType))
+		if (!CoreTypes.CommandType.IsAssignableFrom(instType))
 		{
 			throw new ArgumentException(
 				$"[Twitch Integration] lib attempted to create a CommandBase with invalid type {instType}",
