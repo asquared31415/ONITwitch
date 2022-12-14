@@ -19,7 +19,7 @@ public static class SandboxSpawnerPatches
 				{
 					if (entity is KPrefabID kPrefabID)
 					{
-						if (kPrefabID.PrefabID() == PocketDimensionGeneratorConfig.Id)
+						if (kPrefabID.PrefabID() == DevPocketDimensionGeneratorConfig.Id)
 						{
 							return true;
 						}

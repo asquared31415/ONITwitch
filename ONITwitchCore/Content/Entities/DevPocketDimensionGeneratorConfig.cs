@@ -3,9 +3,9 @@ using UnityEngine;
 namespace ONITwitchCore.Content.Entities;
 
 // An entity used to generate a pocket dimension portal at its current location
-public class PocketDimensionGeneratorConfig : IEntityConfig
+public class DevPocketDimensionGeneratorConfig : IEntityConfig
 {
-	public const string Id = "ONITwitch.PocketDimensionGenerator";
+	public const string Id = "ONITwitch." + nameof(DevPocketDimensionGeneratorConfig);
 
 	public GameObject CreatePrefab()
 	{

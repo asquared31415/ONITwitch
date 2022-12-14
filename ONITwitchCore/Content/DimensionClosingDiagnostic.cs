@@ -1,4 +1,3 @@
-using ONITwitchCore.Cmps.PocketDimension;
 using ONITwitchLib;
 
 namespace ONITwitchCore.Content;
@@ -36,7 +35,7 @@ public class DimensionClosingDiagnostic : ColonyDiagnostic
 			return ErrorDiagnostic;
 		}
 
-		if (!world.TryGetComponent(out PocketDimension pocketDimension))
+		if (!world.TryGetComponent(out Cmps.PocketDimension.PocketDimension pocketDimension))
 		{
 			Debug.LogWarning(
 				$"[Twitch Integration] Pocket dimension closing diagnostic on incorrect world {world} (id {world.id})"

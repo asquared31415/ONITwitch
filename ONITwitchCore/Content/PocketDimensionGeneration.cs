@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Delaunay.Geo;
@@ -9,7 +8,6 @@ using ONITwitchCore.Cmps.PocketDimension;
 using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
-using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
@@ -20,31 +18,79 @@ namespace ONITwitchCore.Content;
 public static class PocketDimensionGeneration
 {
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
-	private static readonly List<PocketDimensionGenerationSettings> PocketDimensionSettings = new()
+	private static readonly List<PocketDimensionGenerationConfig> PocketDimensionSettings = new()
 	{
+		// ========================================
+		// Templates
+		// ========================================
+
 		// Trollface indestructible border
-		new PocketDimensionGenerationSettings(
+		new PocketDimensionTemplateGeneration(
 			1f,
-			null,
 			SubWorld.ZoneType.Space,
-			"TwitchIntegration/TrollFace"
+			"TwitchIntegration/TrollFace",
+			canSpawnSubDimensions: false
 		),
 		// Meep face
-		new PocketDimensionGenerationSettings(
+		new PocketDimensionTemplateGeneration(
 			1f,
-			null,
 			SubWorld.ZoneType.CrystalCaverns,
 			PocketDimension.MeepTemplate
 		),
+
+		// ========================================
+		// World Themes
+		// ========================================
+
+		// Sandstone, algae, dirt
+		new PocketDimensionNoiseGeneration(
+			3f,
+			SubWorld.ZoneType.Sandstone,
+			new List<SimHashes>
+			{
+				SimHashes.SandStone,
+				SimHashes.SandStone,
+				SimHashes.SandStone,
+				SimHashes.Algae,
+				SimHashes.Fertilizer,
+				SimHashes.Dirt,
+			},
+			0.05f,
+			0.15f
+		),
+		// Obsidian, niobium
+		new PocketDimensionNoiseGeneration(
+			4f,
+			SubWorld.ZoneType.Wasteland,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Obsidian,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Obsidian,
+				SimHashes.Niobium,
+			},
+			0.1f,
+			0.1f,
+			"Mining3"
+		),
+
+		// ========================================
+		// Random Fun
+		// ========================================
+
 		// Aquarium
-		new PocketDimensionGenerationSettings(
+		new PocketDimensionNoiseGeneration(
 			5f,
-			null,
 			SubWorld.ZoneType.Ocean,
 			new List<SimHashes> { SimHashes.Water },
 			0.2f,
 			0.2f,
-			new List<string>
+			prefabIds: new List<string>
 			{
 				PacuConfig.ID,
 				PacuConfig.ID,
@@ -62,43 +108,6 @@ public static class PocketDimensionGeneration
 				PacuConfig.ID,
 				PacuConfig.ID,
 			}
-		),
-		// Sandstone, algae, dirt
-		new PocketDimensionGenerationSettings(
-			0.2f,
-			null,
-			SubWorld.ZoneType.Sandstone,
-			new List<SimHashes>
-			{
-				SimHashes.SandStone,
-				SimHashes.SandStone,
-				SimHashes.SandStone,
-				SimHashes.Algae,
-				SimHashes.Fertilizer,
-				SimHashes.Dirt,
-			},
-			0.05f,
-			0.15f
-		),
-		// Obsidian, niobium
-		new PocketDimensionGenerationSettings(
-			4f,
-			"Mining3",
-			SubWorld.ZoneType.Wasteland,
-			new List<SimHashes>
-			{
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Obsidian,
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Obsidian,
-				SimHashes.Niobium,
-			},
-			0.1f,
-			0.1f
 		),
 	};
 
@@ -122,62 +131,18 @@ public static class PocketDimensionGeneration
 					)
 					.GetRandom();
 
-				switch (settings.Kind)
-				{
-					case PocketDimensionGenerationSettings.GenerationKind.Noise:
-					{
-						FillWithNoise(
-							world.WorldOffset + PocketDimension.InternalOffset,
-							PocketDimension.InternalSize,
-							settings.Hashes,
-							settings.XFrequency,
-							settings.YFrequency
-						);
-						break;
-					}
-					case PocketDimensionGenerationSettings.GenerationKind.Template:
-					{
-						var template = TemplateCache.GetTemplate(settings.Template);
-						var pos = new Vector2I(
-							world.WorldSize.x / 2 + world.WorldOffset.x,
-							world.WorldSize.y / 2 + world.WorldOffset.y
-						);
-						TemplateLoader.Stamp(template, pos, () => { });
-						break;
-					}
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-
-				if (settings.PrefabIds != null)
-				{
-					foreach (var prefabId in settings.PrefabIds)
-					{
-						var prefab = Assets.GetPrefab(prefabId);
-						if (prefab != null)
-						{
-							var pos = world.WorldOffset + GetRandomInteriorOffset();
-							var go = Util.KInstantiate(prefab, (Vector2) pos);
-							go.SetActive(true);
-						}
-					}
-				}
-
-				// 5% chance to spawn another pocket dimension inside
-				if (ThreadRandom.Next(20) == 0)
-				{
-					var pos = world.WorldOffset + GetRandomInteriorOffset();
-					var go = Util.KInstantiate(Assets.GetPrefab(PocketDimensionGeneratorConfig.Id), (Vector2) pos);
-					go.SetActive(true);
-				}
-
 				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
 				pocketDim.MaxLifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
+
+				// generate the world
+				// natural tiles, prefabs, and possibly a nested dimension
+				settings.Generate(world);
 
 				// remove the old polygons and re-add the one we want.
 				var overworldCell = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
 
-				var internalStart = world.WorldOffset + PocketDimension.InternalOffset - Vector2I.one;
+				var internalStart = world.WorldOffset + PocketDimension.InternalOffset -
+									Vector2I.one;
 				var internalEnd = world.WorldOffset +
 								  PocketDimension.InternalOffset +
 								  PocketDimension.InternalSize +
@@ -209,7 +174,9 @@ public static class PocketDimensionGeneration
 				// above world (4 tiles high for the surrounding no build zone)
 				for (var x = 0; x < PocketDimension.DimensionSize.x; x++)
 				{
-					for (var y = PocketDimension.DimensionSize.y - 4; y < PocketDimension.DimensionSize.y; y++)
+					for (var y = PocketDimension.DimensionSize.y - 4;
+						 y < PocketDimension.DimensionSize.y;
+						 y++)
 					{
 						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
 						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
@@ -231,7 +198,9 @@ public static class PocketDimensionGeneration
 				}
 
 				// right of world
-				for (var x = PocketDimension.DimensionSize.x - 2; x < PocketDimension.DimensionSize.x; x++)
+				for (var x = PocketDimension.DimensionSize.x - 2;
+					 x < PocketDimension.DimensionSize.x;
+					 x++)
 				{
 					for (var y = 2; y < PocketDimension.DimensionSize.y - 2; y++)
 					{
@@ -301,65 +270,5 @@ public static class PocketDimensionGeneration
 		world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
 		world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
 		world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
-	}
-
-	public static Vector2I GetRandomInteriorOffset()
-	{
-		var randomX = ThreadRandom.Next(
-			PocketDimension.InternalOffset.x + 1,
-			PocketDimension.InternalOffset.x + PocketDimension.InternalSize.x - 1
-		);
-		var randomY = ThreadRandom.Next(
-			PocketDimension.InternalOffset.y + 1,
-			PocketDimension.InternalOffset.y + PocketDimension.InternalSize.y - 1
-		);
-
-		return new Vector2I(randomX, randomY);
-	}
-
-	public static void FillWithNoise(
-		Vector2I offset,
-		Vector2I size,
-		[NotNull] List<SimHashes> hashes,
-		float xFrequency,
-		float yFrequency,
-		float seed = float.NaN
-	)
-	{
-		if (float.IsNaN(seed))
-		{
-			seed = Time.realtimeSinceStartup;
-		}
-
-		var numElements = hashes.Count;
-		var elements = hashes.Select(ElementLoader.FindElementByHash).ToList();
-
-		var maxX = offset.x + size.x;
-		for (var x = offset.x; x < maxX; x++)
-		{
-			var maxY = offset.y + size.y;
-			for (var y = offset.y; y < maxY; y++)
-			{
-				// Transform from (-1,1) to (0,1)
-				var val = (PerlinSimplexNoise.noise(x * xFrequency, y * yFrequency, seed) + 1) / 2;
-				var idx = (int) Mathf.Floor(val * numElements);
-				var defaultValues = elements[idx].defaultValues;
-				var mass = (elements[idx].state & (Element.State) Element.StateMask) switch
-				{
-					Element.State.Vacuum => 0f,
-					Element.State.Gas => 5f,
-					Element.State.Liquid => 850f,
-					Element.State.Solid => 2000f,
-					_ => 0f,
-				};
-				SimMessages.ReplaceAndDisplaceElement(
-					Grid.XYToCell(x, y),
-					hashes[idx],
-					null,
-					mass,
-					defaultValues.temperature
-				);
-			}
-		}
 	}
 }
