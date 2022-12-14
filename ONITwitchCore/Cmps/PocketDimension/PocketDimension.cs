@@ -113,12 +113,9 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 		if (world != null)
 		{
-			if (ClusterManager.Instance.activeWorldId == world.id)
-			{
-				ClusterManager.Instance.SetActiveWorld(
-					door != null ? door.GetMyWorldId() : ClusterManager.Instance.GetStartWorld().id
-				);
-			}
+			ClusterManager.Instance.SetActiveWorld(
+				door != null ? door.GetMyWorldId() : ClusterManager.Instance.GetStartWorld().id
+			);
 
 			Vector3 exitPos;
 			if (door != null)

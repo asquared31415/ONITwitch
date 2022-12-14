@@ -57,6 +57,145 @@ public static class PocketDimensionGenerator
 			0.05f,
 			0.15f
 		),
+		// icy biome
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.FrozenWastes,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Snow,
+				SimHashes.Ice,
+				SimHashes.Ice,
+				SimHashes.DirtyIce,
+				SimHashes.BrineIce,
+				SimHashes.Wolframite,
+			},
+			0.2f,
+			0.2f
+		),
+		// sulfur biome
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.Wasteland,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Sand,
+				SimHashes.IgneousRock,
+				SimHashes.Sand,
+				SimHashes.IgneousRock,
+				SimHashes.IgneousRock,
+				SimHashes.Sulfur,
+			},
+			// stretched out tall
+			0.05f,
+			0.15f
+		),
+		// slime biome
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.BoggyMarsh,
+			new List<SimHashes>
+			{
+				SimHashes.ContaminatedOxygen,
+				SimHashes.DirtyWater,
+				SimHashes.SlimeMold,
+				SimHashes.Algae,
+				SimHashes.SlimeMold,
+				SimHashes.SedimentaryRock,
+				SimHashes.Clay,
+				SimHashes.GoldAmalgam,
+			},
+			0.1f,
+			0.1f
+		),
+		// TODO: maybe phosphor/iron jungle biome?
+		// ocean biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Ocean,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Hydrogen,
+				SimHashes.Vacuum,
+				SimHashes.Sand,
+				SimHashes.Sand,
+				SimHashes.Salt,
+				SimHashes.BleachStone,
+				SimHashes.Granite,
+				SimHashes.SedimentaryRock,
+				SimHashes.SedimentaryRock,
+				SimHashes.Granite,
+				SimHashes.Fossil,
+			},
+			// very wide
+			0.04f,
+			0.2f
+		),
+		// metallic biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Metallic,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.IgneousRock,
+				SimHashes.Vacuum,
+				SimHashes.Carbon,
+				SimHashes.Vacuum,
+				SimHashes.AluminumOre,
+				SimHashes.Vacuum,
+				SimHashes.Cobaltite,
+				SimHashes.Vacuum,
+				SimHashes.GoldAmalgam,
+				SimHashes.Vacuum,
+				SimHashes.IronOre,
+			},
+			// smaller blobs
+			0.3f,
+			0.3f
+		),
+		// radioactive biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Radioactive,
+			new List<SimHashes>
+			{
+				SimHashes.Chlorine,
+				SimHashes.SolidCarbonDioxide,
+				SimHashes.Vacuum,
+				SimHashes.Snow,
+				SimHashes.Ice,
+				SimHashes.Wolframite,
+				SimHashes.Vacuum,
+				SimHashes.UraniumOre,
+			},
+			// very small blobs
+			0.5f,
+			0.5f
+		),
+		// rust biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Rust,
+			new List<SimHashes>
+			{
+				SimHashes.CarbonDioxide,
+				SimHashes.SedimentaryRock,
+				SimHashes.MaficRock,
+				SimHashes.BleachStone,
+				SimHashes.Vacuum,
+				SimHashes.Rust,
+				SimHashes.IronOre,
+				SimHashes.Ethanol,
+			},
+			0.2f,
+			0.15f
+		),
+		// TODO: oil biome?
 		// Obsidian, niobium
 		new NoisePocketDimensionGeneration(
 			4f,
