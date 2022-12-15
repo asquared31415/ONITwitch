@@ -14,7 +14,26 @@ public class IceAgeCommand : CommandBase
 
 	public override void Run(object data)
 	{
-		foreach (var cell in GridUtil.ActiveSimCells())
+		// select a random world that is a root world
+		var world = ClusterManager.Instance.WorldContainers.Where(
+				world => world.IsDupeVisited && ((world.ParentWorldId == world.id) ||
+												 (world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX))
+			)
+			.GetRandom();
+		if (world == null)
+		{
+			Debug.LogWarning($"[Twitch Integration] Unable to find a suitable world for Ice Age");
+			foreach (var worldContainer in ClusterManager.Instance.WorldContainers)
+			{
+				Debug.Log(
+					$"{worldContainer.GetComponent<ClusterGridEntity>().Name} has parent {worldContainer.ParentWorldId}"
+				);
+			}
+
+			return;
+		}
+
+		foreach (var cell in GridUtil.IterateCellRegion(world.WorldOffset, world.WorldOffset + world.WorldSize))
 		{
 			if (Grid.IsWorldValidCell(cell) &&
 				Grid.Element[cell].HasTag(GameTags.Liquid) &&
@@ -39,6 +58,12 @@ public class IceAgeCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast("Ice Age", "All liquids in the game have frozen");
+		ToastManager
+			.InstantiateToastWithPosTarget(
+				"Ice Age",
+				$"All liquids on {world.GetComponent<ClusterGridEntity>().Name} have frozen",
+				(
+					Vector2) world.WorldOffset + world.WorldSize / 2
+			);
 	}
 }
