@@ -1,5 +1,4 @@
 using KSerialization;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
@@ -50,6 +49,12 @@ public class PocketDimensionExteriorPortal : KMonoBehaviour
 
 	public void Destroy()
 	{
+		var interior = InteriorPortal.Get();
+		if (interior != null)
+		{
+			Object.Destroy(interior.GetComponent<NavTeleporter>());
+		}
+
 		Object.Destroy(GetComponent<NavTeleporter>());
 
 		var kbac = gameObject.GetComponent<KBatchedAnimController>();
