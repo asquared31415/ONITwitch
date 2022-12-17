@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
@@ -10,19 +11,19 @@ public static class ToastManager
 {
 	private static readonly Func<string, string, GameObject> InstantiateToastDelegate =
 		DelegateUtil.CreateDelegate<Func<string, string, GameObject>>(
-			AccessTools.DeclaredMethod(EventInterface.ToastManagerType, "InstantiateToast"),
+			AccessTools.DeclaredMethod(CoreTypes.ToastManagerType, "InstantiateToast"),
 			null
 		);
 
 	private static readonly Func<string, string, Vector3, GameObject> InstantiateToastWithPosDelegate =
 		DelegateUtil.CreateDelegate<Func<string, string, Vector3, GameObject>>(
-			AccessTools.DeclaredMethod(EventInterface.ToastManagerType, "InstantiateToastWithPosTarget"),
+			AccessTools.DeclaredMethod(CoreTypes.ToastManagerType, "InstantiateToastWithPosTarget"),
 			null
 		);
 
 	private static readonly Func<string, string, GameObject, GameObject> InstantiateToastWithGoDelegate =
 		DelegateUtil.CreateDelegate<Func<string, string, GameObject, GameObject>>(
-			AccessTools.DeclaredMethod(EventInterface.ToastManagerType, "InstantiateToastWithGoTarget"),
+			AccessTools.DeclaredMethod(CoreTypes.ToastManagerType, "InstantiateToastWithGoTarget"),
 			null
 		);
 

@@ -28,9 +28,6 @@ public static class EventInterface
 	private const string DangerManagerTypeName = "ONITwitchCore.DangerManager, ONITwitch";
 	private static Type dangerManagerType;
 
-	private const string ToastManagerTypeName = "ONITwitchCore.Toasts.ToastManager, ONITwitch";
-	private static Type toastManagerType;
-
 	/// <summary>
 	/// Only safe to access if the Twitch mod is active.
 	/// </summary>
@@ -66,12 +63,6 @@ public static class EventInterface
 	/// </summary>
 	[NotNull]
 	public static Type DangerManagerType => (dangerManagerType ??= Type.GetType(DangerManagerTypeName))!;
-
-	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
-	[NotNull]
-	public static Type ToastManagerType => (toastManagerType ??= Type.GetType(ToastManagerTypeName))!;
 
 	private static Func<object> eventManagerInstanceDelegate;
 

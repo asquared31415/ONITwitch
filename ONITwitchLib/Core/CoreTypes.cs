@@ -44,6 +44,9 @@ public static class CoreTypes
 
 	private static Type customPocketDimensionGenerationType;
 
+	private const string ToastManagerTypeName = "ONITwitchCore.Toasts.ToastManager, ONITwitch";
+	private static Type toastManagerType;
+
 	/// <summary>
 	/// Only safe to access if the Twitch mod is active.
 	/// </summary>
@@ -96,4 +99,10 @@ public static class CoreTypes
 	[NotNull]
 	public static Type CustomPocketDimensionGenerationType => (customPocketDimensionGenerationType ??=
 		Type.GetType(CustomPocketDimensionGenerationTypeName))!;
+
+	/// <summary>
+	/// Only safe to access if the Twitch mod is active.
+	/// </summary>
+	[NotNull]
+	public static Type ToastManagerType => (toastManagerType ??= Type.GetType(ToastManagerTypeName))!;
 }

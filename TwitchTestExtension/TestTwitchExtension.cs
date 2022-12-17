@@ -83,4 +83,27 @@ public class TestTwitchExtension : UserMod2
 	}
 }
 
+[HarmonyPatch(typeof(PauseScreen), "OnShow")]
+public static class ToastTest
+{
+	[UsedImplicitly]
+	public static void Postfix()
+	{
+		if (Components.LiveMinionIdentities.Items.Count > 0)
+		{
+			var minion = Components.LiveMinionIdentities.Items.GetRandom();
+			Debug.Log($"targeting {minion}");
+			ToastManager.InstantiateToastWithGoTarget(
+				"Test Toast",
+				$"this is a test toast targeting {minion}",
+				minion.gameObject
+			);
+		}
+		else
+		{
+			Debug.LogWarning("Unable to find a minion to spawn a toast on");
+		}
+	}
+}
+
 internal record struct ExtData(bool Thing);

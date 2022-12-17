@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using JetBrains.Annotations;
+using UnityEngine;
 
 namespace ONITwitchLib.Utils;
 
@@ -200,10 +202,59 @@ public static class GridUtil
 		AccessTools.FieldRefAccess<Game, List<Game.SimActiveRegion>>(
 			AccessTools.DeclaredField(typeof(Game), "simActiveRegions")
 		);
-	
+
 	public static IEnumerable<int> ActiveSimCells()
 	{
 		var activeSimRegions = SimRegionsDelegate(Game.Instance);
 		return activeSimRegions.SelectMany(IterateCellRegion);
+	}
+
+	[CanBeNull]
+	public static Vector2? LineSegmentIntersectsBox(Vector2 start, Vector2 end, Vector2I boxStart)
+	{
+		var boxEnd = boxStart + Vector2I.one;
+
+		var x1t = (boxStart.x - start.x) / (end.x - start.x);
+		var x2t = (boxEnd.x - start.x) / (end.x - start.x);
+		// swap such that 2 is always greater than or equal to 1
+		if (x1t > x2t)
+		{
+			(x2t, x1t) = (x1t, x2t);
+		}
+
+		var y1t = (boxStart.y - start.y) / (end.y - start.y);
+		var y2t = (boxEnd.y - start.y) / (end.y - start.y);
+		// swap such that 2 is always greater than or equal to 1
+		if (y1t > y2t)
+		{
+			(y2t, y1t) = (y1t, y2t);
+		}
+
+		// if the second x axis is crossed before the first y, or the second y before the first x, then the line is outside the cell
+		if ((x2t < y1t) || (y2t < x1t))
+		{
+			return null;
+		}
+
+		var tmin = Mathf.Max(x1t, y1t);
+		var tmax = Mathf.Min(x2t, y2t);
+		if (tmin > tmax)
+		{
+			(tmax, tmin) = (tmin, tmax);
+		}
+
+		var dir = end - start;
+		// return the first collision that is in bounds of the segment
+		if (tmin is >= 0 and <= 1)
+		{
+			return start + tmin * dir;
+		}
+
+		if (tmax is >= 0 and <= 1)
+		{
+			return start + tmax * dir;
+		}
+
+		return null;
 	}
 }
