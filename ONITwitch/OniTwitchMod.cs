@@ -6,7 +6,9 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchCore;
 using ONITwitchCore.Config;
+using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Integration.DecorPackA;
+using ONITwitchLib.Utils;
 using UnityEngine;
 
 namespace ONITwitch;
@@ -26,6 +28,8 @@ public class OniTwitchMod : UserMod2
 		var mainThreadObject = new GameObject("MainThreadScheduler");
 		mainThreadObject.AddOrGet<MainThreadScheduler>();
 		Object.DontDestroyOnLoad(mainThreadObject);
+
+		ModUtil.AddBuildingToPlanScreen("Base", SurpriseTileConfig.Id);
 	}
 
 	public const string DecorPackOneStaticID = "DecorPackA";
