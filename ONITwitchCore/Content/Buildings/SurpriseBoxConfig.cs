@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace ONITwitchCore.Content.Buildings;
 
-public class SurpriseTileConfig : IBuildingConfig
+public class SurpriseBoxConfig : IBuildingConfig
 {
-	public const string Id = "ONITwitch." + nameof(SurpriseTileConfig);
-	public const string Anim = "floor_basic_kanim";
+	public const string Id = "ONITwitch." + nameof(SurpriseBoxConfig);
+	public const string Anim = "twitch_surprise_box_kanim";
 
 	public override BuildingDef CreateBuildingDef()
 	{
@@ -29,13 +29,14 @@ public class SurpriseTileConfig : IBuildingConfig
 		def.Overheatable = false;
 		def.PlayConstructionSounds = false;
 		def.DebugOnly = true;
+		def.ThermalConductivity = 0;
 
 		return def;
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
 	{
-		go.AddOrGet<SurpriseTile>();
+		go.AddOrGet<SurpriseBox>();
 		go.AddOrGet<Deconstructable>();
 	}
 }

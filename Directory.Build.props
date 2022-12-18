@@ -77,6 +77,10 @@
             <HintPath>$(LibFolder)/ImGui.dll</HintPath>
             <Private>false</Private>
         </Reference>
+        <Reference Include="ImGui.NET">
+            <HintPath>$(LibFolder)/ImGui.NET.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
     </ItemGroup>
 
     <PropertyGroup>

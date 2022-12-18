@@ -9,6 +9,22 @@ public static class TIStrings
 {
 	public static class STRINGS
 	{
+		public static class BUILDINGS
+		{
+			public static class PREFABS
+			{
+				public static class ONITWITCH
+				{
+					public static class SURPRISEBOXCONFIG
+					{
+						public static readonly LocString NAME = "Surprise Box";
+						public static readonly LocString EFFECT = "Deconstruct for a surprise!";
+						public static readonly LocString DESC = "";
+					}
+				}
+			}
+		}
+
 		public static class CREATURES
 		{
 			public static class SPECIES

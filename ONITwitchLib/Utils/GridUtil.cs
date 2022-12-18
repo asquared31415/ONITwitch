@@ -257,4 +257,32 @@ public static class GridUtil
 
 		return null;
 	}
+
+	// Finds a cell near the input cell has all of the cells in requiredClearOffsets not solid and clear for building
+	// returns -1 if such a cell cannot be found
+	public static int FindCellOpenToBuilding(int cell, CellOffset[] requiredClearOffsets)
+	{
+		// Find a valid location for the building
+		static bool IsValidCell(int cell)
+		{
+			return !Grid.IsSolidCell(cell) && Grid.IsValidBuildingCell(cell) &&
+				   (Grid.Objects[cell, (int) ObjectLayer.Building] == null);
+		}
+
+		bool IsCellAndNeighborsValid(int cell)
+		{
+			return requiredClearOffsets.Select(offset => Grid.OffsetCell(cell, offset)).All(IsValidCell);
+		}
+
+		var foundCell = GameUtil.FloodFillFind<object>(
+			(cell, _) => IsCellAndNeighborsValid(cell),
+			null,
+			cell,
+			1_000,
+			false,
+			false
+		);
+
+		return foundCell;
+	}
 }

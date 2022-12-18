@@ -6,9 +6,9 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchCore;
 using ONITwitchCore.Config;
-using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Integration.DecorPackA;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ONITwitch;
 
@@ -28,7 +28,7 @@ public class OniTwitchMod : UserMod2
 		mainThreadObject.AddOrGet<MainThreadScheduler>();
 		Object.DontDestroyOnLoad(mainThreadObject);
 
-		ModUtil.AddBuildingToPlanScreen("Base", SurpriseTileConfig.Id);
+		RegisterDevTools();
 	}
 
 	public const string DecorPackOneStaticID = "DecorPackA";
@@ -42,6 +42,13 @@ public class OniTwitchMod : UserMod2
 		{
 			DecorPack1Integration.LoadIntegration(harmony);
 		}
+	}
+
+	private static void RegisterDevTools()
+	{
+		var baseMethod = AccessTools.Method(typeof(DevToolManager), "RegisterDevTool");
+		var twitchDevToolRegister = baseMethod.MakeGenericMethod(typeof(TwitchDevTool));
+		twitchDevToolRegister.Invoke(DevToolManager.Instance, new object[] { "TwitchIntegration/DevTools" });
 	}
 }
 

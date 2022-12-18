@@ -2,12 +2,14 @@ using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
 
-public class SurpriseTile : KMonoBehaviour
+public class SurpriseBox : KMonoBehaviour
 {
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
 		Subscribe((int) GameHashes.DeconstructComplete, OnDeconstruct);
+
+		GetComponent<KBatchedAnimController>().Play("box", KAnim.PlayMode.Loop);
 	}
 
 	private void OnDeconstruct(object data)
