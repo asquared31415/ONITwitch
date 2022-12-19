@@ -30,8 +30,11 @@ public class FillBedroomCommand : CommandBase
 		var db = Db.Get();
 		var bedroomType = db.RoomTypes.Bedroom;
 		var barracksType = db.RoomTypes.Barracks;
+		var privBedroomType = db.RoomTypes.PrivateBedroom;
 		foreach (var bedroom in Game.Instance.roomProber.rooms.Where(
-					 room => (room.roomType == bedroomType) || (room.roomType == barracksType)
+					 room => (room.roomType == bedroomType) ||
+							 (room.roomType == barracksType) ||
+							 (room.roomType == privBedroomType)
 				 ))
 		{
 			foreach (var bed in bedroom.buildings.Where(building => building.GetComponent<Bed>() != null))
