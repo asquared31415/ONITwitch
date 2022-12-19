@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
@@ -14,6 +15,11 @@ public class ResearchTechCommand : CommandBase
 	public override void Run(object data)
 	{
 		var possibleTechs = GetAllowedTechs();
+		if (possibleTechs.Count == 0)
+		{
+			Debug.LogWarning("[Twitch Integration] Zero allowed techs to research");
+			return;
+		}
 
 		// only research a research that is of the minimum tier that has not been complete
 		var minTier = possibleTechs.Min(tech => tech.tier);
@@ -34,6 +40,7 @@ public class ResearchTechCommand : CommandBase
 	
 	private static readonly string[] AllowedTechs = { "basic", "advanced", "nuclear" };
 
+	[NotNull]
 	private static List<Tech> GetAllowedTechs()
 	{
 		var techs = Db.Get().Techs;

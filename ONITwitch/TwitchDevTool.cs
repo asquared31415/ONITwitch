@@ -41,7 +41,7 @@ public class TwitchDevTool : DevTool
 		var dataInst = DataManager.Instance;
 		foreach (var eventInfo in eventInst.GetAllRegisteredEvents())
 		{
-			if (ImGui.Button(eventInfo.ToString()))
+			if (ImGui.Button($"{eventInfo} ({eventInfo.Id})"))
 			{
 				Debug.Log($"[Twitch Integration] Triggering Event {eventInfo} (id {eventInfo.Id})");
 				var data = dataInst.GetDataForEvent(eventInfo);
