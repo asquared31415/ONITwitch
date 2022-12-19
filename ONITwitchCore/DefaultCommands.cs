@@ -320,7 +320,7 @@ public static class DefaultCommands
 				"FloodGold",
 				"Gold Rain",
 				new ElementFloodCommand(),
-				SimHashes.Magma.ToString(),
+				SimHashes.MoltenGold.ToString(),
 				Danger.Deadly,
 				2
 			)

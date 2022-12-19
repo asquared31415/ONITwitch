@@ -15,24 +15,30 @@ public class IceAgeCommand : CommandBase
 	public override void Run(object data)
 	{
 		// select a random world that is a root world
-		var world = ClusterManager.Instance.WorldContainers.Where(
-				world => world.IsDupeVisited && ((world.ParentWorldId == world.id) ||
-												 (world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX))
+		var worlds = ClusterManager.Instance.WorldContainers.Where(
+				world =>
+				{
+					Debug.Log(world.IsDupeVisited);
+					Debug.Log(world.ParentWorldId);
+					return world.IsDupeVisited && ((world.ParentWorldId == world.id) ||
+												   (world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX));
+				}
 			)
-			.GetRandom();
-		if (world == null)
+			.ToList();
+		if (worlds.Count == 0)
 		{
 			Debug.LogWarning($"[Twitch Integration] Unable to find a suitable world for Ice Age");
 			foreach (var worldContainer in ClusterManager.Instance.WorldContainers)
 			{
 				Debug.Log(
-					$"{worldContainer.GetComponent<ClusterGridEntity>().Name} has parent {worldContainer.ParentWorldId}"
+					$"{worldContainer.GetComponent<ClusterGridEntity>().Name}(id {worldContainer.id}) has parent {worldContainer.ParentWorldId}"
 				);
 			}
 
 			return;
 		}
 
+		var world = worlds.GetRandom();
 		foreach (var cell in GridUtil.IterateCellRegion(world.WorldOffset, world.WorldOffset + world.WorldSize))
 		{
 			if (Grid.IsWorldValidCell(cell) &&

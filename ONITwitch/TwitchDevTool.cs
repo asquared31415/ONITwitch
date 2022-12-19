@@ -43,6 +43,7 @@ public class TwitchDevTool : DevTool
 		{
 			if (ImGui.Button(eventInfo.ToString()))
 			{
+				Debug.Log($"[Twitch Integration] Triggering Event {eventInfo} (id {eventInfo.Id})");
 				var data = dataInst.GetDataForEvent(eventInfo);
 				eventInst.TriggerEvent(eventInfo, data);
 			}
