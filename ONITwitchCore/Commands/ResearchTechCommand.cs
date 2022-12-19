@@ -33,23 +33,26 @@ public class ResearchTechCommand : CommandBase
 			techInstance.Purchased();
 			Game.Instance.Trigger((int) GameHashes.ResearchComplete, tech);
 
-			var techName = Util.StripTextFormatting(Strings.Get("STRINGS.RESEARCH.TECHS." + tech.Id.ToUpper() + ".NAME").ToString());
+			var techName = Util.StripTextFormatting(
+				Strings.Get("STRINGS.RESEARCH.TECHS." + tech.Id.ToUpper() + ".NAME").ToString()
+			);
 			ToastManager.InstantiateToast("Tech Researched", $"{techName} has been researched");
 		}
 	}
-	
-	private static readonly string[] AllowedTechs = { "basic", "advanced", "nuclear" };
+
+	private static readonly string[] AllowedResearchKinds = { "basic", "advanced", "nuclear" };
 
 	[NotNull]
 	private static List<Tech> GetAllowedTechs()
 	{
 		var techs = Db.Get().Techs;
-		// only add techs that don't have any costs except the first two tiers (and in SO, nuclear science)
+		// only add techs that have 0 (or missing) costs for space science (or any modded kinds) 
 		// and that have their prereqs satisfied and that are not complete
 		return techs.resources.Where(
-				tech => !tech.costsByResearchTypeID.Keys.Except(AllowedTechs).Any() &&
-						tech.ArePrerequisitesComplete() &&
-						!tech.IsComplete()
+				tech => tech.costsByResearchTypeID.Keys.All(
+					researchKind =>
+						AllowedResearchKinds.Contains(researchKind) || (tech.costsByResearchTypeID[researchKind] == 0)
+				) && tech.ArePrerequisitesComplete() && !tech.IsComplete()
 			)
 			.ToList();
 	}
