@@ -15,6 +15,7 @@ public class SurpriseCommand : CommandBase
 		if (info != null)
 		{
 			var eventData = DataManager.Instance.GetDataForEvent(info);
+			Debug.Log($"[Twitch Integration] Surprise triggering {info}({info.Id})");
 			EventManager.Instance.TriggerEvent(info, eventData);
 		}
 	}

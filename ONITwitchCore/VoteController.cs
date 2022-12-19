@@ -101,6 +101,8 @@ public class VoteController : KMonoBehaviour
 			voteMsg.Append($"{idx + 1}: {eventInst.GetFriendlyName(eventOptions[idx])} ");
 		}
 
+		Debug.Log($"[Twitch Integration] {voteMsg}");
+
 		CurrentVote = new Vote(eventOptions);
 
 		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, voteMsg.ToString());
@@ -128,6 +130,9 @@ public class VoteController : KMonoBehaviour
 		string responseText;
 		if (choice != null)
 		{
+			Debug.Log(
+				$"[Twitch Integration] Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes"
+			);
 			var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
 			EventManager.Instance.TriggerEvent(choice.EventInfo, data);
 			responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
@@ -135,7 +140,7 @@ public class VoteController : KMonoBehaviour
 		else
 		{
 			ToastManager.InstantiateToast("Vote Complete", "No options were voted for");
-			Debug.Log("No options were voted for");
+			Debug.Log("[Twitch Integration] No options were voted for");
 			responseText = "No options were voted for";
 		}
 
