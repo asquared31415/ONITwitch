@@ -2,9 +2,9 @@ CREDITS
 The following people have contributed to the mod in various ways:
 
 Aki:
- - Designing a secret formation
- - Helped creating the informational toast popup
+ - Designing several formations for Pocket Dimensions
  - Pocket Dimension portal animation
+ - Helped creating the informational toast popup
  - Testing beta versions for mod integration
 
 pether.pg:
