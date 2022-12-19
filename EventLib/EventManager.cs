@@ -133,4 +133,10 @@ public class EventManager
 	{
 		registeredEvents[eventInfo.Id].Action.Invoke(data);
 	}
+
+	[NotNull]
+	public List<EventInfo> GetAllRegisteredEvents()
+	{
+		return registeredEvents.Keys.Select(s => new EventInfo(s)).ToList();
+	}
 }

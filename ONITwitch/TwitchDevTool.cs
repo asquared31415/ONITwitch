@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using EventLib;
 using ImGuiNET;
 using ONITwitchCore.Content.Buildings;
 using ONITwitchLib.Utils;
@@ -9,7 +10,12 @@ public class TwitchDevTool : DevTool
 {
 	protected override void RenderTo(DevPanel panel)
 	{
-		ImGui.Text("Twitch Dev Tool");
+		if (Game.Instance == null)
+		{
+			ImGui.Text("Game not yet active");
+			return;
+		}
+
 		if (ImGui.Button("Spawn Surprise Box"))
 		{
 			var spawnCell =
@@ -26,6 +32,20 @@ public class TwitchDevTool : DevTool
 				273.15f,
 				false
 			);
+		}
+
+		ImGui.Separator();
+		ImGui.Text("Trigger Events");
+		ImGui.Indent();
+		var eventInst = EventManager.Instance;
+		var dataInst = DataManager.Instance;
+		foreach (var eventInfo in eventInst.GetAllRegisteredEvents())
+		{
+			if (ImGui.Button(eventInfo.ToString()))
+			{
+				var data = dataInst.GetDataForEvent(eventInfo);
+				eventInst.TriggerEvent(eventInfo, data);
+			}
 		}
 	}
 }

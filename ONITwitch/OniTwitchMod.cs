@@ -48,7 +48,7 @@ public class OniTwitchMod : UserMod2
 	{
 		var baseMethod = AccessTools.Method(typeof(DevToolManager), "RegisterDevTool");
 		var twitchDevToolRegister = baseMethod.MakeGenericMethod(typeof(TwitchDevTool));
-		twitchDevToolRegister.Invoke(DevToolManager.Instance, new object[] { "TwitchIntegration/DevTools" });
+		twitchDevToolRegister.Invoke(DevToolManager.Instance, new object[] { "TwitchIntegration/Twitch Dev Tool" });
 	}
 }
 
