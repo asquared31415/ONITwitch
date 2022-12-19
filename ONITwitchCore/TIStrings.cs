@@ -15,6 +15,22 @@ public static class TIStrings
 			{
 				public static class ONITWITCH
 				{
+					public static class POCKETDIMENSIONEXTERIORPORTALCONFIG
+					{
+						public static readonly LocString NAME = "Pocket Dimension Portal";
+						public static readonly LocString DESC = "TODO";
+						public static readonly LocString EFFECT = "A portal to an unknown dimension.";
+					}
+
+					public static class POCKETDIMENSIONINTERIORPORTALCONFIG
+					{
+						public static readonly LocString NAME = "Return Portal";
+						public static readonly LocString DESC = "TODO";
+
+						public static readonly LocString EFFECT
+							= "A portal that should hopefully return your duplicants back where they came from.";
+					}
+
 					public static class SURPRISEBOXCONFIG
 					{
 						public static readonly LocString NAME = "Surprise Box";
