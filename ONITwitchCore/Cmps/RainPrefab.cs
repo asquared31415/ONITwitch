@@ -46,6 +46,9 @@ public class RainPrefab : KMonoBehaviour
 			Debug.LogWarning($"[Twitch Integration] Unable to find prefab(s) {sb}for rain");
 			enabled = false;
 		}
+
+		// the component may have been disabled previously, enable it for this rain
+		enabled = true;
 	}
 
 	private void Update()
@@ -83,7 +86,8 @@ public class RainPrefab : KMonoBehaviour
 				if ((go.GetComponent<ElementChunk>() != null) && go.TryGetComponent<PrimaryElement>(out var element))
 				{
 					element.Mass = 10;
-					element.Temperature = Grid.Temperature[Grid.PosToCell(pos)];
+					var gridTemp = Grid.Temperature[Grid.PosToCell(pos)];
+					element.Temperature = gridTemp > 0 ? gridTemp : element.Element.defaultValues.temperature;
 				}
 
 				kPrefabID.InitializeTags();
