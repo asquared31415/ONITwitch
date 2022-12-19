@@ -252,7 +252,7 @@ public static class PocketDimensionGenerator
 		PocketDimensionSettings.Add(config);
 	}
 
-	public static void GenerateDimension(int exteriorPortalCell)
+	public static GameObject GenerateDimension(int exteriorPortalCell)
 	{
 		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
 		dimension.SetActive(true);
@@ -411,5 +411,7 @@ public static class PocketDimensionGenerator
 		world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
 		world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
 		world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
+
+		return exteriorDoor;
 	}
 }

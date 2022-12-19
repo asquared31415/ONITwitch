@@ -1,3 +1,4 @@
+using ONITwitchCore.Toasts;
 using STRINGS;
 
 namespace ONITwitchCore.Commands;
@@ -26,5 +27,7 @@ public class BansheeWailCommand : CommandBase
 			var chore = new BansheeChore(choreType, provider, notification);
 			provider.AddChore(chore);
 		}
+
+		ToastManager.InstantiateToast("Banshee Wail", "All of your duplicants are releasing their urge to scream");
 	}
 }

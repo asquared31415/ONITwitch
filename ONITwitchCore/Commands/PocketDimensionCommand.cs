@@ -1,6 +1,7 @@
 using HarmonyLib;
 using Klei;
 using ONITwitchCore.Content;
+using ONITwitchCore.Toasts;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
@@ -29,6 +30,11 @@ public class PocketDimensionCommand : CommandBase
 		}
 
 		var placeCell = GridUtil.FindCellOpenToBuilding(startCell, new[] { CellOffset.none, new CellOffset(0, 1) });
-		PocketDimensionGenerator.GenerateDimension(placeCell);
+		var portalGo = PocketDimensionGenerator.GenerateDimension(placeCell);
+		ToastManager.InstantiateToastWithGoTarget(
+			"Pocket Dimension",
+			"A new pocket dimension has been created",
+			portalGo
+		);
 	}
 }

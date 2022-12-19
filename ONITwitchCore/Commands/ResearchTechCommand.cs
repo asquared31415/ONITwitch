@@ -33,7 +33,7 @@ public class ResearchTechCommand : CommandBase
 			techInstance.Purchased();
 			Game.Instance.Trigger((int) GameHashes.ResearchComplete, tech);
 
-			var techName = Strings.Get("STRINGS.RESEARCH.TECHS." + tech.Id.ToUpper() + ".NAME").ToString();
+			var techName = Util.StripTextFormatting(Strings.Get("STRINGS.RESEARCH.TECHS." + tech.Id.ToUpper() + ".NAME").ToString());
 			ToastManager.InstantiateToast("Innovation Nation", $"{techName} has been researched");
 		}
 	}
