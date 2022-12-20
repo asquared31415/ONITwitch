@@ -12,6 +12,9 @@ public class EventInfo : IComparable<EventInfo>, IComparable
 	/// </summary>
 	public string Id => $"{eventNamespace}.{eventId}";
 
+	public string Namespace => eventNamespace;
+	public string EventId => eventId;
+
 	private readonly string eventNamespace;
 	private readonly string eventId;
 

@@ -50,15 +50,46 @@ public class TwitchDevTool : DevTool
 		ImGui.Indent();
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
+
+		var namespacedEvents = new SortedDictionary<string, List<EventInfo>>();
 		var eventKeys = eventInst.GetAllRegisteredEvents();
-		eventKeys.Sort();
 		foreach (var eventInfo in eventKeys)
 		{
-			if (ImGui.Button($"{eventInfo} ({eventInfo.Id})"))
+			if (!namespacedEvents.ContainsKey(eventInfo.Namespace))
 			{
-				Debug.Log($"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
-				var data = dataInst.GetDataForEvent(eventInfo);
-				eventInst.TriggerEvent(eventInfo, data);
+				namespacedEvents.Add(eventInfo.Namespace, new List<EventInfo> { eventInfo });
+			}
+			else
+			{
+				namespacedEvents[eventInfo.Namespace].Add(eventInfo);
+			}
+		}
+
+		// sort events within their respective category
+		foreach (var (_, events) in namespacedEvents)
+		{
+			events.Sort();
+		}
+
+		foreach (var (eventNamespace, eventInfos) in namespacedEvents)
+		{
+			var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
+			var headerName = mod != null ? mod.title : eventNamespace;
+			if (ImGui.CollapsingHeader(headerName))
+			{
+				ImGui.Indent();
+
+				foreach (var eventInfo in eventInfos)
+				{
+					if (ImGui.Button($"{eventInfo} ({eventInfo.EventId})"))
+					{
+						Debug.Log($"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
+						var data = dataInst.GetDataForEvent(eventInfo);
+						eventInst.TriggerEvent(eventInfo, data);
+					}
+				}
+
+				ImGui.Unindent();
 			}
 		}
 	}
