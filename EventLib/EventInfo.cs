@@ -1,9 +1,11 @@
+using System;
+
 namespace EventLib;
 
 /// <summary>
 /// Represents an event that is known to the <see cref="EventManager"/>.
 /// </summary>
-public class EventInfo
+public class EventInfo : IComparable<EventInfo>
 {
 	/// <summary>
 	/// The ID of the event.
@@ -42,5 +44,20 @@ public class EventInfo
 	public override string ToString()
 	{
 		return EventManager.Instance.GetFriendlyName(this) ?? Id;
+	}
+
+	public int CompareTo(EventInfo other)
+	{
+		if (ReferenceEquals(this, other))
+		{
+			return 0;
+		}
+
+		if (ReferenceEquals(null, other))
+		{
+			return 1;
+		}
+
+		return string.Compare(Id, other.Id, StringComparison.Ordinal);
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 
 namespace EventLib;
@@ -23,6 +24,10 @@ public class EventManager
 	private readonly Dictionary<string, RefActionWrapper> registeredEvents = new();
 	private readonly Dictionary<string, string> idNameMap = new();
 
+	// a helper to look up a mod's static id from its assembly
+	// populated once on first use
+	private Dictionary<Assembly, string> assemblyStaticIdMap = null;
+
 	public static EventManager Instance
 	{
 		get
@@ -35,21 +40,53 @@ public class EventManager
 	/// <summary>
 	/// Registers an event with the event system.
 	/// </summary>
-	/// <param name="namespacedId">The ID of the event, which should be namespaced to avoid collisions</param>
+	/// <param name="id">The ID of the event.  The ID will be automatically namespaced with the static ID of the mod.</param>
 	/// <param name="friendlyName">The user facing name to display</param>
 	/// <returns>A <see cref="EventInfo"/> representing the event that has been registered.</returns>
-	/// <exception cref="Exception">The ID <paramref name="namespacedId"/> is already registered.</exception>
+	/// <exception cref="Exception">The ID <paramref name="id"/> is already registered.</exception>
 	[NotNull]
-	public EventInfo RegisterEvent([NotNull] string namespacedId, [CanBeNull] string friendlyName = null)
+	public EventInfo RegisterEvent([NotNull] string id, [CanBeNull] string friendlyName = null)
 	{
-		if (registeredEvents.ContainsKey(namespacedId))
+		if (registeredEvents.ContainsKey(id))
 		{
-			throw new Exception($"id {namespacedId} already registered");
+			throw new Exception($"id {id} already registered");
 		}
 
-		registeredEvents.Add(namespacedId, new RefActionWrapper(delegate { }));
-		idNameMap.Add(namespacedId, friendlyName);
-		var eventInfo = new EventInfo(namespacedId);
+		if (assemblyStaticIdMap == null)
+		{
+			assemblyStaticIdMap = new Dictionary<Assembly, string>();
+			foreach (var mod in Global.Instance.modManager.mods)
+			{
+				var modStaticID = mod.staticID;
+				var loadedData = mod.loaded_mod_data;
+				if (loadedData != null)
+				{
+					foreach (var assembly in loadedData.dlls)
+					{
+						assemblyStaticIdMap.Add(assembly, modStaticID);
+					}
+				}
+			}
+		}
+
+		var callingAssembly = Assembly.GetCallingAssembly();
+		string modNamespace;
+		if (assemblyStaticIdMap.TryGetValue(callingAssembly, out var staticId))
+		{
+			modNamespace = staticId;
+		}
+		else
+		{
+			Debug.LogWarning(
+				$"[Twitch Integration] Unable to find a static ID for assembly {callingAssembly}, it will not be namespaced"
+			);
+			modNamespace = "";
+		}
+
+		id = $"{modNamespace}.{id}";
+		registeredEvents.Add(id, new RefActionWrapper(delegate { }));
+		idNameMap.Add(id, friendlyName);
+		var eventInfo = new EventInfo(id);
 		return eventInfo;
 	}
 

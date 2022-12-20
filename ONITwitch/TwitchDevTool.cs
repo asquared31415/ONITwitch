@@ -50,7 +50,9 @@ public class TwitchDevTool : DevTool
 		ImGui.Indent();
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
-		foreach (var eventInfo in eventInst.GetAllRegisteredEvents())
+		var eventKeys = eventInst.GetAllRegisteredEvents();
+		eventKeys.Sort();
+		foreach (var eventInfo in eventKeys)
 		{
 			if (ImGui.Button($"{eventInfo} ({eventInfo.Id})"))
 			{

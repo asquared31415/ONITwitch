@@ -41,7 +41,7 @@ public class MeltMagmaCommand : CommandBase
 			}
 		}
 
-		var eventInfo = EventManager.Instance.GetEventByID(DefaultCommands.NamespaceId("MeltMagma"))!;
+		var eventInfo = EventManager.Instance.GetEventByID("asquared31415.TwitchIntegration.MeltMagma")!;
 		TwitchDeckManager.Instance.RemoveAll(eventInfo);
 		ToastManager.InstantiateToast("Magma Melted", "All magma in the core of the planet has been restored");
 	}

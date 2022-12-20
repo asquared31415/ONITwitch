@@ -93,14 +93,14 @@ public class EventManager
 	/// <summary>
 	/// Registers an event with the event system.
 	/// </summary>
-	/// <param name="namespacedId">The ID of the event, which should be namespaced to avoid collisions</param>
+	/// <param name="id">The ID of the event.  The ID will be automatically namespaced with the static ID of the mod.</param>
 	/// <param name="friendlyName">The user facing name to display</param>
 	/// <returns>A <see cref="EventInfo"/> representing the event that has been registered.</returns>
-	/// <exception cref="Exception">The ID <paramref name="namespacedId"/> is already registered.</exception>
+	/// <exception cref="Exception">The ID <paramref name="id"/> is already registered.</exception>
 	[NotNull]
-	public EventInfo RegisterEvent([NotNull] string namespacedId, [CanBeNull] string friendlyName = null)
+	public EventInfo RegisterEvent([NotNull] string id, [CanBeNull] string friendlyName = null)
 	{
-		var output = registerEventDelegate(namespacedId, friendlyName);
+		var output = registerEventDelegate(id, friendlyName);
 		if (output.GetType() != EventInterface.EventInfoType)
 		{
 			throw new Exception("event register type");

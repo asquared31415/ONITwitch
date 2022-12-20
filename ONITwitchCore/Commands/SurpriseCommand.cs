@@ -10,7 +10,7 @@ public class SurpriseCommand : CommandBase
 		do
 		{
 			info = TwitchDeckManager.Instance.Draw();
-		} while ((info != null) && (info.Id == DefaultCommands.NamespaceId("Surprise")));
+		} while ((info != null) && (info.Id == "asquared31415.TwitchIntegration.Surprise"));
 
 		if (info != null)
 		{

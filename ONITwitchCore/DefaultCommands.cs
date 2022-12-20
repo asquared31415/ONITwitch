@@ -11,12 +11,12 @@ namespace ONITwitchCore;
 
 public static class DefaultCommands
 {
-	public const string CommandNamespace = "ONITwitch.";
+	private const string CommandNamespace = "ONITwitch.";
 
 	public static void SetupCommands()
 	{
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SpawnDupe",
 				"Spawn Dupe",
 				new SpawnDupeCommand(),
@@ -26,7 +26,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ElementGroupCommon",
 				"Spawn Common Element",
 				new SpawnElementPoolCommand(),
@@ -59,7 +59,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ElementGroupExotic",
 				"Spawn Exotic Element",
 				new SpawnElementPoolCommand(),
@@ -81,7 +81,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ElementGroupMetal",
 				"Spawn Metal",
 				new SpawnElementPoolCommand(),
@@ -100,7 +100,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ElementGroupGas",
 				"Spawn Gas",
 				new SpawnElementPoolCommand(),
@@ -119,7 +119,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ElementGroupLiquid",
 				"Spawn Liquid",
 				new SpawnElementPoolCommand(),
@@ -145,7 +145,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ElementGroupDeadly",
 				"Spawn Deadly Element",
 				new SpawnElementPoolCommand(),
@@ -163,7 +163,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeAthleticsUp",
 				"Athletics Up",
 				new EffectCommand(),
@@ -173,7 +173,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeAthleticsDown",
 				"Athletics Down",
 				new EffectCommand(),
@@ -183,7 +183,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeConstructionUp",
 				"Construction Up",
 				new EffectCommand(),
@@ -193,7 +193,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeConstructionDown",
 				"Construction Down",
 				new EffectCommand(),
@@ -203,7 +203,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeExcavationUp",
 				"Excavation Up",
 				new EffectCommand(),
@@ -213,7 +213,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeExcavationDown",
 				"Excavation Down",
 				new EffectCommand(),
@@ -223,7 +223,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeStrengthUp",
 				"Strength Up",
 				new EffectCommand(),
@@ -233,7 +233,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"AttributeStrengthDown",
 				"Strength Down",
 				new EffectCommand(),
@@ -243,10 +243,10 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
+			new CommandInfo("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SnowBedrooms",
 				"Snowy Bedrooms",
 				new FillBedroomCommand(),
@@ -256,7 +256,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SlimeBedrooms",
 				"Slimy Bedrooms",
 				new FillBedroomCommand(),
@@ -266,7 +266,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodWater",
 				"Water Flood",
 				new ElementFloodCommand(),
@@ -276,7 +276,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodPollutedWater",
 				"Polluted Water Flood",
 				new ElementFloodCommand(),
@@ -286,7 +286,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodEthanol",
 				"Ethanol Flood",
 				new ElementFloodCommand(),
@@ -296,7 +296,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodOil",
 				"Oil Flood",
 				new ElementFloodCommand(),
@@ -306,7 +306,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodLava",
 				"Lava Flood",
 				new ElementFloodCommand(),
@@ -316,7 +316,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodGold",
 				"Gold Rain",
 				new ElementFloodCommand(),
@@ -326,7 +326,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"FloodNuclearWaste",
 				"Nuclear Waste Disposal Accident",
 				new ElementFloodCommand(),
@@ -336,29 +336,29 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 1)
+			new CommandInfo("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 1)
 		);
-		RegisterCommand(CommandInfo.Namespaced("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 30));
+		RegisterCommand(new CommandInfo("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 30));
 		RegisterCommand(
-			CommandInfo.Namespaced("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 1)
-		);
-		RegisterCommand(
-			CommandInfo.Namespaced("TileTempDown", "Icy Floors", new TileTempCommand(), -40.0d, Danger.Medium, 10)
+			new CommandInfo("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 1)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("TileTempUp", "Floor is Lava", new TileTempCommand(), +40.0d, Danger.Medium, 10)
+			new CommandInfo("TileTempDown", "Icy Floors", new TileTempCommand(), -40.0d, Danger.Medium, 10)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 30)
+			new CommandInfo("TileTempUp", "Floor is Lava", new TileTempCommand(), +40.0d, Danger.Medium, 10)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 20)
+			new CommandInfo("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 30)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 50)
+			new CommandInfo("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 20)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 50)
+		);
+		RegisterCommand(
+			new CommandInfo(
 				"RainPrefabGold",
 				"Gold Rain",
 				new RainPrefabCommand(),
@@ -368,7 +368,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"RainPrefabMorb",
 				"Morbin' Time",
 				new RainPrefabCommand(),
@@ -378,7 +378,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"RainPrefabDiamond",
 				"Diamond Rain",
 				new RainPrefabCommand(),
@@ -388,7 +388,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"RainPrefabSlickster",
 				"Slickster Rain",
 				new RainPrefabCommand(),
@@ -398,7 +398,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"RainPrefabPacu",
 				"Pacu Rain",
 				new RainPrefabCommand(),
@@ -408,7 +408,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"RainPrefabBee",
 				"Bee Infestation",
 				new RainPrefabCommand(),
@@ -418,7 +418,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ReduceOxygen",
 				"Un-include Oxygen",
 				new ReduceOxygenCommand(),
@@ -428,10 +428,10 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced("SkillPoints", "Skilling Spree", new SkillCommand(), 0.33d, Danger.None, 20)
+			new CommandInfo("SkillPoints", "Skilling Spree", new SkillCommand(), 0.33d, Danger.None, 20)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SleepyDupes",
 				"Sleepy Dupes",
 				new SleepyDupesCommand(),
@@ -441,7 +441,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SnazzySuit",
 				"Spawn Snazzy Suit",
 				new SnazzySuitCommand(),
@@ -451,7 +451,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SpawnGlitterPuft",
 				"Spawn Glitter Puft",
 				new SpawnPrefabCommand(),
@@ -461,7 +461,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SpawnVacillatorCharge",
 				"Spawn Vacillator Charge",
 				new SpawnPrefabCommand(),
@@ -471,7 +471,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SpawnAtmoSuit",
 				"Spawn Atmo Suit",
 				new SpawnPrefabCommand(),
@@ -481,7 +481,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SpawnCrab",
 				"Spawn Pokeshell",
 				new SpawnPrefabCommand(),
@@ -491,7 +491,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"SpawnMooComet",
 				"Spawn Gassy Moo Comet",
 				new SpawnPrefabCommand(),
@@ -501,7 +501,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"StressAdd",
 				"Add Stress",
 				new StressCommand(),
@@ -511,7 +511,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"StressRemove",
 				"Remove Stress",
 				new StressCommand(),
@@ -521,7 +521,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"Surprise",
 				"Surprise!!!",
 				new SurpriseCommand(),
@@ -533,7 +533,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"Uninsulate",
 				"Uninsulate Tiles",
 				new UninsulateCommand(),
@@ -543,7 +543,7 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"ResearchTech",
 				"Research Technology",
 				new ResearchTechCommand(),
@@ -554,7 +554,7 @@ public static class DefaultCommands
 		);
 
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"Eclipse",
 				"Eclipse",
 				new EclipseCommand(),
@@ -565,7 +565,7 @@ public static class DefaultCommands
 		);
 
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"PocketDimension",
 				"Spawn Pocket Dimension",
 				new PocketDimensionCommand(),
@@ -576,7 +576,7 @@ public static class DefaultCommands
 		);
 
 		RegisterCommand(
-			CommandInfo.Namespaced(
+			new CommandInfo(
 				"MeltMagma",
 				"Melt Frozen Magma",
 				new MeltMagmaCommand(),
@@ -597,25 +597,7 @@ public static class DefaultCommands
 		object Data,
 		Danger? Danger,
 		int Weight
-	)
-	{
-		public static CommandInfo Namespaced(
-			string id,
-			string name,
-			CommandBase command,
-			object data,
-			Danger? danger,
-			int weight
-		)
-		{
-			return new CommandInfo(NamespaceId(id), name, command, data, danger, weight);
-		}
-	}
-
-	public static string NamespaceId(string id)
-	{
-		return CommandNamespace + id;
-	}
+	);
 
 	public static void RegisterCommand(CommandInfo info)
 	{
