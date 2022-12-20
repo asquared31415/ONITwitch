@@ -5,36 +5,54 @@ namespace EventLib;
 /// <summary>
 /// Represents an event that is known to the <see cref="EventManager"/>.
 /// </summary>
-public class EventInfo : IComparable<EventInfo>
+public class EventInfo : IComparable<EventInfo>, IComparable
 {
 	/// <summary>
 	/// The ID of the event.
 	/// </summary>
-	public string Id { get; }
+	public string Id => $"{eventNamespace}.{eventId}";
 
-	public EventInfo(string id)
+	private readonly string eventNamespace;
+	private readonly string eventId;
+
+	internal EventInfo(string eventNamespace, string eventId)
 	{
-		Id = id;
+		this.eventNamespace = eventNamespace;
+		this.eventId = eventId;
 	}
 
 	protected bool Equals(EventInfo other)
 	{
-		return Id == other.Id;
+		return (eventNamespace == other.eventNamespace) && (eventId == other.eventId);
 	}
 
 	public override bool Equals(object obj)
 	{
-		if (obj is EventInfo other)
+		if (ReferenceEquals(null, obj))
 		{
-			return Equals(other);
+			return false;
 		}
 
-		return false;
+		if (ReferenceEquals(this, obj))
+		{
+			return true;
+		}
+
+		if (obj.GetType() != GetType())
+		{
+			return false;
+		}
+
+		return Equals((EventInfo) obj);
 	}
 
 	public override int GetHashCode()
 	{
-		return Id != null ? Id.GetHashCode() : 0;
+		unchecked
+		{
+			return ((eventNamespace != null ? eventNamespace.GetHashCode() : 0) * 397) ^
+				   (eventId != null ? eventId.GetHashCode() : 0);
+		}
 	}
 
 	/// <summary>
@@ -58,6 +76,26 @@ public class EventInfo : IComparable<EventInfo>
 			return 1;
 		}
 
-		return string.Compare(Id, other.Id, StringComparison.Ordinal);
+		var namespaceComparison = string.Compare(eventNamespace, other.eventNamespace, StringComparison.Ordinal);
+		return namespaceComparison != 0
+			? namespaceComparison
+			: string.Compare(eventId, other.eventId, StringComparison.Ordinal);
+	}
+
+	public int CompareTo(object obj)
+	{
+		if (ReferenceEquals(null, obj))
+		{
+			return 1;
+		}
+
+		if (ReferenceEquals(this, obj))
+		{
+			return 0;
+		}
+
+		return obj is EventInfo other
+			? CompareTo(other)
+			: throw new ArgumentException($"Object must be of type {nameof(EventInfo)}");
 	}
 }

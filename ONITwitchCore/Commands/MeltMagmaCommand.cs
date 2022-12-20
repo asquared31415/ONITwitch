@@ -1,6 +1,7 @@
-using EventLib;
-using ONITwitchCore.Toasts;
+using ONITwitchLib;
 using ProcGen;
+using EventManager = EventLib.EventManager;
+using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
@@ -41,7 +42,7 @@ public class MeltMagmaCommand : CommandBase
 			}
 		}
 
-		var eventInfo = EventManager.Instance.GetEventByID("asquared31415.TwitchIntegration.MeltMagma")!;
+		var eventInfo = EventManager.Instance.GetEventByID(TwitchModInfo.StaticID, "MeltMagma")!;
 		TwitchDeckManager.Instance.RemoveAll(eventInfo);
 		ToastManager.InstantiateToast("Magma Melted", "All magma in the core of the planet has been restored");
 	}

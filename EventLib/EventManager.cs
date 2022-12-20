@@ -21,12 +21,12 @@ public class EventManager
 	private static EventManager instance;
 
 	// entries in this dictionary are never null
-	private readonly Dictionary<string, RefActionWrapper> registeredEvents = new();
-	private readonly Dictionary<string, string> idNameMap = new();
+	private readonly Dictionary<EventInfo, RefActionWrapper> registeredEvents = new();
+	private readonly Dictionary<EventInfo, string> idNameMap = new();
 
 	// a helper to look up a mod's static id from its assembly
 	// populated once on first use
-	private Dictionary<Assembly, string> assemblyStaticIdMap = null;
+	private Dictionary<Assembly, string> assemblyStaticIdMap;
 
 	public static EventManager Instance
 	{
@@ -47,11 +47,6 @@ public class EventManager
 	[NotNull]
 	public EventInfo RegisterEvent([NotNull] string id, [CanBeNull] string friendlyName = null)
 	{
-		if (registeredEvents.ContainsKey(id))
-		{
-			throw new Exception($"id {id} already registered");
-		}
-
 		if (assemblyStaticIdMap == null)
 		{
 			assemblyStaticIdMap = new Dictionary<Assembly, string>();
@@ -83,11 +78,15 @@ public class EventManager
 			modNamespace = "";
 		}
 
-		id = $"{modNamespace}.{id}";
-		registeredEvents.Add(id, new RefActionWrapper(delegate { }));
-		idNameMap.Add(id, friendlyName);
-		var eventInfo = new EventInfo(id);
-		return eventInfo;
+		var namespacedId = new EventInfo(modNamespace, id);
+		if (registeredEvents.ContainsKey(namespacedId))
+		{
+			throw new Exception($"id {namespacedId} already registered");
+		}
+
+		registeredEvents.Add(namespacedId, new RefActionWrapper(delegate { }));
+		idNameMap.Add(namespacedId, friendlyName);
+		return namespacedId;
 	}
 
 	/// <summary>
@@ -97,10 +96,7 @@ public class EventManager
 	/// <param name="friendlyName">The new name for the event</param>
 	public void RenameEvent([NotNull] EventInfo eventInfo, [NotNull] string friendlyName)
 	{
-		if (idNameMap.ContainsKey(eventInfo.Id))
-		{
-			idNameMap[eventInfo.Id] = friendlyName;
-		}
+		idNameMap[eventInfo] = friendlyName;
 	}
 
 	/// <summary>
@@ -111,18 +107,20 @@ public class EventManager
 	[CanBeNull]
 	public string GetFriendlyName([NotNull] EventInfo eventInfo)
 	{
-		return idNameMap.TryGetValue(eventInfo.Id, out var name) ? name : null;
+		return idNameMap.TryGetValue(eventInfo, out var name) ? name : null;
 	}
 
 	/// <summary>
 	/// Gets an <see cref="EventInfo"/> for the specified ID, if the ID is registered.
 	/// </summary>
+	/// <param name="eventNamespace">The namespace for the ID</param>
 	/// <param name="id">The ID to look for</param>
 	/// <returns>An <see cref="EventInfo"/> representing the event, if the ID is found, or <c>null</c> otherwise.</returns>
 	[CanBeNull]
-	public EventInfo GetEventByID([NotNull] string id)
+	public EventInfo GetEventByID([NotNull] string eventNamespace, [NotNull] string id)
 	{
-		return registeredEvents.ContainsKey(id) ? new EventInfo(id) : null;
+		var eventInfo = new EventInfo(eventNamespace, id);
+		return registeredEvents.ContainsKey(eventInfo) ? eventInfo : null;
 	}
 
 	/// <summary>
@@ -135,7 +133,7 @@ public class EventManager
 		[NotNull] Action<object> listener
 	)
 	{
-		registeredEvents[eventInfo.Id].Action += listener;
+		registeredEvents[eventInfo].Action += listener;
 	}
 
 	/// <summary>
@@ -149,7 +147,7 @@ public class EventManager
 		[NotNull] Action<object> listener
 	)
 	{
-		var val = registeredEvents[eventInfo.Id];
+		var val = registeredEvents[eventInfo];
 		if (!val.Action.GetInvocationList().Contains(listener))
 		{
 			throw new ArgumentException(
@@ -168,12 +166,12 @@ public class EventManager
 	/// <param name="data">The data to be passed to all listeners of the event</param>
 	public void TriggerEvent([NotNull] EventInfo eventInfo, object data)
 	{
-		registeredEvents[eventInfo.Id].Action.Invoke(data);
+		registeredEvents[eventInfo].Action.Invoke(data);
 	}
 
 	[NotNull]
 	public List<EventInfo> GetAllRegisteredEvents()
 	{
-		return registeredEvents.Keys.Select(s => new EventInfo(s)).ToList();
+		return registeredEvents.Keys.ToList();
 	}
 }

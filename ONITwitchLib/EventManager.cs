@@ -15,7 +15,7 @@ public class EventManager
 	private readonly Func<string, string, object> registerEventDelegate;
 	private readonly Action<object, object> renameEventDelegate;
 	private readonly Func<object, object> getFriendlyNameDelegate;
-	private readonly Func<string, object> getEventByIdDelegate;
+	private readonly Func<string, string, object> getEventByIdDelegate;
 	private readonly Action<object, Action<string>> addListenerForEventDelegate;
 	private readonly Action<object, Action<object>> removeListenerForEventDelegate;
 	private readonly Action<object, object> triggerEventDelegate;
@@ -53,8 +53,13 @@ public class EventManager
 			EventInterface.EventInfoType,
 			typeof(string)
 		);
-		var getByIdInfo = AccessTools.DeclaredMethod(eventType, "GetEventByID", new[] { typeof(string) });
-		getEventByIdDelegate = DelegateUtil.CreateDelegate<Func<string, object>>(getByIdInfo, eventManagerInstance);
+		var getByIdInfo = AccessTools.DeclaredMethod(
+			eventType,
+			"GetEventByID",
+			new[] { typeof(string), typeof(string) }
+		);
+		getEventByIdDelegate =
+			DelegateUtil.CreateDelegate<Func<string, string, object>>(getByIdInfo, eventManagerInstance);
 		var addListenerForEventInfo = AccessTools.DeclaredMethod(
 			eventType,
 			"AddListenerForEvent",
@@ -133,12 +138,13 @@ public class EventManager
 	/// <summary>
 	/// Gets an <see cref="EventInfo"/> for the specified ID, if the ID is registered.
 	/// </summary>
+	/// <param name="eventNamespace">The namespace for the ID</param>
 	/// <param name="id">The ID to look for</param>
 	/// <returns>An <see cref="EventInfo"/> representing the event, if the ID is found, or <c>null</c> otherwise.</returns>
 	[CanBeNull]
-	public EventInfo GetEventById([NotNull] string id)
+	public EventInfo GetEventByID([NotNull] string eventNamespace, [NotNull] string id)
 	{
-		var output = getEventByIdDelegate(id);
+		var output = getEventByIdDelegate(eventNamespace, id);
 		if (output.GetType() != EventInterface.EventInfoType)
 		{
 			throw new Exception("event by id type");

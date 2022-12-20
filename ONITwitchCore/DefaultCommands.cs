@@ -621,7 +621,8 @@ public static class DefaultCommands
 		var deckInst = TwitchDeckManager.Instance;
 		foreach (var (id, config) in userConfig)
 		{
-			var eventId = eventInst.GetEventByID(id);
+			// TODO: FIX THIS
+			var eventId = eventInst.GetEventByID(null, id);
 			if (eventId != null)
 			{
 				eventInst.RenameEvent(eventId, config.FriendlyName);
