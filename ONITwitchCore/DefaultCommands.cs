@@ -576,6 +576,13 @@ public static class DefaultCommands
 		);
 
 		RegisterCommand(
+			new CommandInfo("SurpriseBox", "Surprise Box", new SurpriseBoxCommand(), null, Danger.None, 20)
+		);
+
+		// ===============================
+		// SPECIAL
+		// ===============================
+		RegisterCommand(
 			new CommandInfo(
 				"MeltMagma",
 				"Melt Frozen Magma",
