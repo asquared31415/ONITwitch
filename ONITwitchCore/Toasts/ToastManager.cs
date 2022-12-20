@@ -23,7 +23,7 @@ public static class ToastManager
 			canvas = new GameObject("ToastCanvas");
 			var canvasCmp = canvas.AddComponent<Canvas>();
 			canvasCmp.renderMode = RenderMode.ScreenSpaceOverlay;
-			canvasCmp.sortingOrder = 99999;
+			canvasCmp.sortingOrder = 100;
 			canvasCmp.pixelPerfect = true;
 
 			var scaler = canvas.AddComponent<CanvasScaler>();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using EventLib;
 using ImGuiNET;
 using ONITwitchCore.Content.Buildings;
+using ONITwitchCore.Toasts;
 using ONITwitchLib.Utils;
 
 namespace ONITwitch;
@@ -10,6 +11,16 @@ public class TwitchDevTool : DevTool
 {
 	protected override void RenderTo(DevPanel panel)
 	{
+		// WARNING: game may not be active in this method unless explicitly checked!
+		if (ImGui.Button("Test Toast"))
+		{
+			ToastManager.InstantiateToast(
+				"Dev Testing Toast",
+				"This is a testing toast created by the Twitch Integration dev tools."
+			);
+		}
+
+		// Everything below this needs the game to be active
 		if (Game.Instance == null)
 		{
 			ImGui.Text("Game not yet active");

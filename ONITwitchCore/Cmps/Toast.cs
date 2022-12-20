@@ -44,7 +44,7 @@ public class Toast : KMonoBehaviour
 		rect.anchoredPosition = StartPos;
 
 		StartCoroutine(FadeInOut(StartPos, EndPos));
-		var button = transform.Find("TargetButton").GetComponent<Button>();
+		var button = transform.Find("BodyContainer").Find("TargetButton").GetComponent<Button>();
 		button.onClick.AddListener(OnClick);
 		var closeButton = transform.Find("TitleContainer").Find("Close").Find("XButton").GetComponent<Button>();
 		closeButton.onClick.AddListener(() => breakEarly = true);
