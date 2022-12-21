@@ -11,8 +11,6 @@ namespace ONITwitchCore;
 
 public static class DefaultCommands
 {
-	private const string CommandNamespace = "ONITwitch.";
-
 	public static void SetupCommands()
 	{
 		RegisterCommand(
@@ -20,7 +18,7 @@ public static class DefaultCommands
 				"SpawnDupe",
 				"Spawn Dupe",
 				new SpawnDupeCommand(),
-				new Dictionary<string, object> { { "MaxDupes", 50.0d } },
+				new Dictionary<string, object> { { "MaxDupes", 30.0d } },
 				Danger.Small,
 				50
 			)
@@ -579,20 +577,6 @@ public static class DefaultCommands
 			new CommandInfo("SurpriseBox", "Surprise Box", new SurpriseBoxCommand(), null, Danger.None, 20)
 		);
 
-		// ===============================
-		// SPECIAL
-		// ===============================
-		RegisterCommand(
-			new CommandInfo(
-				"MeltMagma",
-				"Melt Frozen Magma",
-				new MeltMagmaCommand(),
-				null,
-				Danger.None,
-				20000
-			)
-		);
-
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
@@ -621,23 +605,26 @@ public static class DefaultCommands
 		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight);
 	}
 
-	public static void ReloadData(Dictionary<string, CommandConfig> userConfig)
+	public static void ReloadData(Dictionary<string, Dictionary<string, CommandConfig>> userConfig)
 	{
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
 		var deckInst = TwitchDeckManager.Instance;
-		foreach (var (id, config) in userConfig)
+		foreach (var (namespaceId, namespaceInfo) in userConfig)
 		{
-			// TODO: FIX THIS
-			var eventId = eventInst.GetEventByID(null, id);
-			if (eventId != null)
+			foreach (var (id, config) in namespaceInfo)
 			{
-				eventInst.RenameEvent(eventId, config.FriendlyName);
-				dataInst.SetDataForEvent(eventId, config.Data);
+				Debug.Log($"data for {namespaceId}.{id}: {config.FriendlyName} {config.Weight} {config.Data}");
+				var eventId = eventInst.GetEventByID(namespaceId, id);
+				if (eventId != null)
+				{
+					eventInst.RenameEvent(eventId, config.FriendlyName);
+					dataInst.SetDataForEvent(eventId, config.Data);
 
-				// replace weights by removing and then adding
-				deckInst.RemoveAll(eventId);
-				deckInst.AddToDeck(eventId, config.Weight);
+					// replace weights by removing and then adding
+					deckInst.RemoveAll(eventId);
+					deckInst.AddToDeck(eventId, config.Weight);
+				}
 			}
 		}
 	}

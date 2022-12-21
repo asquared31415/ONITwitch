@@ -39,7 +39,7 @@ public class SpawnPrefabCommand : CommandBase
 		}
 		else
 		{
-			Debug.LogWarning($"[Twitch Integration] Unable to spawn prefab {CustomClothingConfig.ID}");
+			Debug.LogWarning($"[Twitch Integration] Unable to spawn prefab {prefabId}");
 		}
 	}
 }

@@ -33,7 +33,7 @@ public class UserCommandConfigManager
 		configWatcher.EnableRaisingEvents = true;
 	}
 
-	private Dictionary<string, CommandConfig> userConfig = new();
+	private Dictionary<string, Dictionary<string, CommandConfig>> userConfig = new();
 
 	public void DEBUG_DumpCurrentConfig()
 	{
@@ -54,30 +54,33 @@ public class UserCommandConfigManager
 				try
 				{
 					var configText = File.ReadAllText(CommandConfigPath);
-					userConfig = JsonConvert.DeserializeObject<Dictionary<string, CommandConfig>>(
+					userConfig = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, CommandConfig>>>(
 						configText,
 						new NestedDictionaryReader()
 					);
 
 					// convert all remaining objects to string, object dictionary
-					foreach (var key in userConfig.Keys.ToList())
+					foreach (var idNamespace in userConfig.Keys.ToList())
 					{
-						if (userConfig[key].Data is JObject obj)
+						foreach (var id in userConfig[idNamespace].Keys.ToList())
 						{
-							userConfig[key].Data = obj.ToObject<Dictionary<string, object>>();
+							if (userConfig[idNamespace][id].Data is JObject obj)
+							{
+								userConfig[idNamespace][id].Data = obj.ToObject<Dictionary<string, object>>();
+							}
 						}
 					}
 				}
 				catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 				{
 					// we can ignore no config being found, treat it like empty
-					userConfig = new Dictionary<string, CommandConfig>();
+					userConfig = new Dictionary<string, Dictionary<string, CommandConfig>>();
 				}
 				catch (Exception e)
 				{
 					Debug.LogException(e);
 					// insurance to try to not break too much
-					userConfig = new Dictionary<string, CommandConfig>();
+					userConfig = new Dictionary<string, Dictionary<string, CommandConfig>>();
 				}
 			}
 

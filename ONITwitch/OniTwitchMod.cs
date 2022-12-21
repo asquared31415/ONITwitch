@@ -8,6 +8,7 @@ using ONITwitchCore;
 using ONITwitchCore.Config;
 using ONITwitchCore.Integration.DecorPackA;
 using UnityEngine;
+using Label = KMod.Label;
 using Object = UnityEngine.Object;
 
 namespace ONITwitch;
@@ -49,6 +50,19 @@ public class OniTwitchMod : UserMod2
 		var baseMethod = AccessTools.Method(typeof(DevToolManager), "RegisterDevTool");
 		var twitchDevToolRegister = baseMethod.MakeGenericMethod(typeof(TwitchDevTool));
 		twitchDevToolRegister.Invoke(DevToolManager.Instance, new object[] { "Mods/Twitch Integration" });
+	}
+}
+
+[HarmonyPatch(typeof(Manager), nameof(Manager.MatchFootprint))]
+public static class ModOrderLogger
+{
+	[UsedImplicitly]
+	public static void Prefix(List<Label> footprint)
+	{
+		foreach (var label in footprint)
+		{
+			Debug.Log(label.title);
+		}
 	}
 }
 

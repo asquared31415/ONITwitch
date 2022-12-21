@@ -18,7 +18,7 @@ public class MeltMagmaCommand : CommandBase
 					var cellId = Grid.Element[cell].id;
 					switch (cellId)
 					{
-						case SimHashes.IgneousRock or SimHashes.Vacuum:
+						case SimHashes.IgneousRock or SimHashes.Vacuum or SimHashes.Magma:
 							SimMessages.ReplaceElement(
 								cell,
 								SimHashes.Magma,
