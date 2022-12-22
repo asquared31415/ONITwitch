@@ -44,9 +44,10 @@ public static class PocketDimensionGenerator
 		),
 		// Sus
 		new TemplatePocketDimensionGeneration(
-			5f,
+			2f,
 			SubWorld.ZoneType.Ocean,
-			"TwitchIntegration/Sus"
+			"TwitchIntegration/Sus",
+			"Mining3"
 		),
 
 		// ========================================

@@ -12,5 +12,7 @@ ONITwitch.sln.DotSettings.user
 
 animsrc/
 
+weight_tests/
+
 # rust target folder
 target/
