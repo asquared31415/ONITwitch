@@ -36,6 +36,20 @@ public class TwitchDeckManager
 			typeof(int)
 		);
 
+	private static readonly Action<object, object, object, object> AddMultipleItemsWithGroupDelegate =
+		DelegateUtil.CreateRuntimeTypeActionDelegate(
+			AccessTools.DeclaredMethod(
+				EventInterface.TwitchDeckManagerType,
+				"AddToDeck",
+				new[] { EventInterface.EventInfoType, typeof(int), typeof(string) }
+			),
+			null,
+			EventInterface.TwitchDeckManagerType,
+			EventInterface.EventInfoType,
+			typeof(int),
+			typeof(string)
+		);
+
 	private static readonly Type EventInfoEnumerableType = typeof(IEnumerable<>).MakeGenericType(
 		EventInterface.EventInfoType
 	);
@@ -58,6 +72,19 @@ public class TwitchDeckManager
 		EventInterface.EventInfoType
 	);
 
+	private static readonly Action<object, object> RemoveEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+		AccessTools.DeclaredMethod(EventInterface.TwitchDeckManagerType, "RemoveEvent"),
+		null,
+		EventInterface.TwitchDeckManagerType,
+		EventInterface.EventInfoType
+	);
+
+	private static readonly Action<object, object> RemoveGroupDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+		AccessTools.DeclaredMethod(EventInterface.TwitchDeckManagerType, "RemoveGroup"),
+		null,
+		EventInterface.TwitchDeckManagerType,
+		typeof(string)
+	);
 
 	internal TwitchDeckManager(object inst)
 	{
@@ -74,6 +101,11 @@ public class TwitchDeckManager
 		AddMultipleItemsDelegate(deckManagerInstance, eventInfo.EventInfoInstance, count);
 	}
 
+	public void AddToDeck([NotNull] EventInfo eventInfo, int count, [CanBeNull] string groupName)
+	{
+		AddMultipleItemsWithGroupDelegate(deckManagerInstance, eventInfo.EventInfoInstance, count, groupName);
+	}
+
 	private static readonly Func<IEnumerable<object>, object> CastEventInfo =
 		DelegateUtil.CreateRuntimeTypeFuncDelegate(
 			AccessTools.Method(
@@ -87,6 +119,7 @@ public class TwitchDeckManager
 			typeof(IEnumerable<>).MakeGenericType(EventInterface.EventInfoType)
 		);
 
+	[Obsolete("This method does not work nicely with the group system")]
 	public void AddToDeck([NotNull] IEnumerable<EventInfo> eventInfos)
 	{
 		var instances = eventInfos.Select(info => info.EventInfoInstance);
@@ -99,5 +132,15 @@ public class TwitchDeckManager
 	{
 		var result = DrawDelegate(deckManagerInstance);
 		return new EventInfo(result);
+	}
+
+	public void RemoveEvent([NotNull] EventInfo eventInfo)
+	{
+		RemoveEventDelegate(deckManagerInstance, eventInfo.EventInfoInstance);
+	}
+
+	public void RemoveGroup([NotNull] string groupName)
+	{
+		RemoveGroupDelegate(deckManagerInstance, groupName);
 	}
 }

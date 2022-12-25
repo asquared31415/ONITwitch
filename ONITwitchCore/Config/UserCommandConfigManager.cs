@@ -57,7 +57,7 @@ public class UserCommandConfigManager
 					userConfig = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, CommandConfig>>>(
 						configText,
 						new NestedDictionaryReader()
-					);
+					) ?? new Dictionary<string, Dictionary<string, CommandConfig>>();
 
 					// convert all remaining objects to string, object dictionary
 					foreach (var idNamespace in userConfig.Keys.ToList())

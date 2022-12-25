@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using ONITwitchCore.Commands;
 using ONITwitchCore.Config;
 using ONITwitchCore.Content;
@@ -13,6 +14,7 @@ public static class DefaultCommands
 {
 	public static void SetupCommands()
 	{
+		Debug.Log("[Twitch Integration] Setting up default commands");
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnDupe",
@@ -581,16 +583,17 @@ public static class DefaultCommands
 		UserCommandConfigManager.Instance.Reload();
 	}
 
-	public record struct CommandInfo(
-		string Id,
-		string Name,
-		CommandBase Command,
-		object Data,
-		Danger? Danger,
-		int Weight
+	private record struct CommandInfo(
+		[NotNull] string Id,
+		[NotNull] string Name,
+		[NotNull] CommandBase Command,
+		[CanBeNull] object Data,
+		[CanBeNull] Danger? Danger,
+		int Weight,
+		[CanBeNull] string Group = null
 	);
 
-	public static void RegisterCommand(CommandInfo info)
+	private static void RegisterCommand(CommandInfo info)
 	{
 		var eventInst = EventManager.Instance;
 		var eventId = eventInst.RegisterEvent(info.Id, info.Name);
@@ -602,11 +605,12 @@ public static class DefaultCommands
 			DangerManager.Instance.SetDanger(eventId, info.Danger.Value);
 		}
 
-		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight);
+		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight, info.Group);
 	}
 
 	public static void ReloadData(Dictionary<string, Dictionary<string, CommandConfig>> userConfig)
 	{
+		Debug.Log("[Twitch Integration] Reloading user command config");
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
 		var deckInst = TwitchDeckManager.Instance;
@@ -614,16 +618,15 @@ public static class DefaultCommands
 		{
 			foreach (var (id, config) in namespaceInfo)
 			{
-				Debug.Log($"data for {namespaceId}.{id}: {config.FriendlyName} {config.Weight} {config.Data}");
 				var eventId = eventInst.GetEventByID(namespaceId, id);
 				if (eventId != null)
 				{
-					eventInst.RenameEvent(eventId, config.FriendlyName);
+					eventInst.RenameEvent(eventId, config.FriendlyName ?? eventId.Id);
 					dataInst.SetDataForEvent(eventId, config.Data);
 
 					// replace weights by removing and then adding
-					deckInst.RemoveAll(eventId);
-					deckInst.AddToDeck(eventId, config.Weight);
+					deckInst.RemoveEvent(eventId);
+					deckInst.AddToDeck(eventId, config.Weight, config.GroupName);
 				}
 			}
 		}
