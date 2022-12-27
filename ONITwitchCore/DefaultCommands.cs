@@ -55,7 +55,8 @@ public static class DefaultCommands
 					SimHashes.Katairite.ToString(),
 				},
 				Danger.Small,
-				100
+				100,
+				"core.spawn_element"
 			)
 		);
 		RegisterCommand(
@@ -77,7 +78,8 @@ public static class DefaultCommands
 					SimHashes.Resin.ToString(),
 				},
 				Danger.Small,
-				10
+				10,
+				"core.spawn_element"
 			)
 		);
 		RegisterCommand(
@@ -96,7 +98,8 @@ public static class DefaultCommands
 					SimHashes.AluminumOre.ToString(),
 				},
 				Danger.Small,
-				50
+				50,
+				"core.spawn_element"
 			)
 		);
 		RegisterCommand(
@@ -115,7 +118,8 @@ public static class DefaultCommands
 					SimHashes.EthanolGas.ToString(),
 				},
 				Danger.Small,
-				50
+				50,
+				"core.spawn_element"
 			)
 		);
 		RegisterCommand(
@@ -141,7 +145,8 @@ public static class DefaultCommands
 					SimHashes.MoltenSucrose.ToString(),
 				},
 				Danger.Small,
-				50
+				50,
+				"core.spawn_element"
 			)
 		);
 		RegisterCommand(
@@ -159,7 +164,8 @@ public static class DefaultCommands
 					SimHashes.SuperCoolantGas.ToString(),
 				},
 				Danger.Small,
-				10
+				10,
+				"core.spawn_element"
 			)
 		);
 		RegisterCommand(
@@ -169,7 +175,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.AthleticsUpEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -179,7 +186,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.AthleticsDownEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -189,7 +197,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ConstructionUpEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -199,7 +208,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ConstructionDownEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -209,7 +219,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ExcavationUpEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -219,7 +230,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ExcavationDownEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -229,7 +241,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.StrengthUpEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -239,7 +252,8 @@ public static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.StrengthDownEffect.Id,
 				Danger.None,
-				20
+				20,
+				"core.attribute_mod"
 			)
 		);
 		RegisterCommand(
@@ -252,7 +266,8 @@ public static class DefaultCommands
 				new FillBedroomCommand(),
 				SimHashes.Snow.ToString(),
 				Danger.Small,
-				20
+				20,
+				"core.bedroom_element"
 			)
 		);
 		RegisterCommand(
@@ -262,7 +277,8 @@ public static class DefaultCommands
 				new FillBedroomCommand(),
 				SimHashes.SlimeMold.ToString(),
 				Danger.Small,
-				20
+				20,
+				"core.bedroom_element"
 			)
 		);
 		RegisterCommand(
@@ -272,7 +288,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Water.ToString(),
 				Danger.Medium,
-				30
+				30,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -282,7 +299,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.DirtyWater.ToString(),
 				Danger.Medium,
-				30
+				30,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -292,7 +310,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Ethanol.ToString(),
 				Danger.Medium,
-				10
+				10,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -302,7 +321,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.CrudeOil.ToString(),
 				Danger.Medium,
-				10
+				10,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -312,7 +332,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Magma.ToString(),
 				Danger.Deadly,
-				2
+				2,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -322,7 +343,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.MoltenGold.ToString(),
 				Danger.Deadly,
-				2
+				2,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -332,7 +354,8 @@ public static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.NuclearWaste.ToString(),
 				Danger.High,
-				2
+				2,
+				"core.flood"
 			)
 		);
 		RegisterCommand(
@@ -343,10 +366,26 @@ public static class DefaultCommands
 			new CommandInfo("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 1)
 		);
 		RegisterCommand(
-			new CommandInfo("TileTempDown", "Icy Floors", new TileTempCommand(), -40.0d, Danger.Medium, 10)
+			new CommandInfo(
+				"TileTempDown",
+				"Icy Floors",
+				new TileTempCommand(),
+				-40.0d,
+				Danger.Medium,
+				10,
+				"core.tile_temp"
+			)
 		);
 		RegisterCommand(
-			new CommandInfo("TileTempUp", "Floor is Lava", new TileTempCommand(), +40.0d, Danger.Medium, 10)
+			new CommandInfo(
+				"TileTempUp",
+				"Floor is Lava",
+				new TileTempCommand(),
+				+40.0d,
+				Danger.Medium,
+				10,
+				"core.tile_temp"
+			)
 		);
 		RegisterCommand(
 			new CommandInfo("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 30)
@@ -364,7 +403,8 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Gold.ToString() }, { "Count", 50.0d } },
 				Danger.None,
-				30
+				30,
+				"core.rain_prefab"
 			)
 		);
 		RegisterCommand(
@@ -374,7 +414,8 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				30
+				30,
+				"core.rain_prefab"
 			)
 		);
 		RegisterCommand(
@@ -384,7 +425,8 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Diamond.ToString() }, { "Count", 25.0d } },
 				Danger.None,
-				10
+				10,
+				"core.rain_prefab"
 			)
 		);
 		RegisterCommand(
@@ -394,7 +436,8 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", OilFloaterConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				20
+				20,
+				"core.rain_prefab"
 			)
 		);
 		RegisterCommand(
@@ -404,7 +447,8 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				20
+				20,
+				"core.rain_prefab"
 			)
 		);
 		RegisterCommand(
@@ -414,7 +458,8 @@ public static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", BeeConfig.ID }, { "Count", 10.0d } },
 				Danger.Medium,
-				10
+				10,
+				"core.rain_prefab"
 			)
 		);
 		RegisterCommand(
@@ -507,7 +552,8 @@ public static class DefaultCommands
 				new StressCommand(),
 				+0.75d,
 				Danger.Medium,
-				20
+				20,
+				"core.stress"
 			)
 		);
 		RegisterCommand(
@@ -517,7 +563,8 @@ public static class DefaultCommands
 				new StressCommand(),
 				-0.75d,
 				Danger.None,
-				20
+				20,
+				"core.stress"
 			)
 		);
 		RegisterCommand(

@@ -23,7 +23,6 @@ public class VarietyShuffler<T>
 		// give every item added alone its own group
 		var group = new Group((item, weight));
 		// this is probably unique, and if it's not, that's an issue for whoever decided to copy this naming convention
-		Debug.Log($"adding {item} with default name {GetItemDefaultGroupName(item)}");
 		groups[GetItemDefaultGroupName(item)] = group;
 	}
 
