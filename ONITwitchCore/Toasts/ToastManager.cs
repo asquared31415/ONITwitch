@@ -38,9 +38,9 @@ public static class ToastManager
 
 		var toast = Util.KInstantiateUI(ModAssets.Toasts.ToastPrefab, canvas);
 		var toastCmp = toast.AddOrGet<Toast>();
-		toastCmp.Title = toast.transform.GetChild(0).GetChild(0).GetComponent<Text>();
+		toastCmp.Title = toast.transform.GetChild(0).GetChild(0).GetComponent<LocText>();
 		toastCmp.Title.text = title;
-		toastCmp.Body = toast.transform.GetChild(1).GetChild(0).GetComponent<Text>();
+		toastCmp.Body = toast.transform.GetChild(1).GetChild(0).GetComponent<LocText>();
 		toastCmp.Body.text = body;
 		toastCmp.Focus = Toast.FocusKind.None;
 

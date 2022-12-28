@@ -13,4 +13,9 @@
       <ProjectReference Include="..\ONITwitchCore\ONITwitchCore.csproj" />
       <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="UnityEngine.InputLegacyModule">
+        <HintPath>..\lib\UnityEngine.InputLegacyModule.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>

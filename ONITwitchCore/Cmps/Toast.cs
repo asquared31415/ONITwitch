@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using KSerialization;
 using OniTwitchLib;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +17,8 @@ public class Toast : KMonoBehaviour
 	[NonSerialized] public Vector3 FocusPos;
 	[NonSerialized] public GameObject FocusGo;
 
-	[NonSerialized] public Text Body;
-	[NonSerialized] public Text Title;
+	[NonSerialized] internal LocText Body;
+	[NonSerialized] internal LocText Title;
 
 	[NonSerialized] private bool breakEarly;
 
