@@ -53,19 +53,6 @@ public class OniTwitchMod : UserMod2
 	}
 }
 
-[HarmonyPatch(typeof(Manager), nameof(Manager.MatchFootprint))]
-public static class ModOrderLogger
-{
-	[UsedImplicitly]
-	public static void Prefix(List<Label> footprint)
-	{
-		foreach (var label in footprint)
-		{
-			Debug.Log(label.title);
-		}
-	}
-}
-
 [HarmonyPatch(typeof(DevToolManager), nameof(DevToolManager.UpdateShouldShowTools))]
 public class DevToolKeybindFix
 {

@@ -29,7 +29,6 @@ public static class ElementPatches
 			tex.LoadImage(bytes);
 			material.mainTexture = tex;
 
-			Debug.Log(Hash.SDBMLower(nameof(TwitchSimHashes.IndestructibleElement)));
 			var substance = ModUtil.CreateSubstance(
 				nameof(TwitchSimHashes.IndestructibleElement),
 				Element.State.Solid,
@@ -39,7 +38,6 @@ public static class ElementPatches
 				Color.black,
 				Color.black
 			);
-			Debug.Log(Traverse.Create(substance).Field<Tag>("nameTag").Value);
 			substanceList.Add(substance);
 		}
 
