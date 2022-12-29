@@ -8,7 +8,6 @@ using ONITwitchCore;
 using ONITwitchCore.Config;
 using ONITwitchCore.Integration.DecorPackA;
 using UnityEngine;
-using Label = KMod.Label;
 using Object = UnityEngine.Object;
 
 namespace ONITwitch;
