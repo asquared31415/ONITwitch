@@ -64,6 +64,8 @@ public static class WorldSelectorPatches
 
 			var rootWorlds = rows.Where(pair => worldIdxDepthMap[pair.Key] == 0).Select(pair => pair.Key).ToList();
 			rootWorlds.Sort(CompareWorlds);
+			// reverse because the stack will be processed in reverse order
+			rootWorlds.Reverse();
 			var worldStack = new Stack<int>(rootWorlds);
 			while (worldStack.Count > 0)
 			{
