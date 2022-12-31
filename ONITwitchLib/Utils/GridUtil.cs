@@ -23,13 +23,25 @@ public static class GridUtil
 			.Where(n => Grid.IsValidCell(n) && Grid.AreCellsInSameWorld(cell, n));
 	}
 
+	public static bool IsCellFoundationEmpty(int cell)
+	{
+		var isFoundation = Grid.Foundation[cell];
+		var validCell = Grid.IsValidBuildingCell(cell);
+		var isDiggable = Grid.Element[cell].hardness < byte.MaxValue;
+		return !isFoundation && validCell && isDiggable;
+	}
+
 	public static IEnumerable<int> GetNeighborsWithBuildingClearance(int cell)
 	{
-		return GetNeighborsInBounds(cell)
-			.Where(
-				offsetCell => !Grid.Foundation[offsetCell] && Grid.IsValidBuildingCell(offsetCell) &&
-							  (Grid.Element[offsetCell].id != SimHashes.Unobtanium)
-			);
+		return GetNeighborsInBounds(cell).Where(IsCellFoundationEmpty);
+	}
+
+	public static bool IsCellEmpty(int cell)
+	{
+		var isFoundation = Grid.Foundation[cell];
+		var validCell = Grid.IsValidBuildingCell(cell);
+		var isOpen = !Grid.IsSolidCell(cell);
+		return !isFoundation && validCell && isOpen;
 	}
 
 	public const int NearestEmptyCellDepth = 40;
@@ -37,14 +49,7 @@ public static class GridUtil
 	public static int NearestEmptyCell(int baseCell)
 	{
 		var emptyCell = GameUtil.FloodFillFind<object>(
-			(cell, _) =>
-			{
-				var isFoundation = Grid.Foundation[cell];
-				var validCell = Grid.IsValidBuildingCell(cell);
-				var isOpen = !Grid.IsSolidCell(cell);
-				var isInBaseWorld = Grid.AreCellsInSameWorld(cell, baseCell);
-				return !isFoundation && validCell && isOpen && isInBaseWorld;
-			},
+			(cell, _) => IsCellEmpty(cell) && Grid.AreCellsInSameWorld(cell, baseCell),
 			null,
 			baseCell,
 			NearestEmptyCellDepth,
@@ -62,20 +67,12 @@ public static class GridUtil
 
 	public static int FindCellWithCavityClearance(int baseCell)
 	{
-		var clusterIdx = ClusterManager.Instance.activeWorldId;
 		var emptyCell = GameUtil.FloodFillFind<object>(
 			(cell, _) =>
 			{
-				var isFoundation = Grid.Foundation[cell];
-				var validCellForWorld = Grid.IsValidBuildingCell(cell) &&
-										Grid.IsValidCellInWorld(cell, clusterIdx);
-				var elementSolid = Grid.Element[cell].IsSolid;
-
-				var neighborsValid = GetNeighborsInBounds(cell)
-					.All(offsetCell => !Grid.Foundation[offsetCell] && !Grid.Element[offsetCell].IsSolid);
-
-				var result = !isFoundation && validCellForWorld && !elementSolid && neighborsValid;
-				return result;
+				var cellEmpty = IsCellEmpty(cell);
+				var neighborsValid = GetNeighborsInBounds(cell).All(IsCellEmpty);
+				return cellEmpty && neighborsValid;
 			},
 			null,
 			baseCell,
@@ -100,20 +97,9 @@ public static class GridUtil
 		var emptyCell = GameUtil.FloodFillFind<object>(
 			(cell, _) =>
 			{
-				var isFoundation = Grid.Foundation[cell];
-				var validCellForWorld = Grid.IsValidBuildingCell(cell) &&
-										Grid.IsValidCellInWorld(cell, clusterIdx) &&
-										(Grid.Element[cell].id != SimHashes.Unobtanium);
-
-				var neighborsValid = GetNeighborsInBounds(cell)
-					.All(
-						offsetCell =>
-							!Grid.Foundation[offsetCell] && Grid.IsValidBuildingCell(offsetCell) &&
-							(Grid.Element[offsetCell].id != SimHashes.Unobtanium)
-					);
-
-				var result = !isFoundation && validCellForWorld && neighborsValid;
-				return result;
+				var cellEmpty = IsCellFoundationEmpty(cell);
+				var neighborsValid = GetNeighborsInBounds(cell).All(IsCellFoundationEmpty);
+				return cellEmpty && neighborsValid;
 			},
 			null,
 			baseCell,
