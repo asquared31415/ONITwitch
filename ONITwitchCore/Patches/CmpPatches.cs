@@ -17,15 +17,15 @@ public static class CmpPatches
 		{
 			yield return AccessTools.Method(
 				typeof(OuthouseConfig),
-				nameof(OuthouseConfig.DoPostConfigureComplete)
+				nameof(OuthouseConfig.ConfigureBuildingTemplate)
 			);
 			yield return AccessTools.Method(
 				typeof(FlushToiletConfig),
-				nameof(FlushToiletConfig.DoPostConfigureComplete)
+				nameof(FlushToiletConfig.ConfigureBuildingTemplate)
 			);
 			yield return AccessTools.Method(
 				typeof(WallToiletConfig),
-				nameof(WallToiletConfig.DoPostConfigureComplete)
+				nameof(WallToiletConfig.ConfigureBuildingTemplate)
 			);
 		}
 

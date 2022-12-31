@@ -1,4 +1,3 @@
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
@@ -25,7 +24,7 @@ public class SpawnPrefabCommand : CommandBase
 
 		var go = GameUtil.KInstantiate(
 			prefab,
-			Grid.CellToPos(position, 0.01f, 0.01f, Grid.GetLayerZ(sceneLayer)),
+			Grid.CellToPosCBC(position, sceneLayer),
 			sceneLayer
 		);
 		if (go != null)

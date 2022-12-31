@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace OniTwitchLib;
+namespace ONITwitchLib;
 
 public class WaitTimeOrSignal : CustomYieldInstruction
 {

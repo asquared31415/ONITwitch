@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using KSerialization;
-using OniTwitchLib;
+using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
