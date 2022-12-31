@@ -52,19 +52,6 @@ public class OniTwitchMod : UserMod2
 	}
 }
 
-[HarmonyPatch(typeof(DevToolManager), nameof(DevToolManager.UpdateShouldShowTools))]
-public class DevToolKeybindFix
-{
-	[UsedImplicitly]
-	public static void Postfix(ref bool ___toggleKeyWasDown, ref bool ___showImGui)
-	{
-		var flag = Input.GetKeyDown(KeyCode.Hash) && Input.GetKey(KeyCode.LeftControl);
-		if (!___toggleKeyWasDown & flag)
-			___showImGui = !___showImGui;
-		___toggleKeyWasDown = flag;
-	}
-}
-
 [HarmonyPatch(typeof(HoverTextConfiguration), "DrawTitle")]
 public static class CellNumInTitle
 {

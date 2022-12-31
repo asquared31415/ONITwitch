@@ -36,14 +36,14 @@ public static class GridUtil
 
 	public static int NearestEmptyCell(int baseCell)
 	{
-		var clusterIdx = ClusterManager.Instance.activeWorldId;
 		var emptyCell = GameUtil.FloodFillFind<object>(
 			(cell, _) =>
 			{
 				var isFoundation = Grid.Foundation[cell];
-				var validCell = Grid.IsValidBuildingCell(cell) && Grid.IsValidCellInWorld(cell, clusterIdx);
+				var validCell = Grid.IsValidBuildingCell(cell);
 				var isOpen = !Grid.IsSolidCell(cell);
-				return !isFoundation && validCell && isOpen;
+				var isInBaseWorld = Grid.AreCellsInSameWorld(cell, baseCell);
+				return !isFoundation && validCell && isOpen && isInBaseWorld;
 			},
 			null,
 			baseCell,
@@ -52,7 +52,7 @@ public static class GridUtil
 			false
 		);
 
-		if (!Grid.IsValidCellInWorld(emptyCell, clusterIdx))
+		if (!Grid.IsValidBuildingCell(emptyCell))
 		{
 			Debug.LogWarning($"[Twitch Integration] Unable to find empty cell close to {baseCell} output {emptyCell}");
 		}
