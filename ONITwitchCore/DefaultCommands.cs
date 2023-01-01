@@ -361,6 +361,9 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 1)
 		);
+		RegisterCommand(
+			new CommandInfo("GlobalWarming", "Global Warming", new GlobalWarmingCommand(), null, Danger.High, 1)
+		);
 		RegisterCommand(new CommandInfo("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 30));
 		RegisterCommand(
 			new CommandInfo("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 1)
