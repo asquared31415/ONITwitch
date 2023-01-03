@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using EventLib;
 using JetBrains.Annotations;
 using ONITwitchCore.Config;
+using ONITwitchLib;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
 
@@ -13,76 +16,40 @@ public class TwitchDeckManager
 
 	[NotNull] public static TwitchDeckManager Instance => instance ??= new TwitchDeckManager();
 
-	private readonly VarietyShuffler<EventInfo> shuffler = new();
+	private readonly Dictionary<string, EventGroup> groups = new();
 
-	private List<EventInfo> items = new();
+	private List<EventInfo> deck = new();
 	private int headIdx;
 
 	private TwitchDeckManager()
 	{
 	}
 
-	public void AddToDeck([NotNull] EventInfo eventInfo, int count, [CanBeNull] string groupName)
+	public void AddGroup([NotNull] EventGroup group)
 	{
-		if (groupName == null)
-		{
-			AddToDeck(eventInfo, count);
-		}
-		else
-		{
-			var group = shuffler.GetGroup(groupName);
-			if (group != null)
-			{
-				group.AddItem(eventInfo, count);
-			}
-			else
-			{
-				shuffler.AddGroup(groupName, new VarietyShuffler<EventInfo>.Group((eventInfo, count)));
-			}
-
-			items = shuffler.GetShuffled();
-			headIdx = 0;
-		}
-	}
-
-	public void AddToDeck([NotNull] EventInfo eventInfo, int count)
-	{
-		shuffler.AddItem(eventInfo, count);
-		items = shuffler.GetShuffled();
-		headIdx = 0;
-	}
-
-	public void AddToDeck([NotNull] EventInfo eventInfo)
-	{
-		AddToDeck(eventInfo, 1);
-	}
-
-	[Obsolete("This overload is kept only for binary compatibility reasons", true)]
-	public void AddToDeck([NotNull] IEnumerable<EventInfo> eventInfos)
-	{
-		foreach (var eventInfo in eventInfos)
-		{
-			AddToDeck(eventInfo);
-		}
-	}
-
-	public void RemoveEvent([NotNull] EventInfo eventInfo)
-	{
-		var noGroupName = shuffler.GetItemDefaultGroupName(eventInfo);
-		RemoveGroup(noGroupName);
-	}
-
-	public void RemoveGroup([NotNull] string groupName)
-	{
-		shuffler.RemoveGroup(groupName);
-		items = shuffler.GetShuffled();
-		headIdx = 0;
+		group.OnGroupChanged += Shuffle;
+		groups.Add(group.Name, group);
+		Shuffle(group);
 	}
 
 	[CanBeNull]
-	public VarietyShuffler<EventInfo>.Group GetGroup([NotNull] string groupName)
+	public EventGroup GetGroup([NotNull] string name)
 	{
-		return shuffler.GetGroup(groupName);
+		return groups.TryGetValue(name, out var group) ? group : null;
+	}
+
+	[NotNull]
+	public List<EventGroup> GetGroups()
+	{
+		return groups.Values.ToList();
+	}
+
+	private void Shuffle(EventGroup changedGroup)
+	{
+		// this design leaves room to possibly be smarter about shuffling in only the changed group
+
+		deck = GetShuffled();
+		headIdx = 0;
 	}
 
 	[CanBeNull]
@@ -90,7 +57,6 @@ public class TwitchDeckManager
 	{
 		const int maxDrawAttempts = 1000;
 
-		var condInst = ConditionsManager.Instance;
 		var dataInst = DataManager.Instance;
 		var dangerInst = DangerManager.Instance;
 
@@ -103,7 +69,7 @@ public class TwitchDeckManager
 									 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
 			{
 				var data = dataInst.GetDataForEvent(entry);
-				var condition = condInst.CheckCondition(entry, data);
+				var condition = entry.CheckCondition(data);
 				if (condition)
 				{
 					return entry;
@@ -117,19 +83,99 @@ public class TwitchDeckManager
 
 	private EventInfo DrawEntry()
 	{
-		if (items.Count == 0)
+		if (deck.Count == 0)
 		{
 			throw new Exception("Cannot draw from empty random deck");
 		}
 
-		var ret = items[headIdx];
+		var ret = deck[headIdx];
 		headIdx += 1;
-		if (headIdx >= items.Count)
+		if (headIdx >= deck.Count)
 		{
-			items = shuffler.GetShuffled();
+			deck = GetShuffled();
 			headIdx = 0;
 		}
 
+		return ret;
+	}
+
+	[MustUseReturnValue]
+	[NotNull]
+	public List<EventInfo> GetShuffled()
+	{
+		// based on https://engineering.atspotify.com/2014/02/how-to-shuffle-songs/
+		var collectedOffsets = new List<(float, EventInfo)>();
+
+		foreach (var (_, group) in groups)
+		{
+			if (group.TotalWeight < 0)
+			{
+				Debug.LogWarning($"[Twitch Integration] Group {group.Name} had invalid weight {group.TotalWeight}");
+				continue;
+			}
+
+			if (group.TotalWeight == 0)
+			{
+				continue;
+			}
+
+			// first spread the items out by separating them by 1/n and applying a random multiplier between 1-(1/n+1) and 1+(1/n+1)
+			var nRecip = 1.0f / group.TotalWeight;
+			var spaceMin = nRecip * (1 - 1.0f / (group.TotalWeight + 1));
+			var spaceMax = nRecip * (1 + 1.0f / (group.TotalWeight + 1));
+
+			var items = new List<EventInfo>();
+			foreach (var (item, weight) in group.GetWeights())
+			{
+				for (var i = 0; i < weight; i++)
+				{
+					items.Add(item);
+				}
+			}
+
+			// shuffle the items within a group before spreading them
+			items.ShuffleList();
+
+			// indexes correspond to the items above
+			// the first item is always at offset 0
+			var spaced = new List<float> { 0 };
+
+			// TODO: this needs to run after every item except the last?
+
+			// will never be larger than 1, since the max value approaches 1 as n approaches +inf
+			// skip the first item, it was already added
+			var endOffset = items.Skip(1)
+				.Aggregate(
+					0f,
+					(accum, _) =>
+					{
+						var offset = UnityEngine.Random.Range(spaceMin, spaceMax);
+						accum += offset;
+						spaced.Add(accum);
+						return accum;
+					}
+				);
+
+			// will find a random value that would not bring the final value above offset 1
+			var startOffset = UnityEngine.Random.Range(0, 1f - endOffset);
+
+			// offset everything by the start offset and add it to the main collection
+			collectedOffsets.AddRange(spaced.Select((t, idx) => (t + startOffset, items[idx])));
+		}
+
+		// sort by the offsets in ascending order
+		collectedOffsets.Sort(
+			(itemA, itemB) =>
+			{
+				var (offsetA, _) = itemA;
+				var (offsetB, _) = itemB;
+
+				return offsetA.CompareTo(offsetB);
+			}
+		);
+
+		// return the items from the sorted list
+		var ret = collectedOffsets.Select(itemOffset => itemOffset.Item2).ToList();
 		return ret;
 	}
 }

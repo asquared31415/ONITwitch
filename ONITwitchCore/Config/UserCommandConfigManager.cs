@@ -6,6 +6,8 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
+using DataManager = EventLib.DataManager;
+using EventManager = EventLib.EventManager;
 
 namespace ONITwitchCore.Config;
 
@@ -37,8 +39,37 @@ public class UserCommandConfigManager
 
 	public void DEBUG_DumpCurrentConfig()
 	{
-		var data = JsonConvert.SerializeObject(userConfig, Formatting.Indented);
-		Debug.Log(data);
+		var dataInst = DataManager.Instance;
+		var deckInst = TwitchDeckManager.Instance;
+		var data = new Dictionary<string, Dictionary<string, CommandConfig>>();
+
+		foreach (var group in deckInst.GetGroups())
+		{
+			foreach (var (eventInfo, weight) in group.GetWeights())
+			{
+				var eventNamespace = eventInfo.Namespace;
+				var eventId = eventInfo.EventId;
+
+				var config = new CommandConfig
+				{
+					FriendlyName = eventInfo.FriendlyName,
+					Data = dataInst.GetDataForEvent(eventInfo),
+					Weight = weight,
+					GroupName = group.Name,
+				};
+				if (data.TryGetValue(eventNamespace, out var namespaceEvents))
+				{
+					namespaceEvents[eventId] = config;
+				}
+				else
+				{
+					data[eventNamespace] = new Dictionary<string, CommandConfig> { [eventId] = config };
+				}
+			}
+		}
+
+		var ser = JsonConvert.SerializeObject(data, Formatting.None);
+		Debug.Log(ser);
 	}
 
 	public void Reload()
@@ -85,6 +116,8 @@ public class UserCommandConfigManager
 			}
 
 			DefaultCommands.ReloadData(userConfig);
+
+			DEBUG_DumpCurrentConfig();
 		}
 	}
 }

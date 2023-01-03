@@ -94,11 +94,10 @@ public class VoteController : KMonoBehaviour
 			return false;
 		}
 
-		var eventInst = EventManager.Instance;
 		var voteMsg = new StringBuilder("Starting new vote! ");
 		for (var idx = 0; idx < eventOptions.Count; idx++)
 		{
-			voteMsg.Append($"{idx + 1}: {eventInst.GetFriendlyName(eventOptions[idx])} ");
+			voteMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName} ");
 		}
 
 		Debug.Log($"[Twitch Integration] {voteMsg}");
@@ -112,7 +111,7 @@ public class VoteController : KMonoBehaviour
 			var toastMsg = new StringBuilder();
 			for (var idx = 0; idx < eventOptions.Count; idx++)
 			{
-				toastMsg.Append($"{idx + 1}: {eventInst.GetFriendlyName(eventOptions[idx])}\n");
+				toastMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName}\n");
 			}
 
 			ToastManager.InstantiateToast("Starting Vote", toastMsg.ToString());
@@ -134,7 +133,7 @@ public class VoteController : KMonoBehaviour
 				$"[Twitch Integration] Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes"
 			);
 			var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
-			EventManager.Instance.TriggerEvent(choice.EventInfo, data);
+			choice.EventInfo.Trigger(data);
 			responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
 		}
 		else

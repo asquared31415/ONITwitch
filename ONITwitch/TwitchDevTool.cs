@@ -110,7 +110,7 @@ public class TwitchDevTool : DevTool
 					{
 						Debug.Log($"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
 						var data = dataInst.GetDataForEvent(eventInfo);
-						eventInst.TriggerEvent(eventInfo, data);
+						eventInfo.Trigger(data);
 					}
 				}
 

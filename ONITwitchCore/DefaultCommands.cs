@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EventLib;
 using JetBrains.Annotations;
 using ONITwitchCore.Commands;
 using ONITwitchCore.Config;
@@ -6,6 +7,7 @@ using ONITwitchCore.Content;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
+using EventInfo = EventLib.EventInfo;
 using EventManager = EventLib.EventManager;
 
 namespace ONITwitchCore;
@@ -645,17 +647,32 @@ public static class DefaultCommands
 
 	private static void RegisterCommand(CommandInfo info)
 	{
-		var eventInst = EventManager.Instance;
-		var eventId = eventInst.RegisterEvent(info.Id, info.Name);
-		eventInst.AddListenerForEvent(eventId, info.Command.Run);
-		DataManager.Instance.SetDataForEvent(eventId, info.Data);
-		ConditionsManager.Instance.AddCondition(eventId, info.Command.Condition);
-		if (info.Danger.HasValue)
+		var deckInst = TwitchDeckManager.Instance;
+		EventInfo eventInfo;
+		if (info.Group != null)
 		{
-			DangerManager.Instance.SetDanger(eventId, info.Danger.Value);
+			var group = deckInst.GetGroup(info.Group);
+			if (group == null)
+			{
+				group = new EventGroup(info.Group);
+				deckInst.AddGroup(group);
+			}
+
+			eventInfo = group.AddEvent(info.Id, info.Weight, info.Name);
+		}
+		else
+		{
+			(eventInfo, var group) = EventGroup.DefaultSingleEventGroup(info.Id, info.Weight, info.Name);
+			deckInst.AddGroup(group);
 		}
 
-		TwitchDeckManager.Instance.AddToDeck(eventId, info.Weight, info.Group);
+		eventInfo.AddListener(info.Command.Run);
+		DataManager.Instance.SetDataForEvent(eventInfo, info.Data);
+		eventInfo.AddCondition(info.Command.Condition);
+		if (info.Danger.HasValue)
+		{
+			DangerManager.Instance.SetDanger(eventInfo, info.Danger.Value);
+		}
 	}
 
 	public static void ReloadData(Dictionary<string, Dictionary<string, CommandConfig>> userConfig)
@@ -671,12 +688,38 @@ public static class DefaultCommands
 				var eventId = eventInst.GetEventByID(namespaceId, id);
 				if (eventId != null)
 				{
-					eventInst.RenameEvent(eventId, config.FriendlyName ?? eventId.Id);
+					eventId.FriendlyName = config.FriendlyName ?? eventId.Id;
 					dataInst.SetDataForEvent(eventId, config.Data);
 
-					// replace weights by removing and then adding
-					deckInst.RemoveEvent(eventId);
-					deckInst.AddToDeck(eventId, config.Weight, config.GroupName);
+					var group = eventId.Group;
+					if (group.Name == config.GroupName)
+					{
+						group.SetWeight(eventId, config.Weight);
+					}
+					else
+					{
+						group.RemoveEvent(eventId);
+
+						if (config.GroupName != null)
+						{
+							var newGroup = deckInst.GetGroup(config.GroupName);
+							if (newGroup == null)
+							{
+								newGroup = new EventGroup(config.GroupName);
+								deckInst.AddGroup(newGroup);
+							}
+
+							eventId.MoveToGroup(newGroup, config.Weight);
+						}
+						else
+						{
+							var newGroup = new EventGroup(
+								EventGroup.GetItemDefaultGroupName(eventId.Namespace, eventId.EventId)
+							);
+							deckInst.AddGroup(newGroup);
+							eventId.MoveToGroup(newGroup, config.Weight);
+						}
+					}
 				}
 			}
 		}

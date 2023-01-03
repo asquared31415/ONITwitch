@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using JetBrains.Annotations;
 
 namespace EventLib;
 
@@ -12,16 +14,114 @@ public class EventInfo : IComparable<EventInfo>, IComparable
 	/// </summary>
 	public string Id => $"{eventNamespace}.{eventId}";
 
+	[CanBeNull] public string FriendlyName;
+
 	public string Namespace => eventNamespace;
 	public string EventId => eventId;
+
+	[NotNull] public EventGroup Group { get; private set; }
 
 	private readonly string eventNamespace;
 	private readonly string eventId;
 
-	internal EventInfo(string eventNamespace, string eventId)
+	[NotNull] private readonly ActionRef actionRef = new(_ => { });
+	[CanBeNull] private ConditionRef conditionRef;
+
+	internal EventInfo(
+		[NotNull] EventGroup group,
+		[NotNull] string eventNamespace,
+		[NotNull] string eventId,
+		[CanBeNull] string friendlyName = null
+	)
 	{
+		Group = group;
 		this.eventNamespace = eventNamespace;
 		this.eventId = eventId;
+		FriendlyName = friendlyName;
+
+		EventManager.Instance.RegisterEvent(this);
+	}
+
+	/// <summary>
+	/// this is dangerous to use, and probably not what you need
+	/// </summary>
+	public void MoveToGroup(EventGroup newGroup, int weight)
+	{
+		newGroup.AddEventInfoInternal(this, weight);
+		Group = newGroup;
+	}
+
+	public void AddListener([NotNull] Action<object> listener)
+	{
+		actionRef.Action += listener;
+	}
+
+	public void RemoveListener([NotNull] Action<object> listener)
+	{
+		if (!((IList) actionRef.Action.GetInvocationList()).Contains(listener))
+		{
+			throw new ArgumentException(
+				$"unable to remove listener from event {Id}",
+				nameof(listener)
+			);
+		}
+
+		actionRef.Action -= listener;
+	}
+
+	public void Trigger(object data)
+	{
+		actionRef.Action.Invoke(data);
+	}
+
+	public void AddCondition([NotNull] Func<object, bool> condition)
+	{
+		if (conditionRef != null)
+		{
+			conditionRef.Condition += condition;
+		}
+		else
+		{
+			conditionRef = new ConditionRef(condition);
+		}
+	}
+
+	public bool CheckCondition(object data)
+	{
+		if (conditionRef != null)
+		{
+			foreach (var cond in conditionRef.Condition.GetInvocationList())
+			{
+				var result = (bool) cond.DynamicInvoke(data);
+				if (!result)
+				{
+					return false;
+				}
+			}
+		}
+
+		// Either no condition or the conditions all passed
+		return true;
+	}
+
+	private class ActionRef
+	{
+		[NotNull] public Action<object> Action;
+
+		public ActionRef([NotNull] Action<object> action)
+		{
+			Action = action;
+		}
+	}
+
+	private class ConditionRef
+	{
+		[NotNull] public Func<object, bool> Condition;
+
+		public ConditionRef([NotNull] Func<object, bool> condition)
+		{
+			Condition = condition;
+		}
 	}
 
 	protected bool Equals(EventInfo other)
@@ -64,7 +164,7 @@ public class EventInfo : IComparable<EventInfo>, IComparable
 	/// <returns>The friendly name of the event, if it exists, or the ID of the event otherwise.</returns>
 	public override string ToString()
 	{
-		return EventManager.Instance.GetFriendlyName(this) ?? Id;
+		return FriendlyName ?? Id;
 	}
 
 	public int CompareTo(EventInfo other)

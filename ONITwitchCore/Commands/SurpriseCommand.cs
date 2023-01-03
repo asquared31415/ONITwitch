@@ -16,7 +16,7 @@ public class SurpriseCommand : CommandBase
 		{
 			var eventData = DataManager.Instance.GetDataForEvent(info);
 			Debug.Log($"[Twitch Integration] Surprise triggering {info}({info.Id})");
-			EventManager.Instance.TriggerEvent(info, eventData);
+			info.Trigger(eventData);
 		}
 	}
 }
