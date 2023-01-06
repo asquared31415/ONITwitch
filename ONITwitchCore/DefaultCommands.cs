@@ -581,7 +581,8 @@ public static class DefaultCommands
 				// will only choose a command that is within the expected danger range
 				// but this command should ignore danger settings
 				null,
-				50
+				50,
+				"core.surprise"
 			)
 		);
 		RegisterCommand(
@@ -628,7 +629,15 @@ public static class DefaultCommands
 		);
 
 		RegisterCommand(
-			new CommandInfo("SurpriseBox", "Surprise Box", new SurpriseBoxCommand(), null, Danger.None, 20)
+			new CommandInfo(
+				"SurpriseBox",
+				"Surprise Box",
+				new SurpriseBoxCommand(),
+				null,
+				Danger.None,
+				20,
+				"core.surprise"
+			)
 		);
 
 		// update user configs
