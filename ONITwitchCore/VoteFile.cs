@@ -10,17 +10,17 @@ using UnityEngine;
 namespace ONITwitchCore;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class VoteFile : KMonoBehaviour, ISim33ms
+public class VoteFile : KMonoBehaviour
 {
-	private int count;
+	private const float FileUpdateTime = 1f / 3f;
+	private float accum;
 
-	public void Sim33ms(float dt)
+	public void Update()
 	{
-		// only work every 10th update for 330ms
-		count += 1;
-		if (count % 10 == 0)
+		accum += Time.unscaledDeltaTime;
+		while (accum >= FileUpdateTime)
 		{
-			count %= 10;
+			accum -= FileUpdateTime;
 
 			var filePath = Path.Combine(TwitchModInfo.MainModFolder, MainConfig.Instance.ConfigData.VotesPath);
 			if (Game.Instance.TryGetComponent<VoteController>(out var voteController))
