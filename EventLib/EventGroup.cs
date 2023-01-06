@@ -4,12 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using KMod;
 
 namespace EventLib;
 
 public class EventGroup
 {
-	private static Dictionary<Assembly, string> assemblyStaticIdMap;
+	public static Dictionary<Assembly, string> AssemblyIdMap;
 
 	public readonly string Name;
 	public int TotalWeight => weights.Values.Sum();
@@ -72,6 +73,7 @@ public class EventGroup
 		}
 	}
 
+	[NotNull]
 	public IReadOnlyDictionary<EventInfo, int> GetWeights()
 	{
 		// make copy of the dict to prevent weight modification
@@ -87,32 +89,15 @@ public class EventGroup
 
 	private static string GetEventNamespace([NotNull] Assembly callingAssembly)
 	{
-		if (assemblyStaticIdMap == null)
-		{
-			assemblyStaticIdMap = new Dictionary<Assembly, string>();
-			foreach (var mod in Global.Instance.modManager.mods)
-			{
-				var modStaticID = mod.staticID;
-				var loadedData = mod.loaded_mod_data;
-				if (loadedData != null)
-				{
-					foreach (var assembly in loadedData.dlls)
-					{
-						assemblyStaticIdMap.Add(assembly, modStaticID);
-					}
-				}
-			}
-		}
-
 		string modNamespace;
-		if (assemblyStaticIdMap.TryGetValue(callingAssembly, out var staticId))
+		if ((AssemblyIdMap != null) && AssemblyIdMap.TryGetValue(callingAssembly, out var staticId))
 		{
 			modNamespace = staticId;
 		}
 		else
 		{
 			Debug.LogWarning(
-				$"[Twitch Integration] Unable to find a static ID for assembly {callingAssembly}, it will not be namespaced"
+				$"[Twitch Integration] Unable to find a static ID for assembly {callingAssembly} to determine its namespace (did you try to register an event too soon?)"
 			);
 			modNamespace = "";
 		}
@@ -128,10 +113,58 @@ public class EventGroup
 		return $"__<nogroup>__{eventNamespace}.{id}_{eventNamespace.GetHashCode()}.{id.GetHashCode()}_";
 	}
 
+	public override string ToString()
+	{
+		return $"Group {Name}";
+	}
+
 	private void InvokeOnChanged()
 	{
 		// make local copy to make sure that deregistering between null check and call doesnt happen
 		var onChangedEvent = OnGroupChanged;
 		onChangedEvent?.Invoke(this);
+	}
+
+	/// <summary>
+	/// Don't call this
+	/// </summary>
+	public static void RegisterStaticIdMap(IEnumerable<Mod> mods)
+	{
+		if (AssemblyIdMap != null)
+		{
+			Debug.LogWarning("[Twitch Integration] Attempting to initialize the assembly->static id map twice");
+			Debug.LogWarning(Environment.StackTrace);
+		}
+		else
+		{
+			Debug.Log("[Twitch Integration] Initializing mod assembly map");
+			AssemblyIdMap = new Dictionary<Assembly, string>();
+			foreach (var registeredMod in mods)
+			{
+				if (registeredMod.IsEnabledForActiveDlc())
+				{
+					var loadedData = registeredMod.loaded_mod_data;
+					if (loadedData != null)
+					{
+						var modStaticID = registeredMod.staticID;
+						foreach (var assembly in loadedData.dlls)
+						{
+							AssemblyIdMap.Add(assembly, modStaticID);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	[Obsolete("Used as a cast helper for the reflection lib", true)]
+	[UsedImplicitly]
+	private static (object, object) InternalDefaultSingleEventGroup(
+		[NotNull] string id,
+		int weight,
+		[CanBeNull] string friendlyName = null
+	)
+	{
+		return DefaultSingleEventGroup(id, weight, friendlyName);
 	}
 }

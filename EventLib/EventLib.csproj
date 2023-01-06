@@ -11,4 +11,7 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\net48\EventLib.xml</DocumentationFile>
     </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
+    </ItemGroup>
 </Project>

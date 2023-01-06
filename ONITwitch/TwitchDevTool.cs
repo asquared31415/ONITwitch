@@ -80,13 +80,13 @@ public class TwitchDevTool : DevTool
 		var eventKeys = eventInst.GetAllRegisteredEvents();
 		foreach (var eventInfo in eventKeys)
 		{
-			if (!namespacedEvents.ContainsKey(eventInfo.Namespace))
+			if (!namespacedEvents.ContainsKey(eventInfo.EventNamespace))
 			{
-				namespacedEvents.Add(eventInfo.Namespace, new List<EventInfo> { eventInfo });
+				namespacedEvents.Add(eventInfo.EventNamespace, new List<EventInfo> { eventInfo });
 			}
 			else
 			{
-				namespacedEvents[eventInfo.Namespace].Add(eventInfo);
+				namespacedEvents[eventInfo.EventNamespace].Add(eventInfo);
 			}
 		}
 

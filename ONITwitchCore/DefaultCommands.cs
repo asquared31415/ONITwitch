@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EventLib;
 using JetBrains.Annotations;
 using ONITwitchCore.Commands;
 using ONITwitchCore.Config;
@@ -7,6 +6,7 @@ using ONITwitchCore.Content;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
+using EventGroup = EventLib.EventGroup;
 using EventInfo = EventLib.EventInfo;
 using EventManager = EventLib.EventManager;
 
@@ -669,10 +669,7 @@ public static class DefaultCommands
 		eventInfo.AddListener(info.Command.Run);
 		DataManager.Instance.SetDataForEvent(eventInfo, info.Data);
 		eventInfo.AddCondition(info.Command.Condition);
-		if (info.Danger.HasValue)
-		{
-			DangerManager.Instance.SetDanger(eventInfo, info.Danger.Value);
-		}
+		eventInfo.Danger = info.Danger;
 	}
 
 	public static void ReloadData(Dictionary<string, Dictionary<string, CommandConfig>> userConfig)
@@ -714,7 +711,7 @@ public static class DefaultCommands
 						else
 						{
 							var newGroup = new EventGroup(
-								EventGroup.GetItemDefaultGroupName(eventId.Namespace, eventId.EventId)
+								EventGroup.GetItemDefaultGroupName(eventId.EventNamespace, eventId.EventId)
 							);
 							deckInst.AddGroup(newGroup);
 							eventId.MoveToGroup(newGroup, config.Weight);

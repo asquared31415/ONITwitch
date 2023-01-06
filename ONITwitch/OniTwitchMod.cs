@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using EventLib;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
@@ -36,6 +37,9 @@ public class OniTwitchMod : UserMod2
 	public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
 	{
 		base.OnAllModsLoaded(harmony, mods);
+
+		// register the static id reverse map for namespacing
+		EventGroup.RegisterStaticIdMap(mods);
 
 		var decorPackEnabled = mods.Any(mod => (mod.staticID == DecorPackOneStaticID) && mod.IsEnabledForActiveDlc());
 		if (decorPackEnabled)

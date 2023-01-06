@@ -47,7 +47,7 @@ public class UserCommandConfigManager
 		{
 			foreach (var (eventInfo, weight) in group.GetWeights())
 			{
-				var eventNamespace = eventInfo.Namespace;
+				var eventNamespace = eventInfo.EventNamespace;
 				var eventId = eventInfo.EventId;
 
 				var config = new CommandConfig

@@ -7,133 +7,11 @@ namespace ONITwitchLib;
 
 public class EventManager
 {
-	// the EventManager instance from the event lib, but type erased as an object
-	private readonly object eventManagerInstance;
-
-	// delegates created to wrap various methods on the event manager without needing to use reflection
-	// and Invoke every time
-	private readonly Func<string, string, object> registerEventDelegate;
-	private readonly Action<object, object> renameEventDelegate;
-	private readonly Func<object, object> getFriendlyNameDelegate;
-	private readonly Func<string, string, object> getEventByIdDelegate;
-	private readonly Action<object, Action<string>> addListenerForEventDelegate;
-	private readonly Action<object, Action<object>> removeListenerForEventDelegate;
-	private readonly Action<object, object> triggerEventDelegate;
-
-	internal EventManager(object instance)
-	{
-		eventManagerInstance = instance;
-		var eventType = eventManagerInstance.GetType();
-		var registerInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"RegisterEvent",
-			new[] { typeof(string), typeof(string) }
-		);
-		registerEventDelegate =
-			DelegateUtil.CreateDelegate<Func<string, string, object>>(registerInfo, eventManagerInstance);
-		var renameEventInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"RenameEvent",
-			new[] { EventInterface.EventInfoType, typeof(string) }
-		);
-		renameEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			renameEventInfo,
-			eventManagerInstance,
-			EventInterface.EventInfoType,
-			typeof(string)
-		);
-		var getNameInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"GetFriendlyName",
-			new[] { EventInterface.EventInfoType }
-		);
-		getFriendlyNameDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			getNameInfo,
-			eventManagerInstance,
-			EventInterface.EventInfoType,
-			typeof(string)
-		);
-		var getByIdInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"GetEventByID",
-			new[] { typeof(string), typeof(string) }
-		);
-		getEventByIdDelegate =
-			DelegateUtil.CreateDelegate<Func<string, string, object>>(getByIdInfo, eventManagerInstance);
-		var addListenerForEventInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"AddListenerForEvent",
-			new[] { EventInterface.EventInfoType, typeof(Action<object>) }
-		);
-		addListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			addListenerForEventInfo,
-			eventManagerInstance,
-			EventInterface.EventInfoType,
-			typeof(Action<object>)
-		);
-		var removeListenerForEventInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"RemoveListenerForEvent",
-			new[] { EventInterface.EventInfoType, typeof(Action<object>) }
-		);
-		removeListenerForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			removeListenerForEventInfo,
-			eventManagerInstance,
-			EventInterface.EventInfoType,
-			typeof(Action<object>)
-		);
-		var triggerEventInfo = AccessTools.DeclaredMethod(
-			eventType,
-			"TriggerEvent",
-			new[] { EventInterface.EventInfoType, typeof(object) }
-		);
-		triggerEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			triggerEventInfo,
-			eventManagerInstance,
-			EventInterface.EventInfoType,
-			typeof(object)
-		);
-	}
-
 	/// <summary>
-	/// Registers an event with the event system.
+	/// Gets the instance of the event manager from the twitch mod.
+	/// Only safe to access if the Twitch mod is active.
 	/// </summary>
-	/// <param name="id">The ID of the event.  The ID will be automatically namespaced with the static ID of the mod.</param>
-	/// <param name="friendlyName">The user facing name to display</param>
-	/// <returns>A <see cref="EventInfo"/> representing the event that has been registered.</returns>
-	/// <exception cref="Exception">The ID <paramref name="id"/> is already registered.</exception>
-	[NotNull]
-	public EventInfo RegisterEvent([NotNull] string id, [CanBeNull] string friendlyName = null)
-	{
-		var output = registerEventDelegate(id, friendlyName);
-		if (output.GetType() != EventInterface.EventInfoType)
-		{
-			throw new Exception("event register type");
-		}
-
-		return new EventInfo(output);
-	}
-
-	/// <summary>
-	/// Changes the user-facing name for an event.
-	/// </summary>
-	/// <param name="eventInfo">The <see cref="EventInfo"/> for the event to be changed</param>
-	/// <param name="friendlyName">The new name for the event</param>
-	public void RenameEvent([NotNull] EventInfo eventInfo, [NotNull] string friendlyName)
-	{
-		renameEventDelegate(eventInfo.EventInfoInstance, friendlyName);
-	}
-
-	/// <summary>
-	/// Gets the user-facing name for an event.
-	/// </summary>
-	/// <param name="eventInfo">The <see cref="EventInfo"/> for the event</param>
-	/// <returns>The friendly name, if it exists, or <c>null</c> otherwise.</returns>
-	[CanBeNull]
-	public string GetFriendlyName([NotNull] EventInfo eventInfo)
-	{
-		return (string) getFriendlyNameDelegate(eventInfo.EventInfoInstance);
-	}
+	public static EventManager Instance => instance ??= GetEventManagerInstance();
 
 	/// <summary>
 	/// Gets an <see cref="EventInfo"/> for the specified ID, if the ID is registered.
@@ -153,34 +31,45 @@ public class EventManager
 		return new EventInfo(output);
 	}
 
-	/// <summary>
-	/// Adds a listener to the specified event.
-	/// </summary>
-	/// <param name="eventInfo">The <see cref="EventInfo"/> for the event to listen to</param>
-	/// <param name="listener">The listener to call when the event is triggered</param>
-	public void AddListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
+	private static EventManager instance;
+
+	private static Func<object> eventManagerInstanceDelegate;
+
+	private static EventManager GetEventManagerInstance()
 	{
-		addListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
+		if (eventManagerInstanceDelegate == null)
+		{
+			var prop = AccessTools.Property(EventInterface.EventManagerType, "Instance");
+			var propInfo = prop.GetGetMethod();
+
+			var retType = propInfo.ReturnType;
+			if (retType != EventInterface.EventManagerType)
+			{
+				throw new Exception(
+					$"The Instance property on {EventInterface.EventManagerType.AssemblyQualifiedName} does not return an instance of {EventInterface.EventManagerType}"
+				);
+			}
+
+			// no argument because it's static property
+			eventManagerInstanceDelegate = DelegateUtil.CreateDelegate<Func<object>>(propInfo, null);
+		}
+
+		return new EventManager(eventManagerInstanceDelegate());
 	}
 
-	/// <summary>
-	/// Removes a listener from the specified event.
-	/// </summary>
-	/// <param name="eventInfo">The <see cref="EventInfo"/> for the event to remove from</param>
-	/// <param name="listener">The listener to be removed from the event</param>
-	/// <exception cref="ArgumentException"><paramref name="listener"/> was not listening to the event</exception>
-	public void RemoveListenerForEvent([NotNull] EventInfo eventInfo, [NotNull] Action<object> listener)
-	{
-		removeListenerForEventDelegate(eventInfo.EventInfoInstance, listener);
-	}
+	// delegates created to wrap various methods on the event manager without needing to use reflection
+	// and Invoke every time
+	private readonly Func<string, string, object> getEventByIdDelegate;
 
-	/// <summary>
-	/// Triggers an event with the passed data.  This calls all listeners of the event.
-	/// </summary>
-	/// <param name="eventInfo">The <see cref="EventInfo"/> for the event to trigger</param>
-	/// <param name="data">The data to be passed to all listeners of the event</param>
-	public void TriggerEvent([NotNull] EventInfo eventInfo, object data)
+	internal EventManager(object instance)
 	{
-		triggerEventDelegate(eventInfo.EventInfoInstance, data);
+		var eventType = instance.GetType();
+		var getByIdInfo = AccessTools.DeclaredMethod(
+			eventType,
+			"GetEventByID",
+			new[] { typeof(string), typeof(string) }
+		);
+		getEventByIdDelegate =
+			DelegateUtil.CreateDelegate<Func<string, string, object>>(getByIdInfo, instance);
 	}
 }

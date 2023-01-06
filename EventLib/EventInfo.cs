@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using JetBrains.Annotations;
+using ONITwitchLib;
 
 namespace EventLib;
 
@@ -12,17 +13,20 @@ public class EventInfo : IComparable<EventInfo>, IComparable
 	/// <summary>
 	/// The ID of the event.
 	/// </summary>
+	[NotNull]
 	public string Id => $"{eventNamespace}.{eventId}";
 
 	[CanBeNull] public string FriendlyName;
 
-	public string Namespace => eventNamespace;
-	public string EventId => eventId;
+	[NotNull] public string EventNamespace => eventNamespace;
+	[NotNull] public string EventId => eventId;
 
 	[NotNull] public EventGroup Group { get; private set; }
 
-	private readonly string eventNamespace;
-	private readonly string eventId;
+	[CanBeNull] public Danger? Danger;
+
+	[NotNull] private readonly string eventNamespace;
+	[NotNull] private readonly string eventId;
 
 	[NotNull] private readonly ActionRef actionRef = new(_ => { });
 	[CanBeNull] private ConditionRef conditionRef;
@@ -200,5 +204,20 @@ public class EventInfo : IComparable<EventInfo>, IComparable
 		return obj is EventInfo other
 			? CompareTo(other)
 			: throw new ArgumentException($"Object must be of type {nameof(EventInfo)}");
+	}
+
+	[Obsolete("Used as a cast helper for the reflection lib", true)]
+	[CanBeNull]
+	[UsedImplicitly]
+	private int? GetDangerInt()
+	{
+		return Danger.HasValue ? (int) Danger.Value : null;
+	}
+
+	[Obsolete("Used as a cast helper for the reflection lib", true)]
+	[UsedImplicitly]
+	private void SetDangerInt([CanBeNull] int? danger)
+	{
+		Danger = danger.HasValue ? (Danger) danger.Value : null;
 	}
 }

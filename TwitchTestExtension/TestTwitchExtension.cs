@@ -21,52 +21,42 @@ public class TestTwitchExtension : UserMod2
 			return;
 		}
 
-		var eventInst = EventInterface.GetEventManagerInstance();
-		var dataInst = EventInterface.GetDataManagerInstance();
-		var conditionsInst = EventInterface.GetConditionsManager();
-		var deckInst = EventInterface.GetDeckManager();
-		var dangerInst = EventInterface.GetDangerManager();
+		var eventInst = EventManager.Instance;
+		var dataInst = DataManager.Instance;
+		var deckInst = TwitchDeckManager.Instance;
 
-		var extEvent = eventInst.RegisterEvent("ExtEvent", "Extended Event");
-		eventInst.AddListenerForEvent(
-			extEvent,
+		var (extEvent, extEventGroup) = EventGroup.DefaultSingleEventGroup("ExtEvent", 4, "Extended Event");
+		extEvent.AddListener(
 			data =>
 			{
 				Debug.Log("Triggered ext event");
 				Debug.Log(data);
 			}
 		);
+		// add condition
+		extEvent.AddCondition(data => data is ExtData { Thing: true });
+		extEvent.Danger = Danger.None;
 
+		// set up the data
 		dataInst.SetDataForEvent(extEvent, new ExtData(true));
 
-		// add condition
-		conditionsInst.AddCondition(
-			extEvent,
-			data => data is ExtData { Thing: true }
-		);
-
-		// add 1 copy and then 3 more copies to the deck
-		deckInst.AddToDeck(extEvent);
-		deckInst.AddToDeck(extEvent, 3);
-
-		// set the danger to none
-		dangerInst.SetDanger(extEvent, Danger.None);
+		// register the group into the deck
+		deckInst.AddGroup(extEventGroup);
 
 		var rainPrefabType = Type.GetType("ONITwitchCore.Commands.RainPrefabCommand, ONITwitch");
 		var commandBase = new CommandBase(rainPrefabType);
 
-		var customEvent = eventInst.RegisterEvent("CustomSpawnEvent", "Custom Spawn Event");
-
-		var action = commandBase.GetRunAction();
-		eventInst.AddListenerForEvent(customEvent, action);
+		var (extRain, extRainGroup) = EventGroup.DefaultSingleEventGroup("CustomRainEvent", 1, "Custom Rain Event");
+		extRain.AddListener(commandBase.GetRunAction());
 
 		dataInst.SetDataForEvent(
-			customEvent,
+			extRain,
 			new Dictionary<string, object> { { "PrefabId", "PropFacilityCouch" }, { "Count", 10.0d } }
 		);
 
-		deckInst.AddToDeck(customEvent, 1);
+		deckInst.AddGroup(extRainGroup);
 
+		// create a custom pocket dimension
 		var genConfig = new NoisePocketDimensionGeneration(
 			3f,
 			SubWorld.ZoneType.Metallic,

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EventLib;
 using JetBrains.Annotations;
 using ONITwitchCore.Config;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
+using EventGroup = EventLib.EventGroup;
 using EventInfo = EventLib.EventInfo;
 
 namespace ONITwitchCore;
@@ -32,39 +32,33 @@ public class TwitchDeckManager
 		Shuffle(group);
 	}
 
+	[MustUseReturnValue]
 	[CanBeNull]
 	public EventGroup GetGroup([NotNull] string name)
 	{
 		return groups.TryGetValue(name, out var group) ? group : null;
 	}
 
+	[MustUseReturnValue]
 	[NotNull]
-	public List<EventGroup> GetGroups()
+	public IEnumerable<EventGroup> GetGroups()
 	{
-		return groups.Values.ToList();
+		return groups.Values;
 	}
 
-	private void Shuffle(EventGroup changedGroup)
-	{
-		// this design leaves room to possibly be smarter about shuffling in only the changed group
-
-		deck = GetShuffled();
-		headIdx = 0;
-	}
-
+	[MustUseReturnValue]
 	[CanBeNull]
 	public EventInfo Draw()
 	{
 		const int maxDrawAttempts = 1000;
 
 		var dataInst = DataManager.Instance;
-		var dangerInst = DangerManager.Instance;
 
 		for (var attempts = 0; attempts < maxDrawAttempts; attempts++)
 		{
 			var entry = DrawEntry();
 			// no danger assigned or danger within the expected range is okay
-			var danger = dangerInst.GetDanger(entry);
+			var danger = entry.Danger;
 			if ((danger == null) || ((MainConfig.Instance.ConfigData.MinDanger <= danger.Value) &&
 									 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
 			{
@@ -79,6 +73,14 @@ public class TwitchDeckManager
 
 		Debug.LogWarning("[Twitch Integration] Unable to draw a command");
 		return null;
+	}
+
+	private void Shuffle(EventGroup changedGroup)
+	{
+		// this design leaves room to possibly be smarter about shuffling in only the changed group
+
+		deck = GetShuffled();
+		headIdx = 0;
 	}
 
 	private EventInfo DrawEntry()
@@ -101,7 +103,7 @@ public class TwitchDeckManager
 
 	[MustUseReturnValue]
 	[NotNull]
-	public List<EventInfo> GetShuffled()
+	private List<EventInfo> GetShuffled()
 	{
 		// based on https://engineering.atspotify.com/2014/02/how-to-shuffle-songs/
 		var collectedOffsets = new List<(float, EventInfo)>();
@@ -177,5 +179,14 @@ public class TwitchDeckManager
 		// return the items from the sorted list
 		var ret = collectedOffsets.Select(itemOffset => itemOffset.Item2).ToList();
 		return ret;
+	}
+
+	[Obsolete("Used as a cast helper for the reflection lib", true)]
+	[MustUseReturnValue]
+	[NotNull]
+	[UsedImplicitly]
+	private IEnumerable<object> InternalGetGroups()
+	{
+		return GetGroups();
 	}
 }
