@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using ONITwitchCore.Content.Buildings;
+using ONITwitchCore.Content.Entities;
 using ONITwitchCore.Toasts;
-using ONITwitchLib.Utils;
 
 namespace ONITwitchCore.Commands;
 
@@ -9,14 +7,14 @@ public class SurpriseBoxCommand : CommandBase
 {
 	public override void Run(object data)
 	{
-		int startCell;
+		int spawnCell;
 		if (Components.Telepads.Count > 0)
 		{
-			startCell = Grid.PosToCell(Components.Telepads.Items.GetRandom());
+			spawnCell = Grid.CellAbove(Grid.PosToCell(Components.Telepads.Items.GetRandom()));
 		}
 		else if (Components.LiveMinionIdentities.Count > 0)
 		{
-			startCell = Grid.PosToCell(Components.LiveMinionIdentities.Items.GetRandom());
+			spawnCell = Grid.PosToCell(Components.LiveMinionIdentities.Items.GetRandom());
 		}
 		else
 		{
@@ -24,16 +22,13 @@ public class SurpriseBoxCommand : CommandBase
 			return;
 		}
 
-		var spawnCell = GridUtil.FindCellOpenToBuilding(startCell, new[] { CellOffset.none });
-		var surpriseDef = Assets.GetBuildingDef(SurpriseBoxConfig.Id);
-		var box = surpriseDef.Build(
-			spawnCell,
-			Orientation.Neutral,
-			null,
-			new List<Tag> { SimHashes.SandStone.CreateTag() },
-			273.15f,
-			false
+		var boxPrefab = Assets.GetPrefab(SurpriseBoxConfig.Id);
+		var box = GameUtil.KInstantiate(
+			boxPrefab,
+			Grid.CellToPosCBC(spawnCell, Grid.SceneLayer.Front),
+			Grid.SceneLayer.Front
 		);
+		box.SetActive(true);
 
 		ToastManager.InstantiateToastWithGoTarget(
 			"Surprise Box",

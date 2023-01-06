@@ -30,13 +30,6 @@ public static class TIStrings
 						public static readonly LocString EFFECT
 							= "A portal that should hopefully return your duplicants back where they came from.";
 					}
-
-					public static class SURPRISEBOXCONFIG
-					{
-						public static readonly LocString NAME = "Surprise Box";
-						public static readonly LocString EFFECT = "Deconstruct for a surprise!";
-						public static readonly LocString DESC = "";
-					}
 				}
 			}
 		}
@@ -60,6 +53,19 @@ public static class TIStrings
 			{
 				public static readonly LocString NAME = global::STRINGS.ELEMENTS.UNOBTANIUM.NAME;
 				public static readonly LocString DESC = global::STRINGS.ELEMENTS.UNOBTANIUM.DESC;
+			}
+		}
+
+		public static class ITEMS
+		{
+			public static class ONITWITCH
+			{
+				public static class SURPRISEBOXCONFIG
+				{
+					public static readonly LocString NAME = "Surprise Box";
+					public static readonly LocString EFFECT = "Deconstruct for a surprise!";
+					public static readonly LocString DESC = "";
+				}
 			}
 		}
 	}

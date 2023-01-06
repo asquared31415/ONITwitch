@@ -1,44 +1,101 @@
+// Side screen code and general design mostly taken from Aki
+
+using System.Collections;
+using KSerialization;
 using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
 
-public class SurpriseBox : KMonoBehaviour
+public class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 {
+	public string SidescreenButtonText => "Open";
+
+	public string SidescreenButtonTooltip => "";
+
+	public int ButtonSideScreenSortOrder() => 0;
+
+	[Serialize] private bool started;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Subscribe((int) GameHashes.DeconstructComplete, OnDeconstruct);
-
-		GetComponent<KBatchedAnimController>().Play("box", KAnim.PlayMode.Loop);
+		if (started)
+		{
+			StartCoroutine(SpawnGifts());
+		}
 	}
 
-	private void OnDeconstruct(object data)
+	public void OnSidescreenButtonPressed()
 	{
-		for (var i = 0; i < 5; i++)
+		StartCoroutine(SpawnGifts());
+		started = true;
+	}
+
+
+	// prefabs marked for compost (duplicates of originals)
+	private bool PrefabIsValid(KPrefabID prefab)
+	{
+		// explicitly enabled objects
+		if (prefab.TryGetComponent<EnableSurpriseBoxMarker>(out _))
 		{
-			// spawn any random pickupable except:
-			// dupes: they don't like being spawned like this
-			// shockworm: unimplemented and crashy
+			return true;
+		}
+
+		// must be a pickupable
+		if (prefab.GetComponent<Pickupable>() == null)
+		{
+			return false;
+		}
+
+		// dupes: they don't like being spawned like this
+		if (prefab.GetComponent<MinionIdentity>() != null)
+		{
+			return false;
+		}
+
+		// shockworm: unimplemented and crashy
+		if (prefab.PrefabID() == ShockwormConfig.ID)
+		{
+			return false;
+		}
+
+		// dont spawn the compostable copies of things
+		if (prefab.TryGetComponent(out Compostable compostable) && compostable.isMarkedForCompost)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	private IEnumerator SpawnGifts()
+	{
+		GetComponent<KBatchedAnimController>().Play("open");
+		var spawnCount = Random.Range(5, 11);
+		for (var idx = 0; idx < spawnCount; idx++)
+		{
 			KPrefabID randPrefab;
 			do
 			{
 				randPrefab = Assets.Prefabs.GetRandom();
-			} while ((randPrefab.GetComponent<EnableSurpriseBoxMarker>() == null) &&
-					 (
-						 (randPrefab.GetComponent<Pickupable>() == null) ||
-						 (randPrefab.GetComponent<MinionIdentity>() != null) ||
-						 (randPrefab.PrefabID() == ShockwormConfig.ID)
-					 ));
+			} while (!PrefabIsValid(randPrefab));
 
-			Debug.Log($"[Twitch Integration] Surprise box selected prefab {randPrefab}");
 			var go = Util.KInstantiate(randPrefab.gameObject, transform.position);
 			go.SetActive(true);
 
+			if (go.TryGetComponent(out ElementChunk _) && go.TryGetComponent(out PrimaryElement primaryElement))
+			{
+				primaryElement.Mass = 50f;
+			}
+
 			// make it fly a little bit
-			var velocity = Random.Range(5, 10) * Random.insideUnitCircle.normalized;
+			var velocity = Random.Range(1, 3) * Random.insideUnitCircle.normalized;
 			velocity.y = Mathf.Abs(velocity.y);
+			// whether to restore the faller after 
+			var hadFaller = false;
 			if (GameComps.Fallers.Has(go))
 			{
+				hadFaller = true;
 				GameComps.Fallers.Remove(go);
 			}
 
@@ -49,12 +106,31 @@ public class SurpriseBox : KMonoBehaviour
 				15f,
 				_ =>
 				{
-					if (GameComps.Fallers.Has(go))
+					if (go != null)
 					{
-						GameComps.Fallers.Remove(go);
+						// only clear fallers for things that didnt have it before
+						if (!hadFaller && GameComps.Fallers.Has(go))
+						{
+							GameComps.Fallers.Remove(go);
+						}
+
+						// trigger cell changes
+						go.transform.SetPosition(go.transform.position);
 					}
 				}
 			);
+
+			yield return new WaitForSeconds(Random.Range(0.75f, 2.0f));
 		}
+
+		Destroy(gameObject);
 	}
+
+	public void SetButtonTextOverride(ButtonMenuTextOverride textOverride)
+	{
+	}
+
+	public bool SidescreenButtonInteractable() => !started;
+
+	public bool SidescreenEnabled() => !started;
 }

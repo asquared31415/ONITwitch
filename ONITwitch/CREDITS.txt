@@ -6,6 +6,7 @@ Aki:
  - Pocket Dimension portal animation
  - Helped creating the informational toast popup
  - Testing beta versions for mod integration
+ - Miscellaneous code
 
 pether.pg:
  - Testing beta versions for mod integration
