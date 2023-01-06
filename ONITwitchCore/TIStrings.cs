@@ -2,6 +2,8 @@
 // ReSharper disable UnusedType.Global
 // ReSharper disable UnusedMember.Global
 
+using STRINGS;
+
 #pragma warning disable CS1591
 namespace ONITwitchCore;
 
@@ -51,7 +53,11 @@ public static class TIStrings
 		{
 			public static class INDESTRUCTIBLEELEMENT
 			{
-				public static readonly LocString NAME = global::STRINGS.ELEMENTS.UNOBTANIUM.NAME;
+				public static readonly LocString NAME = UI.FormatAsLink(
+					"Neutrollium",
+					nameof(global::STRINGS.ELEMENTS.UNOBTANIUM)
+				);
+
 				public static readonly LocString DESC = global::STRINGS.ELEMENTS.UNOBTANIUM.DESC;
 			}
 		}
