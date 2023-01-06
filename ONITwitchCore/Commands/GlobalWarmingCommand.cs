@@ -31,12 +31,13 @@ public class GlobalWarmingCommand : CommandBase
 		var world = worlds.GetRandom();
 		foreach (var cell in GridUtil.IterateCellRegion(world.WorldOffset, world.WorldOffset + world.WorldSize))
 		{
-			if (Grid.IsWorldValidCell(cell) && (Grid.IsGas(cell) || Grid.IsLiquid(cell)))
+			if (Grid.IsWorldValidCell(cell) &&
+				(Grid.IsGas(cell) || Grid.IsLiquid(cell) || Grid.Element[cell].HasTag(GameTags.IceOre)))
 			{
 				var element = Grid.Element[cell];
 				var temp = Grid.Temperature[cell];
 
-				const float transitionBuffer = 10;
+				const float transitionBuffer = 5;
 				var targetTemp = Mathf.Clamp(
 					temp + 20,
 					element.lowTemp + transitionBuffer,
