@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitchCore.Cmps;
+using ONITwitchCore.Patches;
 using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
@@ -17,54 +17,56 @@ public class RainPrefabCommand : CommandBase
 		return Assets.TryGetPrefab(prefab) != null;
 	}
 
-	private static readonly List<string> SlicksterMorphs = ExtractMorphs(OilFloaterTuning.EGG_CHANCES_BASE);
-	private static readonly List<string> PacuMorphs = ExtractMorphs(PacuTuning.EGG_CHANCES_BASE);
-
 	public override void Run(object o)
 	{
 		var data = (IDictionary<string, object>) o;
-		var prefab = (string) data["PrefabId"];
+		var prefabId = (string) data["PrefabId"];
 		var count = (int) (double) data["Count"];
 
-		var prefabs = new List<string> { prefab };
+		var prefabIds = new List<(Tag Tag, float Weight)> { (prefabId, 1) };
 
-		// certain prefabs are actually a collection
-		switch (prefab)
+		var prefab = Assets.GetPrefab(prefabId);
+		if (prefab == null)
 		{
-			case OilFloaterConfig.ID:
-			{
-				prefabs = SlicksterMorphs;
-				break;
-			}
-			case PacuConfig.ID:
-			{
-				prefabs = PacuMorphs;
-				break;
-			}
+			Debug.LogWarning($"[Twitch Integration] Cannot rain missing prefab {prefabId}");
+			return;
+		}
+
+		// if the prefab has morphs, use them
+		var fertilityDef = prefab.GetDef<FertilityMonitor.Def>();
+		if (fertilityDef != null)
+		{
+			prefabIds = ExtractMorphs(fertilityDef.initialBreedingWeights);
 		}
 
 		var rainPrefab = Game.Instance.gameObject.AddOrGet<RainPrefab>();
-		rainPrefab.Initialize(TimePerItem, count, prefabs);
+		rainPrefab.Initialize(TimePerItem, count, prefabIds);
 
 		ToastManager.InstantiateToast(
 			"Rain",
-			$"A rain of {Util.StripTextFormatting(Assets.GetPrefab(prefabs.First()).GetProperName())} is starting!"
+			$"A rain of {Assets.GetPrefab(prefabIds.First().Tag).GetProperName()} is starting!"
 		);
 	}
 
 
-	private static List<string> ExtractMorphs(IEnumerable<FertilityMonitor.BreedingChance> breedingChances)
+	private static List<(Tag Tag, float Weight)> ExtractMorphs(
+		IEnumerable<FertilityMonitor.BreedingChance> breedingChances
+	)
 	{
-		return breedingChances.Select(
-				chance =>
-				{
-					var eggTag = chance.egg.Name;
-					return eggTag.EndsWith("Egg")
-						? eggTag.Substring(0, eggTag.LastIndexOf("Egg", StringComparison.Ordinal))
-						: null;
-				}
+		var options = breedingChances.Select(
+				chance => EntityTemplatesPatches.TryGetAdultFromEgg(chance.egg, out var adultTag)
+					? (adultTag, chance.weight)
+					: (Tag.Invalid, 0)
 			)
-			.Where(prefabId => !prefabId.IsNullOrWhiteSpace())
+			.Where(pair => pair.adultTag.IsValid && (Assets.TryGetPrefab(pair.adultTag) != null))
 			.ToList();
+		var totalWeight = options.Sum(pair => pair.weight);
+		for (var idx = 0; idx < options.Count; idx++)
+		{
+			var old = options[idx];
+			options[idx] = old with { weight = old.weight / totalWeight };
+		}
+
+		return options;
 	}
 }

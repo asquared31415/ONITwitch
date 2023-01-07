@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using KSerialization;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,40 +11,24 @@ namespace ONITwitchCore.Cmps;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class RainPrefab : KMonoBehaviour
 {
-	[Serialize] [SerializeField] private float timePerItem;
-	[Serialize] [SerializeField] private int countRemaining;
-	[Serialize] [SerializeField] private List<string> prefabIds;
-
+	private float timePerItem;
+	private int countRemaining;
+	private List<(Tag Tag, float Weight)> prefabChances;
 	private float accumTime;
-	private readonly List<GameObject> prefabs = new();
 
-	public void Initialize(float time, int count, List<string> ids)
+	public void Initialize(float time, int count, List<(Tag Tag, float Weight)> ids)
 	{
 		timePerItem = time;
 		countRemaining = count;
-		prefabIds = ids;
+		prefabChances = ids;
 
-		prefabs.Clear();
-
-		foreach (var prefabId in prefabIds)
+		if (prefabChances.Count == 0)
 		{
-			var prefab = Assets.TryGetPrefab(prefabId);
-			if (prefab != null)
-			{
-				prefabs.Add(prefab);
-			}
-		}
+			Debug.LogWarning("[Twitch Integration] Cannot rain list of zero prefabs");
+			Debug.LogWarning(Environment.StackTrace);
 
-		if (prefabs.Count == 0)
-		{
-			var sb = new StringBuilder();
-			foreach (var prefabId in prefabIds)
-			{
-				sb.Append($"{prefabId} ");
-			}
-
-			Debug.LogWarning($"[Twitch Integration] Unable to find prefab(s) {sb}for rain");
 			enabled = false;
+			return;
 		}
 
 		// the component may have been disabled previously, enable it for this rain
@@ -71,8 +55,19 @@ public class RainPrefab : KMonoBehaviour
 				);
 				var cellWithClearance = GridUtil.NearestEmptyCell(randPosCell);
 
-				var prefab = prefabs.GetRandom();
-				var go = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Ore);
+				var prefabTag = GetRandomTag();
+				if (!prefabTag.IsValid)
+				{
+					continue;
+				}
+
+				var prefab = Assets.GetPrefab(prefabTag);
+				if (prefab == null)
+				{
+					continue;
+				}
+
+				var go = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Creatures);
 
 				var sceneLayer = Grid.SceneLayer.Front;
 				if (go.TryGetComponent<KBatchedAnimController>(out var kbac))
@@ -120,5 +115,27 @@ public class RainPrefab : KMonoBehaviour
 		{
 			enabled = false;
 		}
+	}
+
+	private Tag GetRandomTag()
+	{
+		var sum = prefabChances.Sum(pair => pair.Weight);
+		var rand = Random.value * sum;
+		foreach (var (prefabTag, weight) in prefabChances)
+		{
+			rand -= weight;
+			if (rand <= 0)
+			{
+				return prefabTag;
+			}
+		}
+
+		Debug.LogWarning("[Twitch Integration] Unable to select a random prefab for prefab rain");
+		foreach (var (prefabTag, weight) in prefabChances)
+		{
+			Debug.LogWarning($"{prefabTag}: {weight}");
+		}
+
+		return Tag.Invalid;
 	}
 }
