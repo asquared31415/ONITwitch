@@ -24,6 +24,7 @@ public class EventGroup
 		Name = name;
 	}
 
+	[MustUseReturnValue("The group should be added to the TwitchDeckManager to actually be useful")]
 	public static (EventInfo EventInfo, EventGroup Group) DefaultSingleEventGroup(
 		[NotNull] string id,
 		int weight,
@@ -31,14 +32,7 @@ public class EventGroup
 	)
 	{
 		var callingAssembly = Assembly.GetCallingAssembly();
-		var eventNamespace = GetEventNamespace(callingAssembly);
-
-		var group = new EventGroup(GetItemDefaultGroupName(eventNamespace, id));
-		var eventInfo = new EventInfo(group, eventNamespace, id, friendlyName);
-		group.weights.Add(eventInfo, weight);
-
-		// note: we skip calling the group changed event because we know it was just created and has no subscribers
-		return (eventInfo, group);
+		return CommonDefaultSingleEventGroup(callingAssembly, id, weight, friendlyName);
 	}
 
 	[NotNull]
@@ -154,7 +148,29 @@ public class EventGroup
 					}
 				}
 			}
+
+			foreach (var (key, value) in AssemblyIdMap)
+			{
+				Debug.Log($"assembly {key}: {value}");
+			}
 		}
+	}
+
+	private static (EventInfo EventInfo, EventGroup Group) CommonDefaultSingleEventGroup(
+		[NotNull] Assembly callingAssembly,
+		[NotNull] string id,
+		int weight,
+		[CanBeNull] string friendlyName = null
+	)
+	{
+		var eventNamespace = GetEventNamespace(callingAssembly);
+
+		var group = new EventGroup(GetItemDefaultGroupName(eventNamespace, id));
+		var eventInfo = new EventInfo(group, eventNamespace, id, friendlyName);
+		group.weights.Add(eventInfo, weight);
+
+		// note: we skip calling the group changed event because we know it was just created and has no subscribers
+		return (eventInfo, group);
 	}
 
 	[Obsolete("Used as a cast helper for the reflection lib", true)]
@@ -165,6 +181,7 @@ public class EventGroup
 		[CanBeNull] string friendlyName = null
 	)
 	{
-		return DefaultSingleEventGroup(id, weight, friendlyName);
+		var callingAssembly = Assembly.GetCallingAssembly();
+		return CommonDefaultSingleEventGroup(callingAssembly, id, weight, friendlyName);
 	}
 }
