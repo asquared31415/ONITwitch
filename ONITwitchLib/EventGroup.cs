@@ -18,6 +18,7 @@ public class EventGroup
 		SetupDelegates();
 	}
 
+	[MustUseReturnValue("The group should be added to the TwitchDeckManager to actually be useful")]
 	public static (EventInfo EventInfo, EventGroup Group) DefaultSingleEventGroup(
 		[NotNull] string id,
 		int weight,
