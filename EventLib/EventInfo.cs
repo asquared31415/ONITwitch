@@ -8,7 +8,7 @@ namespace EventLib;
 /// <summary>
 /// Represents an event that is known to the <see cref="EventManager"/>.
 /// </summary>
-public class EventInfo : IComparable<EventInfo>, IComparable
+public class EventInfo
 {
 	/// <summary>
 	/// The ID of the event.
@@ -169,41 +169,6 @@ public class EventInfo : IComparable<EventInfo>, IComparable
 	public override string ToString()
 	{
 		return FriendlyName ?? Id;
-	}
-
-	public int CompareTo(EventInfo other)
-	{
-		if (ReferenceEquals(this, other))
-		{
-			return 0;
-		}
-
-		if (ReferenceEquals(null, other))
-		{
-			return 1;
-		}
-
-		var namespaceComparison = string.Compare(eventNamespace, other.eventNamespace, StringComparison.Ordinal);
-		return namespaceComparison != 0
-			? namespaceComparison
-			: string.Compare(eventId, other.eventId, StringComparison.Ordinal);
-	}
-
-	public int CompareTo(object obj)
-	{
-		if (ReferenceEquals(null, obj))
-		{
-			return 1;
-		}
-
-		if (ReferenceEquals(this, obj))
-		{
-			return 0;
-		}
-
-		return obj is EventInfo other
-			? CompareTo(other)
-			: throw new ArgumentException($"Object must be of type {nameof(EventInfo)}");
 	}
 
 	[Obsolete("Used as a cast helper for the reflection lib", true)]

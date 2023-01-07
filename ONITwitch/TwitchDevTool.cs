@@ -1,9 +1,16 @@
+using System;
 using System.Collections.Generic;
-using EventLib;
+using System.Linq;
 using ImGuiNET;
-using ONITwitchCore.Toasts;
+using JetBrains.Annotations;
+using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
+using DataManager = EventLib.DataManager;
+using EventInfo = EventLib.EventInfo;
+using EventManager = EventLib.EventManager;
+using Object = UnityEngine.Object;
+using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitch;
 
@@ -13,6 +20,9 @@ public class TwitchDevTool : DevTool
 
 	private int selectedCell = Grid.InvalidCell;
 	private bool debugClosestCell;
+
+	private List<(string Namespace, List<EventInfo> Events)> eventEntries;
+	private string eventFilter = "";
 
 	public TwitchDevTool()
 	{
@@ -64,7 +74,7 @@ public class TwitchDevTool : DevTool
 		// Everything below this needs the game to be active
 		if (Game.Instance == null)
 		{
-			ImGui.Text("Game not yet active");
+			ImGui.TextColored(Color.red, "Game not yet active");
 			return;
 		}
 
@@ -73,40 +83,37 @@ public class TwitchDevTool : DevTool
 		ImGui.Separator();
 		ImGui.Text("Trigger Events");
 		ImGui.Indent();
-		var eventInst = EventManager.Instance;
+
+		// initialize the entries with no filter
+		eventEntries ??= GenerateEventEntries(null);
+
+		if (ImGuiEx.InputFilter("Search", ref eventFilter, 100))
+		{
+			eventEntries = GenerateEventEntries(eventFilter);
+		}
+
 		var dataInst = DataManager.Instance;
-
-		var namespacedEvents = new SortedDictionary<string, List<EventInfo>>();
-		var eventKeys = eventInst.GetAllRegisteredEvents();
-		foreach (var eventInfo in eventKeys)
-		{
-			if (!namespacedEvents.ContainsKey(eventInfo.EventNamespace))
-			{
-				namespacedEvents.Add(eventInfo.EventNamespace, new List<EventInfo> { eventInfo });
-			}
-			else
-			{
-				namespacedEvents[eventInfo.EventNamespace].Add(eventInfo);
-			}
-		}
-
-		// sort events within their respective category
-		foreach (var (_, events) in namespacedEvents)
-		{
-			events.Sort();
-		}
-
-		foreach (var (eventNamespace, eventInfos) in namespacedEvents)
+		foreach (var (eventNamespace, eventInfos) in eventEntries)
 		{
 			var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
-			var headerName = mod != null ? mod.title : eventNamespace;
+			var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
+			var missingNamespace = headerName.IsNullOrWhiteSpace();
+			if (missingNamespace)
+			{
+				ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
+				headerName = "MISSING NAMESPACE";
+			}
+
 			if (ImGui.CollapsingHeader(headerName))
 			{
+				ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
 				ImGui.Indent();
 
 				foreach (var eventInfo in eventInfos)
 				{
-					if (ImGui.Button($"{eventInfo} ({eventInfo.EventId})"))
+					var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
+					ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
+					if (buttonPressed)
 					{
 						Debug.Log($"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
 						var data = dataInst.GetDataForEvent(eventInfo);
@@ -115,6 +122,13 @@ public class TwitchDevTool : DevTool
 				}
 
 				ImGui.Unindent();
+				ImGui.PopStyleColor();
+			}
+
+			if (missingNamespace)
+			{
+				// pop the red style if we pushed it before
+				ImGui.PopStyleColor();
 			}
 		}
 	}
@@ -163,5 +177,70 @@ public class TwitchDevTool : DevTool
 		lineRenderer.startColor = lineRenderer.endColor = color;
 		lineRenderer.startWidth = lineRenderer.endWidth = 0.05f;
 		testingLines.Add(gameObject);
+	}
+
+	[MustUseReturnValue]
+	[NotNull]
+	private static List<(string Namespace, List<EventInfo> Events)> GenerateEventEntries([CanBeNull] string filter)
+	{
+		var namespacedEvents = new SortedDictionary<string, List<EventInfo>>();
+
+		foreach (var eventInfo in EventManager.Instance.GetAllRegisteredEvents()
+					 .Where(
+						 info => string.IsNullOrWhiteSpace(filter) ||
+								 (info.FriendlyName?.ToLowerInvariant().Contains(filter.ToLowerInvariant()) == true) ||
+								 info.Id.ToLowerInvariant().Contains(filter.ToLowerInvariant())
+					 ))
+		{
+			if (!namespacedEvents.ContainsKey(eventInfo.EventNamespace))
+			{
+				namespacedEvents.Add(eventInfo.EventNamespace, new List<EventInfo> { eventInfo });
+			}
+			else
+			{
+				namespacedEvents[eventInfo.EventNamespace].Add(eventInfo);
+			}
+		}
+
+		foreach (var (_, events) in namespacedEvents)
+		{
+			events.Sort(
+				(infoA, infoB) =>
+				{
+					// if both have a friendly name, use that
+					var nameA = infoA.FriendlyName;
+					var nameB = infoB.FriendlyName;
+					if ((nameA != null) && (nameB != null))
+					{
+						return string.Compare(nameA, nameB, StringComparison.OrdinalIgnoreCase);
+					}
+
+					// if neither have a friendly name, then compare IDs
+					if ((nameA == null) && (nameB == null))
+					{
+						return string.Compare(infoA.Id, infoB.Id, StringComparison.OrdinalIgnoreCase);
+					}
+
+					// the event without a name is greater (last) 
+					return nameA == null ? 1 : -1;
+				}
+			);
+		}
+
+		var filtered = new List<(string, List<EventInfo>)>();
+
+		// put the base mod events in first, then the rest, sorted by namespace
+		if (namespacedEvents.TryGetValue(TwitchModInfo.StaticID, out var baseEvents))
+		{
+			namespacedEvents.Remove(TwitchModInfo.StaticID);
+			filtered.Add((TwitchModInfo.StaticID, baseEvents));
+		}
+
+		foreach (var (modNamespace, events) in namespacedEvents)
+		{
+			filtered.Add((modNamespace, events));
+		}
+
+		return filtered;
 	}
 }
