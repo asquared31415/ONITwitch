@@ -12,9 +12,15 @@ namespace TwitchTestExtension;
 [UsedImplicitly]
 public class TestTwitchExtension : UserMod2
 {
-	public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
+}
+
+[HarmonyPatch(typeof(Db))]
+[HarmonyPatch("Initialize")]
+[HarmonyAfter("asquared31415.TwitchIntegration")]
+public static class Db_Initialize_Patch
+{
+	public static void Postfix()
 	{
-		base.OnAllModsLoaded(harmony, mods);
 		if (!TwitchModInfo.TwitchIsPresent)
 		{
 			Debug.LogWarning("Twitch not enabled");
@@ -70,6 +76,12 @@ public class TestTwitchExtension : UserMod2
 			0.1f
 		);
 		PocketDimensionGenerator.AddGenerationConfig(genConfig);
+
+		var group = TwitchDeckManager.Instance.GetGroup("aaaaaa");
+		if (group != null)
+		{
+			group.AddEvent("aaaa", 0);
+		}
 	}
 }
 

@@ -20,7 +20,8 @@ public class TwitchDeckManager
 	[CanBeNull]
 	public EventGroup GetGroup([NotNull] string name)
 	{
-		return new EventGroup(getGroupDelegate(name));
+		var ret = getGroupDelegate(name);
+		return ret != null ? new EventGroup(ret) : null;
 	}
 
 	[MustUseReturnValue]
