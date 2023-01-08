@@ -416,7 +416,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabMorb",
-				"Morbin' Time",
+				OniTwitchMod.ModIntegration.IsModPresentAndActive("AmogusMorb") ? "Amorbus" : "Morbin' Time",
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
