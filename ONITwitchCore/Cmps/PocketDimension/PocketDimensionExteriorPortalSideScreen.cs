@@ -1,8 +1,7 @@
 using System;
-using ONITwitchCore.Cmps.PocketDimension;
 using UnityEngine;
 
-namespace ONITwitchDefaultCommands.PocketDimension;
+namespace ONITwitchCore.Cmps.PocketDimension;
 
 public class PocketDimensionExteriorPortalSideScreen : KMonoBehaviour, ISidescreenButtonControl
 {

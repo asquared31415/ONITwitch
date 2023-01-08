@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using ONITwitch;
 using ONITwitchCore.Commands;
 using ONITwitchCore.Config;
 using ONITwitchCore.Content;
@@ -448,7 +449,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabPacu",
-				"Pacu Rain",
+				OniTwitchMod.ModIntegration.IsModPresentAndActive("WeebPacu") ? "PacUwU Rain 🐠👉👈" : "Pacu Rain",
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,

@@ -1,4 +1,4 @@
-namespace ONITwitchCore.Elements;
+namespace ONITwitchCore.CustomElements;
 
 public static class TwitchSimHashes
 {

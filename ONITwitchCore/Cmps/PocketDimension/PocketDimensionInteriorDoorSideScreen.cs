@@ -1,7 +1,6 @@
 using System;
-using ONITwitchCore.Cmps.PocketDimension;
 
-namespace ONITwitchDefaultCommands.PocketDimension;
+namespace ONITwitchCore.Cmps.PocketDimension;
 
 public class PocketDimensionInteriorDoorSideScreen : KMonoBehaviour, ISidescreenButtonControl
 {

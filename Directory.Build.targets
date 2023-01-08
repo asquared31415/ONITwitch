@@ -9,7 +9,7 @@
     </Target>
 
     <PropertyGroup>
-        <ModsPath>$(GameSavePath)/mods/Dev/$(ProjectName)/</ModsPath>
+        <ModsPath>$(GameSavePath)/mods/Dev/$(AssemblyName)/</ModsPath>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsLib)' != 'true'">

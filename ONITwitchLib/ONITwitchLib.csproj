@@ -9,6 +9,6 @@
         <IsLib>true</IsLib>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\net48\ONITwitchLib.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\net471\ONITwitchLib.xml</DocumentationFile>
     </PropertyGroup>
 </Project>

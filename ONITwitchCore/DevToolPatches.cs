@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ONITwitch;
+namespace ONITwitchCore;
 
 public static class DevToolPatches
 {

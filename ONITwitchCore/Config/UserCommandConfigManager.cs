@@ -113,11 +113,10 @@ public class UserCommandConfigManager
 					// insurance to try to not break too much
 					userConfig = new Dictionary<string, Dictionary<string, CommandConfig>>();
 				}
+
+				DEBUG_DumpCurrentConfig();
+				DefaultCommands.ReloadData(userConfig);
 			}
-
-			DefaultCommands.ReloadData(userConfig);
-
-			DEBUG_DumpCurrentConfig();
 		}
 	}
 }

@@ -12,7 +12,7 @@ using EventManager = EventLib.EventManager;
 using Object = UnityEngine.Object;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
-namespace ONITwitch;
+namespace ONITwitchCore;
 
 public class TwitchDevTool : DevTool
 {

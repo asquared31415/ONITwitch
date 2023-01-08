@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Elements;
+using ONITwitchCore.CustomElements;
 using ONITwitchLib;
 using UnityEngine;
 

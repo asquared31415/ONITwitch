@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
 using EventLib;
 using HarmonyLib;
@@ -7,15 +6,20 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchCore;
 using ONITwitchCore.Config;
+using ONITwitchCore.Integration;
 using ONITwitchCore.Integration.DecorPackA;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+// ReSharper disable once CheckNamespace
+// This has to be kept for compat reasons
 namespace ONITwitch;
 
 [UsedImplicitly]
 public class OniTwitchMod : UserMod2
 {
+	public static ModIntegration ModIntegration;
+
 	public override void OnLoad(Harmony harmony)
 	{
 		base.OnLoad(harmony);
@@ -41,8 +45,9 @@ public class OniTwitchMod : UserMod2
 		// register the static id reverse map for namespacing
 		EventGroup.RegisterStaticIdMap(mods);
 
-		var decorPackEnabled = mods.Any(mod => (mod.staticID == DecorPackOneStaticID) && mod.IsEnabledForActiveDlc());
-		if (decorPackEnabled)
+		ModIntegration = new ModIntegration(mods);
+
+		if (ModIntegration.IsModPresentAndActive(DecorPackOneStaticID))
 		{
 			DecorPack1Integration.LoadIntegration(harmony);
 		}

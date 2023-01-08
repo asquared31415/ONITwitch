@@ -148,11 +148,6 @@ public class EventGroup
 					}
 				}
 			}
-
-			foreach (var (key, value) in AssemblyIdMap)
-			{
-				Debug.Log($"assembly {key}: {value}");
-			}
 		}
 	}
 
