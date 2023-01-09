@@ -2,6 +2,7 @@
 
 using System.Collections;
 using KSerialization;
+using ONITwitchLib;
 using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
@@ -31,30 +32,22 @@ public class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 		started = true;
 	}
 
-
-	// prefabs marked for compost (duplicates of originals)
 	private bool PrefabIsValid(KPrefabID prefab)
 	{
+		// never allow a force disabled object
+		if (prefab.HasTag(ExtraTags.SurpriseBoxForceDisabled))
+		{
+			return false;
+		}
+
 		// explicitly enabled objects
-		if (prefab.TryGetComponent<EnableSurpriseBoxMarker>(out _))
+		if (prefab.HasTag(ExtraTags.SurpriseBoxForceEnabled))
 		{
 			return true;
 		}
 
 		// must be a pickupable
 		if (prefab.GetComponent<Pickupable>() == null)
-		{
-			return false;
-		}
-
-		// dupes: they don't like being spawned like this
-		if (prefab.GetComponent<MinionIdentity>() != null)
-		{
-			return false;
-		}
-
-		// shockworm: unimplemented and crashy
-		if (prefab.PrefabID() == ShockwormConfig.ID)
 		{
 			return false;
 		}

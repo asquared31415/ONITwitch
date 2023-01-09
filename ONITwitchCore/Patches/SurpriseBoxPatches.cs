@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps;
+using ONITwitchLib;
 using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class SurpriseTilePatches
+public static class SurpriseBoxPatches
 {
 	[HarmonyPatch]
-	public static class EntityPatch
+	public static class EnabledEntityPatches
 	{
 		[UsedImplicitly]
 		public static IEnumerable<MethodBase> TargetMethods()
@@ -27,14 +27,33 @@ public static class SurpriseTilePatches
 				typeof(NuclearWasteCometConfig),
 				nameof(NuclearWasteCometConfig.CreatePrefab)
 			);
-			
+
 			// NOTE: Satellite comet explicitly not included here, it's very very very dangerous
 		}
 
 		[UsedImplicitly]
 		public static void Postfix(GameObject __result)
 		{
-			__result.AddOrGet<EnableSurpriseBoxMarker>();
+			__result.AddTag(ExtraTags.SurpriseBoxForceEnabled);
+		}
+	}
+
+	[HarmonyPatch]
+	public static class DisabledEntityPatches
+	{
+		[UsedImplicitly]
+		public static IEnumerable<MethodBase> TargetMethods()
+		{
+			// doesnt like being spawned manually without special care
+			yield return AccessTools.Method(typeof(MinionConfig), nameof(MinionConfig.CreatePrefab));
+			// unimplemented and crashy
+			yield return AccessTools.Method(typeof(ShockwormConfig), nameof(ShockwormConfig.CreatePrefab));
+		}
+
+		[UsedImplicitly]
+		public static void Postfix(GameObject __result)
+		{
+			__result.AddTag(ExtraTags.SurpriseBoxForceDisabled);
 		}
 	}
 }
