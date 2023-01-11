@@ -641,6 +641,17 @@ public static class DefaultCommands
 			)
 		);
 
+		RegisterCommand(
+			new CommandInfo(
+				"GeyserModification",
+				"Tune Geyser",
+				new GeyserModificationCommand(),
+				null,
+				Danger.Medium,
+				5
+			)
+		);
+
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
