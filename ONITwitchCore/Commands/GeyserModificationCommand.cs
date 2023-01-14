@@ -26,8 +26,8 @@ public class GeyserModificationCommand : CommandBase
 				modification = GeoTunerConfig.CategorySettings[GeoTunerConfig.Category.DEFAULT_CATEGORY];
 			}
 
-			var tuning = target.gameObject.AddComponent<TimedGeyserTuning>();
-			tuning.Initialize(25 * Constants.SECONDS_PER_CYCLE, modification.template);
+			var tuning = target.gameObject.AddOrGet<TimedGeyserTuning>();
+			tuning.AddModification(25 * Constants.SECONDS_PER_CYCLE, modification.template);
 
 			ToastManager.InstantiateToastWithGoTarget(
 				"Geyser Modified",
