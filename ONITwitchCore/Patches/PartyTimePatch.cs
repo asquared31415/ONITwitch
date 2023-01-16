@@ -14,8 +14,10 @@ public static class PartyTimePatch
 
 	public static bool Enabled;
 
+	public static float Intensity = 2.0f;
+
 	[UsedImplicitly]
-	public static void Postfix(RenderTexture src, RenderTexture dest)
+	public static void Postfix(RenderTexture src, RenderTexture dest) 
 	{
 		if (hsvMaterial == null)
 		{
@@ -30,7 +32,7 @@ public static class PartyTimePatch
 			var h = 1f / 12f * (5f * Mathf.Sin((float) (secToRadians * Time.unscaledTime)) + 6);
 
 			hsvMaterial.SetFloat(HueProperty, h);
-			hsvMaterial.SetFloat(SaturationProperty, 2.5f);
+			hsvMaterial.SetFloat(SaturationProperty, Intensity);
 
 			Graphics.Blit(src, dest, hsvMaterial);
 		}

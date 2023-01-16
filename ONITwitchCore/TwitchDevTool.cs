@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
 using JetBrains.Annotations;
+using ONITwitchCore.Patches;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
@@ -79,6 +80,8 @@ public class TwitchDevTool : DevTool
 		}
 
 		ImGui.Checkbox("Closest tile on click", ref debugClosestCell);
+
+		ImGui.DragFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0.05f, 0, 10);
 
 		ImGui.Separator();
 		ImGui.Text("Trigger Events");
