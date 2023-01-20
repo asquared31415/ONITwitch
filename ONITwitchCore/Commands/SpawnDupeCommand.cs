@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitchCore.Config;
+using ONITwitchCore.Settings;
 using ONITwitchCore.Toasts;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ public class SpawnDupeCommand : CommandBase
 		if (name != null)
 		{
 			identity.SetName(
-				MainConfig.Instance.ConfigData.UseTwitchNameColor && color.HasValue
+				GenericModSettings.Data.UseTwitchNameColors && color.HasValue
 					? $"<color=#{color.Value.ToHexString()}>{name}</color>"
 					: name
 			);

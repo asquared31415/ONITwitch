@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using KSerialization;
 using ONITwitchCore.Config;
+using ONITwitchCore.Settings;
 using ONITwitchLib;
 using UnityEngine;
 using DataManager = EventLib.DataManager;
@@ -49,7 +50,7 @@ public class VoteController : KMonoBehaviour
 				{
 					if (connection.IsAuthenticated)
 					{
-						connection.JoinRoom(MainConfig.Instance.ConfigData.Channel);
+						connection.JoinRoom(GenericModSettings.Data.ChannelName);
 						break;
 					}
 
@@ -70,7 +71,7 @@ public class VoteController : KMonoBehaviour
 
 		var eventOptions = new List<EventInfo>();
 		var drawnCount = 0;
-		while (drawnCount < MainConfig.Instance.ConfigData.NumVotes)
+		while (drawnCount < GenericModSettings.Data.VoteCount)
 		{
 			var attempt = TwitchDeckManager.Instance.Draw();
 			// if we fail to draw, exit early
@@ -104,9 +105,9 @@ public class VoteController : KMonoBehaviour
 
 		CurrentVote = new Vote(eventOptions);
 
-		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, voteMsg.ToString());
+		connection.SendTextMessage(GenericModSettings.Data.ChannelName, voteMsg.ToString());
 
-		if (MainConfig.Instance.ConfigData.ShowVoteStartToasts)
+		if (GenericModSettings.Data.ShowVoteStartToasts)
 		{
 			var toastMsg = new StringBuilder();
 			for (var idx = 0; idx < eventOptions.Count; idx++)
@@ -117,7 +118,7 @@ public class VoteController : KMonoBehaviour
 			ToastManager.InstantiateToast("Starting Vote", toastMsg.ToString());
 		}
 
-		VoteTimeRemaining = MainConfig.Instance.ConfigData.VoteTime;
+		VoteTimeRemaining = GenericModSettings.Data.VoteTime;
 		State = VotingState.VoteInProgress;
 
 		return true;
@@ -143,10 +144,10 @@ public class VoteController : KMonoBehaviour
 			responseText = "No options were voted for";
 		}
 
-		connection.SendTextMessage(MainConfig.Instance.ConfigData.Channel, responseText);
+		connection.SendTextMessage(GenericModSettings.Data.ChannelName, responseText);
 
 		CurrentVote = null;
-		VoteDelayRemaining = MainConfig.Instance.ConfigData.CyclesPerVote * Constants.SECONDS_PER_CYCLE;
+		VoteDelayRemaining = GenericModSettings.Data.VoteDelay;
 		State = VotingState.VoteDelay;
 	}
 
@@ -174,9 +175,7 @@ public class VoteController : KMonoBehaviour
 			{
 				if (VoteDelayRemaining > 0)
 				{
-					// explicitly using the *scaled* deltatime
-					// the time remaining is a number of seconds for some count of cycles
-					VoteDelayRemaining -= Time.deltaTime;
+					VoteDelayRemaining -= Time.unscaledDeltaTime;
 				}
 				else
 				{

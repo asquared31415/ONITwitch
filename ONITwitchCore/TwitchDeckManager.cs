@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchCore.Config;
+using ONITwitchCore.Settings;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
 using EventGroup = EventLib.EventGroup;
@@ -59,8 +60,9 @@ public class TwitchDeckManager
 			var entry = DrawEntry();
 			// no danger assigned or danger within the expected range is okay
 			var danger = entry.Danger;
-			if ((danger == null) || ((MainConfig.Instance.ConfigData.MinDanger <= danger.Value) &&
-									 (danger.Value <= MainConfig.Instance.ConfigData.MaxDanger)))
+			if ((danger == null) ||
+				((GenericModSettings.Data.MinDanger <= danger.Value) &&
+				 (danger.Value <= GenericModSettings.Data.MaxDanger)))
 			{
 				var data = dataInst.GetDataForEvent(entry);
 				var condition = entry.CheckCondition(data);

@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Config;
+using ONITwitchCore.Settings;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ public static class ToastManager
 	[CanBeNull]
 	private static GameObject InstantiateToastCommon([CanBeNull] string title, [CanBeNull] string body)
 	{
-		if (!MainConfig.Instance.ConfigData.ShowToasts)
+		if (!GenericModSettings.Data.ShowToasts)
 		{
 			return null;
 		}

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using EventLib;
 using HarmonyLib;
@@ -26,7 +27,6 @@ public class OniTwitchMod : UserMod2
 		LocString.CreateLocStringKeys(typeof(TIStrings.STRINGS), null);
 
 		// load config
-		var unusedConfig = MainConfig.Instance;
 		var unusedCommandConfig = UserCommandConfigManager.Instance;
 
 		var mainThreadObject = new GameObject("MainThreadScheduler");

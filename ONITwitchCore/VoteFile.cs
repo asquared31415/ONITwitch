@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KSerialization;
 using ONITwitchCore.Config;
+using ONITwitchCore.Settings;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ public class VoteFile : KMonoBehaviour
 		{
 			accum -= FileUpdateTime;
 
-			var filePath = Path.Combine(TwitchModInfo.MainModFolder, MainConfig.Instance.ConfigData.VotesPath);
+			var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.Data.VotesPath);
 			if (Game.Instance.TryGetComponent<VoteController>(out var voteController))
 			{
 				string fileText;
@@ -37,7 +38,7 @@ public class VoteFile : KMonoBehaviour
 					{
 						var sb = new StringBuilder();
 						sb.Append(
-							$"{MainConfig.Instance.ConfigData.VoteHeader} ({Mathf.RoundToInt(voteController.VoteTimeRemaining)}s)\n"
+							$"Current Vote ({Mathf.RoundToInt(voteController.VoteTimeRemaining)}s)\n"
 						);
 						var votes = voteController.CurrentVote.Votes;
 						for (var idx = 0; idx < votes.Count; idx++)
@@ -67,7 +68,7 @@ public class VoteFile : KMonoBehaviour
 
 	protected override void OnCleanUp()
 	{
-		var filePath = Path.Combine(TwitchModInfo.MainModFolder, MainConfig.Instance.ConfigData.VotesPath);
+		var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.Data.VotesPath);
 		File.WriteAllText(filePath, "Voting not yet started");
 		base.OnCleanUp();
 	}
