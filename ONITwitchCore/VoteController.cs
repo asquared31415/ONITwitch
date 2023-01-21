@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Config;
 using ONITwitchCore.Settings;
@@ -175,7 +176,11 @@ public class VoteController : KMonoBehaviour
 			{
 				if (VoteDelayRemaining > 0)
 				{
-					VoteDelayRemaining -= Time.unscaledDeltaTime;
+					var pauseShown = Traverse.Create(PauseScreen.Instance).Field<bool>("shown").Value;
+					if (!pauseShown)
+					{
+						VoteDelayRemaining -= Time.unscaledDeltaTime;
+					}
 				}
 				else
 				{

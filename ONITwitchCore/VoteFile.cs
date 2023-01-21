@@ -51,8 +51,7 @@ public class VoteFile : KMonoBehaviour
 					}
 					case VoteController.VotingState.VoteDelay:
 					{
-						fileText =
-							$"Vote Over ({voteController.VoteDelayRemaining / Constants.SECONDS_PER_CYCLE:F1} cycles to next vote)";
+						fileText = $"Vote Over ({voteController.VoteDelayRemaining:F0} seconds to next vote)";
 						break;
 					}
 					default:
