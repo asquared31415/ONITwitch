@@ -1,11 +1,12 @@
 using ONITwitchCore.Cmps;
+using ONITwitchLib;
 using UnityEngine;
 
 namespace ONITwitchCore.Content.Entities;
 
 public class SurpriseBoxConfig : IEntityConfig
 {
-	public const string Id = "ONITwitch." + nameof(SurpriseBoxConfig);
+	public const string Id = TwitchModInfo.ModPrefix + nameof(SurpriseBoxConfig);
 	public const string Anim = "twitch_surprise_box_kanim";
 
 	public GameObject CreatePrefab()

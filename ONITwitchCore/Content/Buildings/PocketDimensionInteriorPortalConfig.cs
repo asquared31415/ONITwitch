@@ -9,7 +9,7 @@ namespace ONITwitchCore.Content.Buildings;
 [UsedImplicitly]
 public class PocketDimensionInteriorPortalConfig : IBuildingConfig
 {
-	public const string Id = "ONITwitch." + nameof(PocketDimensionInteriorPortalConfig);
+	public const string Id = TwitchModInfo.ModPrefix + nameof(PocketDimensionInteriorPortalConfig);
 	private const string Anim = "TI_PocketDim_kanim";
 
 	public override BuildingDef CreateBuildingDef()

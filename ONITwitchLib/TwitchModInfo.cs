@@ -9,8 +9,7 @@ namespace ONITwitchLib;
 /// </summary>
 public static class TwitchModInfo
 {
-	// suboptimal, but required for save compat, might be able to fix to "ONITwitch." later
-	public const string ModPrefix = "TI.";
+	public const string ModPrefix = "ONITwitch.";
 
 	public const string StaticID = "asquared31415.TwitchIntegration";
 	

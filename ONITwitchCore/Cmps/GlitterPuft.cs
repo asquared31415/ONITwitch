@@ -29,9 +29,6 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 	[MyCmpGet] private Light2D light;
 #pragma warning restore 649
 
-	private const int NumSparkles = 2;
-	private readonly List<GameObject> sparkles = new();
-
 	// The frequency to target, is modified when in a group to target the group
 	private float targetFrequency = BaseFrequency;
 
@@ -65,17 +62,6 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 		alphaKey[0].time = 0.0f;
 
 		gradient.SetKeys(colorKey, alphaKey);
-
-		for (var i = 0; i < NumSparkles; i++)
-		{
-			sparkles.Add(
-				GameUtil.KInstantiate(
-					EffectPrefabs.Instance.SparkleStreakFX,
-					transform.position,
-					Grid.SceneLayer.Front
-				)
-			);
-		}
 	}
 
 	protected override void OnSpawn()
@@ -160,23 +146,5 @@ public class GlitterPuft : KMonoBehaviour, ISim33ms
 		// prevent the light beams from being way too bright
 		light.Color = 0.5f * color;
 		light.overlayColour = color * LIGHT2D.LIGHT_OVERLAY;
-
-		foreach (var sparkle in sparkles)
-		{
-			var rand = (Vector3) Random.insideUnitCircle / 8f;
-			sparkle.transform.position = transform.position + rand;
-		}
-	}
-
-	protected override void OnCleanUp()
-	{
-		foreach (var sparkle in sparkles)
-		{
-			Destroy(sparkle);
-		}
-
-		sparkles.Clear();
-
-		base.OnCleanUp();
 	}
 }

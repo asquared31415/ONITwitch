@@ -10,11 +10,13 @@ namespace ONITwitchCore.Content.Entities;
 [UsedImplicitly]
 public class GlitterPuftConfig : IEntityConfig
 {
-	public const string Id = TwitchModInfo.ModPrefix + nameof(GlitterPuftConfig);
+	// suboptimal, but required for save compat, might be able to fix to "ONITwitch." later
+	public const string Id = "TI." + nameof(GlitterPuftConfig);
+	private const string BaseTraitId = "TI." + "GlitterPuftBaseTrait";
+
 	public const string Anim = "TI_GlitterPuft_kanim";
 
 	private static readonly Tag SpeciesTag = GameTags.Creatures.Species.PuftSpecies;
-	private const string BaseTraitId = TwitchModInfo.ModPrefix + "GlitterPuftBaseTrait";
 
 	private static void CreateBaseTrait()
 	{
@@ -72,6 +74,7 @@ public class GlitterPuftConfig : IEntityConfig
 			BaseTraitId,
 			navGrid,
 			NavType.Hover,
+			onDeathDropCount: 0,
 			drownVulnerable: false,
 			entombVulnerable: false,
 			warningLowTemperature: lowTemp,
@@ -79,7 +82,7 @@ public class GlitterPuftConfig : IEntityConfig
 			lethalLowTemperature: lowTemp,
 			lethalHighTemperature: highTemp
 		);
-		
+		go.AddOrGet<FactionAlignment>().canBePlayerTargeted = false;
 		Object.Destroy(go.GetComponent<RangedAttackable>());
 
 		var component = go.AddOrGet<KPrefabID>();
@@ -88,7 +91,10 @@ public class GlitterPuftConfig : IEntityConfig
 		go.AddOrGetDef<SubmergedMonitor.Def>();
 		go.AddOrGet<LoopingSounds>();
 
-		// TODO: add lure with `LureableMonitor.Def`
+		go.AddOrGetDef<LureableMonitor.Def>().lures = new[]
+		{
+			GameTags.SlimeMold,
+		};
 
 		// It really just kinda has to float around and sleep
 		var choreTable = new ChoreTable.Builder().Add(new AnimInterruptStates.Def())
@@ -110,6 +116,8 @@ public class GlitterPuftConfig : IEntityConfig
 		go.AddOrGet<LightSymbolTracker>().targetSymbol = (HashedString) "body";
 
 		go.AddOrGet<GlitterPuft>();
+		const int numSparkles = 2;
+		go.AddOrGet<SparkleFollower>().NumSparkles = numSparkles;
 
 		return go;
 	}

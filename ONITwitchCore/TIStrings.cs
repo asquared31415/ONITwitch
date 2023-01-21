@@ -73,6 +73,20 @@ public static class TIStrings
 					public static readonly LocString DESC = "";
 				}
 			}
+
+			public static class FOOD
+			{
+				public static class ONITWITCH
+				{
+					public static class GLITTERMEATCONFIG
+					{
+						public static readonly LocString NAME = "Glitter Meat";
+
+						public static readonly LocString DESC =
+							"A piece of meat that glitters faintly.\n\n...It's best not to think about where it came from...";
+					}
+				}
+			}
 		}
 	}
 }
