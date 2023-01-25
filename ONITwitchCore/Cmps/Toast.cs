@@ -24,7 +24,6 @@ public class Toast : KMonoBehaviour
 
 	private const float AnimationTime = 0.5f;
 
-	// TODO: calc better?
 	private static readonly Vector2 StartPos = new(640, 128);
 	private static readonly Vector2 EndPos = new(640, -20);
 

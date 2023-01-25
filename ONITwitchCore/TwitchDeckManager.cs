@@ -144,8 +144,6 @@ public class TwitchDeckManager
 			// the first item is always at offset 0
 			var spaced = new List<float> { 0 };
 
-			// TODO: this needs to run after every item except the last?
-
 			// will never be larger than 1, since the max value approaches 1 as n approaches +inf
 			// skip the first item, it was already added
 			var endOffset = items.Skip(1)

@@ -33,7 +33,6 @@ public class GenericModSettings
 		public bool ShowToasts = true;
 		public bool ShowVoteStartToasts = true;
 
-		// TODO: selector for these
 		public Danger MinDanger = Danger.None;
 		public Danger MaxDanger = Danger.High;
 

@@ -259,7 +259,7 @@ public struct IrcMessage
 
 	public string GetIrcString()
 	{
-		// TODO: tags + prefix
+		// TODO: tags
 		var sb = new StringBuilder();
 		if (Prefix != null)
 		{
