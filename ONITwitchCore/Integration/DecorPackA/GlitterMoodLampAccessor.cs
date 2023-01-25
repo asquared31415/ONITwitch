@@ -27,7 +27,6 @@ public class GlitterMoodLampAccessor : KMonoBehaviour
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		Debug.Log(Duration);
 		glitterLight2DComponent = (KMonoBehaviour) gameObject.GetComponent(GlitterLampType);
 		operational = gameObject.GetComponent<Operational>();
 

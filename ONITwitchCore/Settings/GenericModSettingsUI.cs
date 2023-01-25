@@ -16,6 +16,8 @@ internal class GenericModSettingsUI : KScreen
 	private Toggle useTwitchNameColorsToggle;
 	private Toggle showToastsToggle;
 	private Toggle showVoteChoicesToggle;
+	private Slider minDangerSlider;
+	private Slider maxDangerSlider;
 
 	private bool hasUnsavedChanges;
 	private bool confirmExitDialogActive;
@@ -64,6 +66,31 @@ internal class GenericModSettingsUI : KScreen
 		showVoteChoicesToggle = transform.Find("Content/SubToastSettings/ShowVoteStartToast").GetComponent<Toggle>();
 		showVoteChoicesToggle.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
 
+		minDangerSlider = transform.Find("Content/MinDangerInput/SliderContainer/Slider").GetComponent<Slider>();
+		maxDangerSlider = transform.Find("Content/MaxDangerInput/SliderContainer/Slider").GetComponent<Slider>();
+
+		minDangerSlider.onValueChanged.AddListener(
+			newVal =>
+			{
+				hasUnsavedChanges = true;
+				if (newVal > maxDangerSlider.value)
+				{
+					maxDangerSlider.value = newVal;
+				}
+			}
+		);
+		maxDangerSlider.onValueChanged.AddListener(
+			newVal =>
+			{
+				hasUnsavedChanges = true;
+				if (newVal < minDangerSlider.value)
+				{
+					minDangerSlider.value = newVal;
+				}
+			}
+		);
+
+
 		transform.Find("Buttons/Version").GetComponent<LocText>().text = "v" + Global.Instance.modManager.mods
 			.Find(mod => mod.staticID == TwitchModInfo.StaticID)
 			.packagedModInfo
@@ -95,6 +122,9 @@ internal class GenericModSettingsUI : KScreen
 		// set the main toggle last so that it can override the active state of the sub option(s)
 		showToastsToggle.isOn = GenericModSettings.Data.ShowToasts;
 
+		minDangerSlider.value = (float) GenericModSettings.Data.MinDanger;
+		maxDangerSlider.value = (float) GenericModSettings.Data.MaxDanger;
+
 		// writing the old values would set this to true, reset it
 		hasUnsavedChanges = false;
 	}
@@ -115,7 +145,7 @@ internal class GenericModSettingsUI : KScreen
 				},
 				"Go Back",
 				() => { confirmExitDialogActive = false; },
-				"<color=#FF4747>Discard Changes</color>",
+				"Discard Changes".Colored(ColorUtil.RedWarningColor),
 				() =>
 				{
 					Destroy(gameObject);
@@ -143,6 +173,16 @@ internal class GenericModSettingsUI : KScreen
 	{
 		var defaultSettings = new GenericModSettings.SettingsData();
 
+		if ((GenericModSettings.Data.MaxDanger < Danger.Deadly) && ((Danger) maxDangerSlider.value >= Danger.Deadly))
+		{
+			DialogUtil.MakeDialog(
+				"Deadly Settings",
+				$"The Deadly danger has events that can {"<i><b>directly kill your duplicants</b></i>".Colored(ColorUtil.RedWarningColor)} or cause extremely deadly things to happen, often with no opportunity to prevent it.  Do not get too attached to your dupes.",
+				"Continue".Colored(ColorUtil.RedWarningColor),
+				() => { }
+			);
+		}
+
 		// updates and saves the config
 		GenericModSettings.Data = new GenericModSettings.SettingsData
 		{
@@ -156,6 +196,8 @@ internal class GenericModSettingsUI : KScreen
 			UseTwitchNameColors = useTwitchNameColorsToggle.isOn,
 			ShowToasts = showToastsToggle.isOn,
 			ShowVoteStartToasts = showVoteChoicesToggle.isOn,
+			MinDanger = (Danger) minDangerSlider.value,
+			MaxDanger = (Danger) maxDangerSlider.value,
 		};
 
 		hasUnsavedChanges = false;

@@ -81,19 +81,31 @@ public class GenericModSettings
 					}
 
 					SaveConfig(config);
-					return config;
+					break;
 				}
 				case CurrentConfigVersion:
 				{
-					return config;
+					break;
 				}
 				case > CurrentConfigVersion:
 				{
 					// TODO: UI warning
 					Debug.LogWarning($"[Twitch Integration] Found future config version {config.Version}");
-					return new SettingsData();
+					config = new SettingsData();
+					break;
 				}
 			}
+
+			if (config.MaxDanger < config.MinDanger)
+			{
+				Debug.Log(
+					$"[Twitch Integration] Invalid danger min/max: {config.MinDanger}/{config.MaxDanger} resetting min to {Danger.None}"
+				);
+				config.MinDanger = Danger.None;
+				SaveConfig(config);
+			}
+
+			return config;
 		}
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{
