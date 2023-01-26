@@ -652,6 +652,17 @@ public static class DefaultCommands
 			)
 		);
 
+		RegisterCommand(
+			new CommandInfo(
+				"MorphCritters",
+				"Morph Critters",
+				new MorphCommand(),
+				null,
+				Danger.Small,
+				5
+			)
+		);
+
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
