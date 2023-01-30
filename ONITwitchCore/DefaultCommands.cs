@@ -558,7 +558,7 @@ public static class DefaultCommands
 				new StressCommand(),
 				+0.75d,
 				Danger.Medium,
-				20,
+				10,
 				"core.stress"
 			)
 		);
@@ -582,7 +582,7 @@ public static class DefaultCommands
 				// will only choose a command that is within the expected danger range
 				// but this command should ignore danger settings
 				null,
-				50,
+				80,
 				"core.surprise"
 			)
 		);
@@ -625,7 +625,7 @@ public static class DefaultCommands
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
-				20
+				25
 			)
 		);
 
@@ -648,7 +648,7 @@ public static class DefaultCommands
 				new GeyserModificationCommand(),
 				null,
 				Danger.Medium,
-				5
+				10
 			)
 		);
 
