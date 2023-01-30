@@ -663,6 +663,17 @@ public static class DefaultCommands
 			)
 		);
 
+		RegisterCommand(
+			new CommandInfo(
+				"Fart",
+				"Fart",
+				new FartCommand(),
+				25.0d,
+				Danger.Small,
+				30
+			)
+		);
+
 		// update user configs
 		UserCommandConfigManager.Instance.Reload();
 	}
