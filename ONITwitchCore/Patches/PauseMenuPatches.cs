@@ -42,6 +42,7 @@ public static class PauseMenuPatches
 		public static void Postfix(ref IList<KButtonMenu.ButtonInfo> ___buttons)
 		{
 			var buttons = ___buttons.ToList();
+			TwitchButtonInfo.isEnabled = true;
 			buttons.Insert(4, TwitchButtonInfo);
 			___buttons = buttons;
 		}
