@@ -17,7 +17,6 @@ public class SparkleFollower : KMonoBehaviour, ISim200ms
 	{
 		base.OnSpawn();
 
-		Debug.Log($"go {gameObject} spawning {NumSparkles} sparkles");
 		for (var i = 0; i < NumSparkles; i++)
 		{
 			sparkles.Add(
