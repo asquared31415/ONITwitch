@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using ONITwitch;
 using ONITwitchCore.Commands;
@@ -670,6 +671,17 @@ public static class DefaultCommands
 				new FartCommand(),
 				25.0d,
 				Danger.Small,
+				30
+			)
+		);
+
+		RegisterCommand(
+			new CommandInfo(
+				"SpiceFood",
+				"Spice Food",
+				new SpiceFoodCommand(),
+				null,
+				Danger.None,
 				30
 			)
 		);
