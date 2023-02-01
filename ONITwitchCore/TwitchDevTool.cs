@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using ONITwitchCore.Config;
 using ONITwitchCore.Patches;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
@@ -70,6 +72,11 @@ public class TwitchDevTool : DevTool
 				"Dev Testing Toast",
 				"This is a testing toast.\n<color=#FF00FF>this is color</color> <i>this is italic</i> <b>this is bold</b>\n<link=\"eoautdhoetnauh\">testing link</link> aaaaaa"
 			);
+		}
+
+		if (ImGui.Button("Dump Event Config"))
+		{
+			DumpCurrentConfig();
 		}
 
 		// Everything below this needs the game to be active
@@ -180,6 +187,41 @@ public class TwitchDevTool : DevTool
 		lineRenderer.startColor = lineRenderer.endColor = color;
 		lineRenderer.startWidth = lineRenderer.endWidth = 0.05f;
 		testingLines.Add(gameObject);
+	}
+
+	public void DumpCurrentConfig()
+	{
+		var dataInst = DataManager.Instance;
+		var deckInst = TwitchDeckManager.Instance;
+		var data = new Dictionary<string, Dictionary<string, CommandConfig>>();
+
+		foreach (var group in deckInst.GetGroups())
+		{
+			foreach (var (eventInfo, weight) in group.GetWeights())
+			{
+				var eventNamespace = eventInfo.EventNamespace;
+				var eventId = eventInfo.EventId;
+
+				var config = new CommandConfig
+				{
+					FriendlyName = eventInfo.FriendlyName,
+					Data = dataInst.GetDataForEvent(eventInfo),
+					Weight = weight,
+					GroupName = group.Name,
+				};
+				if (data.TryGetValue(eventNamespace, out var namespaceEvents))
+				{
+					namespaceEvents[eventId] = config;
+				}
+				else
+				{
+					data[eventNamespace] = new Dictionary<string, CommandConfig> { [eventId] = config };
+				}
+			}
+		}
+
+		var ser = JsonConvert.SerializeObject(data, Formatting.None);
+		Debug.Log(ser);
 	}
 
 	[MustUseReturnValue]

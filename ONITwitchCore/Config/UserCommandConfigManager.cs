@@ -37,41 +37,6 @@ public class UserCommandConfigManager
 
 	private Dictionary<string, Dictionary<string, CommandConfig>> userConfig = new();
 
-	public void DEBUG_DumpCurrentConfig()
-	{
-		var dataInst = DataManager.Instance;
-		var deckInst = TwitchDeckManager.Instance;
-		var data = new Dictionary<string, Dictionary<string, CommandConfig>>();
-
-		foreach (var group in deckInst.GetGroups())
-		{
-			foreach (var (eventInfo, weight) in group.GetWeights())
-			{
-				var eventNamespace = eventInfo.EventNamespace;
-				var eventId = eventInfo.EventId;
-
-				var config = new CommandConfig
-				{
-					FriendlyName = eventInfo.FriendlyName,
-					Data = dataInst.GetDataForEvent(eventInfo),
-					Weight = weight,
-					GroupName = group.Name,
-				};
-				if (data.TryGetValue(eventNamespace, out var namespaceEvents))
-				{
-					namespaceEvents[eventId] = config;
-				}
-				else
-				{
-					data[eventNamespace] = new Dictionary<string, CommandConfig> { [eventId] = config };
-				}
-			}
-		}
-
-		var ser = JsonConvert.SerializeObject(data, Formatting.None);
-		Debug.Log(ser);
-	}
-
 	public void Reload()
 	{
 		lock (loadLock)
@@ -114,7 +79,6 @@ public class UserCommandConfigManager
 					userConfig = new Dictionary<string, Dictionary<string, CommandConfig>>();
 				}
 
-				DEBUG_DumpCurrentConfig();
 				DefaultCommands.ReloadData(userConfig);
 			}
 		}
