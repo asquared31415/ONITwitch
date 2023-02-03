@@ -1,6 +1,5 @@
-using HarmonyLib;
-using Klei;
 using ONITwitchCore.Content;
+using ONITwitchCore.Content.Buildings;
 using ONITwitchCore.Toasts;
 using ONITwitchLib.Utils;
 using UnityEngine;
@@ -9,9 +8,6 @@ namespace ONITwitchCore.Commands;
 
 public class PocketDimensionCommand : CommandBase
 {
-	private static readonly AccessTools.FieldRef<WorldContainer, WorldDetailSave.OverworldCell> OverworldCellAccess =
-		AccessTools.FieldRefAccess<WorldContainer, WorldDetailSave.OverworldCell>("overworldCell");
-
 	public override void Run(object data)
 	{
 		int startCell;
@@ -29,7 +25,10 @@ public class PocketDimensionCommand : CommandBase
 			startCell = Grid.PosToCell(new Vector2(midX, midY));
 		}
 
-		var placeCell = GridUtil.FindCellOpenToBuilding(startCell, new[] { CellOffset.none, new CellOffset(0, 1) });
+		var placeCell = GridUtil.FindCellOpenToBuilding(
+			startCell,
+			Assets.GetBuildingDef(PocketDimensionExteriorPortalConfig.Id)
+		);
 		var portalGo = PocketDimensionGenerator.GenerateDimension(placeCell);
 		ToastManager.InstantiateToastWithGoTarget(
 			"Pocket Dimension",
