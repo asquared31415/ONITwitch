@@ -12,10 +12,9 @@ public class EventGroup
 {
 	internal readonly object Obj;
 
-	public EventGroup([NotNull] string name)
+	public static EventGroup GetOrCreateGroup([NotNull] string name)
 	{
-		Obj = EventGroupCtorByName(name);
-		SetupDelegates();
+		return new EventGroup(CreateEventGroupDelegate(name));
 	}
 
 	[MustUseReturnValue("The group should be added to the TwitchDeckManager to actually be useful")]
@@ -60,14 +59,14 @@ public class EventGroup
 		return Obj.ToString();
 	}
 
-	private static Func<object, object> EventGroupCtorByName =
-		DelegateUtil.CreateRuntimeTypeConstructorDelegate(
-			AccessTools.Constructor(EventInterface.EventGroupType, new[] { typeof(string) }),
-			typeof(string),
-			EventInterface.EventGroupType
-		);
+	private static readonly Func<object, object> CreateEventGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
+		AccessTools.Method(EventInterface.EventGroupType, "GetOrCreateGroup"),
+		null,
+		typeof(string),
+		EventInterface.EventGroupType
+	);
 
-	private static Func<object, object, object, object> DefaultSingleEventGroupDelegate =
+	private static readonly Func<object, object, object, object> DefaultSingleEventGroupDelegate =
 		DelegateUtil.CreateRuntimeTypeFuncDelegate(
 			AccessTools.Method(EventInterface.EventGroupType, "InternalDefaultSingleEventGroup"),
 			null,

@@ -51,6 +51,7 @@ public class EventInfo
 	/// </summary>
 	public void MoveToGroup(EventGroup newGroup, int weight)
 	{
+		Group.RemoveEvent(this);
 		newGroup.AddEventInfoInternal(this, weight);
 		Group = newGroup;
 	}

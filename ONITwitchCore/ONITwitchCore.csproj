@@ -12,7 +12,6 @@
         <DocumentationFile>bin\Release\net471\ONITwitchCore.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\EventLib\EventLib.csproj" />
         <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
     </ItemGroup>
     <ItemGroup>

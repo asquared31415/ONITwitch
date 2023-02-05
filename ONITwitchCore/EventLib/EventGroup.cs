@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using KMod;
+using ONITwitchCore;
+using ONITwitchCore.Config;
 
 namespace EventLib;
 
@@ -12,16 +14,23 @@ public class EventGroup
 {
 	public static Dictionary<Assembly, string> AssemblyIdMap;
 
-	public readonly string Name;
+	[NotNull] public readonly string Name;
 	public int TotalWeight => weights.Values.Sum();
 
 	public event Action<EventGroup> OnGroupChanged;
 
 	private readonly Dictionary<EventInfo, int> weights = new();
 
-	public EventGroup([NotNull] string name)
+	private EventGroup([NotNull] string name)
 	{
 		Name = name;
+	}
+
+	[NotNull]
+	public static EventGroup GetOrCreateGroup([NotNull] string name)
+	{
+		var existing = TwitchDeckManager.Instance.GetGroup(name);
+		return existing ?? new EventGroup(name);
 	}
 
 	[MustUseReturnValue("The group should be added to the TwitchDeckManager to actually be useful")]
@@ -38,15 +47,49 @@ public class EventGroup
 	[NotNull]
 	public EventInfo AddEvent([NotNull] string id, int weight, [CanBeNull] string friendlyName = null)
 	{
-		var callingAssembly = Assembly.GetCallingAssembly();
-		var eventNamespace = GetEventNamespace(callingAssembly);
+		var eventNamespace = GetEventNamespace(Assembly.GetCallingAssembly());
 
-		var eventInfo = new EventInfo(this, eventNamespace, id, friendlyName);
-		weights[eventInfo] = weight;
+		// get the weight and name from the config if applicable
+		var config = UserCommandConfigManager.Instance.GetConfig(eventNamespace, id);
+		if (config != null)
+		{
+			if (config.FriendlyName != null)
+			{
+				friendlyName = config.FriendlyName;
+			}
 
-		InvokeOnChanged();
+			weight = config.Weight;
+		}
 
-		return eventInfo;
+		// add the event to a different group if that was specified 
+		if ((config?.GroupName != null) && (config.GroupName != Name))
+		{
+			var existingGroup = TwitchDeckManager.Instance.GetGroup(config.GroupName);
+			if (existingGroup != null)
+			{
+				var eventInfo = new EventInfo(existingGroup, eventNamespace, id, friendlyName);
+				existingGroup.AddEventInfoInternal(eventInfo, weight);
+
+				return eventInfo;
+			}
+			else
+			{
+				// it was specified to be in a group that does not yet exist
+				var group = GetOrCreateGroup(config.GroupName);
+				var eventInfo = new EventInfo(group, eventNamespace, id, friendlyName);
+				group.AddEventInfoInternal(eventInfo, weight);
+
+				return eventInfo;
+			}
+		}
+
+		// no group override in the config, just add it
+		{
+			var eventInfo = new EventInfo(this, eventNamespace, id, friendlyName);
+			AddEventInfoInternal(eventInfo, weight);
+
+			return eventInfo;
+		}
 	}
 
 	public void SetWeight([NotNull] EventInfo eventInfo, int weight)
@@ -102,6 +145,7 @@ public class EventGroup
 	/// <summary>
 	/// This is not stable
 	/// </summary>
+	[NotNull]
 	public static string GetItemDefaultGroupName([NotNull] string eventNamespace, [NotNull] string id)
 	{
 		return $"__<nogroup>__{eventNamespace}.{id}_{eventNamespace.GetHashCode()}.{id.GetHashCode()}_";
@@ -160,12 +204,43 @@ public class EventGroup
 	{
 		var eventNamespace = GetEventNamespace(callingAssembly);
 
-		var group = new EventGroup(GetItemDefaultGroupName(eventNamespace, id));
-		var eventInfo = new EventInfo(group, eventNamespace, id, friendlyName);
-		group.weights.Add(eventInfo, weight);
+		var groupName = GetItemDefaultGroupName(eventNamespace, id);
 
-		// note: we skip calling the group changed event because we know it was just created and has no subscribers
-		return (eventInfo, group);
+		// get the group and weight and name from the config if applicable
+		var config = UserCommandConfigManager.Instance.GetConfig(eventNamespace, id);
+		Debug.Log($"nogroup config for {eventNamespace}.{id}: {config}");
+		if (config != null)
+		{
+			if (config.FriendlyName != null)
+			{
+				friendlyName = config.FriendlyName;
+			}
+
+			weight = config.Weight;
+
+			if (config.GroupName != null)
+			{
+				groupName = config.GroupName;
+			}
+		}
+
+		// if the group already exists (because of config) get it
+		var existing = TwitchDeckManager.Instance.GetGroup(groupName);
+		if (existing != null)
+		{
+			var eventInfo = new EventInfo(existing, eventNamespace, id, friendlyName);
+			existing.AddEventInfoInternal(eventInfo, weight);
+
+			return (eventInfo, existing);
+		}
+		else
+		{
+			var group = GetOrCreateGroup(groupName);
+			var eventInfo = new EventInfo(group, eventNamespace, id, friendlyName);
+			group.AddEventInfoInternal(eventInfo, weight);
+
+			return (eventInfo, group);
+		}
 	}
 
 	[Obsolete("Used as a cast helper for the reflection lib", true)]

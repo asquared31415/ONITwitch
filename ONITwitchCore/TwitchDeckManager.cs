@@ -28,9 +28,12 @@ public class TwitchDeckManager
 
 	public void AddGroup([NotNull] EventGroup group)
 	{
-		group.OnGroupChanged += Shuffle;
-		groups.Add(group.Name, group);
-		Shuffle(group);
+		if (!groups.ContainsKey(group.Name))
+		{
+			group.OnGroupChanged += Shuffle;
+			groups.Add(group.Name, group);
+			Shuffle(group);
+		}
 	}
 
 	[MustUseReturnValue]

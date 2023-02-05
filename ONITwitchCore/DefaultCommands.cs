@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using ONITwitch;
 using ONITwitchCore.Commands;
-using ONITwitchCore.Config;
 using ONITwitchCore.Content;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
 using EventGroup = EventLib.EventGroup;
 using EventInfo = EventLib.EventInfo;
-using EventManager = EventLib.EventManager;
 
 namespace ONITwitchCore;
 
@@ -685,9 +682,6 @@ public static class DefaultCommands
 				30
 			)
 		);
-
-		// update user configs
-		UserCommandConfigManager.Instance.Reload();
 	}
 
 	private record struct CommandInfo(
@@ -709,7 +703,7 @@ public static class DefaultCommands
 			var group = deckInst.GetGroup(info.Group);
 			if (group == null)
 			{
-				group = new EventGroup(info.Group);
+				group = EventGroup.GetOrCreateGroup(info.Group);
 				deckInst.AddGroup(group);
 			}
 
@@ -725,55 +719,5 @@ public static class DefaultCommands
 		DataManager.Instance.SetDataForEvent(eventInfo, info.Data);
 		eventInfo.AddCondition(info.Command.Condition);
 		eventInfo.Danger = info.Danger;
-	}
-
-	public static void ReloadData(Dictionary<string, Dictionary<string, CommandConfig>> userConfig)
-	{
-		Debug.Log("[Twitch Integration] Reloading user command config");
-		var eventInst = EventManager.Instance;
-		var dataInst = DataManager.Instance;
-		var deckInst = TwitchDeckManager.Instance;
-		foreach (var (namespaceId, namespaceInfo) in userConfig)
-		{
-			foreach (var (id, config) in namespaceInfo)
-			{
-				var eventId = eventInst.GetEventByID(namespaceId, id);
-				if (eventId != null)
-				{
-					eventId.FriendlyName = config.FriendlyName ?? eventId.Id;
-					dataInst.SetDataForEvent(eventId, config.Data);
-
-					var group = eventId.Group;
-					if (group.Name == config.GroupName)
-					{
-						group.SetWeight(eventId, config.Weight);
-					}
-					else
-					{
-						group.RemoveEvent(eventId);
-
-						if (config.GroupName != null)
-						{
-							var newGroup = deckInst.GetGroup(config.GroupName);
-							if (newGroup == null)
-							{
-								newGroup = new EventGroup(config.GroupName);
-								deckInst.AddGroup(newGroup);
-							}
-
-							eventId.MoveToGroup(newGroup, config.Weight);
-						}
-						else
-						{
-							var newGroup = new EventGroup(
-								EventGroup.GetItemDefaultGroupName(eventId.EventNamespace, eventId.EventId)
-							);
-							deckInst.AddGroup(newGroup);
-							eventId.MoveToGroup(newGroup, config.Weight);
-						}
-					}
-				}
-			}
-		}
 	}
 }

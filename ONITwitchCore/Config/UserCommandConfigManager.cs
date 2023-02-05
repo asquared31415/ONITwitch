@@ -7,14 +7,26 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
 using DataManager = EventLib.DataManager;
+using EventGroup = EventLib.EventGroup;
 using EventManager = EventLib.EventManager;
+
+// using ONITwitchLib;
 
 namespace ONITwitchCore.Config;
 
 public class UserCommandConfigManager
 {
-	private static UserCommandConfigManager instance;
 	public static UserCommandConfigManager Instance => instance ??= new UserCommandConfigManager();
+
+	[CanBeNull]
+	public CommandConfig GetConfig([NotNull] string eventNamespace, [NotNull] string eventId)
+	{
+		return userConfig.TryGetValue(eventNamespace, out var namespaceConfig)
+			? namespaceConfig.TryGetValue(eventId, out var config) ? config : null
+			: null;
+	}
+
+	private static UserCommandConfigManager instance;
 
 	private System.DateTime lastLoadTime = System.DateTime.MinValue;
 	private readonly object loadLock = new();
@@ -37,7 +49,7 @@ public class UserCommandConfigManager
 
 	private Dictionary<string, Dictionary<string, CommandConfig>> userConfig = new();
 
-	public void Reload()
+	private void Reload()
 	{
 		lock (loadLock)
 		{
@@ -46,6 +58,7 @@ public class UserCommandConfigManager
 			if (now.Subtract(lastLoadTime).TotalSeconds >= 0.5f)
 			{
 				lastLoadTime = now;
+				Debug.Log("[Twitch Integration] Reloading user config");
 
 				try
 				{
@@ -79,7 +92,44 @@ public class UserCommandConfigManager
 					userConfig = new Dictionary<string, Dictionary<string, CommandConfig>>();
 				}
 
-				DefaultCommands.ReloadData(userConfig);
+				ReloadEvents();
+			}
+		}
+	}
+
+	private void ReloadEvents()
+	{
+		var eventInst = EventManager.Instance;
+		var dataInst = DataManager.Instance;
+		var deckInst = TwitchDeckManager.Instance;
+		foreach (var (namespaceId, namespaceInfo) in userConfig)
+		{
+			foreach (var (id, config) in namespaceInfo)
+			{
+				var eventId = eventInst.GetEventByID(namespaceId, id);
+				if (eventId != null)
+				{
+					// friendly name and data can be updated always
+					eventId.FriendlyName = config.FriendlyName;
+					dataInst.SetDataForEvent(eventId, config.Data);
+
+					var group = eventId.Group;
+					// if the group did not move, just update the weight
+					if (group.Name == config.GroupName)
+					{
+						group.SetWeight(eventId, config.Weight);
+					}
+					else
+					{
+						var groupName = config.GroupName ?? EventGroup.GetItemDefaultGroupName(
+							eventId.EventNamespace,
+							eventId.EventId
+						);
+						var newGroup = EventGroup.GetOrCreateGroup(groupName);
+						eventId.MoveToGroup(newGroup, config.Weight);
+						deckInst.AddGroup(newGroup);
+					}
+				}
 			}
 		}
 	}

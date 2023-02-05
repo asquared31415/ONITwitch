@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using ONITwitchCore.Config;
 
 namespace EventLib;
 
@@ -7,7 +8,7 @@ public class DataManager
 {
 	private static DataManager instance;
 	private readonly Dictionary<EventInfo, object> storedData = new();
-	
+
 	public static DataManager Instance
 	{
 		get
@@ -24,7 +25,9 @@ public class DataManager
 	/// <param name="data">The new data for the event</param>
 	public void SetDataForEvent([NotNull] EventInfo info, object data)
 	{
-		storedData[info] = data;
+		// overwrite with the user provided data if applicable
+		var config = UserCommandConfigManager.Instance.GetConfig(info.EventNamespace, info.Id);
+		storedData[info] = config != null ? config.Data : data;
 	}
 
 	/// <summary>

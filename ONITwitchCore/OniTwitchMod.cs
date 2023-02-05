@@ -26,9 +26,6 @@ public class OniTwitchMod : UserMod2
 		base.OnLoad(harmony);
 		LocString.CreateLocStringKeys(typeof(TIStrings.STRINGS), null);
 
-		// load config
-		var unusedCommandConfig = UserCommandConfigManager.Instance;
-
 		var mainThreadObject = new GameObject("MainThreadScheduler");
 		mainThreadObject.AddOrGet<MainThreadScheduler>();
 		Object.DontDestroyOnLoad(mainThreadObject);
