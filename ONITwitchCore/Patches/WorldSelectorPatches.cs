@@ -14,7 +14,8 @@ public static class WorldSelectorPatches
 		[UsedImplicitly]
 		public static void Postfix(WorldSelector __instance)
 		{
-			SortRows(__instance.worldRows);
+			// TODO: Disabled as to not stomp other mods, figure out a way to do this if nested worlds ever work
+			// SortRows(__instance.worldRows);
 		}
 
 		// returns the absolute depth of the current world, or the depth at which a loop happens, relative to this world 
