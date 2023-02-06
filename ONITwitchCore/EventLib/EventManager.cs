@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 
 namespace EventLib;
@@ -34,11 +33,5 @@ public class EventManager
 	public EventInfo GetEventByID([NotNull] string eventNamespace, [NotNull] string id)
 	{
 		return registeredEvents.TryGetValue($"{eventNamespace}.{id}", out var eventInfo) ? eventInfo : null;
-	}
-
-	[NotNull]
-	public List<EventInfo> GetAllRegisteredEvents()
-	{
-		return registeredEvents.Values.ToList();
 	}
 }

@@ -7,13 +7,14 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ONITwitchCore;
+namespace ONITwitchCore.Patches;
 
 public static class DevToolPatches
 {
 	[HarmonyPatch(typeof(SelectTool), nameof(SelectTool.OnLeftClickDown))]
 	public static class SelectTool_OnLeftClickDown_Patch
 	{
+		[UsedImplicitly]
 		public static void Postfix(SelectTool __instance)
 		{
 			if (TwitchDevTool.Instance != null)
@@ -66,6 +67,7 @@ public static class DevToolPatches
 			return codes;
 		}
 
+		[UsedImplicitly]
 		private static bool LenHelper(IReadOnlyCollection<RaycastResult> results)
 		{
 			return results.Count > 0;

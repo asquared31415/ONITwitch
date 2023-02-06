@@ -6,7 +6,8 @@ namespace ONITwitchLib.Utils;
 
 public static class ColorUtil
 {
-	public static Color RedWarningColor = new(0xFF / 256f, 0x47 / 256f, 0x47 / 256f);
+	public static Color RedWarningColor = new(0xFF / 256f, 0x30 / 256f, 0x30 / 256f);
+	public static Color GreenSuccessColor = new(0x30 / 256f, 0xFF / 256f, 0x30 / 256f);
 
 	public static bool TryParseHexString([NotNull] string colorString, out Color color)
 	{

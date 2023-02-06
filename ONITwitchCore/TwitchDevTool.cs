@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 using ONITwitchCore.Config;
 using ONITwitchCore.Patches;
 using ONITwitchLib;
+// using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
-using EventManager = EventLib.EventManager;
 using Object = UnityEngine.Object;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
@@ -24,7 +24,7 @@ public class TwitchDevTool : DevTool
 	private int selectedCell = Grid.InvalidCell;
 	private bool debugClosestCell;
 
-	private List<(string Namespace, List<EventInfo> Events)> eventEntries;
+	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
 
 	public TwitchDevTool()
@@ -86,24 +86,35 @@ public class TwitchDevTool : DevTool
 			return;
 		}
 
-		ImGui.Checkbox("Closest tile on click", ref debugClosestCell);
+		ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
 
 		ImGui.DragFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0.05f, 0, 10);
 
 		ImGui.Separator();
 		ImGui.Text("Trigger Events");
+
+		ImGui.Text("Events colored");
+		ImGui.SameLine();
+		ImGui.TextColored(ColorUtil.GreenSuccessColor, "green");
+		ImGui.SameLine();
+		ImGui.Text("have their condition currently met. Events colored");
+		ImGui.SameLine();
+		ImGui.TextColored(ColorUtil.RedWarningColor, "red");
+		ImGui.SameLine();
+		ImGui.Text("do not.");
+
 		ImGui.Indent();
 
 		// initialize the entries with no filter
 		eventEntries ??= GenerateEventEntries(null);
 
-		if (ImGuiEx.InputFilter("Search", ref eventFilter, 100))
+		if (ImGuiEx.InputFilter("Search###EventSearch", ref eventFilter, 100))
 		{
 			eventEntries = GenerateEventEntries(eventFilter);
 		}
 
 		var dataInst = DataManager.Instance;
-		foreach (var (eventNamespace, eventInfos) in eventEntries)
+		foreach (var (eventNamespace, groups) in eventEntries)
 		{
 			var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
 			var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
@@ -119,15 +130,37 @@ public class TwitchDevTool : DevTool
 				ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
 				ImGui.Indent();
 
-				foreach (var eventInfo in eventInfos)
+				var firstGroup = true;
+				foreach (var (groupName, events) in groups)
 				{
-					var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
-					ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
-					if (buttonPressed)
+					if (firstGroup)
 					{
-						Debug.Log($"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
-						var data = dataInst.GetDataForEvent(eventInfo);
-						eventInfo.Trigger(data);
+						firstGroup = false;
+					}
+					else
+					{
+						ImGui.NewLine();
+					}
+
+					ImGui.Text(groupName);
+					foreach (var eventInfo in events)
+					{
+						var condColor = eventInfo.CheckCondition(dataInst.GetDataForEvent(eventInfo))
+							? ColorUtil.GreenSuccessColor
+							: ColorUtil.RedWarningColor;
+						ImGui.PushStyleColor(ImGuiCol.Text, condColor);
+						var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
+						ImGui.PopStyleColor();
+
+						ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
+						if (buttonPressed)
+						{
+							Debug.Log(
+								$"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})"
+							);
+							var data = dataInst.GetDataForEvent(eventInfo);
+							eventInfo.Trigger(data);
+						}
 					}
 				}
 
@@ -226,64 +259,84 @@ public class TwitchDevTool : DevTool
 
 	[MustUseReturnValue]
 	[NotNull]
-	private static List<(string Namespace, List<EventInfo> Events)> GenerateEventEntries([CanBeNull] string filter)
+	private static List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)>
+		GenerateEventEntries([CanBeNull] string filter)
 	{
-		var namespacedEvents = new SortedDictionary<string, List<EventInfo>>();
-
-		foreach (var eventInfo in EventManager.Instance.GetAllRegisteredEvents()
-					 .Where(
-						 info => string.IsNullOrWhiteSpace(filter) ||
-								 (info.FriendlyName?.ToLowerInvariant().Contains(filter.ToLowerInvariant()) == true) ||
-								 info.Id.ToLowerInvariant().Contains(filter.ToLowerInvariant())
-					 ))
+		bool MatchesFilter([NotNull] EventInfo info)
 		{
-			if (!namespacedEvents.ContainsKey(eventInfo.EventNamespace))
-			{
-				namespacedEvents.Add(eventInfo.EventNamespace, new List<EventInfo> { eventInfo });
-			}
-			else
-			{
-				namespacedEvents[eventInfo.EventNamespace].Add(eventInfo);
-			}
+			return string.IsNullOrWhiteSpace(filter) ||
+				   (info.FriendlyName?.ToLowerInvariant().Contains(filter.ToLowerInvariant()) == true) ||
+				   info.Id.ToLowerInvariant().Contains(filter.ToLowerInvariant());
 		}
 
-		foreach (var (_, events) in namespacedEvents)
+		var namespacedGroupedEvents = new Dictionary<string, Dictionary<string, List<EventInfo>>>();
+		foreach (var eventGroup in TwitchDeckManager.Instance.GetGroups())
 		{
-			events.Sort(
-				(infoA, infoB) =>
+			foreach (var (info, _) in eventGroup.GetWeights())
+			{
+				if (MatchesFilter(info))
 				{
-					// if both have a friendly name, use that
-					var nameA = infoA.FriendlyName;
-					var nameB = infoB.FriendlyName;
-					if ((nameA != null) && (nameB != null))
+					var eventNamespace = info.EventNamespace;
+					if (!namespacedGroupedEvents.ContainsKey(eventNamespace))
 					{
-						return string.Compare(nameA, nameB, StringComparison.OrdinalIgnoreCase);
+						namespacedGroupedEvents[eventNamespace] = new Dictionary<string, List<EventInfo>>();
 					}
 
-					// if neither have a friendly name, then compare IDs
-					if ((nameA == null) && (nameB == null))
+					var groupName = info.Group.Name.Contains("__<nogroup>__") ? "__NoGroup" : info.Group.Name;
+					if (!namespacedGroupedEvents[eventNamespace].ContainsKey(groupName))
 					{
-						return string.Compare(infoA.Id, infoB.Id, StringComparison.OrdinalIgnoreCase);
+						namespacedGroupedEvents[eventNamespace][groupName] = new List<EventInfo>();
 					}
 
-					// the event without a name is greater (last) 
-					return nameA == null ? 1 : -1;
+					namespacedGroupedEvents[eventNamespace][groupName].Add(info);
 				}
-			);
+			}
 		}
 
-		var filtered = new List<(string, List<EventInfo>)>();
+		// sort events by name and then ID
+		int CompareInfo(EventInfo infoA, EventInfo infoB)
+		{
+			// if both have a friendly name, use that
+			var nameA = infoA.FriendlyName;
+			var nameB = infoB.FriendlyName;
+			if ((nameA != null) && (nameB != null))
+			{
+				return string.Compare(nameA, nameB, StringComparison.OrdinalIgnoreCase);
+			}
+
+			// if neither have a friendly name, then compare IDs
+			if ((nameA == null) && (nameB == null))
+			{
+				return string.Compare(infoA.Id, infoB.Id, StringComparison.OrdinalIgnoreCase);
+			}
+
+			// the event without a name is greater (last) 
+			return nameA == null ? 1 : -1;
+		}
+
+		List<(string, List<EventInfo>)> SortGroupsForNamespace(Dictionary<string, List<EventInfo>> groups)
+		{
+			var sorted = groups.OrderBy(entry => entry.Key).Select(pair => (pair.Key, pair.Value)).ToList();
+			foreach (var (_, events) in sorted)
+			{
+				events.Sort(CompareInfo);
+			}
+
+			return sorted;
+		}
+
+		var filtered = new List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)>();
 
 		// put the base mod events in first, then the rest, sorted by namespace
-		if (namespacedEvents.TryGetValue(TwitchModInfo.StaticID, out var baseEvents))
+		if (namespacedGroupedEvents.TryGetValue(TwitchModInfo.StaticID, out var baseGroups))
 		{
-			namespacedEvents.Remove(TwitchModInfo.StaticID);
-			filtered.Add((TwitchModInfo.StaticID, baseEvents));
+			namespacedGroupedEvents.Remove(TwitchModInfo.StaticID);
+			filtered.Add((TwitchModInfo.StaticID, SortGroupsForNamespace(baseGroups)));
 		}
 
-		foreach (var (modNamespace, events) in namespacedEvents)
+		foreach (var (modNamespace, groups) in namespacedGroupedEvents)
 		{
-			filtered.Add((modNamespace, events));
+			filtered.Add((modNamespace, SortGroupsForNamespace(groups)));
 		}
 
 		return filtered;

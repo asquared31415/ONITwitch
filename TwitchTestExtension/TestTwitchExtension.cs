@@ -62,6 +62,16 @@ public static class Db_Initialize_Patch
 
 		deckInst.AddGroup(extRainGroup);
 
+		// manual group creation
+		var extGroup = EventGroup.GetOrCreateGroup("ExtGroup");
+		var manualGroupEvent = extGroup.AddEvent("ManualEvent", 1, "Manual Group Event");
+		manualGroupEvent.Danger = Danger.None;
+		manualGroupEvent.AddCondition(_ => false);
+		manualGroupEvent.AddListener(
+			_ => { ToastManager.InstantiateToast("Toast", "This toast was manually triggered by the dev tools!"); }
+		);
+		deckInst.AddGroup(extGroup);
+
 		// create a custom pocket dimension
 		var genConfig = new NoisePocketDimensionGeneration(
 			3f,
@@ -81,29 +91,6 @@ public static class Db_Initialize_Patch
 		if (group != null)
 		{
 			group.AddEvent("aaaa", 0);
-		}
-	}
-}
-
-[HarmonyPatch(typeof(PauseScreen), "OnShow")]
-public static class ToastTest
-{
-	[UsedImplicitly]
-	public static void Postfix()
-	{
-		if (Components.LiveMinionIdentities.Items.Count > 0)
-		{
-			var minion = Components.LiveMinionIdentities.Items.GetRandom();
-			Debug.Log($"targeting {minion}");
-			ToastManager.InstantiateToastWithGoTarget(
-				"Test Toast",
-				$"this is a test toast targeting {minion}",
-				minion.gameObject
-			);
-		}
-		else
-		{
-			Debug.LogWarning("Unable to find a minion to spawn a toast on");
 		}
 	}
 }
