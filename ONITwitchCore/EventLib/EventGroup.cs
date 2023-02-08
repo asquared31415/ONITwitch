@@ -208,7 +208,6 @@ public class EventGroup
 
 		// get the group and weight and name from the config if applicable
 		var config = UserCommandConfigManager.Instance.GetConfig(eventNamespace, id);
-		Debug.Log($"nogroup config for {eventNamespace}.{id}: {config}");
 		if (config != null)
 		{
 			if (config.FriendlyName != null)

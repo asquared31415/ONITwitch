@@ -48,7 +48,6 @@ public static class PauseMenuPatches
 		}
 	}
 
-
 	public static readonly Color DisabledColor = new Color32(0x6A, 0x69, 0x66, 0xFF);
 	public static readonly Color InactiveTwitchColor = new Color32(0x91, 0x46, 0xFF, 0xFF);
 	public static readonly Color HoverTwitchColor = new Color32(0xA2, 0x56, 0xFF, 0xFF);

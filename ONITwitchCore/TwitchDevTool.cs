@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using ONITwitchCore.Config;
 using ONITwitchCore.Patches;
 using ONITwitchLib;
-// using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using DataManager = EventLib.DataManager;
@@ -62,10 +61,35 @@ public class TwitchDevTool : DevTool
 		}
 	}
 
+	private static void SetStyle()
+	{
+		ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 4);
+
+		ImGui.PushStyleColor(ImGuiCol.WindowBg, new Vector4(0.06f, 0.06f, 0.06f, 0.75f));
+		ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0.09f, 0.00f, 0.21f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.CheckMark, new Vector4(0.57f, 0.27f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.SliderGrab, new Vector4(0.60f, 0.33f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.SliderGrabActive, new Vector4(0.71f, 0.40f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.57f, 0.27f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.64f, 0.34f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.71f, 0.40f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.Header, new Vector4(0.57f, 0.27f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.HeaderHovered, new Vector4(0.64f, 0.34f, 1.00f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.HeaderActive, new Vector4(0.71f, 0.40f, 1.00f, 1.00f));
+	}
+
+	private static void ClearStyle()
+	{
+		// these must match the counts pushed in SetStyle
+		ImGui.PopStyleColor(11);
+		ImGui.PopStyleVar(1);
+	}
+
 	protected override void RenderTo(DevPanel panel)
 	{
-		// WARNING: game may not be active unless explicitly checked!
+		SetStyle();
 
+		// WARNING: game may not be active unless explicitly checked!
 		if (ImGui.Button("Test Toast"))
 		{
 			ToastManager.InstantiateToast(
@@ -80,100 +104,109 @@ public class TwitchDevTool : DevTool
 		}
 
 		// Everything below this needs the game to be active
-		if (Game.Instance == null)
+		if (Game.Instance != null)
 		{
-			ImGui.TextColored(Color.red, "Game not yet active");
-			return;
-		}
+			ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
 
-		ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
+			ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
 
-		ImGui.DragFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0.05f, 0, 10);
+			ImGui.Separator();
+			ImGui.Text("Trigger Events");
 
-		ImGui.Separator();
-		ImGui.Text("Trigger Events");
+			ImGui.Text("Events with a");
+			ImGui.SameLine();
+			ColoredBullet(ColorUtil.GreenSuccessColor);
+			ImGui.SameLine();
+			ImGui.Text("icon have their condition currently met. Events with a");
+			ImGui.SameLine();
+			ColoredBullet(ColorUtil.RedWarningColor);
+			ImGui.SameLine();
+			ImGui.Text("do not.");
 
-		ImGui.Text("Events colored");
-		ImGui.SameLine();
-		ImGui.TextColored(ColorUtil.GreenSuccessColor, "green");
-		ImGui.SameLine();
-		ImGui.Text("have their condition currently met. Events colored");
-		ImGui.SameLine();
-		ImGui.TextColored(ColorUtil.RedWarningColor, "red");
-		ImGui.SameLine();
-		ImGui.Text("do not.");
+			ImGui.Indent();
 
-		ImGui.Indent();
+			// initialize the entries with no filter
+			eventEntries ??= GenerateEventEntries(null);
 
-		// initialize the entries with no filter
-		eventEntries ??= GenerateEventEntries(null);
-
-		if (ImGuiEx.InputFilter("Search###EventSearch", ref eventFilter, 100))
-		{
-			eventEntries = GenerateEventEntries(eventFilter);
-		}
-
-		var dataInst = DataManager.Instance;
-		foreach (var (eventNamespace, groups) in eventEntries)
-		{
-			var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
-			var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
-			var missingNamespace = headerName.IsNullOrWhiteSpace();
-			if (missingNamespace)
+			if (ImGuiEx.InputFilter("Search###EventSearch", ref eventFilter, 100))
 			{
-				ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
-				headerName = "MISSING NAMESPACE";
+				eventEntries = GenerateEventEntries(eventFilter);
 			}
 
-			if (ImGui.CollapsingHeader(headerName))
+			var dataInst = DataManager.Instance;
+			foreach (var (eventNamespace, groups) in eventEntries)
 			{
-				ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
-				ImGui.Indent();
-
-				var firstGroup = true;
-				foreach (var (groupName, events) in groups)
+				var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
+				var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
+				var missingNamespace = headerName.IsNullOrWhiteSpace();
+				if (missingNamespace)
 				{
-					if (firstGroup)
-					{
-						firstGroup = false;
-					}
-					else
-					{
-						ImGui.NewLine();
-					}
-
-					ImGui.Text(groupName);
-					foreach (var eventInfo in events)
-					{
-						var condColor = eventInfo.CheckCondition(dataInst.GetDataForEvent(eventInfo))
-							? ColorUtil.GreenSuccessColor
-							: ColorUtil.RedWarningColor;
-						ImGui.PushStyleColor(ImGuiCol.Text, condColor);
-						var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
-						ImGui.PopStyleColor();
-
-						ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
-						if (buttonPressed)
-						{
-							Debug.Log(
-								$"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})"
-							);
-							var data = dataInst.GetDataForEvent(eventInfo);
-							eventInfo.Trigger(data);
-						}
-					}
+					ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
+					headerName = "MISSING NAMESPACE";
 				}
 
-				ImGui.Unindent();
-				ImGui.PopStyleColor();
-			}
+				if (ImGui.CollapsingHeader(headerName))
+				{
+					ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
+					ImGui.Indent();
 
-			if (missingNamespace)
-			{
-				// pop the red style if we pushed it before
-				ImGui.PopStyleColor();
+					var firstGroup = true;
+					foreach (var (groupName, events) in groups)
+					{
+						if (firstGroup)
+						{
+							firstGroup = false;
+						}
+						else
+						{
+							ImGui.NewLine();
+						}
+
+						ImGui.Text(groupName);
+						foreach (var eventInfo in events)
+						{
+							var condColor = eventInfo.CheckCondition(dataInst.GetDataForEvent(eventInfo))
+								? ColorUtil.GreenSuccessColor
+								: ColorUtil.RedWarningColor;
+							ColoredBullet(condColor);
+							var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
+
+							ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
+							if (buttonPressed)
+							{
+								Debug.Log(
+									$"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})"
+								);
+								var data = dataInst.GetDataForEvent(eventInfo);
+								eventInfo.Trigger(data);
+							}
+						}
+					}
+
+					ImGui.Unindent();
+					ImGui.PopStyleColor();
+				}
+
+				if (missingNamespace)
+				{
+					// pop the red style if we pushed it before
+					ImGui.PopStyleColor();
+				}
 			}
 		}
+		else
+		{
+			ImGui.TextColored(Color.red, "Game not yet active");
+		}
+
+		ClearStyle();
+	}
+
+	private static void ColoredBullet(Color color)
+	{
+		ImGui.PushStyleColor(ImGuiCol.Text, color);
+		ImGui.Bullet();
+		ImGui.PopStyleColor();
 	}
 
 	private readonly List<GameObject> testingLines = new();
