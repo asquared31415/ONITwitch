@@ -80,15 +80,21 @@ public static class MainMenuPatches
 				}
 				catch (WebException we)
 				{
-					using var r = we.Response;
+					Debug.LogWarning("[Twitch Integration] Error validating token with Twitch.");
 
-					var httpResponse = (HttpWebResponse) r;
-					Debug.LogWarning(
-						$"[Twitch Integration] Error validating token with Twitch.  Status {httpResponse.StatusCode}"
-					);
-					errMsg = httpResponse.StatusCode == HttpStatusCode.Unauthorized
-						? "The OAuth token is invalid or has expired.  Please generate a new token following the instructions in the README."
-						: "An unknown error occured when validating your OAuth token with Twitch.";
+					using var r = we.Response;
+					if (r != null)
+					{
+						var httpResponse = (HttpWebResponse) r;
+						errMsg = httpResponse.StatusCode == HttpStatusCode.Unauthorized
+							? "The OAuth token is invalid or has expired.  Please generate a new token following the instructions in the README."
+							: "An unknown error occured when validating your OAuth token with Twitch.";
+					}
+					else
+					{
+						errMsg =
+							"An unknown error occured when validating your OAuth token with Twitch. (No response from server)";
+					}
 				}
 			}
 
