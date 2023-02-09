@@ -132,6 +132,11 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			}
 
 			world.EjectAllDupes(exitPos);
+			foreach (var minionIdentity in Components.MinionIdentities.GetWorldItems(world.id))
+			{
+				minionIdentity.transform.SetPosition(exitPos);
+			}
+
 			world.CancelChores();
 			world.DestroyWorldBuildings(out _);
 
@@ -145,8 +150,9 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			// unregister the world immediately to make sure that the world is inaccessible
 			ClusterManager.Instance.UnregisterWorldContainer(world);
 
-			GameScheduler.Instance.ScheduleNextFrame(
+			GameScheduler.Instance.Schedule(
 				"Finish Delete World",
+				4f,
 				_ =>
 				{
 					var trav = Traverse.Create(world);
