@@ -32,7 +32,7 @@ public class UserCommandConfigManager
 	private readonly object loadLock = new();
 
 	private const string CommandConfigName = "command_config.json";
-	private static readonly string CommandConfigPath = Path.Combine(TwitchModInfo.MainModFolder, CommandConfigName);
+	internal static readonly string CommandConfigPath = Path.Combine(TwitchModInfo.MainModFolder, CommandConfigName);
 
 	[NotNull] private readonly FileSystemWatcher configWatcher = new()
 	{

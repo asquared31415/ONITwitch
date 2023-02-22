@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using ImGuiNET;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using ONITwitchCore.Config;
 using ONITwitchCore.Patches;
+using ONITwitchCore.Settings;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using UnityEngine;
+using UnityEngine.UI;
+using CompressionLevel = System.IO.Compression.CompressionLevel;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
 using Object = UnityEngine.Object;
@@ -25,6 +31,8 @@ public class TwitchDevTool : DevTool
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
+
+	private static GameObject canvas;
 
 	public TwitchDevTool()
 	{
@@ -101,6 +109,31 @@ public class TwitchDevTool : DevTool
 		if (ImGui.Button("Dump Event Config"))
 		{
 			DumpCurrentConfig();
+		}
+
+		if (ImGui.Button("Import Config"))
+		{
+			if (canvas == null)
+			{
+				canvas = new GameObject("ConfigCanvas");
+				var canvasCmp = canvas.AddComponent<Canvas>();
+				canvasCmp.renderMode = RenderMode.ScreenSpaceOverlay;
+				canvasCmp.sortingOrder = 100;
+				canvasCmp.pixelPerfect = true;
+
+				var scaler = canvas.AddComponent<CanvasScaler>();
+				scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+				scaler.referenceResolution = new Vector2(1920, 1080);
+
+				canvas.AddComponent<GraphicRaycaster>();
+
+				Object.DontDestroyOnLoad(canvas);
+				canvas.SetActive(true);
+			}
+
+			var config = Util.KInstantiateUI(ModAssets.Options.ConfigPopup, canvas);
+			config.AddOrGet<ConfigImportUI>();
+			config.SetActive(true);
 		}
 
 		// Everything below this needs the game to be active
@@ -287,7 +320,21 @@ public class TwitchDevTool : DevTool
 		}
 
 		var ser = JsonConvert.SerializeObject(data, Formatting.None);
-		Debug.Log(ser);
+		var bytes = Encoding.UTF8.GetBytes(ser);
+
+		using var outputStream = new MemoryStream();
+		// need to scope things so that they close and flush as needed
+		using (var dataStream = new MemoryStream(bytes))
+		{
+			// leave the underlying stream open so that we can access it after it flushes and closes
+			using (var compressor = new DeflateStream(outputStream, CompressionLevel.Fastest, true))
+			{
+				dataStream.CopyTo(compressor);
+			}
+		}
+
+		var encoded = Convert.ToBase64String(outputStream.ToArray()).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+		Debug.Log(encoded);
 	}
 
 	[MustUseReturnValue]

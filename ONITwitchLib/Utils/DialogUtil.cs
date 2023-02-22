@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace ONITwitchLib.Utils;
 
 public static class DialogUtil
@@ -6,7 +8,7 @@ public static class DialogUtil
 		string title,
 		string text,
 		string confirmText,
-		System.Action onConfirm
+		[CanBeNull] System.Action onConfirm
 	)
 	{
 		var screen = (ConfirmDialogScreen) KScreenManager.Instance.StartScreen(
@@ -29,11 +31,11 @@ public static class DialogUtil
 		string title,
 		string text,
 		string confirmText,
-		System.Action onConfirm,
+		[CanBeNull] System.Action onConfirm,
 		string cancelText,
-		System.Action onCancel,
+		[CanBeNull] System.Action onCancel,
 		string thirdText = null,
-		System.Action thirdAction = null
+		[CanBeNull] System.Action thirdAction = null
 	)
 	{
 		var screen = (ConfirmDialogScreen) KScreenManager.Instance.StartScreen(

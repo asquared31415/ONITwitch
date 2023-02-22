@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +23,7 @@ public static class ModAssets
 	public static class Options
 	{
 		public static GameObject GenericOptionsPrefab;
+		public static GameObject ConfigPopup;
 	}
 
 	public static TMP_FontAsset NotoSans;
@@ -63,6 +63,11 @@ public static class ModAssets
 				16
 			);
 			Options.GenericOptionsPrefab.SetActive(false);
+
+			Options.ConfigPopup = optionsBundle.LoadAsset<GameObject>("TwitchConfigUI.prefab");
+			FixText(Options.ConfigPopup.transform.Find("TitleBar").gameObject, GrayStroke, 20);
+			FixText(Options.ConfigPopup.transform.Find("Content").gameObject, NotoSans);
+			Options.ConfigPopup.SetActive(false);
 		}
 	}
 

@@ -63,7 +63,7 @@ public static class ModsScreenPatches
 		{
 			if (canvas == null)
 			{
-				canvas = new GameObject("ToastCanvas");
+				canvas = new GameObject("SettingsCanvas");
 				var canvasCmp = canvas.AddComponent<Canvas>();
 				canvasCmp.renderMode = RenderMode.ScreenSpaceOverlay;
 				canvasCmp.sortingOrder = 100;
