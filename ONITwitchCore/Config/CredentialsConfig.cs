@@ -3,6 +3,7 @@ using System.IO;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 
 namespace ONITwitchCore.Config;
 
@@ -28,7 +29,26 @@ public class CredentialsConfig
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{
 			Credentials = new Credentials();
-			File.WriteAllText(TwitchModInfo.CredentialsPath, JsonConvert.SerializeObject(Credentials, Formatting.Indented));
+			File.WriteAllText(
+				TwitchModInfo.CredentialsPath,
+				JsonConvert.SerializeObject(Credentials, Formatting.Indented)
+			);
+		}
+		catch (JsonException je)
+		{
+			Debug.LogWarning("[Twitch Integration] Invalid JSON for credentials");
+			Debug.LogWarning($"[Twitch Integration] {je}");
+			Credentials = new Credentials();
+			File.WriteAllText(
+				TwitchModInfo.CredentialsPath,
+				JsonConvert.SerializeObject(Credentials, Formatting.Indented)
+			);
+			DialogUtil.MakeDialog(
+				"Invalid Credentials",
+				"The credentials file was broken and has been reset, please follow the instructions in the README",
+				"Ok",
+				null
+			);
 		}
 		catch (Exception e)
 		{
@@ -39,7 +59,9 @@ public class CredentialsConfig
 
 public record struct Credentials([NotNull] string Nick, [NotNull] string Oauth)
 {
-	public Credentials() : this("", "") { }
+	public Credentials() : this("", "")
+	{
+	}
 
 	public bool IsValid()
 	{
