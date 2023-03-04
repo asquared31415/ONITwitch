@@ -94,7 +94,8 @@ public class TwitchDevTool : DevTool
 		{
 			ToastManager.InstantiateToast(
 				"Dev Testing Toast",
-				"This is a testing toast.\n<color=#FF00FF>this is color</color> <i>this is italic</i> <b>this is bold</b>\n<link=\"eoautdhoetnauh\">testing link</link> aaaaaa"
+				STRINGS.TESTING.TEXT
+				// "This is a testing toast.\n<color=#FF00FF>this is color</color> <i>this is italic</i> <b>this is bold</b>\n<link=\"eoautdhoetnauh\">testing link</link> aaaaaa"
 			);
 		}
 

@@ -24,7 +24,6 @@ public class OniTwitchMod : UserMod2
 	public override void OnLoad(Harmony harmony)
 	{
 		base.OnLoad(harmony);
-		LocString.CreateLocStringKeys(typeof(TIStrings.STRINGS), null);
 
 		var mainThreadObject = new GameObject("MainThreadScheduler");
 		mainThreadObject.AddOrGet<MainThreadScheduler>();

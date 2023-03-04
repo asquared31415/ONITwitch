@@ -13,8 +13,8 @@ public class SurpriseBoxConfig : IEntityConfig
 	{
 		var go = EntityTemplates.CreateLooseEntity(
 			Id,
-			TIStrings.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.NAME,
-			TIStrings.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.DESC,
+			STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.NAME,
+			STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.DESC,
 			100f,
 			true,
 			Assets.GetAnim(Anim),

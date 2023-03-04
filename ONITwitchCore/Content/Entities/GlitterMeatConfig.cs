@@ -14,8 +14,8 @@ public class GlitterMeatConfig : IEntityConfig
 	{
 		var go = EntityTemplates.CreateLooseEntity(
 			Id,
-			TIStrings.STRINGS.ITEMS.FOOD.ONITWITCH.GLITTERMEATCONFIG.NAME,
-			TIStrings.STRINGS.ITEMS.FOOD.ONITWITCH.GLITTERMEATCONFIG.DESC,
+			STRINGS.ITEMS.FOOD.ONITWITCH.GLITTERMEATCONFIG.NAME,
+			STRINGS.ITEMS.FOOD.ONITWITCH.GLITTERMEATCONFIG.DESC,
 			1f,
 			false,
 			Assets.GetAnim((HashedString) "creaturemeat_kanim"),
