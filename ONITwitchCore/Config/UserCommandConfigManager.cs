@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -24,6 +26,62 @@ public class UserCommandConfigManager
 		return userConfig.TryGetValue(eventNamespace, out var namespaceConfig)
 			? namespaceConfig.TryGetValue(eventId, out var config) ? config : null
 			: null;
+	}
+
+	public static void OpenConfigEditor()
+	{
+		var config = GetEncodedConfig();
+		App.OpenWebURL($"https://onitwitchzmkqgu2n-oni-twitch.functions.fnc.fr-par.scw.cloud/data?data={config}");
+	}
+
+	[NotNull]
+	private static string GetEncodedConfig()
+	{
+		var dataInst = DataManager.Instance;
+		var deckInst = TwitchDeckManager.Instance;
+		var data = new Dictionary<string, Dictionary<string, CommandConfig>>();
+
+		foreach (var group in deckInst.GetGroups())
+		{
+			foreach (var (eventInfo, weight) in group.GetWeights())
+			{
+				var eventNamespace = eventInfo.EventNamespace;
+				var eventId = eventInfo.EventId;
+
+				var config = new CommandConfig
+				{
+					FriendlyName = eventInfo.FriendlyName,
+					Data = dataInst.GetDataForEvent(eventInfo),
+					Weight = weight,
+					GroupName = group.Name,
+				};
+				if (data.TryGetValue(eventNamespace, out var namespaceEvents))
+				{
+					namespaceEvents[eventId] = config;
+				}
+				else
+				{
+					data[eventNamespace] = new Dictionary<string, CommandConfig> { [eventId] = config };
+				}
+			}
+		}
+
+		var ser = JsonConvert.SerializeObject(data, Formatting.None);
+		var bytes = Encoding.UTF8.GetBytes(ser);
+
+		using var outputStream = new MemoryStream();
+		// need to scope things so that they close and flush as needed
+		using (var dataStream = new MemoryStream(bytes))
+		{
+			// leave the underlying stream open so that we can access it after it flushes and closes
+			using (var compressor = new DeflateStream(outputStream, CompressionLevel.Fastest, true))
+			{
+				dataStream.CopyTo(compressor);
+			}
+		}
+
+		var encoded = Convert.ToBase64String(outputStream.ToArray()).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+		return encoded;
 	}
 
 	private static UserCommandConfigManager instance;

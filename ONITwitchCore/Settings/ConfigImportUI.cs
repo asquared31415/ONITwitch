@@ -3,6 +3,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ONITwitchCore.Config;
 using ONITwitchLib.Utils;
 using TMPro;
@@ -73,7 +75,8 @@ internal class ConfigImportUI : KScreen
 			var decompressed = Encoding.UTF8.GetString(dataStream.ToArray());
 			if (!decompressed.IsNullOrWhiteSpace())
 			{
-				File.WriteAllText(UserCommandConfigManager.CommandConfigPath, decompressed);
+				var pretty = JToken.Parse(decompressed).ToString(Formatting.Indented);
+				File.WriteAllText(UserCommandConfigManager.CommandConfigPath, pretty);
 			}
 			else
 			{

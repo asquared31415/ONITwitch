@@ -1,4 +1,5 @@
 using System.Globalization;
+using ONITwitchCore.Config;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using TMPro;
@@ -89,6 +90,19 @@ internal class GenericModSettingsUI : KScreen
 				}
 			}
 		);
+
+		transform.Find("Content/EditConfig/EditConfigButton")
+			.GetComponent<Button>()
+			.onClick.AddListener(
+				() =>
+				{
+					UserCommandConfigManager.OpenConfigEditor();
+
+					var config = Util.KInstantiateUI(ModAssets.Options.ConfigPopup, canvas.gameObject);
+					config.AddOrGet<ConfigImportUI>();
+					config.SetActive(true);
+				}
+			);
 
 
 		transform.Find("Buttons/Version").GetComponent<LocText>().text = "v" + Global.Instance.modManager.mods
