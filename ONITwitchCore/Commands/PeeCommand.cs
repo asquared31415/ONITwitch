@@ -21,9 +21,6 @@ public class PeeCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(
-			"Pee Everywhere",
-			"All of your duplicants suddenly had the urge to relieve themselves"
-		);
+		ToastManager.InstantiateToast(STRINGS.TOASTS.PEE.TITLE, STRINGS.TOASTS.PEE.BODY);
 	}
 }

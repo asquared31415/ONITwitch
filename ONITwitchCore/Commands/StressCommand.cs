@@ -23,17 +23,11 @@ public class StressCommand : CommandBase
 
 		if (stressPercent >= 0)
 		{
-			ToastManager.InstantiateToast(
-				"Stress Wave",
-				"All duplicants have become suddenly stressed about life in the colony"
-			);
+			ToastManager.InstantiateToast(STRINGS.TOASTS.STRESS_INCREASE.TITLE, STRINGS.TOASTS.STRESS_INCREASE.BODY);
 		}
 		else
 		{
-			ToastManager.InstantiateToast(
-				"Calming Wave",
-				"All duplicants have been calmed about the stressful situation which is life in an asteroid"
-			);
+			ToastManager.InstantiateToast(STRINGS.TOASTS.STRESS_DECREASE.TITLE, STRINGS.TOASTS.STRESS_DECREASE.BODY);
 		}
 	}
 }

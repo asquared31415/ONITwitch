@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using ONITwitchCore.Toasts;
+using STRINGS;
 
 namespace ONITwitchCore.Commands;
 
@@ -31,7 +32,7 @@ public class SpiceFoodCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast("Spiced Food", "All of your food has had spices applied.  The spice must flow!");
+		ToastManager.InstantiateToast(STRINGS.TOASTS.SPICE_FOOD.TITLE, STRINGS.TOASTS.SPICE_FOOD.BODY);
 	}
 
 	private static List<string> GetValidSpiceIds()

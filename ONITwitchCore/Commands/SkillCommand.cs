@@ -29,9 +29,6 @@ public class SkillCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(
-			"Skilling Spree",
-			"Some duplicants have been inspired and instantly gained a skill point"
-		);
+		ToastManager.InstantiateToast(STRINGS.TOASTS.SKILLS.TITLE, STRINGS.TOASTS.SKILLS.BODY);
 	}
 }

@@ -22,6 +22,6 @@ public class SleepyDupesCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast("Sleepy Dupes", "All of your dupes have become extremely exhausted");
+		ToastManager.InstantiateToast(STRINGS.TOASTS.SLEEPY_DUPES.TITLE, STRINGS.TOASTS.SLEEPY_DUPES.BODY);
 	}
 }

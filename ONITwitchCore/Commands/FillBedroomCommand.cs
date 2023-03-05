@@ -54,8 +54,11 @@ public class FillBedroomCommand : CommandBase
 		}
 
 		ToastManager.InstantiateToast(
-			"Bedrooms Bombed",
-			$"Every bedroom has had {Util.StripTextFormatting(element.name)} created inside it"
+			STRINGS.TOASTS.FILL_BEDROOMS.TITLE,
+			string.Format(
+				Strings.Get(STRINGS.TOASTS.FILL_BEDROOMS.BODY_FORMAT.key),
+				Util.StripTextFormatting(element.name)
+			)
 		);
 	}
 }

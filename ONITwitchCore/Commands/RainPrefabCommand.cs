@@ -43,8 +43,11 @@ public class RainPrefabCommand : CommandBase
 		rainPrefab.Initialize(TimePerItem, count, prefabIds);
 
 		ToastManager.InstantiateToast(
-			"Rain",
-			$"A rain of {Assets.GetPrefab(prefabIds.First().Tag).GetProperName()} is starting!"
+			STRINGS.TOASTS.RAIN_PREFAB.TITLE,
+			string.Format(
+				Strings.Get(STRINGS.TOASTS.RAIN_PREFAB.BODY_FORMAT.key),
+				prefab.GetProperName()
+			)
 		);
 	}
 

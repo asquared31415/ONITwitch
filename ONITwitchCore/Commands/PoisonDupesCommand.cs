@@ -25,9 +25,6 @@ public class PoisonDupesCommand : CommandBase
 			dot.enabled = true;
 		}
 
-		ToastManager.InstantiateToast(
-			"Poisoned Dupes",
-			"All duplicants have been poisoned and will take some damage over time"
-		);
+		ToastManager.InstantiateToast(STRINGS.TOASTS.POISON.TITLE, STRINGS.TOASTS.POISON.BODY);
 	}
 }

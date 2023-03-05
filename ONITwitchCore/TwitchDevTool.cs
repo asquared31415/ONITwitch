@@ -89,19 +89,16 @@ public class TwitchDevTool : DevTool
 	{
 		SetStyle();
 
+		// ==========================================================
 		// WARNING: game may not be active unless explicitly checked!
-		if (ImGui.Button("Test Toast"))
-		{
-			ToastManager.InstantiateToast(
-				"Dev Testing Toast",
-				STRINGS.TESTING.TEXT
-				// "This is a testing toast.\n<color=#FF00FF>this is color</color> <i>this is italic</i> <b>this is bold</b>\n<link=\"eoautdhoetnauh\">testing link</link> aaaaaa"
-			);
-		}
+		// ==========================================================
 
-		// Everything below this needs the game to be active
 		if (Game.Instance != null)
 		{
+			// ==========================================================
+			// Game is active at this point
+			// ==========================================================
+
 			ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
 
 			ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);

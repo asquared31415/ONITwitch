@@ -24,6 +24,9 @@ public class EffectCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast("Effect Applied", $"All dupes have had the {effect.Name} effect applied");
+		ToastManager.InstantiateToast(
+			STRINGS.TOASTS.EFFECT.TITLE,
+			string.Format(Strings.Get(STRINGS.TOASTS.EFFECT.BODY_FORMAT.key), effect.Name)
+		);
 	}
 }

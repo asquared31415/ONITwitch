@@ -31,11 +31,11 @@ public class TileTempCommand : CommandBase
 
 		if (tempMod > 0)
 		{
-			ToastManager.InstantiateToast("The Floor is Lava", "All non-natural tiles have been heated");
+			ToastManager.InstantiateToast(STRINGS.TOASTS.TILE_TEMP_UP.TITLE, STRINGS.TOASTS.TILE_TEMP_UP.BODY);
 		}
 		else
 		{
-			ToastManager.InstantiateToast("Icy Tiles", "All non-natural tiles have been cooled");
+			ToastManager.InstantiateToast(STRINGS.TOASTS.TILE_TEMP_DOWN.TITLE, STRINGS.TOASTS.TILE_TEMP_DOWN.BODY);
 		}
 	}
 }

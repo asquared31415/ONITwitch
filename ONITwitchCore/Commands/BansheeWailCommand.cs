@@ -28,6 +28,6 @@ public class BansheeWailCommand : CommandBase
 			provider.AddChore(chore);
 		}
 
-		ToastManager.InstantiateToast("Banshee Wail", "All of your duplicants are releasing their urge to scream");
+		ToastManager.InstantiateToast(STRINGS.TOASTS.BANSHEE_WAIL.TITLE, STRINGS.TOASTS.BANSHEE_WAIL.BODY);
 	}
 }

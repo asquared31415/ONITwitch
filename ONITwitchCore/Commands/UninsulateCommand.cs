@@ -69,9 +69,6 @@ public class UninsulateCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(
-			"Tiles Uninsulated",
-			"Several insulated tiles have been replaced with their not insulated counterparts"
-		);
+		ToastManager.InstantiateToast(STRINGS.TOASTS.UNINSULATE_TILES.TITLE, STRINGS.TOASTS.UNINSULATE_TILES.BODY);
 	}
 }

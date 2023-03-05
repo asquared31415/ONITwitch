@@ -14,9 +14,6 @@ public class PartyTimeCommand : CommandBase
 		partyTime.enabled = true;
 		PartyTimePatch.Enabled = true;
 		
-		ToastManager.InstantiateToast(
-			"Party Time!",
-			"The dupes have decided it's time for a party and made everything rainbow!"
-		);
+		ToastManager.InstantiateToast(STRINGS.TOASTS.PARTY_TIME.TITLE, STRINGS.TOASTS.PARTY_TIME.BODY);
 	}
 }

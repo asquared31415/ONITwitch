@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -36,7 +37,11 @@ public class ResearchTechCommand : CommandBase
 			var techName = Util.StripTextFormatting(
 				Strings.Get("STRINGS.RESEARCH.TECHS." + tech.Id.ToUpper() + ".NAME").ToString()
 			);
-			ToastManager.InstantiateToast("Tech Researched", $"{techName} has been researched");
+
+			ToastManager.InstantiateToast(
+				STRINGS.TOASTS.RESEARCH_TECH.TITLE,
+				string.Format(Strings.Get(STRINGS.TOASTS.RESEARCH_TECH.BODY_FORMAT.key), techName)
+			);
 		}
 	}
 

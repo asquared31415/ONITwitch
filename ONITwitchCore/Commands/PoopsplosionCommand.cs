@@ -47,6 +47,6 @@ public class PoopsplosionCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast("Poop Explosion", "All toilets have exploded with poop");
+		ToastManager.InstantiateToast(STRINGS.TOASTS.POOPSPLOSION.TITLE, STRINGS.TOASTS.POOPSPLOSION.BODY);
 	}
 }
