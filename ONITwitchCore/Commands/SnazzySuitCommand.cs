@@ -1,3 +1,4 @@
+using System;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
@@ -31,8 +32,11 @@ public class SnazzySuitCommand : CommandBase
 			EquippableFacade.AddFacadeToEquippable(go.GetComponent<Equippable>(), randomFacade.Id);
 
 			ToastManager.InstantiateToastWithGoTarget(
-				"Spawning Object",
-				$"A new {Util.StripTextFormatting(prefab.GetProperName())} has been created",
+				STRINGS.TOASTS.SPAWN_PREFAB.TITLE,
+				string.Format(
+					Strings.Get(STRINGS.TOASTS.SPAWN_PREFAB.BODY_FORMAT.key),
+					Util.StripTextFormatting(prefab.GetProperName())
+				),
 				go
 			);
 		}

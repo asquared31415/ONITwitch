@@ -116,7 +116,7 @@ public class VoteController : KMonoBehaviour
 				toastMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName}\n");
 			}
 
-			ToastManager.InstantiateToast("Starting Vote", toastMsg.ToString());
+			ToastManager.InstantiateToast(STRINGS.TOASTS.STARTING_VOTE.TITLE, toastMsg.ToString());
 		}
 
 		VoteTimeRemaining = GenericModSettings.Data.VoteTime;
@@ -140,7 +140,10 @@ public class VoteController : KMonoBehaviour
 		}
 		else
 		{
-			ToastManager.InstantiateToast("Vote Complete", "No options were voted for");
+			ToastManager.InstantiateToast(
+				STRINGS.TOASTS.END_VOTE_NO_OPTIONS.TITLE,
+				STRINGS.TOASTS.END_VOTE_NO_OPTIONS.BODY
+			);
 			Debug.Log("[Twitch Integration] No options were voted for");
 			responseText = "No options were voted for";
 		}

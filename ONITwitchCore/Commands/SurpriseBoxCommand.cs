@@ -31,8 +31,8 @@ public class SurpriseBoxCommand : CommandBase
 		box.SetActive(true);
 
 		ToastManager.InstantiateToastWithGoTarget(
-			"Surprise Box",
-			"A Surprise Box has been created. I wonder what could be inside...",
+			STRINGS.TOASTS.SURPRISE_BOX.TITLE,
+			STRINGS.TOASTS.SURPRISE_BOX.BODY,
 			box
 		);
 	}

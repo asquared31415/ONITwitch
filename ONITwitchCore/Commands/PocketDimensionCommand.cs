@@ -31,8 +31,8 @@ public class PocketDimensionCommand : CommandBase
 		);
 		var portalGo = PocketDimensionGenerator.GenerateDimension(placeCell);
 		ToastManager.InstantiateToastWithGoTarget(
-			"Pocket Dimension",
-			"A new pocket dimension has been created",
+			STRINGS.TOASTS.POCKET_DIMENSION.TITLE,
+			STRINGS.TOASTS.POCKET_DIMENSION.BODY,
 			portalGo
 		);
 	}

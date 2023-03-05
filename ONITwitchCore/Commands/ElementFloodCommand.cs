@@ -11,7 +11,7 @@ public class ElementFloodCommand : CommandBase
 		"Spawned by Twitch",
 		true
 	);
-	
+
 	public override bool Condition(object data)
 	{
 		return ElementUtil.ElementExistsAndEnabled((string) data);
@@ -50,8 +50,8 @@ public class ElementFloodCommand : CommandBase
 		}
 
 		ToastManager.InstantiateToastWithPosTarget(
-			"Flood",
-			$"A flood of {Util.StripTextFormatting(element.name)} has spawned",
+			STRINGS.TOASTS.FLOOD.TITLE,
+			string.Format(Strings.Get(STRINGS.TOASTS.FLOOD.BODY_FORMAT.key), Util.StripTextFormatting(element.name)),
 			Grid.CellToPos(nearestCell)
 		);
 	}

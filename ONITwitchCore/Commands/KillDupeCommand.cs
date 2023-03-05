@@ -23,8 +23,8 @@ public class KillDupeCommand : CommandBase
 			HealthKillDelegate(rand.gameObject.GetComponent<Health>());
 
 			ToastManager.InstantiateToastWithGoTarget(
-				"Killing Duplicant",
-				$"{rand.name} has been killed :(",
+				STRINGS.TOASTS.KILL_DUPE.TITLE,
+				string.Format(Strings.Get(STRINGS.TOASTS.KILL_DUPE.BODY_FORMAT.key), rand.name),
 				rand.gameObject
 			);
 

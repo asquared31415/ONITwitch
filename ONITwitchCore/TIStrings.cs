@@ -195,6 +195,18 @@ public static class STRINGS
 			public static readonly LocString BODY_FORMAT = "All dupes have had the {0} effect applied";
 		}
 
+		public static class ELEMENT_GROUP
+		{
+			public static readonly LocString TITLE = "Element Created";
+			public static readonly LocString BODY_FORMAT = "A chunk of {0} has appeared";
+		}
+
+		public static class END_VOTE_NO_OPTIONS
+		{
+			public static readonly LocString TITLE = "Vote Complete";
+			public static readonly LocString BODY = "No events were voted for";
+		}
+
 		public static class FART
 		{
 			public static readonly LocString TITLE = "Fart";
@@ -209,6 +221,36 @@ public static class STRINGS
 			public static readonly LocString BODY_FORMAT = "{0} was placed in every bedroom";
 		}
 
+		public static class FLOOD
+		{
+			public static readonly LocString TITLE = "Flood";
+			public static readonly LocString BODY_FORMAT = "A flood of {0} was spawned";
+		}
+
+		public static class GEYSER_MODIFICATION
+		{
+			public static readonly LocString TITLE = "Geyser Modified";
+			public static readonly LocString BODY_FORMAT = "Geyser {0} is temporarily tuned";
+		}
+
+		public static class GLOBAL_WARMING
+		{
+			public static readonly LocString TITLE = "Global Warming";
+			public static readonly LocString BODY_FORMAT = "Temperatures on {0} are on the rise";
+		}
+
+		public static class ICE_AGE
+		{
+			public static readonly LocString TITLE = "Ice Age";
+			public static readonly LocString BODY_FORMAT = "All liquids on {0} have frozen";
+		}
+
+		public static class KILL_DUPE
+		{
+			public static readonly LocString TITLE = "Duplicant Killed";
+			public static readonly LocString BODY_FORMAT = "{0} died :(";
+		}
+
 		public static class PARTY_TIME
 		{
 			public static readonly LocString TITLE = "Party Time!";
@@ -219,6 +261,12 @@ public static class STRINGS
 		{
 			public static readonly LocString TITLE = "Pee Everywhere";
 			public static readonly LocString BODY = "All duplicants suddenly feel the need to relieve themselves";
+		}
+
+		public static class POCKET_DIMENSION
+		{
+			public static readonly LocString TITLE = "Pocket Dimension";
+			public static readonly LocString BODY = "A portal to a pocket dimension opened";
 		}
 
 		public static class POISON
@@ -265,10 +313,27 @@ public static class STRINGS
 			public static readonly LocString BODY = "All duplicants are extremely exhausted";
 		}
 
+		public static class SPAWN_DUPE
+		{
+			public static readonly LocString TITLE = "Spawning Duplicant";
+			public static readonly LocString BODY_FORMAT = "{0} was brought into the world";
+		}
+
+		public static class SPAWN_PREFAB
+		{
+			public static readonly LocString TITLE = "Spawning Object";
+			public static readonly LocString BODY_FORMAT = "A new {0} was created";
+		}
+
 		public static class SPICE_FOOD
 		{
 			public static readonly LocString TITLE = "Spiced Food";
 			public static readonly LocString BODY = "All food has had spices applied";
+		}
+
+		public static class STARTING_VOTE
+		{
+			public static readonly LocString TITLE = "Starting Vote";
 		}
 
 		public static class STRESS_INCREASE
@@ -281,6 +346,12 @@ public static class STRINGS
 		{
 			public static readonly LocString TITLE = "Calming Wave";
 			public static readonly LocString BODY = "All duplicants are less stressed";
+		}
+
+		public static class SURPRISE_BOX
+		{
+			public static readonly LocString TITLE = "Surprise Box";
+			public static readonly LocString BODY = "I wonder what is inside?";
 		}
 
 		public static class TILE_TEMP_UP

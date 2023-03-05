@@ -31,8 +31,11 @@ public class SpawnPrefabCommand : CommandBase
 		{
 			go.SetActive(true);
 			ToastManager.InstantiateToastWithGoTarget(
-				"Spawning Object",
-				$"A new {Util.StripTextFormatting(prefab.GetProperName())} has been created",
+				STRINGS.TOASTS.SPAWN_PREFAB.TITLE,
+				string.Format(
+					Strings.Get(STRINGS.TOASTS.SPAWN_PREFAB.BODY_FORMAT.key),
+					Util.StripTextFormatting(prefab.GetProperName())
+				),
 				go
 			);
 		}

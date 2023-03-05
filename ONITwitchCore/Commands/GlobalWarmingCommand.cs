@@ -58,8 +58,11 @@ public class GlobalWarmingCommand : CommandBase
 
 		ToastManager
 			.InstantiateToastWithPosTarget(
-				"Global Warming",
-				$"{world.GetComponent<ClusterGridEntity>().Name} has been substantially warmed",
+				STRINGS.TOASTS.GLOBAL_WARMING.TITLE,
+				string.Format(
+					Strings.Get(STRINGS.TOASTS.GLOBAL_WARMING.BODY_FORMAT.key),
+					world.GetComponent<ClusterGridEntity>().Name
+				),
 				(Vector2) world.WorldOffset + world.WorldSize / 2
 			);
 	}

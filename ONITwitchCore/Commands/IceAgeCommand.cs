@@ -66,8 +66,11 @@ public class IceAgeCommand : CommandBase
 
 		ToastManager
 			.InstantiateToastWithPosTarget(
-				"Ice Age",
-				$"All liquids on {world.GetComponent<ClusterGridEntity>().Name} have frozen",
+				STRINGS.TOASTS.ICE_AGE.TITLE,
+				string.Format(
+					Strings.Get(STRINGS.TOASTS.ICE_AGE.BODY_FORMAT.key),
+					world.GetComponent<ClusterGridEntity>().Name
+				),
 				(Vector2) world.WorldOffset + world.WorldSize / 2
 			);
 	}

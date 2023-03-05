@@ -104,8 +104,11 @@ public class SpawnElementPoolCommand : CommandBase
 		}
 
 		ToastManager.InstantiateToastWithPosTarget(
-			"Element Created",
-			$"{Util.StripTextFormatting(element.name)} was placed!",
+			STRINGS.TOASTS.ELEMENT_GROUP.TITLE,
+			string.Format(
+				Strings.Get(STRINGS.TOASTS.ELEMENT_GROUP.BODY_FORMAT.key),
+				Util.StripTextFormatting(element.name)
+			),
 			Grid.CellToPos(cell)
 		);
 	}
