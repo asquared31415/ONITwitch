@@ -19,7 +19,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnDupe",
-				"Spawn Dupe",
+				STRINGS.EVENTS.SPAWN_DUPE,
 				new SpawnDupeCommand(),
 				new Dictionary<string, object> { { "MaxDupes", 30.0d } },
 				Danger.Small,
@@ -29,7 +29,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupCommon",
-				"Spawn Common Element",
+				STRINGS.EVENTS.ELEMENT_GROUP_COMMON,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -63,7 +63,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupExotic",
-				"Spawn Exotic Element",
+				STRINGS.EVENTS.ELEMENT_GROUP_EXOTIC,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -86,7 +86,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupMetal",
-				"Spawn Metal",
+				STRINGS.EVENTS.ELEMENT_GROUP_METAL,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -106,7 +106,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupGas",
-				"Spawn Gas",
+				STRINGS.EVENTS.ELEMENT_GROUP_METAL,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -126,7 +126,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupLiquid",
-				"Spawn Liquid",
+				STRINGS.EVENTS.ELEMENT_GROUP_LIQUID,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -153,7 +153,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupDeadly",
-				"Spawn Deadly Element",
+				STRINGS.EVENTS.ELEMENT_GROUP_DEADLY,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -172,7 +172,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeAthleticsUp",
-				"Athletics Up",
+				STRINGS.EVENTS.ATTRIBUTE_ATHLETICS_UP,
 				new EffectCommand(),
 				CustomEffects.AthleticsUpEffect.Id,
 				Danger.None,
@@ -183,7 +183,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeAthleticsDown",
-				"Athletics Down",
+				STRINGS.EVENTS.ATTRIBUTE_ATHLETICS_DOWN,
 				new EffectCommand(),
 				CustomEffects.AthleticsDownEffect.Id,
 				Danger.None,
@@ -194,7 +194,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeConstructionUp",
-				"Construction Up",
+				STRINGS.EVENTS.ATTRIBUTE_CONSTRUCTION_UP,
 				new EffectCommand(),
 				CustomEffects.ConstructionUpEffect.Id,
 				Danger.None,
@@ -205,7 +205,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeConstructionDown",
-				"Construction Down",
+				STRINGS.EVENTS.ATTRIBUTE_CONSTRUCTION_DOWN,
 				new EffectCommand(),
 				CustomEffects.ConstructionDownEffect.Id,
 				Danger.None,
@@ -216,7 +216,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeExcavationUp",
-				"Excavation Up",
+				STRINGS.EVENTS.ATTRIBUTE_EXCAVATION_UP,
 				new EffectCommand(),
 				CustomEffects.ExcavationUpEffect.Id,
 				Danger.None,
@@ -227,7 +227,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeExcavationDown",
-				"Excavation Down",
+				STRINGS.EVENTS.ATTRIBUTE_EXCAVATION_DOWN,
 				new EffectCommand(),
 				CustomEffects.ExcavationDownEffect.Id,
 				Danger.None,
@@ -238,7 +238,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeStrengthUp",
-				"Strength Up",
+				STRINGS.EVENTS.ATTRIBUTE_STRENGTH_UP,
 				new EffectCommand(),
 				CustomEffects.StrengthUpEffect.Id,
 				Danger.None,
@@ -249,7 +249,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeStrengthDown",
-				"Strength Down",
+				STRINGS.EVENTS.ATTRIBUTE_STRENGTH_DOWN,
 				new EffectCommand(),
 				CustomEffects.StrengthDownEffect.Id,
 				Danger.None,
@@ -258,12 +258,19 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("BansheeWail", "Banshee Wail", new BansheeWailCommand(), null, Danger.Small, 10)
+			new CommandInfo(
+				"BansheeWail",
+				STRINGS.EVENTS.BANSHEE_WAIL,
+				new BansheeWailCommand(),
+				null,
+				Danger.Small,
+				10
+			)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"SnowBedrooms",
-				"Snowy Bedrooms",
+				STRINGS.EVENTS.BEDROOM_SNOW,
 				new FillBedroomCommand(),
 				SimHashes.Snow.ToString(),
 				Danger.Small,
@@ -274,7 +281,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SlimeBedrooms",
-				"Slimy Bedrooms",
+				STRINGS.EVENTS.BEDROOMS_SLIME,
 				new FillBedroomCommand(),
 				SimHashes.SlimeMold.ToString(),
 				Danger.Small,
@@ -285,7 +292,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodWater",
-				"Water Flood",
+				STRINGS.EVENTS.FLOOD_WATER,
 				new ElementFloodCommand(),
 				SimHashes.Water.ToString(),
 				Danger.Medium,
@@ -296,7 +303,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodPollutedWater",
-				"Polluted Water Flood",
+				STRINGS.EVENTS.FLOOD_POLLUTED_WATER,
 				new ElementFloodCommand(),
 				SimHashes.DirtyWater.ToString(),
 				Danger.Medium,
@@ -307,7 +314,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodEthanol",
-				"Ethanol Flood",
+				STRINGS.EVENTS.FLOOD_ETHANOL,
 				new ElementFloodCommand(),
 				SimHashes.Ethanol.ToString(),
 				Danger.Medium,
@@ -318,7 +325,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodOil",
-				"Oil Flood",
+				STRINGS.EVENTS.FLOOD_OIL,
 				new ElementFloodCommand(),
 				SimHashes.CrudeOil.ToString(),
 				Danger.Medium,
@@ -329,7 +336,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodLava",
-				"Lava Flood",
+				STRINGS.EVENTS.FLOOD_LAVA,
 				new ElementFloodCommand(),
 				SimHashes.Magma.ToString(),
 				Danger.Deadly,
@@ -340,7 +347,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodGold",
-				"Gold Rain",
+				STRINGS.EVENTS.FLOOD_GOLD,
 				new ElementFloodCommand(),
 				SimHashes.MoltenGold.ToString(),
 				Danger.Deadly,
@@ -351,7 +358,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodNuclearWaste",
-				"Nuclear Waste Disposal Accident",
+				STRINGS.EVENTS.FLOOD_NUCLEAR_WASTE,
 				new ElementFloodCommand(),
 				SimHashes.NuclearWaste.ToString(),
 				Danger.High,
@@ -360,19 +367,26 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("IceAge", "Ice Age", new IceAgeCommand(), null, Danger.Extreme, 1)
+			new CommandInfo("IceAge", STRINGS.EVENTS.ICE_AGE, new IceAgeCommand(), null, Danger.Extreme, 1)
 		);
 		RegisterCommand(
-			new CommandInfo("GlobalWarming", "Global Warming", new GlobalWarmingCommand(), null, Danger.High, 1)
+			new CommandInfo(
+				"GlobalWarming",
+				STRINGS.EVENTS.GLOBAL_WARMING,
+				new GlobalWarmingCommand(),
+				null,
+				Danger.High,
+				1
+			)
 		);
-		RegisterCommand(new CommandInfo("Pee", "Gold Rain", new PeeCommand(), null, Danger.Small, 30));
+		RegisterCommand(new CommandInfo("Pee", STRINGS.EVENTS.PEE, new PeeCommand(), null, Danger.Small, 30));
 		RegisterCommand(
-			new CommandInfo("Kill", "Kill Duplicant", new KillDupeCommand(), null, Danger.Deadly, 1)
+			new CommandInfo("Kill", STRINGS.EVENTS.KILL_DUPE, new KillDupeCommand(), null, Danger.Deadly, 1)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"TileTempDown",
-				"Icy Floors",
+				STRINGS.EVENTS.TILE_TEMP_DOWN,
 				new TileTempCommand(),
 				-40.0d,
 				Danger.Medium,
@@ -383,7 +397,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"TileTempUp",
-				"Floor is Lava",
+				STRINGS.EVENTS.TILE_TEMP_UP,
 				new TileTempCommand(),
 				+40.0d,
 				Danger.Medium,
@@ -392,18 +406,25 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("PartyTime", "Party Time", new PartyTimeCommand(), 300.0d, Danger.None, 30)
+			new CommandInfo("PartyTime", STRINGS.EVENTS.PARTY_TIME, new PartyTimeCommand(), 300.0d, Danger.None, 30)
 		);
 		RegisterCommand(
-			new CommandInfo("PoisonDupes", "Poison Dupes", new PoisonDupesCommand(), null, Danger.High, 20)
+			new CommandInfo("PoisonDupes", STRINGS.EVENTS.POISON, new PoisonDupesCommand(), null, Danger.High, 20)
 		);
 		RegisterCommand(
-			new CommandInfo("Poopsplosion", "Poopsplosion", new PoopsplosionCommand(), null, Danger.Small, 50)
+			new CommandInfo(
+				"Poopsplosion",
+				STRINGS.EVENTS.POOPSPLOSION,
+				new PoopsplosionCommand(),
+				null,
+				Danger.Small,
+				50
+			)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabGold",
-				"Gold Rain",
+				STRINGS.EVENTS.RAIN_PREFAB_GOLD,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Gold.ToString() }, { "Count", 50.0d } },
 				Danger.None,
@@ -414,7 +435,9 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabMorb",
-				OniTwitchMod.ModIntegration.IsModPresentAndActive("AmogusMorb") ? "Amorbus" : "Morbin' Time",
+				OniTwitchMod.ModIntegration.IsModPresentAndActive("AmogusMorb")
+					? STRINGS.EVENTS.RAIN_PREFAB_MORB_AMORBUS
+					: STRINGS.EVENTS.RAIN_PREFAB_MORB_NORMAL,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
@@ -425,7 +448,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabDiamond",
-				"Diamond Rain",
+				STRINGS.EVENTS.RAIN_PREFAB_DIAMOND,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Diamond.ToString() }, { "Count", 25.0d } },
 				Danger.None,
@@ -436,7 +459,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabSlickster",
-				"Slickster Rain",
+				STRINGS.EVENTS.RAIN_PREFAB_SLICKSTER,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", OilFloaterConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
@@ -447,7 +470,9 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabPacu",
-				OniTwitchMod.ModIntegration.IsModPresentAndActive("WeebPacu") ? "PacUwU Rain 🐠👉👈" : "Pacu Rain",
+				OniTwitchMod.ModIntegration.IsModPresentAndActive("WeebPacu")
+					? STRINGS.EVENTS.RAIN_PREFAB_PACU_PACUWU
+					: STRINGS.EVENTS.RAIN_PREFAB_PACU_NORMAL,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
@@ -458,7 +483,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabBee",
-				"Bee Infestation",
+				STRINGS.EVENTS.RAIN_PREFAB_BEE,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", BeeConfig.ID }, { "Count", 10.0d } },
 				Danger.Medium,
@@ -469,7 +494,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ReduceOxygen",
-				"Un-include Oxygen",
+				STRINGS.EVENTS.REDUCE_OXYGEN,
 				new ReduceOxygenCommand(),
 				0.20d,
 				Danger.High,
@@ -477,12 +502,12 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("SkillPoints", "Skilling Spree", new SkillCommand(), 0.33d, Danger.None, 20)
+			new CommandInfo("SkillPoints", STRINGS.EVENTS.SKILL_POINTS, new SkillCommand(), 0.33d, Danger.None, 20)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"SleepyDupes",
-				"Sleepy Dupes",
+				STRINGS.EVENTS.SLEEPY_DUPES,
 				new SleepyDupesCommand(),
 				null,
 				Danger.Medium,
@@ -492,7 +517,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SnazzySuit",
-				"Spawn Snazzy Suit",
+				STRINGS.EVENTS.SPAWN_SNAZZY_SUIT,
 				new SnazzySuitCommand(),
 				null,
 				Danger.None,
@@ -502,7 +527,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnGlitterPuft",
-				"Spawn Glitter Puft",
+				STRINGS.EVENTS.SPAWN_GLITTER_PUFT,
 				new SpawnPrefabCommand(),
 				GlitterPuftConfig.Id,
 				Danger.None,
@@ -512,7 +537,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnVacillatorCharge",
-				"Spawn Vacillator Charge",
+				STRINGS.EVENTS.SPAWN_VACILLATOR_CHARGE,
 				new SpawnPrefabCommand(),
 				GeneShufflerRechargeConfig.ID,
 				Danger.None,
@@ -522,7 +547,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnAtmoSuit",
-				"Spawn Atmo Suit",
+				STRINGS.EVENTS.SPAWN_ATMO_SUIT,
 				new SpawnPrefabCommand(),
 				AtmoSuitConfig.ID,
 				Danger.None,
@@ -532,7 +557,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnCrab",
-				"Spawn Pokeshell",
+				STRINGS.EVENTS.SPAWN_CRAB,
 				new SpawnPrefabCommand(),
 				CrabConfig.ID,
 				Danger.None,
@@ -542,7 +567,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnMooComet",
-				"Spawn Gassy Moo Comet",
+				STRINGS.EVENTS.SPAWN_MOO_COMET,
 				new SpawnPrefabCommand(),
 				GassyMooCometConfig.ID,
 				Danger.None,
@@ -552,7 +577,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"StressAdd",
-				"Add Stress",
+				STRINGS.EVENTS.STRESS_ADD,
 				new StressCommand(),
 				+0.75d,
 				Danger.Medium,
@@ -563,7 +588,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"StressRemove",
-				"Remove Stress",
+				STRINGS.EVENTS.STRESS_REMOVE,
 				new StressCommand(),
 				-0.75d,
 				Danger.None,
@@ -574,7 +599,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Surprise",
-				"Surprise!!!",
+				STRINGS.EVENTS.SURPRISE,
 				new SurpriseCommand(),
 				null,
 				// will only choose a command that is within the expected danger range
@@ -587,7 +612,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Uninsulate",
-				"Uninsulate Tiles",
+				STRINGS.EVENTS.UNINSULATE,
 				new UninsulateCommand(),
 				null,
 				Danger.Extreme,
@@ -597,7 +622,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ResearchTech",
-				"Research Technology",
+				STRINGS.EVENTS.RESEARCH_TECH,
 				new ResearchTechCommand(),
 				null,
 				Danger.None,
@@ -608,7 +633,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Eclipse",
-				"Eclipse",
+				STRINGS.EVENTS.ECLIPSE,
 				new EclipseCommand(),
 				(double) (3 * Constants.SECONDS_PER_CYCLE),
 				Danger.Small,
@@ -619,7 +644,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"PocketDimension",
-				"Spawn Pocket Dimension",
+				STRINGS.EVENTS.POCKET_DIMENSION,
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
@@ -630,7 +655,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SurpriseBox",
-				"Surprise Box",
+				STRINGS.EVENTS.SURPRISE_BOX,
 				new SurpriseBoxCommand(),
 				null,
 				Danger.None,
@@ -642,7 +667,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"GeyserModification",
-				"Tune Geyser",
+				STRINGS.EVENTS.GEYSER_MODIFICATION,
 				new GeyserModificationCommand(),
 				null,
 				Danger.Medium,
@@ -653,7 +678,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"MorphCritters",
-				"Morph Critters",
+				STRINGS.EVENTS.MORPH_CRITTERS,
 				new MorphCommand(),
 				null,
 				Danger.Small,
@@ -664,7 +689,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Fart",
-				"Fart",
+				STRINGS.EVENTS.FART,
 				new FartCommand(),
 				25.0d,
 				Danger.Small,
@@ -675,7 +700,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpiceFood",
-				"Spice Food",
+				STRINGS.EVENTS.SPICE_FOOD,
 				new SpiceFoodCommand(),
 				null,
 				Danger.None,
@@ -686,7 +711,7 @@ public static class DefaultCommands
 
 	private record struct CommandInfo(
 		[NotNull] string Id,
-		[NotNull] string Name,
+		[NotNull] LocString Name,
 		[NotNull] CommandBase Command,
 		[CanBeNull] object Data,
 		[CanBeNull] Danger? Danger,

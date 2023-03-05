@@ -65,6 +65,89 @@ public static class STRINGS
 		}
 	}
 
+	public static class EVENTS
+	{
+		public static readonly LocString ATTRIBUTE_ATHLETICS_UP = "Athletics Up";
+		public static readonly LocString ATTRIBUTE_ATHLETICS_DOWN = "Athletics Down";
+		public static readonly LocString ATTRIBUTE_CONSTRUCTION_UP = "Construction Up";
+		public static readonly LocString ATTRIBUTE_CONSTRUCTION_DOWN = "Construction Down";
+		public static readonly LocString ATTRIBUTE_EXCAVATION_UP = "Excavation Up";
+		public static readonly LocString ATTRIBUTE_EXCAVATION_DOWN = "Excavation Down";
+		public static readonly LocString ATTRIBUTE_STRENGTH_UP = "Strength Up";
+		public static readonly LocString ATTRIBUTE_STRENGTH_DOWN = "Strength Down";
+
+		public static readonly LocString BANSHEE_WAIL = "Banshee Wail";
+
+		public static readonly LocString BEDROOMS_SLIME = "Slimy Bedrooms";
+		public static readonly LocString BEDROOM_SNOW = "Snowy Bedrooms";
+
+		public static readonly LocString ECLIPSE = "Eclipse";
+
+		public static readonly LocString ELEMENT_GROUP_COMMON = "Spawn Common Element";
+		public static readonly LocString ELEMENT_GROUP_DEADLY = "Spawn Deadly Element";
+		public static readonly LocString ELEMENT_GROUP_EXOTIC = "Spawn Exotic Element";
+		public static readonly LocString ELEMENT_GROUP_GAS = "Spawn Gas";
+		public static readonly LocString ELEMENT_GROUP_LIQUID = "Spawn Liquid";
+		public static readonly LocString ELEMENT_GROUP_METAL = "Spawn Metal";
+
+		public static readonly LocString FART = "Fart";
+
+		public static readonly LocString FLOOD_ETHANOL = "Ethanol Flood";
+		public static readonly LocString FLOOD_GOLD = "Gold Rain";
+		public static readonly LocString FLOOD_WATER = "Water Flood";
+		public static readonly LocString FLOOD_LAVA = "Lava Flood";
+		public static readonly LocString FLOOD_NUCLEAR_WASTE = "Nuclear Waste Disposal Accident";
+		public static readonly LocString FLOOD_OIL = "Oil Flood";
+		public static readonly LocString FLOOD_POLLUTED_WATER = "Polluted Water Flood";
+
+		public static readonly LocString GEYSER_MODIFICATION = "Tune Geyser";
+
+		public static readonly LocString GLOBAL_WARMING = "Global Warming";
+		public static readonly LocString ICE_AGE = "Ice Age";
+
+		public static readonly LocString KILL_DUPE = "Kill Duplicant";
+		public static readonly LocString MORPH_CRITTERS = "Morph Critters";
+		public static readonly LocString PARTY_TIME = "Party Time";
+		public static readonly LocString PEE = "Gold Rain";
+		public static readonly LocString POCKET_DIMENSION = "Spawn Pocket Dimension";
+		public static readonly LocString POISON = "Poison Duplicants";
+		public static readonly LocString POOPSPLOSION = "Poopsplosion";
+
+		public static readonly LocString RAIN_PREFAB_BEE = "Bee Infestation";
+		public static readonly LocString RAIN_PREFAB_DIAMOND = "Diamond Rain";
+		public static readonly LocString RAIN_PREFAB_GOLD = "Gold Rain";
+		public static readonly LocString RAIN_PREFAB_MORB_AMORBUS = "Amorbus Rain";
+		public static readonly LocString RAIN_PREFAB_MORB_NORMAL = "Morbs!!!";
+		public static readonly LocString RAIN_PREFAB_PACU_NORMAL = "Pacu Rain";
+		public static readonly LocString RAIN_PREFAB_PACU_PACUWU = "PacUwU Rain 🐠👉👈";
+		public static readonly LocString RAIN_PREFAB_SLICKSTER = "Slickster Rain";
+
+		public static readonly LocString REDUCE_OXYGEN = "Un-include Oxygen";
+		public static readonly LocString RESEARCH_TECH = "Research Technology";
+		public static readonly LocString SKILL_POINTS = "Skilling Spree";
+		public static readonly LocString SLEEPY_DUPES = "Sleepy Dupes";
+		public static readonly LocString SPICE_FOOD = "Spice Food";
+
+		public static readonly LocString SPAWN_ATMO_SUIT = "Spawn Atmo Suit";
+		public static readonly LocString SPAWN_CRAB = "Spawn Pokeshell";
+		public static readonly LocString SPAWN_DUPE = "Spawn Duplicant";
+		public static readonly LocString SPAWN_GLITTER_PUFT = "Spawn Glitter Puft";
+		public static readonly LocString SPAWN_MOO_COMET = "Spawn Gassy Moo Comet";
+		public static readonly LocString SPAWN_SNAZZY_SUIT = "Spawn Snazzy Suit";
+		public static readonly LocString SPAWN_VACILLATOR_CHARGE = "Spawn Vacillator Charge";
+
+		public static readonly LocString STRESS_ADD = "Add Stress";
+		public static readonly LocString STRESS_REMOVE = "Remove Stress";
+
+		public static readonly LocString SURPRISE = "Surprise!!!";
+		public static readonly LocString SURPRISE_BOX = "Surprise Box";
+
+		public static readonly LocString TILE_TEMP_DOWN = "Icy Floors";
+		public static readonly LocString TILE_TEMP_UP = "The Floor is Lava";
+
+		public static readonly LocString UNINSULATE = "Uninsulate Tiles";
+	}
+
 	public static class ITEMS
 	{
 		public static class ONITWITCH
