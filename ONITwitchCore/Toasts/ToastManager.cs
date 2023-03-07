@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using ONITwitchCore.Cmps;
-using ONITwitchCore.Config;
 using ONITwitchCore.Settings;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +11,7 @@ public static class ToastManager
 	private static GameObject canvas;
 
 	[CanBeNull]
-	private static GameObject InstantiateToastCommon([CanBeNull] string title, [CanBeNull] string body)
+	private static GameObject InstantiateToastCommon(GameObject prefab, [CanBeNull] string title, [CanBeNull] string body)
 	{
 		if (!GenericModSettings.Data.ShowToasts)
 		{
@@ -37,7 +36,7 @@ public static class ToastManager
 			canvas.SetActive(true);
 		}
 
-		var toast = Util.KInstantiateUI(ModAssets.Toasts.ToastPrefab, canvas);
+		var toast = Util.KInstantiateUI(prefab, canvas);
 		var toastCmp = toast.AddOrGet<Toast>();
 		toastCmp.Title = toast.transform.GetChild(0).GetChild(0).GetComponent<LocText>();
 		toastCmp.Title.text = title;
@@ -57,7 +56,7 @@ public static class ToastManager
 	[CanBeNull]
 	public static GameObject InstantiateToast([CanBeNull] string title, [CanBeNull] string body)
 	{
-		var go = InstantiateToastCommon(title, body);
+		var go = InstantiateToastCommon(ModAssets.Toasts.NormalToastPrefab, title, body);
 		if (go == null)
 		{
 			return null;
@@ -81,7 +80,7 @@ public static class ToastManager
 		Vector3 pos
 	)
 	{
-		var go = InstantiateToastCommon(title, body);
+		var go = InstantiateToastCommon(ModAssets.Toasts.ClickableToastPrefab, title, body);
 		if (go == null)
 		{
 			return null;
@@ -110,7 +109,7 @@ public static class ToastManager
 		GameObject target
 	)
 	{
-		var go = InstantiateToastCommon(title, body);
+		var go = InstantiateToastCommon(ModAssets.Toasts.ClickableToastPrefab, title, body);
 		if (go == null)
 		{
 			return null;

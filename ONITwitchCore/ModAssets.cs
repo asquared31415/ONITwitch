@@ -17,7 +17,8 @@ public static class ModAssets
 
 	public static class Toasts
 	{
-		public static GameObject ToastPrefab;
+		public static GameObject NormalToastPrefab;
+		public static GameObject ClickableToastPrefab;
 	}
 
 	public static class Options
@@ -38,10 +39,15 @@ public static class ModAssets
 		var toastBundle = LoadBundle(ToastManifestName);
 		if (toastBundle != null)
 		{
-			Toasts.ToastPrefab = toastBundle.LoadAsset<GameObject>("assets/singletoast.prefab");
-			FixText(Toasts.ToastPrefab.transform.Find("TitleContainer").gameObject, GrayStroke);
-			FixText(Toasts.ToastPrefab.transform.Find("BodyContainer").gameObject, NotoSans);
-			Toasts.ToastPrefab.SetActive(false);
+			Toasts.NormalToastPrefab = toastBundle.LoadAsset<GameObject>("assets/singletoast.prefab");
+			FixText(Toasts.NormalToastPrefab.transform.Find("TitleContainer").gameObject, GrayStroke);
+			FixText(Toasts.NormalToastPrefab.transform.Find("BodyContainer").gameObject, NotoSans);
+			Toasts.NormalToastPrefab.SetActive(false);
+			
+			Toasts.ClickableToastPrefab = toastBundle.LoadAsset<GameObject>("assets/clickabletoast.prefab");
+			FixText(Toasts.ClickableToastPrefab.transform.Find("TitleContainer").gameObject, GrayStroke);
+			FixText(Toasts.ClickableToastPrefab.transform.Find("BodyContainer").gameObject, NotoSans);
+			Toasts.ClickableToastPrefab.SetActive(false);
 		}
 
 		var optionsBundle = LoadBundle(OptionsManifestName);
