@@ -23,7 +23,6 @@ public class VoteFile : KMonoBehaviour
 		{
 			accum -= FileUpdateTime;
 
-			var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.Data.VotesPath);
 			if (Game.Instance.TryGetComponent<VoteController>(out var voteController))
 			{
 				string fileText;
@@ -54,10 +53,16 @@ public class VoteFile : KMonoBehaviour
 						fileText = $"Vote Over ({voteController.VoteDelayRemaining:F0} seconds to next vote)";
 						break;
 					}
+					case VoteController.VotingState.Error:
+					{
+						fileText = "An error occurred in an event";
+						break;
+					}
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
 
+				var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.Data.VotesPath);
 				Task.Run(
 					() => { File.WriteAllText(filePath, fileText); }
 				);

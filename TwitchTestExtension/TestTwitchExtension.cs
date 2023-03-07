@@ -19,6 +19,7 @@ public class TestTwitchExtension : UserMod2
 [HarmonyAfter("asquared31415.TwitchIntegration")]
 public static class Db_Initialize_Patch
 {
+	[UsedImplicitly]
 	public static void Postfix()
 	{
 		if (!TwitchModInfo.TwitchIsPresent)
@@ -30,6 +31,22 @@ public static class Db_Initialize_Patch
 		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
 		var deckInst = TwitchDeckManager.Instance;
+
+		var (crash, crashGroup) = EventGroup.DefaultSingleEventGroup("ExtCrash", 0, "[DO NOT USE] CRASH EVENT");
+		crash.AddListener(
+			_ =>
+			{
+				[NotNull]
+				string FakeNotNull()
+				{
+					return null!;
+				}
+
+				// throws NRE
+				var len = FakeNotNull().Length;
+			}
+		);
+		deckInst.AddGroup(crashGroup);
 
 		var (extEvent, extEventGroup) = EventGroup.DefaultSingleEventGroup("ExtEvent", 4, "Extended Event");
 		extEvent.AddListener(

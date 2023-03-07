@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using JetBrains.Annotations;
+using ONITwitchCore;
 using ONITwitchLib;
+using ONITwitchLib.Utils;
 
 namespace EventLib;
 
@@ -76,7 +78,26 @@ public class EventInfo
 
 	public void Trigger(object data)
 	{
-		actionRef.Action.Invoke(data);
+		try
+		{
+			actionRef.Action.Invoke(data);
+		}
+		catch (Exception e)
+		{
+			var debugName = FriendlyName != null ? $"{FriendlyName} ({Id})" : $"({Id})";
+			Debug.LogWarning($"[Twitch Integration] crash while processing event {debugName}: {e}");
+			DialogUtil.MakeDialog(
+				"Event Error",
+				$"Event {debugName} crashed while being run: {e.Message}.\nStopping votes.\nPlease report this error (and provide the log) to that event's author.",
+				"Ok",
+				null
+			);
+
+			if ((Game.Instance != null) && Game.Instance.TryGetComponent(out VoteController controller))
+			{
+				controller.SetError();
+			}
+		}
 	}
 
 	public void AddCondition([NotNull] Func<object, bool> condition)

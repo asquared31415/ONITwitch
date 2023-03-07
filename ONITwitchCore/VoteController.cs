@@ -6,13 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using HarmonyLib;
 using KSerialization;
-using ONITwitchCore.Config;
 using ONITwitchCore.Settings;
 using ONITwitchLib;
 using UnityEngine;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
-using EventManager = EventLib.EventManager;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore;
@@ -25,6 +23,7 @@ public class VoteController : KMonoBehaviour
 		NotStarted,
 		VoteInProgress,
 		VoteDelay,
+		Error
 	}
 
 	private TwitchChatConnection connection;
@@ -125,34 +124,48 @@ public class VoteController : KMonoBehaviour
 		return true;
 	}
 
+	internal void SetError()
+	{
+		State = VotingState.Error;
+	}
+
 	private void FinishVote()
 	{
-		var choice = CurrentVote.GetBestVote();
-		string responseText;
-		if (choice != null)
+		try
 		{
-			Debug.Log(
-				$"[Twitch Integration] Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes"
-			);
-			var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
-			choice.EventInfo.Trigger(data);
-			responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
+			var choice = CurrentVote.GetBestVote();
+			string responseText;
+			if (choice != null)
+			{
+				Debug.Log(
+					$"[Twitch Integration] Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes"
+				);
+				var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
+				choice.EventInfo.Trigger(data);
+				responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
+			}
+			else
+			{
+				ToastManager.InstantiateToast(
+					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.TITLE,
+					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.BODY
+				);
+				Debug.Log("[Twitch Integration] No options were voted for");
+				responseText = "No options were voted for";
+			}
+
+			connection.SendTextMessage(GenericModSettings.Data.ChannelName, responseText);
+
+			CurrentVote = null;
+			VoteDelayRemaining = GenericModSettings.Data.VoteDelay;
+			State = VotingState.VoteDelay;
 		}
-		else
+		catch (Exception e)
 		{
-			ToastManager.InstantiateToast(
-				STRINGS.TOASTS.END_VOTE_NO_OPTIONS.TITLE,
-				STRINGS.TOASTS.END_VOTE_NO_OPTIONS.BODY
-			);
-			Debug.Log("[Twitch Integration] No options were voted for");
-			responseText = "No options were voted for";
+			State = VotingState.Error;
+
+			Debug.LogWarning($"[Twitch Integration] Unhandled exception {e} while processing a voted event");
 		}
-
-		connection.SendTextMessage(GenericModSettings.Data.ChannelName, responseText);
-
-		CurrentVote = null;
-		VoteDelayRemaining = GenericModSettings.Data.VoteDelay;
-		State = VotingState.VoteDelay;
 	}
 
 	private void Update()
@@ -160,6 +173,7 @@ public class VoteController : KMonoBehaviour
 		switch (State)
 		{
 			case VotingState.NotStarted:
+			case VotingState.Error:
 				break;
 			case VotingState.VoteInProgress:
 			{
