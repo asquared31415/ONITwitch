@@ -368,6 +368,13 @@ public static class STRINGS
 		}
 	}
 	
+	public static class VOTE_CONTROLLER
+	{
+		public static readonly LocString START_VOTE_HEADER = "Starting new vote! ";
+		public static readonly LocString CHOSEN_VOTE_FORMAT = "The chosen vote was {0} with {1} votes";
+		public static readonly LocString NO_VOTES = "No options were voted for";
+	}
+	
 	public static class VOTE_INFO_FILE
 	{
 		public static readonly LocString NOT_STARTED = "Voting not yet started";

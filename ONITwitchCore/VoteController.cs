@@ -96,7 +96,7 @@ public class VoteController : KMonoBehaviour
 			return false;
 		}
 
-		var voteMsg = new StringBuilder("Starting new vote! ");
+		var voteMsg = new StringBuilder(STRINGS.VOTE_CONTROLLER.START_VOTE_HEADER);
 		for (var idx = 0; idx < eventOptions.Count; idx++)
 		{
 			voteMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName} ");
@@ -141,7 +141,11 @@ public class VoteController : KMonoBehaviour
 				Log.Info($"Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes");
 				var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
 				choice.EventInfo.Trigger(data);
-				responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
+				responseText = string.Format(
+					Strings.Get(STRINGS.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT.key),
+					choice.EventInfo,
+					choice.Count
+				);
 			}
 			else
 			{
@@ -150,7 +154,7 @@ public class VoteController : KMonoBehaviour
 					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.BODY
 				);
 				Log.Info("No options were voted for");
-				responseText = "No options were voted for";
+				responseText = STRINGS.VOTE_CONTROLLER.NO_VOTES;
 			}
 
 			connection.SendTextMessage(GenericModSettings.Data.ChannelName, responseText);
