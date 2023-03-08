@@ -37,7 +37,7 @@ public class PocketDimensionExteriorPortalSideScreen : KMonoBehaviour, ISidescre
 			CameraController.Instance.ActiveWorldStarWipe(
 				exteriorPortal.CreatedWorldIdx,
 				portal.transform.position +
-				(Vector3) (Vector2) (ONITwitchCore.Cmps.PocketDimension.PocketDimension.InternalSize / 2)
+				(Vector3) (Vector2) (PocketDimension.InternalSize / 2)
 			);
 		}
 		else
@@ -51,6 +51,6 @@ public class PocketDimensionExteriorPortalSideScreen : KMonoBehaviour, ISidescre
 		return 0;
 	}
 
-	public string SidescreenButtonText => "View Dimension";
-	public string SidescreenButtonTooltip => "TODO";
+	public string SidescreenButtonText => STRINGS.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN.NAME;
+	public string SidescreenButtonTooltip => STRINGS.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN.TOOLTIP;
 }

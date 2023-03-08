@@ -128,7 +128,7 @@ public static class STRINGS
 	{
 		public static class INDESTRUCTIBLEELEMENT
 		{
-			public static readonly LocString NAME = UI.FormatAsLink(
+			public static readonly LocString NAME = global::STRINGS.UI.FormatAsLink(
 				"Neutrollium",
 				nameof(global::STRINGS.ELEMENTS.UNOBTANIUM)
 			);
@@ -448,6 +448,28 @@ public static class STRINGS
 		{
 			public static readonly LocString TITLE = "Tiles Uninsulated";
 			public static readonly LocString BODY = "Many tiles have been replaced with non-insulated versions";
+		}
+	}
+	
+	// TODO: strings here
+	public static class UI
+	{
+		public static class POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN
+		{
+			public static readonly LocString NAME = "View Dimension";
+			public static readonly LocString TOOLTIP = "TODO";
+		}
+		
+		public static class POCKET_DIMENSION_INTERIOR_SIDE_SCREEN
+		{
+			public static readonly LocString NAME = "View Parent";
+			public static readonly LocString TOOLTIP = "TODO";
+		}
+		
+		public static class SURPRISE_BOX_SIDE_SCREEN
+		{
+			public static readonly LocString NAME = "Open";
+			public static readonly LocString TOOLTIP = "TODO";
 		}
 	}
 

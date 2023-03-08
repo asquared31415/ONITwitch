@@ -9,9 +9,9 @@ namespace ONITwitchCore.Cmps;
 
 public class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 {
-	public string SidescreenButtonText => "Open";
+	public string SidescreenButtonText => STRINGS.UI.SURPRISE_BOX_SIDE_SCREEN.NAME;
 
-	public string SidescreenButtonTooltip => "";
+	public string SidescreenButtonTooltip => STRINGS.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP;
 
 	public int ButtonSideScreenSortOrder() => 0;
 

@@ -27,7 +27,7 @@ public class RainPrefab : KMonoBehaviour
 		if (prefabChances.Count == 0)
 		{
 			// this is a warning for mod devs to see, even if they're working against the release version
-			Log.Warn("[Twitch Integration] Cannot rain list of zero prefabs");
+			Log.Warn("Cannot rain list of zero prefabs");
 			Log.Warn(Environment.StackTrace);
 
 			enabled = false;
