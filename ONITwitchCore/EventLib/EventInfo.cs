@@ -91,7 +91,7 @@ public class EventInfo
 			DialogUtil.MakeDialog(
 				ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.TITLE,
 				string.Format(
-					Strings.Get(ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT.key),
+					ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT,
 					debugName,
 					e.Message
 				),

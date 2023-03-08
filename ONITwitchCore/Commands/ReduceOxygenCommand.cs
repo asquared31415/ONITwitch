@@ -42,7 +42,7 @@ public class ReduceOxygenCommand : CommandBase
 		var reducePercent = Mathf.RoundToInt((float) ((1 - targetFraction) * 100));
 		ToastManager.InstantiateToast(
 			STRINGS.ONITWITCH.TOASTS.REDUCE_OXYGEN.TITLE,
-			string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.REDUCE_OXYGEN.BODY_FORMAT.key), reducePercent)
+			string.Format(STRINGS.ONITWITCH.TOASTS.REDUCE_OXYGEN.BODY_FORMAT, reducePercent)
 		);
 	}
 }

@@ -142,7 +142,7 @@ public class VoteController : KMonoBehaviour
 				var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
 				choice.EventInfo.Trigger(data);
 				responseText = string.Format(
-					Strings.Get(STRINGS.ONITWITCH.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT.key),
+					STRINGS.ONITWITCH.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT,
 					choice.EventInfo,
 					choice.Count
 				);

@@ -43,7 +43,7 @@ public class VoteFile : KMonoBehaviour
 						}
 
 						fileText = string.Format(
-							Strings.Get(STRINGS.ONITWITCH.VOTE_INFO_FILE.IN_PROGRESS_FORMAT.key),
+							STRINGS.ONITWITCH.VOTE_INFO_FILE.IN_PROGRESS_FORMAT,
 							voteController.VoteTimeRemaining,
 							sb
 						);
@@ -52,7 +52,7 @@ public class VoteFile : KMonoBehaviour
 					case VoteController.VotingState.VoteDelay:
 					{
 						fileText = string.Format(
-							Strings.Get(STRINGS.ONITWITCH.VOTE_INFO_FILE.VOTE_OVER_FORMAT.key),
+							STRINGS.ONITWITCH.VOTE_INFO_FILE.VOTE_OVER_FORMAT,
 							voteController.VoteDelayRemaining
 						);
 						break;

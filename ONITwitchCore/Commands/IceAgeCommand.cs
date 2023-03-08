@@ -64,7 +64,7 @@ public class IceAgeCommand : CommandBase
 			.InstantiateToastWithPosTarget(
 				STRINGS.ONITWITCH.TOASTS.ICE_AGE.TITLE,
 				string.Format(
-					Strings.Get(STRINGS.ONITWITCH.TOASTS.ICE_AGE.BODY_FORMAT.key),
+					STRINGS.ONITWITCH.TOASTS.ICE_AGE.BODY_FORMAT,
 					world.GetComponent<ClusterGridEntity>().Name
 				),
 				(Vector2) world.WorldOffset + world.WorldSize / 2

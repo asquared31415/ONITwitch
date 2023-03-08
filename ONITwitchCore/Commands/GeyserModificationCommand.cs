@@ -31,7 +31,7 @@ public class GeyserModificationCommand : CommandBase
 			ToastManager.InstantiateToastWithGoTarget(
 				STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.TITLE,
 				string.Format(
-					Strings.Get(STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT.key),
+					STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT,
 					target.GetComponent<UserNameable>().savedName
 				),
 				target.gameObject

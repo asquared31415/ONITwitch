@@ -72,7 +72,7 @@ public class SpawnDupeCommand : CommandBase
 
 		ToastManager.InstantiateToastWithGoTarget(
 			STRINGS.ONITWITCH.TOASTS.SPAWN_DUPE.TITLE,
-			string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.SPAWN_DUPE.BODY_FORMAT.key), identity.name),
+			string.Format(STRINGS.ONITWITCH.TOASTS.SPAWN_DUPE.BODY_FORMAT, identity.name),
 			minion
 		);
 

@@ -26,7 +26,7 @@ public class EffectCommand : CommandBase
 
 		ToastManager.InstantiateToast(
 			STRINGS.ONITWITCH.TOASTS.EFFECT.TITLE,
-			string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.EFFECT.BODY_FORMAT.key), effect.Name)
+			string.Format(STRINGS.ONITWITCH.TOASTS.EFFECT.BODY_FORMAT, effect.Name)
 		);
 	}
 }

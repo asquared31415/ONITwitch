@@ -34,7 +34,7 @@ public class SpawnPrefabCommand : CommandBase
 			ToastManager.InstantiateToastWithGoTarget(
 				STRINGS.ONITWITCH.TOASTS.SPAWN_PREFAB.TITLE,
 				string.Format(
-					Strings.Get(STRINGS.ONITWITCH.TOASTS.SPAWN_PREFAB.BODY_FORMAT.key),
+					STRINGS.ONITWITCH.TOASTS.SPAWN_PREFAB.BODY_FORMAT,
 					Util.StripTextFormatting(prefab.GetProperName())
 				),
 				go
