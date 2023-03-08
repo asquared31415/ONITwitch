@@ -222,14 +222,10 @@ public static class STRINGS
 
 	public static class ITEMS
 	{
-		public static class ONITWITCH
+		public static class DEV_POCKET_DIMENSION_GENERATOR
 		{
-			public static class SURPRISEBOXCONFIG
-			{
-				public static readonly LocString NAME = "Surprise Box";
-				public static readonly LocString EFFECT = "Deconstruct for a surprise!";
-				public static readonly LocString DESC = "";
-			}
+			public static readonly LocString NAME = "Pocket Dimension Generator";
+			public static readonly LocString DESC = "Generates a Pocket Dimension";
 		}
 
 		public static class FOOD
@@ -243,6 +239,16 @@ public static class STRINGS
 					public static readonly LocString DESC =
 						"A piece of meat that glitters faintly.\n\n...It's best not to think about where it came from...";
 				}
+			}
+		}
+
+		public static class ONITWITCH
+		{
+			public static class SURPRISEBOXCONFIG
+			{
+				public static readonly LocString NAME = "Surprise Box";
+				public static readonly LocString EFFECT = "Deconstruct for a surprise!";
+				public static readonly LocString DESC = "";
 			}
 		}
 	}
@@ -458,5 +464,13 @@ public static class STRINGS
 		public static readonly LocString IN_PROGRESS_FORMAT = "Current Vote: ({0:F0}s)\n{1}";
 		public static readonly LocString VOTE_OVER_FORMAT = "Vote Over ({0:F0} seconds to next vote)";
 		public static readonly LocString ERROR = "An error occurred";
+	}
+
+	public static class WORLDS
+	{
+		public static class POCKET_DIMENSION
+		{
+			public static readonly LocString NAME = "Pocket Dimension";
+		}
 	}
 }

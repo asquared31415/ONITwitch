@@ -12,8 +12,8 @@ public class DevPocketDimensionGeneratorConfig : IEntityConfig
 	{
 		var go = EntityTemplates.CreateBasicEntity(
 			Id,
-			"Pocket Dimension Generator",
-			"Generates a pocket dimension",
+			STRINGS.ITEMS.DEV_POCKET_DIMENSION_GENERATOR.NAME,
+			STRINGS.ITEMS.DEV_POCKET_DIMENSION_GENERATOR.DESC,
 			1f,
 			true,
 			Assets.GetAnim("meallicegrain_kanim"),
