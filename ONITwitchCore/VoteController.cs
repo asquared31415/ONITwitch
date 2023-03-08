@@ -96,7 +96,7 @@ public class VoteController : KMonoBehaviour
 			return false;
 		}
 
-		var voteMsg = new StringBuilder(STRINGS.VOTE_CONTROLLER.START_VOTE_HEADER);
+		var voteMsg = new StringBuilder(STRINGS.ONITWITCH.VOTE_CONTROLLER.START_VOTE_HEADER);
 		for (var idx = 0; idx < eventOptions.Count; idx++)
 		{
 			voteMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName} ");
@@ -116,7 +116,7 @@ public class VoteController : KMonoBehaviour
 				toastMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName}\n");
 			}
 
-			ToastManager.InstantiateToast(STRINGS.TOASTS.STARTING_VOTE.TITLE, toastMsg.ToString());
+			ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.STARTING_VOTE.TITLE, toastMsg.ToString());
 		}
 
 		VoteTimeRemaining = GenericModSettings.Data.VoteTime;
@@ -142,7 +142,7 @@ public class VoteController : KMonoBehaviour
 				var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
 				choice.EventInfo.Trigger(data);
 				responseText = string.Format(
-					Strings.Get(STRINGS.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT.key),
+					Strings.Get(STRINGS.ONITWITCH.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT.key),
 					choice.EventInfo,
 					choice.Count
 				);
@@ -150,11 +150,11 @@ public class VoteController : KMonoBehaviour
 			else
 			{
 				ToastManager.InstantiateToast(
-					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.TITLE,
-					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.BODY
+					STRINGS.ONITWITCH.TOASTS.END_VOTE_NO_OPTIONS.TITLE,
+					STRINGS.ONITWITCH.TOASTS.END_VOTE_NO_OPTIONS.BODY
 				);
 				Log.Info("No options were voted for");
-				responseText = STRINGS.VOTE_CONTROLLER.NO_VOTES;
+				responseText = STRINGS.ONITWITCH.VOTE_CONTROLLER.NO_VOTES;
 			}
 
 			connection.SendTextMessage(GenericModSettings.Data.ChannelName, responseText);

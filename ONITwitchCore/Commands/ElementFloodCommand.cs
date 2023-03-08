@@ -50,8 +50,8 @@ public class ElementFloodCommand : CommandBase
 		}
 
 		ToastManager.InstantiateToastWithPosTarget(
-			STRINGS.TOASTS.FLOOD.TITLE,
-			string.Format(Strings.Get(STRINGS.TOASTS.FLOOD.BODY_FORMAT.key), Util.StripTextFormatting(element.name)),
+			STRINGS.ONITWITCH.TOASTS.FLOOD.TITLE,
+			string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.FLOOD.BODY_FORMAT.key), Util.StripTextFormatting(element.name)),
 			Grid.CellToPos(nearestCell)
 		);
 	}

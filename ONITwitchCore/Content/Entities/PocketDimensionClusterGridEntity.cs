@@ -8,7 +8,7 @@ namespace ONITwitchCore.Content.Entities;
 [SerializationConfig(MemberSerialization.OptIn)]
 public class PocketDimensionClusterGridEntity : ClusterGridEntity
 {
-	public override string Name => STRINGS.WORLDS.POCKET_DIMENSION.NAME;
+	public override string Name => STRINGS.ONITWITCH.WORLDS.POCKET_DIMENSION.NAME;
 	public override EntityLayer Layer => EntityLayer.POI;
 
 	[CanBeNull] private List<AnimConfig> animConfigs;

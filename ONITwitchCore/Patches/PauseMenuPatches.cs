@@ -9,7 +9,7 @@ namespace ONITwitchCore.Patches;
 public static class PauseMenuPatches
 {
 	public static readonly KButtonMenu.ButtonInfo TwitchButtonInfo = new(
-		STRINGS.UI.PAUSE_MENU.START_VOTES,
+		STRINGS.ONITWITCH.UI.PAUSE_MENU.START_VOTES,
 		Action.NumActions,
 		OnTwitchButtonPressed
 	);

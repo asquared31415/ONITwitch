@@ -55,9 +55,9 @@ public class FillBedroomCommand : CommandBase
 		}
 
 		ToastManager.InstantiateToast(
-			STRINGS.TOASTS.FILL_BEDROOMS.TITLE,
+			STRINGS.ONITWITCH.TOASTS.FILL_BEDROOMS.TITLE,
 			string.Format(
-				Strings.Get(STRINGS.TOASTS.FILL_BEDROOMS.BODY_FORMAT.key),
+				Strings.Get(STRINGS.ONITWITCH.TOASTS.FILL_BEDROOMS.BODY_FORMAT.key),
 				Util.StripTextFormatting(element.name)
 			)
 		);

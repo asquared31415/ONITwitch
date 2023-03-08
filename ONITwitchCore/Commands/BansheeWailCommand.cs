@@ -28,6 +28,6 @@ public class BansheeWailCommand : CommandBase
 			provider.AddChore(chore);
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.BANSHEE_WAIL.TITLE, STRINGS.TOASTS.BANSHEE_WAIL.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE, STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY);
 	}
 }

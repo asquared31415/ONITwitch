@@ -53,7 +53,7 @@ public static class ModsScreenPatches
 					button.onClick += OpenModSettingsScreen;
 					button.transform.SetSiblingIndex(4);
 					var text = button.GetComponentInChildren<LocText>();
-					text.text = STRINGS.UI.SETTINGS.BUTTON_NAME;
+					text.text = STRINGS.ONITWITCH.UI.SETTINGS.BUTTON_NAME;
 					text.fontSize = 14;
 				}
 			}

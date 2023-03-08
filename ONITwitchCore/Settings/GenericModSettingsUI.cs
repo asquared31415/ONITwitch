@@ -190,9 +190,9 @@ internal class GenericModSettingsUI : KScreen
 		if ((GenericModSettings.Data.MaxDanger < Danger.Deadly) && ((Danger) maxDangerSlider.value >= Danger.Deadly))
 		{
 			DialogUtil.MakeDialog(
-				STRINGS.UI.DIALOGS.DEADLY_CONFIG.TITLE,
-				STRINGS.UI.DIALOGS.DEADLY_CONFIG.BODY,
-				STRINGS.UI.DIALOGS.DEADLY_CONFIG.CONTINUE,
+				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.TITLE,
+				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.BODY,
+				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.CONTINUE,
 				() => { }
 			);
 		}

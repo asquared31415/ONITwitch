@@ -104,9 +104,9 @@ public class SpawnElementPoolCommand : CommandBase
 		}
 
 		ToastManager.InstantiateToastWithPosTarget(
-			STRINGS.TOASTS.ELEMENT_GROUP.TITLE,
+			STRINGS.ONITWITCH.TOASTS.ELEMENT_GROUP.TITLE,
 			string.Format(
-				Strings.Get(STRINGS.TOASTS.ELEMENT_GROUP.BODY_FORMAT.key),
+				Strings.Get(STRINGS.ONITWITCH.TOASTS.ELEMENT_GROUP.BODY_FORMAT.key),
 				Util.StripTextFormatting(element.name)
 			),
 			Grid.CellToPos(cell)

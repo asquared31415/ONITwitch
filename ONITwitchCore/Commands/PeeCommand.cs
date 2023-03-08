@@ -21,6 +21,6 @@ public class PeeCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.PEE.TITLE, STRINGS.TOASTS.PEE.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.PEE.TITLE, STRINGS.ONITWITCH.TOASTS.PEE.BODY);
 	}
 }

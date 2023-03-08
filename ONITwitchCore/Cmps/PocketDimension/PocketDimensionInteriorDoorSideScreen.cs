@@ -49,6 +49,6 @@ public class PocketDimensionInteriorDoorSideScreen : KMonoBehaviour, ISidescreen
 		return 0;
 	}
 
-	public string SidescreenButtonText => STRINGS.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.NAME;
-	public string SidescreenButtonTooltip => STRINGS.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.TOOLTIP;
+	public string SidescreenButtonText => STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.NAME;
+	public string SidescreenButtonTooltip => STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.TOOLTIP;
 }

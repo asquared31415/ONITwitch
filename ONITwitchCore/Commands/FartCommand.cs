@@ -20,7 +20,7 @@ public class FartCommand : CommandBase
 
 		DoCringeEffect();
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.FART.TITLE, STRINGS.TOASTS.FART.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.FART.TITLE, STRINGS.ONITWITCH.TOASTS.FART.BODY);
 	}
 
 	private static readonly AccessTools.FieldRef<HashedString[]> WorkAnimsGetter =

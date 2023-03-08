@@ -71,8 +71,8 @@ public class SpawnDupeCommand : CommandBase
 		minion.transform.SetLocalPosition(pos.transform.position);
 
 		ToastManager.InstantiateToastWithGoTarget(
-			STRINGS.TOASTS.SPAWN_DUPE.TITLE,
-			string.Format(Strings.Get(STRINGS.TOASTS.SPAWN_DUPE.BODY_FORMAT.key), identity.name),
+			STRINGS.ONITWITCH.TOASTS.SPAWN_DUPE.TITLE,
+			string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.SPAWN_DUPE.BODY_FORMAT.key), identity.name),
 			minion
 		);
 

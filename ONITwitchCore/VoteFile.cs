@@ -30,7 +30,7 @@ public class VoteFile : KMonoBehaviour
 				{
 					case VoteController.VotingState.NotStarted:
 					{
-						fileText = STRINGS.VOTE_INFO_FILE.NOT_STARTED;
+						fileText = STRINGS.ONITWITCH.VOTE_INFO_FILE.NOT_STARTED;
 						break;
 					}
 					case VoteController.VotingState.VoteInProgress:
@@ -43,7 +43,7 @@ public class VoteFile : KMonoBehaviour
 						}
 
 						fileText = string.Format(
-							Strings.Get(STRINGS.VOTE_INFO_FILE.IN_PROGRESS_FORMAT.key),
+							Strings.Get(STRINGS.ONITWITCH.VOTE_INFO_FILE.IN_PROGRESS_FORMAT.key),
 							voteController.VoteTimeRemaining,
 							sb
 						);
@@ -52,14 +52,14 @@ public class VoteFile : KMonoBehaviour
 					case VoteController.VotingState.VoteDelay:
 					{
 						fileText = string.Format(
-							Strings.Get(STRINGS.VOTE_INFO_FILE.VOTE_OVER_FORMAT.key),
+							Strings.Get(STRINGS.ONITWITCH.VOTE_INFO_FILE.VOTE_OVER_FORMAT.key),
 							voteController.VoteDelayRemaining
 						);
 						break;
 					}
 					case VoteController.VotingState.Error:
 					{
-						fileText = STRINGS.VOTE_INFO_FILE.ERROR;
+						fileText = STRINGS.ONITWITCH.VOTE_INFO_FILE.ERROR;
 						break;
 					}
 					default:

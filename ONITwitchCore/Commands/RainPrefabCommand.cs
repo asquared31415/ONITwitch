@@ -44,9 +44,9 @@ public class RainPrefabCommand : CommandBase
 		rainPrefab.Initialize(TimePerItem, count, prefabIds);
 
 		ToastManager.InstantiateToast(
-			STRINGS.TOASTS.RAIN_PREFAB.TITLE,
+			STRINGS.ONITWITCH.TOASTS.RAIN_PREFAB.TITLE,
 			string.Format(
-				Strings.Get(STRINGS.TOASTS.RAIN_PREFAB.BODY_FORMAT.key),
+				Strings.Get(STRINGS.ONITWITCH.TOASTS.RAIN_PREFAB.BODY_FORMAT.key),
 				prefab.GetProperName()
 			)
 		);

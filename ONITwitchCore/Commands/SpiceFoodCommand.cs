@@ -33,7 +33,7 @@ public class SpiceFoodCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.SPICE_FOOD.TITLE, STRINGS.TOASTS.SPICE_FOOD.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.TITLE, STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.BODY);
 	}
 
 	private static List<string> GetValidSpiceIds()

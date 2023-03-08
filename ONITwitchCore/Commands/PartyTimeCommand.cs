@@ -14,6 +14,6 @@ public class PartyTimeCommand : CommandBase
 		partyTime.enabled = true;
 		PartyTimePatch.Enabled = true;
 		
-		ToastManager.InstantiateToast(STRINGS.TOASTS.PARTY_TIME.TITLE, STRINGS.TOASTS.PARTY_TIME.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.PARTY_TIME.TITLE, STRINGS.ONITWITCH.TOASTS.PARTY_TIME.BODY);
 	}
 }

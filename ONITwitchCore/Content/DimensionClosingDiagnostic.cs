@@ -9,28 +9,28 @@ public class DimensionClosingDiagnostic : ColonyDiagnostic
 
 	public DimensionClosingDiagnostic(int worldID) : base(
 		worldID,
-		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.DIAGNOSTIC_NAME
+		STRINGS.ONITWITCH.DIAGNOSTICS.DIMENSION_CLOSING.DIAGNOSTIC_NAME
 	)
 	{
 		AddCriterion(
 			Id,
-			new DiagnosticCriterion(STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.CRITERION_NAME, EvaluateDiagnostic)
+			new DiagnosticCriterion(STRINGS.ONITWITCH.DIAGNOSTICS.DIMENSION_CLOSING.CRITERION_NAME, EvaluateDiagnostic)
 		);
 	}
 
 	private static readonly DiagnosticResult ErrorDiagnostic = new(
 		DiagnosticResult.Opinion.DuplicantThreatening,
-		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.ERROR
+		STRINGS.ONITWITCH.DIAGNOSTICS.DIMENSION_CLOSING.ERROR
 	);
 
 	private static readonly DiagnosticResult NormalDiagnostic = new(
 		DiagnosticResult.Opinion.Normal,
-		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.NORMAL
+		STRINGS.ONITWITCH.DIAGNOSTICS.DIMENSION_CLOSING.NORMAL
 	);
 
 	private static readonly DiagnosticResult LowTimeDiagnostic = new(
 		DiagnosticResult.Opinion.Bad,
-		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.CLOSING
+		STRINGS.ONITWITCH.DIAGNOSTICS.DIMENSION_CLOSING.CLOSING
 	);
 
 	private DiagnosticResult EvaluateDiagnostic()

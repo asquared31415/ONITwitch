@@ -23,8 +23,8 @@ public class GlitterPuftConfig : IEntityConfig
 		var trait = Db.Get()
 			.CreateTrait(
 				BaseTraitId,
-				STRINGS.CREATURES.SPECIES.GLITTERPUFT.NAME,
-				STRINGS.CREATURES.SPECIES.GLITTERPUFT.NAME,
+				STRINGS.CREATURES.SPECIES.ONITWITCH.GLITTERPUFT.NAME,
+				STRINGS.CREATURES.SPECIES.ONITWITCH.GLITTERPUFT.NAME,
 				null,
 				false,
 				null,
@@ -35,7 +35,7 @@ public class GlitterPuftConfig : IEntityConfig
 			new AttributeModifier(
 				Db.Get().Amounts.HitPoints.maxAttribute.Id,
 				float.PositiveInfinity,
-				STRINGS.CREATURES.SPECIES.GLITTERPUFT.NAME
+				STRINGS.CREATURES.SPECIES.ONITWITCH.GLITTERPUFT.NAME
 			)
 		);
 	}
@@ -46,8 +46,8 @@ public class GlitterPuftConfig : IEntityConfig
 
 		var go = EntityTemplates.CreatePlacedEntity(
 			Id,
-			STRINGS.CREATURES.SPECIES.GLITTERPUFT.NAME,
-			STRINGS.CREATURES.SPECIES.GLITTERPUFT.DESC,
+			STRINGS.CREATURES.SPECIES.ONITWITCH.GLITTERPUFT.NAME,
+			STRINGS.CREATURES.SPECIES.ONITWITCH.GLITTERPUFT.DESC,
 			5f,
 			Assets.GetAnim(Anim),
 			initialAnim,

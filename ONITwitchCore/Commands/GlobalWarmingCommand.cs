@@ -59,9 +59,9 @@ public class GlobalWarmingCommand : CommandBase
 
 		ToastManager
 			.InstantiateToastWithPosTarget(
-				STRINGS.TOASTS.GLOBAL_WARMING.TITLE,
+				STRINGS.ONITWITCH.TOASTS.GLOBAL_WARMING.TITLE,
 				string.Format(
-					Strings.Get(STRINGS.TOASTS.GLOBAL_WARMING.BODY_FORMAT.key),
+					Strings.Get(STRINGS.ONITWITCH.TOASTS.GLOBAL_WARMING.BODY_FORMAT.key),
 					world.GetComponent<ClusterGridEntity>().Name
 				),
 				(Vector2) world.WorldOffset + world.WorldSize / 2

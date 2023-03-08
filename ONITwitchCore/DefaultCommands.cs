@@ -20,7 +20,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnDupe",
-				STRINGS.EVENTS.SPAWN_DUPE,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_DUPE,
 				new SpawnDupeCommand(),
 				new Dictionary<string, object> { { "MaxDupes", 30.0d } },
 				Danger.Small,
@@ -30,7 +30,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupCommon",
-				STRINGS.EVENTS.ELEMENT_GROUP_COMMON,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_COMMON,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -64,7 +64,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupExotic",
-				STRINGS.EVENTS.ELEMENT_GROUP_EXOTIC,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_EXOTIC,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -87,7 +87,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupMetal",
-				STRINGS.EVENTS.ELEMENT_GROUP_METAL,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_METAL,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -107,7 +107,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupGas",
-				STRINGS.EVENTS.ELEMENT_GROUP_METAL,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_METAL,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -127,7 +127,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupLiquid",
-				STRINGS.EVENTS.ELEMENT_GROUP_LIQUID,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_LIQUID,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -154,7 +154,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupDeadly",
-				STRINGS.EVENTS.ELEMENT_GROUP_DEADLY,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_DEADLY,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{
@@ -173,7 +173,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeAthleticsUp",
-				STRINGS.EVENTS.ATTRIBUTE_ATHLETICS_UP,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_ATHLETICS_UP,
 				new EffectCommand(),
 				CustomEffects.AthleticsUpEffect.Id,
 				Danger.None,
@@ -184,7 +184,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeAthleticsDown",
-				STRINGS.EVENTS.ATTRIBUTE_ATHLETICS_DOWN,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_ATHLETICS_DOWN,
 				new EffectCommand(),
 				CustomEffects.AthleticsDownEffect.Id,
 				Danger.None,
@@ -195,7 +195,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeConstructionUp",
-				STRINGS.EVENTS.ATTRIBUTE_CONSTRUCTION_UP,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_CONSTRUCTION_UP,
 				new EffectCommand(),
 				CustomEffects.ConstructionUpEffect.Id,
 				Danger.None,
@@ -206,7 +206,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeConstructionDown",
-				STRINGS.EVENTS.ATTRIBUTE_CONSTRUCTION_DOWN,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_CONSTRUCTION_DOWN,
 				new EffectCommand(),
 				CustomEffects.ConstructionDownEffect.Id,
 				Danger.None,
@@ -217,7 +217,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeExcavationUp",
-				STRINGS.EVENTS.ATTRIBUTE_EXCAVATION_UP,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_EXCAVATION_UP,
 				new EffectCommand(),
 				CustomEffects.ExcavationUpEffect.Id,
 				Danger.None,
@@ -228,7 +228,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeExcavationDown",
-				STRINGS.EVENTS.ATTRIBUTE_EXCAVATION_DOWN,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_EXCAVATION_DOWN,
 				new EffectCommand(),
 				CustomEffects.ExcavationDownEffect.Id,
 				Danger.None,
@@ -239,7 +239,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeStrengthUp",
-				STRINGS.EVENTS.ATTRIBUTE_STRENGTH_UP,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_STRENGTH_UP,
 				new EffectCommand(),
 				CustomEffects.StrengthUpEffect.Id,
 				Danger.None,
@@ -250,7 +250,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"AttributeStrengthDown",
-				STRINGS.EVENTS.ATTRIBUTE_STRENGTH_DOWN,
+				STRINGS.ONITWITCH.EVENTS.ATTRIBUTE_STRENGTH_DOWN,
 				new EffectCommand(),
 				CustomEffects.StrengthDownEffect.Id,
 				Danger.None,
@@ -261,7 +261,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"BansheeWail",
-				STRINGS.EVENTS.BANSHEE_WAIL,
+				STRINGS.ONITWITCH.EVENTS.BANSHEE_WAIL,
 				new BansheeWailCommand(),
 				null,
 				Danger.Small,
@@ -271,7 +271,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SnowBedrooms",
-				STRINGS.EVENTS.BEDROOM_SNOW,
+				STRINGS.ONITWITCH.EVENTS.BEDROOM_SNOW,
 				new FillBedroomCommand(),
 				SimHashes.Snow.ToString(),
 				Danger.Small,
@@ -282,7 +282,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SlimeBedrooms",
-				STRINGS.EVENTS.BEDROOMS_SLIME,
+				STRINGS.ONITWITCH.EVENTS.BEDROOMS_SLIME,
 				new FillBedroomCommand(),
 				SimHashes.SlimeMold.ToString(),
 				Danger.Small,
@@ -293,7 +293,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodWater",
-				STRINGS.EVENTS.FLOOD_WATER,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_WATER,
 				new ElementFloodCommand(),
 				SimHashes.Water.ToString(),
 				Danger.Medium,
@@ -304,7 +304,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodPollutedWater",
-				STRINGS.EVENTS.FLOOD_POLLUTED_WATER,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_POLLUTED_WATER,
 				new ElementFloodCommand(),
 				SimHashes.DirtyWater.ToString(),
 				Danger.Medium,
@@ -315,7 +315,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodEthanol",
-				STRINGS.EVENTS.FLOOD_ETHANOL,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_ETHANOL,
 				new ElementFloodCommand(),
 				SimHashes.Ethanol.ToString(),
 				Danger.Medium,
@@ -326,7 +326,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodOil",
-				STRINGS.EVENTS.FLOOD_OIL,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_OIL,
 				new ElementFloodCommand(),
 				SimHashes.CrudeOil.ToString(),
 				Danger.Medium,
@@ -337,7 +337,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodLava",
-				STRINGS.EVENTS.FLOOD_LAVA,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_LAVA,
 				new ElementFloodCommand(),
 				SimHashes.Magma.ToString(),
 				Danger.Deadly,
@@ -348,7 +348,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodGold",
-				STRINGS.EVENTS.FLOOD_GOLD,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_GOLD,
 				new ElementFloodCommand(),
 				SimHashes.MoltenGold.ToString(),
 				Danger.Deadly,
@@ -359,7 +359,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"FloodNuclearWaste",
-				STRINGS.EVENTS.FLOOD_NUCLEAR_WASTE,
+				STRINGS.ONITWITCH.EVENTS.FLOOD_NUCLEAR_WASTE,
 				new ElementFloodCommand(),
 				SimHashes.NuclearWaste.ToString(),
 				Danger.High,
@@ -368,26 +368,26 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("IceAge", STRINGS.EVENTS.ICE_AGE, new IceAgeCommand(), null, Danger.Extreme, 1)
+			new CommandInfo("IceAge", STRINGS.ONITWITCH.EVENTS.ICE_AGE, new IceAgeCommand(), null, Danger.Extreme, 1)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"GlobalWarming",
-				STRINGS.EVENTS.GLOBAL_WARMING,
+				STRINGS.ONITWITCH.EVENTS.GLOBAL_WARMING,
 				new GlobalWarmingCommand(),
 				null,
 				Danger.High,
 				1
 			)
 		);
-		RegisterCommand(new CommandInfo("Pee", STRINGS.EVENTS.PEE, new PeeCommand(), null, Danger.Small, 30));
+		RegisterCommand(new CommandInfo("Pee", STRINGS.ONITWITCH.EVENTS.PEE, new PeeCommand(), null, Danger.Small, 30));
 		RegisterCommand(
-			new CommandInfo("Kill", STRINGS.EVENTS.KILL_DUPE, new KillDupeCommand(), null, Danger.Deadly, 1)
+			new CommandInfo("Kill", STRINGS.ONITWITCH.EVENTS.KILL_DUPE, new KillDupeCommand(), null, Danger.Deadly, 1)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"TileTempDown",
-				STRINGS.EVENTS.TILE_TEMP_DOWN,
+				STRINGS.ONITWITCH.EVENTS.TILE_TEMP_DOWN,
 				new TileTempCommand(),
 				-40.0d,
 				Danger.Medium,
@@ -398,7 +398,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"TileTempUp",
-				STRINGS.EVENTS.TILE_TEMP_UP,
+				STRINGS.ONITWITCH.EVENTS.TILE_TEMP_UP,
 				new TileTempCommand(),
 				+40.0d,
 				Danger.Medium,
@@ -407,15 +407,15 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("PartyTime", STRINGS.EVENTS.PARTY_TIME, new PartyTimeCommand(), 300.0d, Danger.None, 30)
+			new CommandInfo("PartyTime", STRINGS.ONITWITCH.EVENTS.PARTY_TIME, new PartyTimeCommand(), 300.0d, Danger.None, 30)
 		);
 		RegisterCommand(
-			new CommandInfo("PoisonDupes", STRINGS.EVENTS.POISON, new PoisonDupesCommand(), null, Danger.High, 20)
+			new CommandInfo("PoisonDupes", STRINGS.ONITWITCH.EVENTS.POISON, new PoisonDupesCommand(), null, Danger.High, 20)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"Poopsplosion",
-				STRINGS.EVENTS.POOPSPLOSION,
+				STRINGS.ONITWITCH.EVENTS.POOPSPLOSION,
 				new PoopsplosionCommand(),
 				null,
 				Danger.Small,
@@ -425,7 +425,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabGold",
-				STRINGS.EVENTS.RAIN_PREFAB_GOLD,
+				STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_GOLD,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Gold.ToString() }, { "Count", 50.0d } },
 				Danger.None,
@@ -437,8 +437,8 @@ public static class DefaultCommands
 			new CommandInfo(
 				"RainPrefabMorb",
 				OniTwitchMod.ModIntegration.IsModPresentAndActive("AmogusMorb")
-					? STRINGS.EVENTS.RAIN_PREFAB_MORB_AMORBUS
-					: STRINGS.EVENTS.RAIN_PREFAB_MORB_NORMAL,
+					? STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_MORB_AMORBUS
+					: STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_MORB_NORMAL,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
@@ -449,7 +449,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabDiamond",
-				STRINGS.EVENTS.RAIN_PREFAB_DIAMOND,
+				STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_DIAMOND,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Diamond.ToString() }, { "Count", 25.0d } },
 				Danger.None,
@@ -460,7 +460,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabSlickster",
-				STRINGS.EVENTS.RAIN_PREFAB_SLICKSTER,
+				STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_SLICKSTER,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", OilFloaterConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
@@ -472,8 +472,8 @@ public static class DefaultCommands
 			new CommandInfo(
 				"RainPrefabPacu",
 				OniTwitchMod.ModIntegration.IsModPresentAndActive("WeebPacu")
-					? STRINGS.EVENTS.RAIN_PREFAB_PACU_PACUWU
-					: STRINGS.EVENTS.RAIN_PREFAB_PACU_NORMAL,
+					? STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_PACU_PACUWU
+					: STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_PACU_NORMAL,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
@@ -484,7 +484,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"RainPrefabBee",
-				STRINGS.EVENTS.RAIN_PREFAB_BEE,
+				STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_BEE,
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", BeeConfig.ID }, { "Count", 10.0d } },
 				Danger.Medium,
@@ -495,7 +495,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ReduceOxygen",
-				STRINGS.EVENTS.REDUCE_OXYGEN,
+				STRINGS.ONITWITCH.EVENTS.REDUCE_OXYGEN,
 				new ReduceOxygenCommand(),
 				0.20d,
 				Danger.High,
@@ -503,12 +503,12 @@ public static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("SkillPoints", STRINGS.EVENTS.SKILL_POINTS, new SkillCommand(), 0.33d, Danger.None, 20)
+			new CommandInfo("SkillPoints", STRINGS.ONITWITCH.EVENTS.SKILL_POINTS, new SkillCommand(), 0.33d, Danger.None, 20)
 		);
 		RegisterCommand(
 			new CommandInfo(
 				"SleepyDupes",
-				STRINGS.EVENTS.SLEEPY_DUPES,
+				STRINGS.ONITWITCH.EVENTS.SLEEPY_DUPES,
 				new SleepyDupesCommand(),
 				null,
 				Danger.Medium,
@@ -518,7 +518,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SnazzySuit",
-				STRINGS.EVENTS.SPAWN_SNAZZY_SUIT,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_SNAZZY_SUIT,
 				new SnazzySuitCommand(),
 				null,
 				Danger.None,
@@ -528,7 +528,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnGlitterPuft",
-				STRINGS.EVENTS.SPAWN_GLITTER_PUFT,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_GLITTER_PUFT,
 				new SpawnPrefabCommand(),
 				GlitterPuftConfig.Id,
 				Danger.None,
@@ -538,7 +538,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnVacillatorCharge",
-				STRINGS.EVENTS.SPAWN_VACILLATOR_CHARGE,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_VACILLATOR_CHARGE,
 				new SpawnPrefabCommand(),
 				GeneShufflerRechargeConfig.ID,
 				Danger.None,
@@ -548,7 +548,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnAtmoSuit",
-				STRINGS.EVENTS.SPAWN_ATMO_SUIT,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_ATMO_SUIT,
 				new SpawnPrefabCommand(),
 				AtmoSuitConfig.ID,
 				Danger.None,
@@ -558,7 +558,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnCrab",
-				STRINGS.EVENTS.SPAWN_CRAB,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_CRAB,
 				new SpawnPrefabCommand(),
 				CrabConfig.ID,
 				Danger.None,
@@ -568,7 +568,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnMooComet",
-				STRINGS.EVENTS.SPAWN_MOO_COMET,
+				STRINGS.ONITWITCH.EVENTS.SPAWN_MOO_COMET,
 				new SpawnPrefabCommand(),
 				GassyMooCometConfig.ID,
 				Danger.None,
@@ -578,7 +578,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"StressAdd",
-				STRINGS.EVENTS.STRESS_ADD,
+				STRINGS.ONITWITCH.EVENTS.STRESS_ADD,
 				new StressCommand(),
 				+0.75d,
 				Danger.Medium,
@@ -589,7 +589,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"StressRemove",
-				STRINGS.EVENTS.STRESS_REMOVE,
+				STRINGS.ONITWITCH.EVENTS.STRESS_REMOVE,
 				new StressCommand(),
 				-0.75d,
 				Danger.None,
@@ -600,7 +600,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Surprise",
-				STRINGS.EVENTS.SURPRISE,
+				STRINGS.ONITWITCH.EVENTS.SURPRISE,
 				new SurpriseCommand(),
 				null,
 				// will only choose a command that is within the expected danger range
@@ -613,7 +613,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Uninsulate",
-				STRINGS.EVENTS.UNINSULATE,
+				STRINGS.ONITWITCH.EVENTS.UNINSULATE,
 				new UninsulateCommand(),
 				null,
 				Danger.Extreme,
@@ -623,7 +623,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ResearchTech",
-				STRINGS.EVENTS.RESEARCH_TECH,
+				STRINGS.ONITWITCH.EVENTS.RESEARCH_TECH,
 				new ResearchTechCommand(),
 				null,
 				Danger.None,
@@ -634,7 +634,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Eclipse",
-				STRINGS.EVENTS.ECLIPSE,
+				STRINGS.ONITWITCH.EVENTS.ECLIPSE,
 				new EclipseCommand(),
 				(double) (3 * Constants.SECONDS_PER_CYCLE),
 				Danger.Small,
@@ -645,7 +645,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"PocketDimension",
-				STRINGS.EVENTS.POCKET_DIMENSION,
+				STRINGS.ONITWITCH.EVENTS.POCKET_DIMENSION,
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
@@ -656,7 +656,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SurpriseBox",
-				STRINGS.EVENTS.SURPRISE_BOX,
+				STRINGS.ONITWITCH.EVENTS.SURPRISE_BOX,
 				new SurpriseBoxCommand(),
 				null,
 				Danger.None,
@@ -668,7 +668,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"GeyserModification",
-				STRINGS.EVENTS.GEYSER_MODIFICATION,
+				STRINGS.ONITWITCH.EVENTS.GEYSER_MODIFICATION,
 				new GeyserModificationCommand(),
 				null,
 				Danger.Medium,
@@ -679,7 +679,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"MorphCritters",
-				STRINGS.EVENTS.MORPH_CRITTERS,
+				STRINGS.ONITWITCH.EVENTS.MORPH_CRITTERS,
 				new MorphCommand(),
 				null,
 				Danger.Small,
@@ -690,7 +690,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"Fart",
-				STRINGS.EVENTS.FART,
+				STRINGS.ONITWITCH.EVENTS.FART,
 				new FartCommand(),
 				25.0d,
 				Danger.Small,
@@ -701,7 +701,7 @@ public static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"SpiceFood",
-				STRINGS.EVENTS.SPICE_FOOD,
+				STRINGS.ONITWITCH.EVENTS.SPICE_FOOD,
 				new SpiceFoodCommand(),
 				null,
 				Danger.None,

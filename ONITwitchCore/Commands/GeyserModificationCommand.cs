@@ -29,9 +29,9 @@ public class GeyserModificationCommand : CommandBase
 			tuning.AddModification(25 * Constants.SECONDS_PER_CYCLE, modification.template);
 
 			ToastManager.InstantiateToastWithGoTarget(
-				STRINGS.TOASTS.GEYSER_MODIFICATION.TITLE,
+				STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.TITLE,
 				string.Format(
-					Strings.Get(STRINGS.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT.key),
+					Strings.Get(STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT.key),
 					target.GetComponent<UserNameable>().savedName
 				),
 				target.gameObject

@@ -12,7 +12,7 @@ public class EclipseCommand : CommandBase
 			var time = (float) (double) data;
 			eclipse.StartEclipse(time);
 
-			ToastManager.InstantiateToast(STRINGS.TOASTS.ECLIPSE.TITLE, STRINGS.TOASTS.ECLIPSE.BODY);
+			ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.ECLIPSE.TITLE, STRINGS.ONITWITCH.TOASTS.ECLIPSE.BODY);
 		}
 	}
 }

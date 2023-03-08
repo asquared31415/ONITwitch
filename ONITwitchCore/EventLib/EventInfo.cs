@@ -89,9 +89,9 @@ public class EventInfo
 			var debugName = FriendlyName != null ? $"{FriendlyName} ({Id})" : $"({Id})";
 			Log.Warn($"crash while processing event {debugName}: {e}");
 			DialogUtil.MakeDialog(
-				ONITwitchCore.STRINGS.UI.DIALOGS.EVENT_ERROR.TITLE,
+				ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.TITLE,
 				string.Format(
-					Strings.Get(ONITwitchCore.STRINGS.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT.key),
+					Strings.Get(ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT.key),
 					debugName,
 					e.Message
 				),

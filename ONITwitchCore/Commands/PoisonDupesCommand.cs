@@ -25,6 +25,6 @@ public class PoisonDupesCommand : CommandBase
 			dot.enabled = true;
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.POISON.TITLE, STRINGS.TOASTS.POISON.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.POISON.TITLE, STRINGS.ONITWITCH.TOASTS.POISON.BODY);
 	}
 }

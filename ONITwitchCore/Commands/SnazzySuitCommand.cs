@@ -33,9 +33,9 @@ public class SnazzySuitCommand : CommandBase
 			EquippableFacade.AddFacadeToEquippable(go.GetComponent<Equippable>(), randomFacade.Id);
 
 			ToastManager.InstantiateToastWithGoTarget(
-				STRINGS.TOASTS.SPAWN_PREFAB.TITLE,
+				STRINGS.ONITWITCH.TOASTS.SPAWN_PREFAB.TITLE,
 				string.Format(
-					Strings.Get(STRINGS.TOASTS.SPAWN_PREFAB.BODY_FORMAT.key),
+					Strings.Get(STRINGS.ONITWITCH.TOASTS.SPAWN_PREFAB.BODY_FORMAT.key),
 					Util.StripTextFormatting(prefab.GetProperName())
 				),
 				go

@@ -32,8 +32,8 @@ public class SurpriseBoxCommand : CommandBase
 		box.SetActive(true);
 
 		ToastManager.InstantiateToastWithGoTarget(
-			STRINGS.TOASTS.SURPRISE_BOX.TITLE,
-			STRINGS.TOASTS.SURPRISE_BOX.BODY,
+			STRINGS.ONITWITCH.TOASTS.SURPRISE_BOX.TITLE,
+			STRINGS.ONITWITCH.TOASTS.SURPRISE_BOX.BODY,
 			box
 		);
 	}

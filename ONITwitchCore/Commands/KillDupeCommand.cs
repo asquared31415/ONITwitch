@@ -24,8 +24,8 @@ public class KillDupeCommand : CommandBase
 			HealthKillDelegate(rand.gameObject.GetComponent<Health>());
 
 			ToastManager.InstantiateToastWithGoTarget(
-				STRINGS.TOASTS.KILL_DUPE.TITLE,
-				string.Format(Strings.Get(STRINGS.TOASTS.KILL_DUPE.BODY_FORMAT.key), rand.name),
+				STRINGS.ONITWITCH.TOASTS.KILL_DUPE.TITLE,
+				string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.KILL_DUPE.BODY_FORMAT.key), rand.name),
 				rand.gameObject
 			);
 

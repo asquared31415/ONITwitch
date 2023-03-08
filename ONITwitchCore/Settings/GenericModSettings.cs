@@ -108,8 +108,8 @@ public class GenericModSettings
 
 					Log.Warn($"Found future config version {config.Version}");
 					DialogUtil.MakeDialog(
-						STRINGS.UI.DIALOGS.UNKNOWN_SAVE.TITLE,
-						STRINGS.UI.DIALOGS.UNKNOWN_SAVE.BODY,
+						STRINGS.ONITWITCH.UI.DIALOGS.UNKNOWN_SAVE.TITLE,
+						STRINGS.ONITWITCH.UI.DIALOGS.UNKNOWN_SAVE.BODY,
 						UI.CONFIRMDIALOG.OK,
 						null
 					);

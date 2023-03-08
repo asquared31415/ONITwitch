@@ -29,6 +29,6 @@ public class SkillCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.SKILLS.TITLE, STRINGS.TOASTS.SKILLS.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.SKILLS.TITLE, STRINGS.ONITWITCH.TOASTS.SKILLS.BODY);
 	}
 }

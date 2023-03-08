@@ -22,6 +22,6 @@ public class SleepyDupesCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.SLEEPY_DUPES.TITLE, STRINGS.TOASTS.SLEEPY_DUPES.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.SLEEPY_DUPES.TITLE, STRINGS.ONITWITCH.TOASTS.SLEEPY_DUPES.BODY);
 	}
 }

@@ -40,8 +40,8 @@ public class ResearchTechCommand : CommandBase
 			);
 
 			ToastManager.InstantiateToast(
-				STRINGS.TOASTS.RESEARCH_TECH.TITLE,
-				string.Format(Strings.Get(STRINGS.TOASTS.RESEARCH_TECH.BODY_FORMAT.key), techName)
+				STRINGS.ONITWITCH.TOASTS.RESEARCH_TECH.TITLE,
+				string.Format(Strings.Get(STRINGS.ONITWITCH.TOASTS.RESEARCH_TECH.BODY_FORMAT.key), techName)
 			);
 		}
 	}

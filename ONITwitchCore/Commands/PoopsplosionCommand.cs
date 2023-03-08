@@ -47,6 +47,6 @@ public class PoopsplosionCommand : CommandBase
 			}
 		}
 
-		ToastManager.InstantiateToast(STRINGS.TOASTS.POOPSPLOSION.TITLE, STRINGS.TOASTS.POOPSPLOSION.BODY);
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.POOPSPLOSION.TITLE, STRINGS.ONITWITCH.TOASTS.POOPSPLOSION.BODY);
 	}
 }
