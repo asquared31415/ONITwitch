@@ -47,6 +47,68 @@ public static class STRINGS
 		}
 	}
 
+	public static class DUPLICANTS
+	{
+		// TODO: fix all the strings here
+		public static class MODIFIERS
+		{
+			public static class ATHLETICS_UP
+			{
+				public static readonly LocString NAME = "Athletics Up";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class ATHLETICS_DOWN
+			{
+				public static readonly LocString NAME = "Athletics Down";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class CONSTRUCTION_UP
+			{
+				public static readonly LocString NAME = "Construction Up";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class CONSTRUCTION_DOWN
+			{
+				public static readonly LocString NAME = "Construction Down";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class EXCAVATION_UP
+			{
+				public static readonly LocString NAME = "Excavation Up";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class EXCAVATION_DOWN
+			{
+				public static readonly LocString NAME = "Excavation Down";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class SLEEPY
+			{
+				public static readonly LocString NAME = "Incredibly Sleepy";
+				public static readonly LocString TOOLTIP = "Incredibly Exhausted";
+			}
+			
+			public static class STRENGTH_UP
+			{
+				public static readonly LocString NAME = "Strength Up";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+			
+			public static class STRENGTH_DOWN
+			{
+				public static readonly LocString NAME = "Strength Down";
+				public static readonly LocString TOOLTIP = "TODO";
+			}
+		}
+	}
+	
+	
 	public static class ELEMENTS
 	{
 		public static class INDESTRUCTIBLEELEMENT

@@ -6,8 +6,8 @@ public static class CustomEffects
 {
 	public static readonly Effect AthleticsUpEffect = new(
 		"ONITwitch.AttributeAthleticsUp",
-		"Athletics Up",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.ATHLETICS_UP.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.ATHLETICS_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -16,8 +16,8 @@ public static class CustomEffects
 
 	public static readonly Effect AthleticsDownEffect = new(
 		"ONITwitch.AttributeAthleticsDown",
-		"Athletics Down",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.ATHLETICS_DOWN.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.ATHLETICS_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -26,8 +26,8 @@ public static class CustomEffects
 
 	public static readonly Effect ConstructionUpEffect = new(
 		"ONITwitch.AttributeConstructionUp",
-		"Construction Up",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.CONSTRUCTION_UP.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.CONSTRUCTION_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -36,8 +36,8 @@ public static class CustomEffects
 
 	public static readonly Effect ConstructionDownEffect = new(
 		"ONITwitch.AttributeConstructionDown",
-		"Construction Down",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.CONSTRUCTION_DOWN.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.CONSTRUCTION_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -46,8 +46,8 @@ public static class CustomEffects
 
 	public static readonly Effect ExcavationUpEffect = new(
 		"ONITwitch.AttributeExcavationUp",
-		"Excavation Up",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.EXCAVATION_UP.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.EXCAVATION_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -56,8 +56,8 @@ public static class CustomEffects
 
 	public static readonly Effect ExcavationDownEffect = new(
 		"ONITwitch.AttributeExcavationDown",
-		"Excavation Down",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.EXCAVATION_DOWN.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.EXCAVATION_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -66,8 +66,8 @@ public static class CustomEffects
 
 	public static readonly Effect StrengthUpEffect = new(
 		"ONITwitch.AttributeStrengthUp",
-		"Strength Up",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.STRENGTH_UP.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.STRENGTH_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -76,8 +76,8 @@ public static class CustomEffects
 
 	public static readonly Effect StrengthDownEffect = new(
 		"ONITwitch.AttributeStrengthDown",
-		"Strength Down",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.STRENGTH_DOWN.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.STRENGTH_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -86,8 +86,8 @@ public static class CustomEffects
 
 	public static readonly Effect SleepyEffect = new(
 		"ONITwitch.SleepyDupesEffect",
-		"Incredibly Sleepy",
-		"TODO",
+		STRINGS.DUPLICANTS.MODIFIERS.SLEEPY.NAME,
+		STRINGS.DUPLICANTS.MODIFIERS.SLEEPY.TOOLTIP,
 		0.5f * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
@@ -115,7 +115,7 @@ public static class CustomEffects
 		effects.Add(StrengthUpEffect);
 		StrengthDownEffect.Add(new AttributeModifier(attributes.Strength.Id, -5));
 		effects.Add(StrengthDownEffect);
-		SleepyEffect.Add(new AttributeModifier(amounts.Stamina.deltaAttribute.Id, -10f, "Incredibly Exhausted"));
+		SleepyEffect.Add(new AttributeModifier(amounts.Stamina.deltaAttribute.Id, -10f, STRINGS.DUPLICANTS.MODIFIERS.SLEEPY.TOOLTIP));
 		effects.Add(SleepyEffect);
 	}
 }
