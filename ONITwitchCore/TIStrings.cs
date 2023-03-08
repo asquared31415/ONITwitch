@@ -450,22 +450,32 @@ public static class STRINGS
 			public static readonly LocString BODY = "Many tiles have been replaced with non-insulated versions";
 		}
 	}
-	
+
 	// TODO: strings here
 	public static class UI
 	{
+		public static class PAUSE_MENU
+		{
+			public static readonly LocString START_VOTES = "Start Voting";
+		}
+
 		public static class POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN
 		{
 			public static readonly LocString NAME = "View Dimension";
 			public static readonly LocString TOOLTIP = "TODO";
 		}
-		
+
 		public static class POCKET_DIMENSION_INTERIOR_SIDE_SCREEN
 		{
 			public static readonly LocString NAME = "View Parent";
 			public static readonly LocString TOOLTIP = "TODO";
 		}
-		
+
+		public static class SETTINGS
+		{
+			public static readonly LocString BUTTON_NAME = "Settings";
+		}
+
 		public static class SURPRISE_BOX_SIDE_SCREEN
 		{
 			public static readonly LocString NAME = "Open";
