@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
+using STRINGS;
 
 namespace ONITwitchCore.Settings;
 
@@ -107,9 +108,9 @@ public class GenericModSettings
 
 					Log.Warn($"Found future config version {config.Version}");
 					DialogUtil.MakeDialog(
-						"Unknown Save Version",
-						"An unknown version of the Twitch Integration config was encountered and the config had to be reset. Your old config has been saved to config_bak.json.",
-						"Ok",
+						STRINGS.UI.DIALOGS.UNKNOWN_SAVE.TITLE,
+						STRINGS.UI.DIALOGS.UNKNOWN_SAVE.BODY,
+						UI.CONFIRMDIALOG.OK,
 						null
 					);
 					config = new SettingsData();

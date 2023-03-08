@@ -2,6 +2,7 @@
 // ReSharper disable UnusedType.Global
 // ReSharper disable UnusedMember.Global
 
+using ONITwitchLib.Utils;
 using STRINGS;
 
 #pragma warning disable CS1591
@@ -454,6 +455,49 @@ public static class STRINGS
 	// TODO: strings here
 	public static class UI
 	{
+		public static class DIALOGS
+		{
+			public static class DEADLY_CONFIG
+			{
+				public static readonly LocString TITLE = "Deadly Settings";
+
+				public static readonly LocString BODY =
+					$"The Deadly danger has events that can {"<i><b>directly kill your duplicants</b></i>".Colored(ColorUtil.RedWarningColor)} or cause extremely deadly things to happen, often with no opportunity to prevent it.  Do not get too attached to your dupes.";
+
+				public static readonly LocString CONTINUE = "Continue".Colored(ColorUtil.RedWarningColor);
+			}
+
+			public static class EVENT_ERROR
+			{
+				public static readonly LocString TITLE = "Event Error";
+
+				public static readonly LocString BODY_FORMAT =
+					"Event {0} crashed while being run: {1}.\nStopping votes.\nPlease report this error (and provide the log) to that event's author.";
+			}
+
+			public static class INVALID_CREDENTIALS
+			{
+				public static readonly LocString TITLE = "Invalid Credentials";
+
+				public static readonly LocString BODY =
+					"The credentials file was broken and has been reset, please follow the instructions in the README";
+			}
+
+			public static class INVALID_EVENT_CONFIG
+			{
+				public static readonly LocString TITLE = "Invalid Config";
+				public static readonly LocString BODY = "The config provided was invalid";
+			}
+
+			public static class UNKNOWN_SAVE
+			{
+				public static readonly LocString TITLE = "Unknown Save Version";
+
+				public static readonly LocString BODY =
+					"An unknown version of the Twitch Integration config was encountered and the config had to be reset. Your old config has been saved to config_bak.json.";
+			}
+		}
+
 		public static class PAUSE_MENU
 		{
 			public static readonly LocString START_VOTES = "Start Voting";

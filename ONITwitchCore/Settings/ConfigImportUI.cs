@@ -9,6 +9,7 @@ using ONITwitchCore.Config;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
+using STRINGS;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,7 +96,12 @@ internal class ConfigImportUI : KScreen
 
 	private static void ShowError()
 	{
-		DialogUtil.MakeDialog("Invalid Config", "The config provided was invalid", "Ok", null);
+		DialogUtil.MakeDialog(
+			STRINGS.UI.DIALOGS.INVALID_EVENT_CONFIG.TITLE,
+			STRINGS.UI.DIALOGS.INVALID_EVENT_CONFIG.BODY,
+			UI.CONFIRMDIALOG.OK,
+			null
+		);
 	}
 
 	public override bool IsModal()

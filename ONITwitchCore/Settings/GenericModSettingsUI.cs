@@ -190,9 +190,9 @@ internal class GenericModSettingsUI : KScreen
 		if ((GenericModSettings.Data.MaxDanger < Danger.Deadly) && ((Danger) maxDangerSlider.value >= Danger.Deadly))
 		{
 			DialogUtil.MakeDialog(
-				"Deadly Settings",
-				$"The Deadly danger has events that can {"<i><b>directly kill your duplicants</b></i>".Colored(ColorUtil.RedWarningColor)} or cause extremely deadly things to happen, often with no opportunity to prevent it.  Do not get too attached to your dupes.",
-				"Continue".Colored(ColorUtil.RedWarningColor),
+				STRINGS.UI.DIALOGS.DEADLY_CONFIG.TITLE,
+				STRINGS.UI.DIALOGS.DEADLY_CONFIG.BODY,
+				STRINGS.UI.DIALOGS.DEADLY_CONFIG.CONTINUE,
 				() => { }
 			);
 		}

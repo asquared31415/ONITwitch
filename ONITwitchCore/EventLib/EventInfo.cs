@@ -5,6 +5,7 @@ using ONITwitchCore;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
+using STRINGS;
 
 namespace EventLib;
 
@@ -88,9 +89,13 @@ public class EventInfo
 			var debugName = FriendlyName != null ? $"{FriendlyName} ({Id})" : $"({Id})";
 			Log.Warn($"crash while processing event {debugName}: {e}");
 			DialogUtil.MakeDialog(
-				"Event Error",
-				$"Event {debugName} crashed while being run: {e.Message}.\nStopping votes.\nPlease report this error (and provide the log) to that event's author.",
-				"Ok",
+				ONITwitchCore.STRINGS.UI.DIALOGS.EVENT_ERROR.TITLE,
+				string.Format(
+					Strings.Get(ONITwitchCore.STRINGS.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT.key),
+					debugName,
+					e.Message
+				),
+				UI.CONFIRMDIALOG.OK,
 				null
 			);
 

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
+using STRINGS;
 
 namespace ONITwitchCore.Config;
 
@@ -45,9 +46,9 @@ public class CredentialsConfig
 				JsonConvert.SerializeObject(Credentials, Formatting.Indented)
 			);
 			DialogUtil.MakeDialog(
-				"Invalid Credentials",
-				"The credentials file was broken and has been reset, please follow the instructions in the README",
-				"Ok",
+				STRINGS.UI.DIALOGS.INVALID_CREDENTIALS.TITLE,
+				STRINGS.UI.DIALOGS.INVALID_CREDENTIALS.BODY,
+				UI.CONFIRMDIALOG.OK,
 				null
 			);
 		}
