@@ -47,6 +47,22 @@ public static class STRINGS
 		}
 	}
 
+	public static class DIAGNOSTICS
+	{
+		public static class DIMENSION_CLOSING
+		{
+			// idk where this is used
+			public static readonly LocString CRITERION_NAME = "Pocket Dimension closing soon";
+
+			public static readonly LocString DIAGNOSTIC_NAME = "Time Remaining";
+
+			// this is not shown under normal cases
+			public static readonly LocString ERROR = "Error";
+			public static readonly LocString NORMAL = "Dimension Normal";
+			public static readonly LocString CLOSING = "Low Time Remaining";
+		}
+	}
+
 	public static class DUPLICANTS
 	{
 		// TODO: fix all the strings here
@@ -57,49 +73,49 @@ public static class STRINGS
 				public static readonly LocString NAME = "Athletics Up";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class ATHLETICS_DOWN
 			{
 				public static readonly LocString NAME = "Athletics Down";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class CONSTRUCTION_UP
 			{
 				public static readonly LocString NAME = "Construction Up";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class CONSTRUCTION_DOWN
 			{
 				public static readonly LocString NAME = "Construction Down";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class EXCAVATION_UP
 			{
 				public static readonly LocString NAME = "Excavation Up";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class EXCAVATION_DOWN
 			{
 				public static readonly LocString NAME = "Excavation Down";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class SLEEPY
 			{
 				public static readonly LocString NAME = "Incredibly Sleepy";
 				public static readonly LocString TOOLTIP = "Incredibly Exhausted";
 			}
-			
+
 			public static class STRENGTH_UP
 			{
 				public static readonly LocString NAME = "Strength Up";
 				public static readonly LocString TOOLTIP = "TODO";
 			}
-			
+
 			public static class STRENGTH_DOWN
 			{
 				public static readonly LocString NAME = "Strength Down";
@@ -107,8 +123,7 @@ public static class STRINGS
 			}
 		}
 	}
-	
-	
+
 	public static class ELEMENTS
 	{
 		public static class INDESTRUCTIBLEELEMENT
@@ -429,14 +444,14 @@ public static class STRINGS
 			public static readonly LocString BODY = "Many tiles have been replaced with non-insulated versions";
 		}
 	}
-	
+
 	public static class VOTE_CONTROLLER
 	{
 		public static readonly LocString START_VOTE_HEADER = "Starting new vote! ";
 		public static readonly LocString CHOSEN_VOTE_FORMAT = "The chosen vote was {0} with {1} votes";
 		public static readonly LocString NO_VOTES = "No options were voted for";
 	}
-	
+
 	public static class VOTE_INFO_FILE
 	{
 		public static readonly LocString NOT_STARTED = "Voting not yet started";

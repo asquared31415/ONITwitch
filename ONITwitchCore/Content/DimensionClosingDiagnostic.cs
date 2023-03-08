@@ -7,24 +7,30 @@ public class DimensionClosingDiagnostic : ColonyDiagnostic
 {
 	public const string Id = TwitchModInfo.ModPrefix + "PocketDimIsClosingSoon";
 
-	public DimensionClosingDiagnostic(int worldID) : base(worldID, "Time Remaining")
+	public DimensionClosingDiagnostic(int worldID) : base(
+		worldID,
+		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.DIAGNOSTIC_NAME
+	)
 	{
-		AddCriterion(Id, new DiagnosticCriterion("Pocket Dimension closing soon", EvaluateDiagnostic));
+		AddCriterion(
+			Id,
+			new DiagnosticCriterion(STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.CRITERION_NAME, EvaluateDiagnostic)
+		);
 	}
 
 	private static readonly DiagnosticResult ErrorDiagnostic = new(
 		DiagnosticResult.Opinion.DuplicantThreatening,
-		"Error"
+		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.ERROR
 	);
 
 	private static readonly DiagnosticResult NormalDiagnostic = new(
 		DiagnosticResult.Opinion.Normal,
-		"Dimension Normal"
+		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.NORMAL
 	);
 
 	private static readonly DiagnosticResult LowTimeDiagnostic = new(
 		DiagnosticResult.Opinion.Bad,
-		"Low Time Remaining"
+		STRINGS.DIAGNOSTICS.DIMENSION_CLOSING.CLOSING
 	);
 
 	private DiagnosticResult EvaluateDiagnostic()
