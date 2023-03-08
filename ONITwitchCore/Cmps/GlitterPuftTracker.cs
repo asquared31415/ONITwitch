@@ -1,5 +1,7 @@
 using KSerialization;
 using ONITwitchCore.Integration.DecorPackA;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
@@ -71,7 +73,7 @@ public class GlitterPuftTracker : KMonoBehaviour
 			{
 				if (!thisPuft.PuftGroup.Remove(other.gameObject))
 				{
-					Debug.LogWarning("[Twitch Integration] Glitter Puft left collider without entering");
+					Log.Debug("[Twitch Integration] Glitter Puft left collider without entering");
 				}
 			}
 		}

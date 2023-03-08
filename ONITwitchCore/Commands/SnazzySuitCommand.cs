@@ -1,5 +1,6 @@
 using System;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
@@ -42,7 +43,7 @@ public class SnazzySuitCommand : CommandBase
 		}
 		else
 		{
-			Debug.LogWarning($"[Twitch Integration] Unable to spawn prefab {CustomClothingConfig.ID}");
+			Log.Warn($"Unable to spawn prefab {CustomClothingConfig.ID}");
 		}
 	}
 }

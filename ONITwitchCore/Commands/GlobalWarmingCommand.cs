@@ -1,5 +1,6 @@
 using System.Linq;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
@@ -17,10 +18,10 @@ public class GlobalWarmingCommand : CommandBase
 			.ToList();
 		if (worlds.Count == 0)
 		{
-			Debug.LogWarning("[Twitch Integration] Unable to find a suitable world for global warming");
+			Log.Warn("Unable to find a suitable world for global warming");
 			foreach (var worldContainer in ClusterManager.Instance.WorldContainers)
 			{
-				Debug.Log(
+				Log.Debug(
 					$"{worldContainer.GetComponent<ClusterGridEntity>().Name}(id {worldContainer.id}) has parent {worldContainer.ParentWorldId}"
 				);
 			}

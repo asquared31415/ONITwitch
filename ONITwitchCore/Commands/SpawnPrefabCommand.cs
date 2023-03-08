@@ -1,3 +1,4 @@
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
@@ -41,7 +42,7 @@ public class SpawnPrefabCommand : CommandBase
 		}
 		else
 		{
-			Debug.LogWarning($"[Twitch Integration] Unable to spawn prefab {prefabId}");
+			Log.Warn($"Unable to spawn prefab {prefabId}");
 		}
 	}
 }

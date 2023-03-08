@@ -5,6 +5,7 @@ using ImGuiNET;
 using JetBrains.Annotations;
 using ONITwitchCore.Patches;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using DataManager = EventLib.DataManager;
@@ -167,9 +168,7 @@ public class TwitchDevTool : DevTool
 							ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
 							if (buttonPressed)
 							{
-								Debug.Log(
-									$"[Twitch Integration] Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})"
-								);
+								Log.Debug($"Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
 								var data = dataInst.GetDataForEvent(eventInfo);
 								eventInfo.Trigger(data);
 							}

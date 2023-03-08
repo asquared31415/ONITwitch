@@ -3,6 +3,7 @@ using System.IO;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 
 namespace ONITwitchCore.Config;
@@ -36,8 +37,8 @@ public class CredentialsConfig
 		}
 		catch (JsonException je)
 		{
-			Debug.LogWarning("[Twitch Integration] Invalid JSON for credentials");
-			Debug.LogWarning($"[Twitch Integration] {je}");
+			Log.Warn("Invalid JSON for credentials");
+			Log.Warn($"{je}");
 			Credentials = new Credentials();
 			File.WriteAllText(
 				TwitchModInfo.CredentialsPath,

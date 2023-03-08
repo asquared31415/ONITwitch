@@ -2,6 +2,8 @@ using System.Linq;
 using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Content;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +42,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 		}
 		else
 		{
-			Debug.LogWarning("[Twitch Integration] no exterior door linked to pocket dimension");
+			Log.Warn("no exterior door linked to pocket dimension");
 			DestroyWorld();
 		}
 
@@ -86,9 +88,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 		if (!WorldSelector.Instance.worldRows.TryGetValue(world.id, out var worldRow))
 		{
-			Debug.LogWarning(
-				$"[Twitch Integration] World selector did not have a row for world {world} (idx {world.id})"
-			);
+			Log.Warn($"World selector did not have a row for world {world} (idx {world.id})");
 			return;
 		}
 
@@ -108,7 +108,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 		var door = ExteriorPortal.Get();
 		if (door == null)
 		{
-			Debug.LogWarning($"[Twitch Integration] Destroying world with no exterior door!");
+			Log.Warn("Destroying world with no exterior door!");
 		}
 
 		if (world != null)
@@ -165,12 +165,6 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 			// disable the component, so it only destroys once
 			enabled = false;
-		}
-		else
-		{
-			Debug.LogWarning(
-				$"[Twitch Integration] Unable to destroy pocket dimension door: {door} world: {world}"
-			);
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Delaunay.Geo;
@@ -373,6 +374,12 @@ public static class PocketDimensionGenerator
 				);
 			}
 		);
+
+		if (world == null)
+		{
+			// throw this instead of NREing later, it will be handled by the event error handler
+			throw new Exception("Unable to create a world for a pocket dimension");
+		}
 
 		// This setup happens immediately, before the world spawns, and before the template is placed
 		var exteriorBuildingDef = Assets.GetBuildingDef(PocketDimensionExteriorPortalConfig.Id);

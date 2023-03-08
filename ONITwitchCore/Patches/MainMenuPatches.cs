@@ -5,7 +5,9 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Config;
-using ONITwitchCore.Toasts;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
+using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Patches;
 
@@ -27,12 +29,12 @@ public static class MainMenuPatches
 			string errMsg = null;
 			if (nick.IsNullOrWhiteSpace())
 			{
-				Debug.LogWarning("[Twitch Integration] Null or whitespace nick in credentials");
+				Log.Warn("Null or whitespace nick in credentials");
 				errMsg = "The credentials file does not have a Twitch login name set";
 			}
 			else if (nick.Contains("/") || nick.Contains("\\"))
 			{
-				Debug.LogWarning($"[Twitch Integration] Nick contained a slash: {nick}");
+				Log.Warn($"Nick contained a slash: {nick}");
 				errMsg =
 					"The Twitch nickname in the credentials file contained a slash.  The nickname should be <i>only</i> the name you use to log in to Twitch.";
 			}
@@ -61,7 +63,7 @@ public static class MainMenuPatches
 			var match = OauthRegex.Match(oauth);
 			if (!match.Success || (match.Index != 0))
 			{
-				Debug.LogWarning("[Twitch Integration] oauth did not match the regex `[0-9a-zA-Z]+`");
+				Log.Warn("oauth did not match the regex `[0-9a-zA-Z]+`");
 				errMsg = "Invalid OAuth token!\nThe OAuth token should be composed of only numbers and letters.";
 			}
 			else
@@ -80,18 +82,18 @@ public static class MainMenuPatches
 				}
 				catch (WebException we)
 				{
-					Debug.LogWarning("[Twitch Integration] Error validating token with Twitch.");
-
 					using var r = we.Response;
 					if (r != null)
 					{
 						var httpResponse = (HttpWebResponse) r;
+						Log.Warn($"Error validating oauth token with twitch.  Status: {httpResponse.StatusCode}");
 						errMsg = httpResponse.StatusCode == HttpStatusCode.Unauthorized
 							? "The OAuth token is invalid or has expired.  Please generate a new token following the instructions in the README."
 							: "An unknown error occured when validating your OAuth token with Twitch.";
 					}
 					else
 					{
+						Log.Warn("Error validating oauth token with twitch.  No response.");
 						errMsg =
 							"An unknown error occured when validating your OAuth token with Twitch. (No response from server)";
 					}

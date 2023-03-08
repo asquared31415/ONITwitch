@@ -1,4 +1,6 @@
 using KSerialization;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
@@ -42,7 +44,7 @@ public class PocketDimensionExteriorPortal : KMonoBehaviour
 		}
 		else
 		{
-			Debug.LogWarning("[Twitch Integration] No return portal for pocket dimension, removing");
+			Log.Warn("No return portal for pocket dimension on spawn, removing");
 			Destroy();
 		}
 	}

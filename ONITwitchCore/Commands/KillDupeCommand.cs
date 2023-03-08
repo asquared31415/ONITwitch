@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -28,13 +29,11 @@ public class KillDupeCommand : CommandBase
 				rand.gameObject
 			);
 
-			Debug.Log($"[Twitch Integration] Killed {rand.name}");
+			Log.Info($"Killed {rand.name}");
 		}
 		else
 		{
-			Debug.LogWarning(
-				"[TwitchIntegration] Could not kill a random dupe (Do any live dupes exist?)"
-			);
+			Log.Warn("Unable to find a dupe to kill");
 		}
 	}
 }

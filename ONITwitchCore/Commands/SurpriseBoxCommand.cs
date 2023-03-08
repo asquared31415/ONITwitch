@@ -1,5 +1,6 @@
 using ONITwitchCore.Content.Entities;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -18,7 +19,7 @@ public class SurpriseBoxCommand : CommandBase
 		}
 		else
 		{
-			Debug.LogWarning("[Twitch Integration] Unable to spawn a Surprise Box, no telepads or live minions");
+			Log.Warn("Unable to spawn a Surprise Box, no telepads or live minions");
 			return;
 		}
 

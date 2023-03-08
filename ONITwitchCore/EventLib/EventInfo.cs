@@ -3,6 +3,7 @@ using System.Collections;
 using JetBrains.Annotations;
 using ONITwitchCore;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 
 namespace EventLib;
@@ -85,7 +86,7 @@ public class EventInfo
 		catch (Exception e)
 		{
 			var debugName = FriendlyName != null ? $"{FriendlyName} ({Id})" : $"({Id})";
-			Debug.LogWarning($"[Twitch Integration] crash while processing event {debugName}: {e}");
+			Log.Warn($"crash while processing event {debugName}: {e}");
 			DialogUtil.MakeDialog(
 				"Event Error",
 				$"Event {debugName} crashed while being run: {e.Message}.\nStopping votes.\nPlease report this error (and provide the log) to that event's author.",

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KSerialization;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,8 +26,9 @@ public class RainPrefab : KMonoBehaviour
 
 		if (prefabChances.Count == 0)
 		{
-			Debug.LogWarning("[Twitch Integration] Cannot rain list of zero prefabs");
-			Debug.LogWarning(Environment.StackTrace);
+			// this is a warning for mod devs to see, even if they're working against the release version
+			Log.Warn("[Twitch Integration] Cannot rain list of zero prefabs");
+			Log.Warn(Environment.StackTrace);
 
 			enabled = false;
 			return;
@@ -130,10 +133,10 @@ public class RainPrefab : KMonoBehaviour
 			}
 		}
 
-		Debug.LogWarning("[Twitch Integration] Unable to select a random prefab for prefab rain");
+		Log.Warn("Unable to select a random prefab for prefab rain");
 		foreach (var (prefabTag, weight) in prefabChances)
 		{
-			Debug.LogWarning($"{prefabTag}: {weight}");
+			Log.Debug($"{prefabTag}: {weight}");
 		}
 
 		return Tag.Invalid;

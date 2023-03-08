@@ -3,6 +3,7 @@ using System.Linq;
 using ONITwitchCore.Config;
 using ONITwitchCore.Settings;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 using UnityEngine;
 
 namespace ONITwitchCore.Commands;
@@ -40,7 +41,7 @@ public class SpawnDupeCommand : CommandBase
 		var liveMinions = Components.LiveMinionIdentities.Items;
 		if (liveMinions.Count == 0)
 		{
-			Debug.LogWarning("[TwitchIntegration] No live minions, aborting spawn");
+			Log.Warn("No live minions, aborting spawn");
 			return;
 		}
 
@@ -75,6 +76,6 @@ public class SpawnDupeCommand : CommandBase
 			minion
 		);
 
-		Debug.Log($"[Twitch Integration] Spawned duplicant {identity.name}");
+		Log.Info($"Spawned duplicant {identity.name}");
 	}
 }

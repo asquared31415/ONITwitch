@@ -3,6 +3,8 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using ONITwitchCore.Toasts;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,14 +84,14 @@ public static class ModAssets
 		var assetStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
 		if (assetStream == null)
 		{
-			Debug.LogWarning($"[Twitch Integration] Unable to locate embedded asset {name}");
+			Log.Warn($"Unable to locate embedded asset {name}");
 			return null;
 		}
 
 		var bundle = AssetBundle.LoadFromStream(assetStream);
 		if (bundle == null)
 		{
-			Debug.LogWarning($"[Twitch Integration] Error loading asset bundle {name}");
+			Log.Warn($"Error loading asset bundle {name}");
 			return null;
 		}
 

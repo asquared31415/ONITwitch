@@ -1,4 +1,5 @@
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Content;
 
@@ -31,15 +32,13 @@ public class DimensionClosingDiagnostic : ColonyDiagnostic
 		var world = ClusterManager.Instance.GetWorld(worldID);
 		if (world == null)
 		{
-			Debug.LogWarning($"[Twitch Integration] Pocket dimension closing diagnostic on null world idx {worldID}");
+			Log.Debug($"Pocket dimension closing diagnostic on null world idx {worldID}");
 			return ErrorDiagnostic;
 		}
 
 		if (!world.TryGetComponent(out Cmps.PocketDimension.PocketDimension pocketDimension))
 		{
-			Debug.LogWarning(
-				$"[Twitch Integration] Pocket dimension closing diagnostic on incorrect world {world} (id {world.id})"
-			);
+			Log.Warn($"Pocket dimension closing diagnostic on incorrect world {world} (id {world.id})");
 			return ErrorDiagnostic;
 		}
 

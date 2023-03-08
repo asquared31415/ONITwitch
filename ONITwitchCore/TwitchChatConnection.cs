@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using ONITwitchCore.Config;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
@@ -52,7 +53,8 @@ public class TwitchChatConnection
 				var credentials = CredentialsConfig.Instance.Credentials;
 				if (!credentials.IsValid())
 				{
-					Debug.LogWarning("[Twitch Integration] Credentials are not valid");
+					// TODO: handle this whole validity checking and erroring better
+					Log.Warn("Credentials are not valid");
 					return;
 				}
 
@@ -79,7 +81,7 @@ public class TwitchChatConnection
 					var result = await GetMessage();
 					if (result == null)
 					{
-						Debug.LogWarning("[Twitch Integration] Unable to read message");
+						Log.Debug("Unable to read message");
 					}
 					else
 					{
@@ -99,7 +101,7 @@ public class TwitchChatConnection
 							}
 							else
 							{
-								Debug.LogWarning($"[Twitch Integration] Unable to parse message: {trimmed}");
+								Log.Warn($"Unable to parse IRC message: {trimmed}");
 							}
 						}
 					}
@@ -150,7 +152,7 @@ public class TwitchChatConnection
 		}
 		else
 		{
-			Debug.LogWarning($"[Twitch Integration] Cannot send unknown command {message.Command}");
+			Log.Warn($"Cannot send unknown IRC command {message.Command}");
 		}
 	}
 
@@ -217,7 +219,7 @@ public class TwitchChatConnection
 				{
 					if (message.Args.LastOrDefault() is string motd)
 					{
-						Debug.Log($"[Twitch Integration] MOTD: {motd}");
+						Log.Debug($"Twitch IRC MOTD: {motd}");
 					}
 
 					break;
@@ -251,7 +253,7 @@ public class TwitchChatConnection
 					var pingArg = message.Args.LastOrDefault();
 					if (pingArg == null)
 					{
-						Debug.LogWarning("[Twitch Integration] Received null ping arg");
+						Log.Debug("Received null ping arg");
 					}
 					else
 					{
@@ -263,7 +265,7 @@ public class TwitchChatConnection
 				}
 				case IrcCommandType.PONG:
 				{
-					Debug.LogWarning("[Twitch Integration] unexpected PONG received");
+					Log.Debug("unexpected PONG received");
 					break;
 				}
 				case IrcCommandType.PRIVMSG:
@@ -275,7 +277,7 @@ public class TwitchChatConnection
 				{
 					if (message.Args.Count < 2)
 					{
-						Debug.LogWarning("[Twitch Integration] Did not receive CAP subcommand");
+						Log.Debug("Did not receive CAP subcommand");
 						break;
 					}
 
@@ -344,7 +346,7 @@ public class TwitchChatConnection
 	{
 		if (message.Args.Count < 2)
 		{
-			Debug.LogWarning("[Twitch Integration] PRIVMSG did not include all args");
+			Log.Debug("PRIVMSG did not include all args");
 			return;
 		}
 
@@ -419,15 +421,17 @@ public class TwitchChatConnection
 					{
 						case WebSocketException we:
 						{
-							Debug.Log(we);
+							Log.Warn(we);
 							break;
 						}
 						case Exception e:
 						{
-							Debug.LogWarning("An unexpected exception occurred when connecting");
-							Debug.Log(e.GetType());
-							Debug.Log(e.Message);
-							Debug.Log(e.StackTrace);
+							// the interleaved warns and debugs are intentional so that a release build doesn't
+							// have extra crap in it
+							Log.Warn("An unexpected exception occurred when connecting");
+							Log.Debug(e.GetType());
+							Log.Warn(e.Message);
+							Log.Debug(e.StackTrace);
 							return;
 						}
 					}
@@ -501,9 +505,11 @@ public class TwitchChatConnection
 		}
 		catch (AggregateException ae)
 		{
+			Log.Warn("Unable to send IRC message");
 			foreach (var ie in ae.InnerExceptions)
 			{
-				Debug.LogWarning(ie);
+				Log.Warn(ie.Message);
+				Log.Debug(ie);
 			}
 		}
 	}
@@ -524,12 +530,12 @@ public class TwitchChatConnection
 		}
 		catch (AggregateException ae)
 		{
-			Debug.Log(socket.State);
-			Debug.Log(socket.CloseStatus);
-			Debug.Log(socket.CloseStatusDescription);
+			Log.Debug(socket.State);
+			Log.Debug(socket.CloseStatus);
+			Log.Debug(socket.CloseStatusDescription);
 			foreach (var ie in ae.InnerExceptions)
 			{
-				Debug.LogWarning(ie);
+				Log.Debug(ie);
 			}
 
 			return null;

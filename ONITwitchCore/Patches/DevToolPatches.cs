@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -49,7 +51,7 @@ public static class DevToolPatches
 			var pingCallIdx = codes.FindLastIndex(ci => ci.Calls(InternalPingMethod));
 			if (pingCallIdx == -1)
 			{
-				Debug.LogWarning("[Twitch Integration] Unable to find Internal_Ping call to fix dev ui ping crash");
+				Log.Warn("Unable to find Internal_Ping call to fix dev ui ping crash");
 				return codes;
 			}
 

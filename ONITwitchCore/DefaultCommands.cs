@@ -5,6 +5,7 @@ using ONITwitchCore.Commands;
 using ONITwitchCore.Content;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using DataManager = EventLib.DataManager;
 using EventGroup = EventLib.EventGroup;
 using EventInfo = EventLib.EventInfo;
@@ -15,7 +16,7 @@ public static class DefaultCommands
 {
 	public static void SetupCommands()
 	{
-		Debug.Log("[Twitch Integration] Setting up default commands");
+		Log.Info("Setting up default commands");
 		RegisterCommand(
 			new CommandInfo(
 				"SpawnDupe",

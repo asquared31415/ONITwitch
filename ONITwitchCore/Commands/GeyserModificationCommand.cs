@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -20,9 +21,7 @@ public class GeyserModificationCommand : CommandBase
 			var target = geysers.GetRandom();
 			if (!GeoTunerConfig.geotunerGeyserSettings.TryGetValue(target.configuration.typeId, out var modification))
 			{
-				Debug.LogWarning(
-					$"[Twitch Integration] No modification registered for geyser type {target.configuration.typeId}, using default"
-				);
+				Log.Warn($"No modification registered for geyser type {target.configuration.typeId}, using default");
 				modification = GeoTunerConfig.CategorySettings[GeoTunerConfig.Category.DEFAULT_CATEGORY];
 			}
 
@@ -40,7 +39,7 @@ public class GeyserModificationCommand : CommandBase
 		}
 		else
 		{
-			Debug.LogWarning("[Twitch Integration] Unable to find any geysers to modify");
+			Log.Warn("Unable to find any geysers to modify");
 		}
 	}
 

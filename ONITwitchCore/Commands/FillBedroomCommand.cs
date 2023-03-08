@@ -1,5 +1,6 @@
 using System.Linq;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
@@ -23,7 +24,7 @@ public class FillBedroomCommand : CommandBase
 		var element = ElementUtil.FindElementByNameFast((string) data);
 		if (!ElementUtil.ElementExistsAndEnabled(element))
 		{
-			Debug.LogWarning($"[Twitch Integration] Unable to spawn element {(string) data}");
+			Log.Warn($"Unable to spawn element {(string) data}");
 			return;
 		}
 

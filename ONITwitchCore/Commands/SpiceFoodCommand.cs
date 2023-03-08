@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 using STRINGS;
 
 namespace ONITwitchCore.Commands;
@@ -16,7 +17,7 @@ public class SpiceFoodCommand : CommandBase
 		var validSpices = GetValidSpiceIds();
 		if (validSpices.Count == 0)
 		{
-			Debug.LogWarning("[Twitch Integration] No spices were enabled for the spice event");
+			Log.Warn("No spices were enabled for the spice event");
 			return;
 		}
 

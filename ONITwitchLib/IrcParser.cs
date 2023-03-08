@@ -291,6 +291,7 @@ public struct IrcMessage
 
 	public override string ToString()
 	{
+		// TODO: redact PASS messages
 		var sb = new StringBuilder();
 		if (Tags.Count > 0)
 		{

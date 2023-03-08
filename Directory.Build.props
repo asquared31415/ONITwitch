@@ -5,15 +5,18 @@
         <TargetFramework>net471</TargetFramework>
         <LangVersion>preview</LangVersion>
         <OutputType>Library</OutputType>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <BuildType>Release</BuildType>
         <LibFolder>../lib</LibFolder>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <DefineConstants>TRACE</DefineConstants>
+    <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+        <DefineTrace>true</DefineTrace>
+        <DefineDebug>true</DefineDebug>
+        <Optimize>false</Optimize>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <DefineTrace>true</DefineTrace>
         <Optimize>true</Optimize>
         <DebugType>none</DebugType>
     </PropertyGroup>

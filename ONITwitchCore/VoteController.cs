@@ -8,6 +8,7 @@ using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Settings;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using UnityEngine;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
@@ -65,7 +66,7 @@ public class VoteController : KMonoBehaviour
 	{
 		if (!connection.IsAuthenticated)
 		{
-			Debug.LogWarning("[Twitch Integration] Not yet authenticated, unable to start vote!");
+			Log.Warn("Not yet authenticated, unable to start vote!");
 			return false;
 		}
 
@@ -90,8 +91,8 @@ public class VoteController : KMonoBehaviour
 
 		if (eventOptions.Count == 0)
 		{
-			Debug.LogWarning("[Twitch Integration] Unable to draw any events! Canceling!");
-			State = VotingState.NotStarted;
+			Log.Warn("Unable to draw any events! Canceling.");
+			State = VotingState.Error;
 			return false;
 		}
 
@@ -101,7 +102,7 @@ public class VoteController : KMonoBehaviour
 			voteMsg.Append($"{idx + 1}: {eventOptions[idx].FriendlyName} ");
 		}
 
-		Debug.Log($"[Twitch Integration] {voteMsg}");
+		Log.Info($"{voteMsg}");
 
 		CurrentVote = new Vote(eventOptions);
 
@@ -137,9 +138,7 @@ public class VoteController : KMonoBehaviour
 			string responseText;
 			if (choice != null)
 			{
-				Debug.Log(
-					$"[Twitch Integration] Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes"
-				);
+				Log.Info($"Chosen vote was {choice.EventInfo}({choice.EventInfo.Id}) with {choice.Count} votes");
 				var data = DataManager.Instance.GetDataForEvent(choice.EventInfo);
 				choice.EventInfo.Trigger(data);
 				responseText = $"The chosen vote was {choice.EventInfo} with {choice.Count} votes";
@@ -150,7 +149,7 @@ public class VoteController : KMonoBehaviour
 					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.TITLE,
 					STRINGS.TOASTS.END_VOTE_NO_OPTIONS.BODY
 				);
-				Debug.Log("[Twitch Integration] No options were voted for");
+				Log.Info("No options were voted for");
 				responseText = "No options were voted for";
 			}
 
@@ -164,7 +163,7 @@ public class VoteController : KMonoBehaviour
 		{
 			State = VotingState.Error;
 
-			Debug.LogWarning($"[Twitch Integration] Unhandled exception {e} while processing a voted event");
+			Log.Warn($"Unhandled exception {e} while processing a voted event");
 		}
 	}
 

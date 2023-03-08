@@ -3,6 +3,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
 
 namespace ONITwitchCore.Settings;
 
@@ -67,7 +69,7 @@ public class GenericModSettings
 			{
 				case <= 0:
 				{
-					Debug.Log("[Twitch Integration] Migrating V0 config");
+					Log.Debug("Migrating V0 config");
 					config = MigrateV0Config(JsonConvert.DeserializeObject<JObject>(configText));
 
 					try
@@ -88,8 +90,28 @@ public class GenericModSettings
 				}
 				case > CurrentConfigVersion:
 				{
-					// TODO: UI warning
-					Debug.LogWarning($"[Twitch Integration] Found future config version {config.Version}");
+					try
+					{
+						var backupPath = Path.Combine(TwitchModInfo.MainModFolder, "config_bak.json");
+						if (File.Exists(backupPath))
+						{
+							File.Delete(backupPath);
+						}
+
+						File.Copy(TwitchModInfo.ConfigPath, backupPath);
+					}
+					catch (Exception e)
+					{
+						// ignored
+					}
+
+					Log.Warn($"Found future config version {config.Version}");
+					DialogUtil.MakeDialog(
+						"Unknown Save Version",
+						"An unknown version of the Twitch Integration config was encountered and the config had to be reset. Your old config has been saved to config_bak.json.",
+						"Ok",
+						null
+					);
 					config = new SettingsData();
 					break;
 				}
@@ -97,9 +119,7 @@ public class GenericModSettings
 
 			if (config.MaxDanger < config.MinDanger)
 			{
-				Debug.Log(
-					$"[Twitch Integration] Invalid danger min/max: {config.MinDanger}/{config.MaxDanger} resetting min to {Danger.None}"
-				);
+				Log.Info($"Invalid danger min/max: {config.MinDanger}/{config.MaxDanger} resetting min to {Danger.None}");
 				config.MinDanger = Danger.None;
 				SaveConfig(config);
 			}

@@ -7,19 +7,17 @@
     </PropertyGroup>
     <PropertyGroup>
         <MainMod>true</MainMod>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <DocumentationFile>bin\Release\net471\ONITwitchCore.xml</DocumentationFile>
+        <DocumentationFile>bin\$(Configuration)\net471\ONITwitchCore.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="UnityEngine.InputLegacyModule">
-            <HintPath>..\lib\UnityEngine.InputLegacyModule.dll</HintPath>
+            <HintPath>$(LibFolder)/UnityEngine.InputLegacyModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
-            <HintPath>..\lib\UnityEngine.TextRenderingModule.dll</HintPath>
+            <HintPath>$(LibFolder)/UnityEngine.TextRenderingModule.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

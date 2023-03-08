@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Logger;
 using UnityEngine;
 
 namespace ONITwitchLib.Utils;
@@ -59,7 +60,7 @@ public static class GridUtil
 
 		if (!Grid.IsValidBuildingCell(emptyCell))
 		{
-			Debug.LogWarning($"[Twitch Integration] Unable to find empty cell close to {baseCell} output {emptyCell}");
+			Log.Warn($"Unable to find empty cell close to {baseCell} output {emptyCell}");
 		}
 
 		return emptyCell;
@@ -83,9 +84,7 @@ public static class GridUtil
 
 		if (!Grid.IsValidCell(emptyCell))
 		{
-			Debug.LogWarning(
-				$"[Twitch Integration] Unable to find valid cell with clearance at start cell {baseCell}, output {emptyCell}"
-			);
+			Log.Warn($"Unable to find valid cell with clearance at start cell {baseCell}, output {emptyCell}");
 		}
 
 		return emptyCell;
@@ -110,9 +109,7 @@ public static class GridUtil
 
 		if (!Grid.IsValidCell(emptyCell))
 		{
-			Debug.LogWarning(
-				$"[Twitch Integration] Unable to find valid cell with building clearance at start cell {baseCell}, output {emptyCell}"
-			);
+			Log.Warn($"Unable to find valid cell with building clearance at start cell {baseCell}, output {emptyCell}");
 		}
 
 		return emptyCell;

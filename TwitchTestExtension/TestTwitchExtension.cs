@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchLib;
 using ONITwitchLib.Core;
+using ONITwitchLib.Logger;
 using ProcGen;
 
 namespace TwitchTestExtension;
@@ -24,7 +25,7 @@ public static class Db_Initialize_Patch
 	{
 		if (!TwitchModInfo.TwitchIsPresent)
 		{
-			Debug.LogWarning("Twitch not enabled");
+			Log.Warn("[Test Ext Events] Twitch not enabled");
 			return;
 		}
 
@@ -50,11 +51,7 @@ public static class Db_Initialize_Patch
 
 		var (extEvent, extEventGroup) = EventGroup.DefaultSingleEventGroup("ExtEvent", 4, "Extended Event");
 		extEvent.AddListener(
-			data =>
-			{
-				Debug.Log("Triggered ext event");
-				Debug.Log(data);
-			}
+			data => { Log.Info($"Triggered ext event with data {data}"); }
 		);
 		// add condition
 		extEvent.AddCondition(data => data is ExtData { Thing: true });

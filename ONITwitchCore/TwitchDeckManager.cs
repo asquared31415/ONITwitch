@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using ONITwitchCore.Config;
 using ONITwitchCore.Settings;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using DataManager = EventLib.DataManager;
 using EventGroup = EventLib.EventGroup;
 using EventInfo = EventLib.EventInfo;
@@ -76,7 +77,7 @@ public class TwitchDeckManager
 			}
 		}
 
-		Debug.LogWarning("[Twitch Integration] Unable to draw a command");
+		Log.Warn("Unable to draw a command");
 		return null;
 	}
 
@@ -117,7 +118,7 @@ public class TwitchDeckManager
 		{
 			if (group.TotalWeight < 0)
 			{
-				Debug.LogWarning($"[Twitch Integration] Group {group.Name} had invalid weight {group.TotalWeight}");
+				Log.Warn($"Group {group.Name} had invalid weight {group.TotalWeight}");
 				continue;
 			}
 

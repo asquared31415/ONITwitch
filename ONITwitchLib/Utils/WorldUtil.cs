@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Logger;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace ONITwitchLib.Utils;
 
 public static class WorldUtil
 {
+	[CanBeNull]
 	public static WorldContainer CreateWorldWithTemplate(
 		[NotNull] GameObject worldGo,
 		Vector2I size,
@@ -42,7 +44,7 @@ public static class WorldUtil
 			return worldContainer;
 		}
 
-		Debug.LogError($"[TwitchIntegration] Was not able to create a world of size {size}");
+		Log.Warn($"Unable to create a world of size {size}");
 		return null;
 	}
 
@@ -69,28 +71,26 @@ public static class WorldUtil
 			var world = ClusterManager.Instance.GetWorld(idx);
 			if (world == null)
 			{
-				Debug.LogWarning($"[Twitch Lib] Attempted to delete null world at index {idx}");
+				Log.Debug($"Attempted to delete null world at index {idx}");
 				return;
 			}
 
 			if (!world.TryGetComponent<ClusterGridEntity>(out var gridEntity))
 			{
-				Debug.LogWarning(
-					$"[Twitch Lib] World {world} (idx {idx}) was not a cluster grid entity, this should never happen!"
-				);
+				Log.Debug($"World {world} (idx {idx}) was not a cluster grid entity, this should never happen!");
 				return;
 			}
 
 			if (!WorldSelector.Instance.worldRows.TryGetValue(idx, out var worldRow))
 			{
-				Debug.LogWarning($"[Twitch Lib] World selector did not have a row for world {world} (idx {idx})");
+				Log.Debug($"World selector did not have a row for world {world} (idx {idx})");
 				return;
 			}
 
 			var targetSprite = gridEntity.GetUISprite();
 			if (targetSprite == null)
 			{
-				Debug.LogWarning($"[Twitch Lib] World {world} (idx {idx}) returned null UI sprite");
+				Log.Debug($"World {world} (idx {idx}) returned null UI sprite");
 				return;
 			}
 
@@ -117,7 +117,7 @@ public static class WorldUtil
 		var dict = diagnosticDict(ColonyDiagnosticUtility.Instance);
 		if (!dict.TryGetValue(worldIdx, out var diagnostics) || (diagnostics == null))
 		{
-			Debug.LogWarning($"[Twitch Integration] World {worldIdx} did not exist in the diagnostics list");
+			Log.Debug($"World {worldIdx} did not exist in the diagnostics list");
 			return;
 		}
 

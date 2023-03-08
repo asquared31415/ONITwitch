@@ -7,6 +7,8 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchCore;
 using ONITwitchCore.Config;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 
 namespace EventLib;
 
@@ -133,9 +135,8 @@ public class EventGroup
 		}
 		else
 		{
-			Debug.LogWarning(
-				$"[Twitch Integration] Unable to find a static ID for assembly {callingAssembly} to determine its namespace (did you try to register an event too soon?)"
-			);
+			// Warning for mod devs to be present even on the release versions 
+			Log.Warn($"Unable to find a static ID for assembly {callingAssembly} to determine its namespace (did you try to register an event before the twitch mod's OnAllModsLoaded?)");
 			modNamespace = "";
 		}
 
@@ -163,19 +164,16 @@ public class EventGroup
 		onChangedEvent?.Invoke(this);
 	}
 
-	/// <summary>
-	/// Don't call this
-	/// </summary>
-	public static void RegisterStaticIdMap(IEnumerable<Mod> mods)
+	internal static void RegisterStaticIdMap(IEnumerable<Mod> mods)
 	{
 		if (AssemblyIdMap != null)
 		{
-			Debug.LogWarning("[Twitch Integration] Attempting to initialize the assembly->static id map twice");
-			Debug.LogWarning(Environment.StackTrace);
+			Log.Debug("Attempting to initialize the assembly->static id map twice");
+			Log.Debug(Environment.StackTrace);
 		}
 		else
 		{
-			Debug.Log("[Twitch Integration] Initializing mod assembly map");
+			Log.Debug("Initializing mod assembly map");
 			AssemblyIdMap = new Dictionary<Assembly, string>();
 			foreach (var registeredMod in mods)
 			{

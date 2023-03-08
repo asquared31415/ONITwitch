@@ -6,6 +6,8 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchCore.Config;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using TMPro;
 using UnityEngine;
@@ -80,14 +82,13 @@ internal class ConfigImportUI : KScreen
 			}
 			else
 			{
-				Debug.LogWarning("[Twitch Integration] Invalid compressed data");
-				Debug.Log(config);
+				Log.Warn($"Invalid compressed data {config}");
 				ShowError();
 			}
 		}
 		catch (FormatException e)
 		{
-			Debug.Log($"[Twitch Integration] Invalid base64 {config}");
+			Log.Warn($"Invalid base64 {config}");
 			ShowError();
 		}
 	}

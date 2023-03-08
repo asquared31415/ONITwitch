@@ -1,4 +1,6 @@
 using KSerialization;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
@@ -27,7 +29,7 @@ public class DamageOverTime : KMonoBehaviour
 	{
 		if (health == null)
 		{
-			Debug.LogWarning($"[Twitch Integration] Poison damage over time missing health for {gameObject}");
+			Log.Debug($"Poison damage over time missing health for {gameObject}");
 			return;
 		}
 

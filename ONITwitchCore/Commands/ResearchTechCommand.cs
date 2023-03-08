@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -18,7 +19,7 @@ public class ResearchTechCommand : CommandBase
 		var possibleTechs = GetAllowedTechs();
 		if (possibleTechs.Count == 0)
 		{
-			Debug.LogWarning("[Twitch Integration] Zero allowed techs to research");
+			Log.Warn("Cannot find a Tech to research");
 			return;
 		}
 

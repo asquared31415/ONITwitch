@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using DataManager = EventLib.DataManager;
 using EventGroup = EventLib.EventGroup;
 using EventManager = EventLib.EventManager;
@@ -116,7 +117,7 @@ public class UserCommandConfigManager
 			if (now.Subtract(lastLoadTime).TotalSeconds >= 0.5f)
 			{
 				lastLoadTime = now;
-				Debug.Log("[Twitch Integration] Reloading user config");
+				Log.Debug("Reloading user config");
 
 				try
 				{

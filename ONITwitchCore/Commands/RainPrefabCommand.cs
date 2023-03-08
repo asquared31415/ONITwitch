@@ -3,6 +3,7 @@ using System.Linq;
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Patches;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -28,7 +29,7 @@ public class RainPrefabCommand : CommandBase
 		var prefab = Assets.GetPrefab(prefabId);
 		if (prefab == null)
 		{
-			Debug.LogWarning($"[Twitch Integration] Cannot rain missing prefab {prefabId}");
+			Log.Warn($"Cannot rain missing prefab {prefabId}");
 			return;
 		}
 

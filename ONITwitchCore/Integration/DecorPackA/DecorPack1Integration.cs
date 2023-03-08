@@ -1,6 +1,8 @@
 using System;
 using HarmonyLib;
 using ONITwitchCore.Integration.DecorPackA.Patches;
+using ONITwitchLib;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Integration.DecorPackA;
 
@@ -9,7 +11,7 @@ public static class DecorPack1Integration
 	// loads integration with Decor Pack 1
 	public static void LoadIntegration(Harmony harmony)
 	{
-		Debug.Log("[Twitch Integration] Loading integration with Decor Pack I");
+		Log.Info("Loading integration with Decor Pack I");
 		var moodLampConfigType = Type.GetType("DecorPackA.Buildings.MoodLamp.MoodLampConfig, DecorPackA");
 		if (moodLampConfigType != null)
 		{
@@ -20,9 +22,7 @@ public static class DecorPack1Integration
 		}
 		else
 		{
-			Debug.LogWarning("[Twitch Integration] Unable to find MoodLampConfig from Decor Pack I");
+			Log.Warn("Unable to find MoodLampConfig from Decor Pack I");
 		}
-
-		Debug.Log("[Twitch Integration] Decor Pack I integration complete!");
 	}
 }

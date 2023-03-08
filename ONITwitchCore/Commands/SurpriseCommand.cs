@@ -1,4 +1,5 @@
 using EventLib;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -15,7 +16,7 @@ public class SurpriseCommand : CommandBase
 		if (info != null)
 		{
 			var eventData = DataManager.Instance.GetDataForEvent(info);
-			Debug.Log($"[Twitch Integration] Surprise triggering {info}({info.Id})");
+			Log.Info($"Surprise triggering {info}({info.Id})");
 			info.Trigger(eventData);
 		}
 	}
