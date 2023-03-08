@@ -30,32 +30,36 @@ public class VoteFile : KMonoBehaviour
 				{
 					case VoteController.VotingState.NotStarted:
 					{
-						fileText = "Voting not yet started";
+						fileText = STRINGS.VOTE_INFO_FILE.NOT_STARTED;
 						break;
 					}
 					case VoteController.VotingState.VoteInProgress:
 					{
 						var sb = new StringBuilder();
-						sb.Append(
-							$"Current Vote ({Mathf.RoundToInt(voteController.VoteTimeRemaining)}s)\n"
-						);
 						var votes = voteController.CurrentVote.Votes;
 						for (var idx = 0; idx < votes.Count; idx++)
 						{
 							sb.Append($"{idx + 1}: {votes[idx].EventInfo} ({votes[idx].Count})\n");
 						}
 
-						fileText = sb.ToString();
+						fileText = string.Format(
+							Strings.Get(STRINGS.VOTE_INFO_FILE.IN_PROGRESS_FORMAT.key),
+							voteController.VoteTimeRemaining,
+							sb
+						);
 						break;
 					}
 					case VoteController.VotingState.VoteDelay:
 					{
-						fileText = $"Vote Over ({voteController.VoteDelayRemaining:F0} seconds to next vote)";
+						fileText = string.Format(
+							Strings.Get(STRINGS.VOTE_INFO_FILE.VOTE_OVER_FORMAT.key),
+							voteController.VoteDelayRemaining
+						);
 						break;
 					}
 					case VoteController.VotingState.Error:
 					{
-						fileText = "An error occurred in an event";
+						fileText = STRINGS.VOTE_INFO_FILE.ERROR;
 						break;
 					}
 					default:

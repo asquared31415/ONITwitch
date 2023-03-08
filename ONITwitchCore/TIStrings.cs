@@ -9,11 +9,6 @@ namespace ONITwitchCore;
 
 public static class STRINGS
 {
-	public static class TESTING
-	{
-		public static readonly LocString TEXT = "Testing text";
-	}
-
 	public static class BUILDINGS
 	{
 		public static class PREFABS
@@ -371,5 +366,13 @@ public static class STRINGS
 			public static readonly LocString TITLE = "Tiles Uninsulated";
 			public static readonly LocString BODY = "Many tiles have been replaced with non-insulated versions";
 		}
+	}
+	
+	public static class VOTE_INFO_FILE
+	{
+		public static readonly LocString NOT_STARTED = "Voting not yet started";
+		public static readonly LocString IN_PROGRESS_FORMAT = "Current Vote: ({0:F0}s)\n{1}";
+		public static readonly LocString VOTE_OVER_FORMAT = "Vote Over ({0:F0} seconds to next vote)";
+		public static readonly LocString ERROR = "An error occurred";
 	}
 }
