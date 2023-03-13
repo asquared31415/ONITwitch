@@ -1,5 +1,6 @@
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Toasts;
+using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
@@ -13,6 +14,10 @@ internal class EclipseCommand : CommandBase
 			eclipse.StartEclipse(time);
 
 			ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.ECLIPSE.TITLE, STRINGS.ONITWITCH.TOASTS.ECLIPSE.BODY);
+		}
+		else
+		{
+			Log.Warn("Unable to start eclipse");
 		}
 	}
 }

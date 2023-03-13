@@ -43,6 +43,12 @@ internal class ResearchTechCommand : CommandBase
 				string.Format(STRINGS.ONITWITCH.TOASTS.RESEARCH_TECH.BODY_FORMAT, techName)
 			);
 		}
+		else
+		{
+			Log.Info(
+				"Tech command could not find any techs to research, it was probably done between condition and run"
+			);
+		}
 	}
 
 	private static readonly string[] AllowedResearchKinds = { "basic", "advanced", "nuclear" };

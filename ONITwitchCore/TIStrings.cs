@@ -340,6 +340,12 @@ public static class STRINGS
 				public static readonly LocString BODY_FORMAT = "{0} died :(";
 			}
 
+			public static class MORPH
+			{
+				public static readonly LocString TITLE = "Critters Morphed";
+				public static readonly LocString BODY = "All critters have been morphed";
+			}
+
 			public static class PARTY_TIME
 			{
 				public static readonly LocString TITLE = "Party Time!";

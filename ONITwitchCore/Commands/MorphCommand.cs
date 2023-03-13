@@ -1,5 +1,6 @@
 using System.Linq;
 using Klei.AI;
+using ONITwitchCore.Toasts;
 using UnityEngine;
 
 namespace ONITwitchCore.Commands;
@@ -17,6 +18,8 @@ internal class MorphCommand : CommandBase
 		{
 			DoMorph(brain.gameObject);
 		}
+
+		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.MORPH.TITLE, STRINGS.ONITWITCH.TOASTS.MORPH.BODY);
 	}
 
 	private static void DoMorph(GameObject orig)
