@@ -6,7 +6,7 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
-public class GeyserModificationCommand : CommandBase
+internal class GeyserModificationCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

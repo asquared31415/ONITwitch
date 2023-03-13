@@ -6,7 +6,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class PoopsplosionCommand : CommandBase
+internal class PoopsplosionCommand : CommandBase
 {
 	private static readonly CellElementEvent SpawnEvent = new(
 		"TwitchSpawnedElement",

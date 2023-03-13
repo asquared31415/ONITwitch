@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
-public class SpawnDupeCommand : CommandBase
+internal class SpawnDupeCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

@@ -3,7 +3,7 @@ using KMod;
 
 namespace ONITwitchCore.Integration;
 
-public class ModIntegration
+internal class ModIntegration
 {
 	private readonly Dictionary<string, Mod> mods = new();
 

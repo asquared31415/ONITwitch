@@ -174,6 +174,11 @@ public class EventInfo
 		return (EventNamespace == other.EventNamespace) && (EventId == other.EventId);
 	}
 
+	/// <summary>
+	/// Compares this <see cref="EventInfo"/> and another by their <see cref="Id"/>.
+	/// </summary>
+	/// <param name="obj">The other <see cref="EventInfo"/>.</param>
+	/// <returns>Whether the two objects are equal.</returns>
 	public override bool Equals(object obj)
 	{
 		if (ReferenceEquals(null, obj))
@@ -189,6 +194,10 @@ public class EventInfo
 		return (obj.GetType() == GetType()) && Equals((EventInfo) obj);
 	}
 
+	/// <summary>
+	/// Gets a hash code for an <see cref="EventInfo"/> based on its <see cref="Id"/>.
+	/// </summary>
+	/// <returns>A hash code for the object.</returns>
 	public override int GetHashCode()
 	{
 		unchecked

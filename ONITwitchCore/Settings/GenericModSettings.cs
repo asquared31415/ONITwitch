@@ -9,7 +9,7 @@ using STRINGS;
 
 namespace ONITwitchCore.Settings;
 
-public class GenericModSettings
+internal static class GenericModSettings
 {
 	public static SettingsData Data
 	{
@@ -23,7 +23,7 @@ public class GenericModSettings
 
 	public const int CurrentConfigVersion = 1;
 
-	public class SettingsData
+	internal class SettingsData
 	{
 		// default version for deserializing, must be overwritten
 		public int Version = 0;
@@ -40,7 +40,7 @@ public class GenericModSettings
 		public Danger MaxDanger = Danger.High;
 
 		// file only config
-		public string VotesPath = "votes.txt";
+		public const string VotesPath = "votes.txt";
 
 		public override string ToString()
 		{

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace ONITwitchCore.Cmps.PocketDimension;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class PocketDimensionExteriorPortal : KMonoBehaviour
+internal class PocketDimensionExteriorPortal : KMonoBehaviour
 {
 	[Serialize] [SerializeField] public int CreatedWorldIdx = ClusterManager.INVALID_WORLD_IDX;
 

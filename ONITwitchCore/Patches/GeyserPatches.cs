@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class GeyserPatches
+internal static class GeyserPatches
 {
 	[HarmonyPatch(typeof(GeyserGenericConfig), nameof(GeyserGenericConfig.CreatePrefabs))]
-	public static class GeyserConfig_CreatePrefab_Patch
+	private static class GeyserConfig_CreatePrefab_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix(List<GameObject> __result)
+		private static void Postfix(List<GameObject> __result)
 		{
 			foreach (var go in __result)
 			{

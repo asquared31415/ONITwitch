@@ -12,7 +12,7 @@ using EventInfo = EventLib.EventInfo;
 
 namespace ONITwitchCore;
 
-public static class DefaultCommands
+internal static class DefaultCommands
 {
 	public static void SetupCommands()
 	{

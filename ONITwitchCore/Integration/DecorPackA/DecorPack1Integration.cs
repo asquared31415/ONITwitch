@@ -6,7 +6,7 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Integration.DecorPackA;
 
-public static class DecorPack1Integration
+internal static class DecorPack1Integration
 {
 	// loads integration with Decor Pack 1
 	public static void LoadIntegration(Harmony harmony)

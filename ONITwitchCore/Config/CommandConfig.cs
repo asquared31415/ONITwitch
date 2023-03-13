@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 
 namespace ONITwitchCore.Config;
 
-public class CommandConfig
+internal class CommandConfig
 {
 	[CanBeNull] public string FriendlyName;
 	[CanBeNull] public object Data;

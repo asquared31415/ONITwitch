@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
-public class TileTempCommand : CommandBase
+internal class TileTempCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

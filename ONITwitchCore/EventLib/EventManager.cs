@@ -14,6 +14,10 @@ public class EventManager
 
 	private readonly Dictionary<string, EventInfo> registeredEvents = new();
 
+	/// <summary>
+	/// The instance of the <see cref="EventManager"/>.
+	/// </summary>
+	[PublicAPI]
 	public static EventManager Instance
 	{
 		get

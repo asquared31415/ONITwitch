@@ -2,7 +2,7 @@ using System;
 
 namespace ONITwitchCore.Cmps.PocketDimension;
 
-public class PocketDimensionInteriorDoorSideScreen : KMonoBehaviour, ISidescreenButtonControl
+internal class PocketDimensionInteriorDoorSideScreen : KMonoBehaviour, ISidescreenButtonControl
 {
 #pragma warning disable CS0649
 	[MyCmpReq] private PocketDimensionInteriorPortal interiorPortal;

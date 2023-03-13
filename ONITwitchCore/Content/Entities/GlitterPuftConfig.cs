@@ -8,13 +8,13 @@ using UnityEngine;
 namespace ONITwitchCore.Content.Entities;
 
 [UsedImplicitly]
-public class GlitterPuftConfig : IEntityConfig
+internal class GlitterPuftConfig : IEntityConfig
 {
 	// suboptimal, but required for save compat, might be able to fix to "ONITwitch." later
 	public const string Id = "TI." + nameof(GlitterPuftConfig);
+	
 	private const string BaseTraitId = "TI." + "GlitterPuftBaseTrait";
-
-	public const string Anim = "TI_GlitterPuft_kanim";
+	private const string Anim = "TI_GlitterPuft_kanim";
 
 	private static readonly Tag SpeciesTag = GameTags.Creatures.Species.PuftSpecies;
 

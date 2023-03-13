@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace ONITwitchCore.Content.Entities;
 
-public class SurpriseBoxConfig : IEntityConfig
+internal class SurpriseBoxConfig : IEntityConfig
 {
 	public const string Id = TwitchModInfo.ModPrefix + nameof(SurpriseBoxConfig);
-	public const string Anim = "twitch_surprise_box_kanim";
+	private const string Anim = "twitch_surprise_box_kanim";
 
 	public GameObject CreatePrefab()
 	{

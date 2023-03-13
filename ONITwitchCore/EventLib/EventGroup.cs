@@ -20,10 +20,22 @@ namespace EventLib;
 public class EventGroup
 {
 	// TODO: expose these properties
-	[NotNull] public readonly string Name;
 
+	/// <summary>
+	/// The name of the group.
+	/// </summary>
+	[PublicAPI] [NotNull] public readonly string Name;
+
+	/// <summary>
+	/// The total weight of the group.
+	/// </summary>
+	[PublicAPI]
 	public int TotalWeight => weights.Values.Sum();
 
+	/// <summary>
+	/// An event that fires when a group is changed, called with the group that changed.
+	/// </summary>
+	[PublicAPI]
 	public event Action<EventGroup> OnGroupChanged;
 
 	/// <summary>
@@ -164,6 +176,10 @@ public class EventGroup
 		return new ReadOnlyDictionary<EventInfo, int>(new Dictionary<EventInfo, int>(weights));
 	}
 
+	/// <summary>
+	/// Displays a string representation of a group using its name.
+	/// </summary>
+	/// <returns>A string representation of the object.</returns>
 	public override string ToString()
 	{
 		return $"Group {Name}";

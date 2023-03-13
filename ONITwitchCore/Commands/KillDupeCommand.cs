@@ -5,7 +5,7 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
-public class KillDupeCommand : CommandBase
+internal class KillDupeCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

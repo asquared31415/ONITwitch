@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ONITwitchCore.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class PartyTime : KMonoBehaviour
+internal class PartyTime : KMonoBehaviour
 {
 	[Serialize] [SerializeField] public float TimeRemaining;
 

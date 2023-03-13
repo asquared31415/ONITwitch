@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace ONITwitchCore;
 
 // Mostly copied from https://stackoverflow.com/questions/11561597/deserialize-json-recursively-to-idictionarystring-object/31250524#31250524
-public class NestedDictionaryReader : JsonConverter
+internal class NestedDictionaryReader : JsonConverter
 {
 	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
 	{

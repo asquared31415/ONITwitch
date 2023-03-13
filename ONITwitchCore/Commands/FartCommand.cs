@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
-public class FartCommand : CommandBase
+internal class FartCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

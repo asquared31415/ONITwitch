@@ -9,7 +9,7 @@ namespace ONITwitchCore.Cmps;
 // This is put on a bare GO directly and that GO should not have a SaveLoadRoot
 // nothing should be saved
 [SerializationConfig(MemberSerialization.OptIn)]
-public class GlitterPuftTracker : KMonoBehaviour
+internal class GlitterPuftTracker : KMonoBehaviour
 {
 	private BoxCollider2D collider2D;
 

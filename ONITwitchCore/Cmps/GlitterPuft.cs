@@ -11,13 +11,13 @@ namespace ONITwitchCore.Cmps;
 
 // Most of the gradient and color logic is taken from Aki's Glitter Puft mood light
 [SerializationConfig(MemberSerialization.OptIn)]
-public class GlitterPuft : KMonoBehaviour, ISim33ms
+internal class GlitterPuft : KMonoBehaviour, ISim33ms
 {
 	// group of the *trackers* not of the pufts
 	public readonly List<GameObject> PuftGroup = new();
 
 	// 7s from Aki's Decor Pack I glitter puft lamp
-	public const float BaseFrequency = 1f / 7f;
+	private const float BaseFrequency = 1f / 7f;
 
 	[Serialize] [SerializeField] private float t;
 

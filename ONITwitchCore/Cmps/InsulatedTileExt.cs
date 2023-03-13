@@ -2,7 +2,7 @@ using ONITwitchCore.Content;
 
 namespace ONITwitchCore.Cmps;
 
-public class InsulatedTileExt : KMonoBehaviour
+internal class InsulatedTileExt : KMonoBehaviour
 {
 	protected override void OnSpawn()
 	{

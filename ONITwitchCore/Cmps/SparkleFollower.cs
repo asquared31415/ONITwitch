@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace ONITwitchCore.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class SparkleFollower : KMonoBehaviour, ISim200ms
+internal class SparkleFollower : KMonoBehaviour, ISim200ms
 {
 	[Serialize] [SerializeField] public int NumSparkles = 5;
 	[Serialize] [SerializeField] public Vector2 Offset = Vector2.zero;

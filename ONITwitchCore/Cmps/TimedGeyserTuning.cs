@@ -4,7 +4,7 @@ using KSerialization;
 namespace ONITwitchCore.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class TimedGeyserTuning : KMonoBehaviour, ISim200ms
+internal class TimedGeyserTuning : KMonoBehaviour, ISim200ms
 {
 	[Serialize] private readonly List<TimedModification> modifications = new();
 
@@ -46,7 +46,7 @@ public class TimedGeyserTuning : KMonoBehaviour, ISim200ms
 }
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class TimedModification
+internal class TimedModification
 {
 	[Serialize] public float TimeRemaining;
 	[Serialize] public Geyser.GeyserModification Modification;

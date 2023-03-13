@@ -5,7 +5,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class SkillCommand : CommandBase
+internal class SkillCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

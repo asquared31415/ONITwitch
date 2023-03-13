@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class EclipsePatches
+internal static class EclipsePatches
 {
 	[HarmonyPatch(typeof(GameClock), nameof(GameClock.IsNighttime))]
-	public static class GameClock_IsNighttime_Patch
+	private static class GameClock_IsNighttime_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix(ref bool __result)
+		private static void Postfix(ref bool __result)
 		{
 			if ((Game.Instance != null) && Game.Instance.TryGetComponent(out Eclipse eclipse))
 			{
@@ -25,7 +25,7 @@ public static class EclipsePatches
 	}
 
 	[HarmonyPatch(typeof(TimeOfDay), "UpdateVisuals")]
-	public static class TimeOfDay_UpdateVisuals_Patch
+	private static class TimeOfDay_UpdateVisuals_Patch
 	{
 		private static readonly int TimeOfDayProperty = Shader.PropertyToID("_TimeOfDay");
 
@@ -37,7 +37,7 @@ public static class EclipsePatches
 			);
 
 		[UsedImplicitly]
-		public static bool Prefix(TimeOfDay __instance, ref float ___scale)
+		private static bool Prefix(TimeOfDay __instance, ref float ___scale)
 		{
 			// if in an eclipse, redo the math to lerp to 0 scale and force the sunlight intensity to 0
 			if (Game.Instance.TryGetComponent(out Eclipse eclipse) && (eclipse.State == Eclipse.EclipseState.Eclipse))
@@ -55,10 +55,10 @@ public static class EclipsePatches
 	}
 
 	[HarmonyPatch(typeof(BeeHive), nameof(BeeHive.InitializeStates))]
-	public static class BeeHive_InitializeStates_Patch
+	private static class BeeHive_InitializeStates_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix(BeeHive __instance)
+		private static void Postfix(BeeHive __instance)
 		{
 			__instance.enabled.grownStates.nightTime.transitions.Clear();
 			__instance.enabled.grownStates.nightTime.EventTransition(

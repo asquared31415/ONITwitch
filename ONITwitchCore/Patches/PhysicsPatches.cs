@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class PhysicsPatches
+internal static class PhysicsPatches
 {
 	[HarmonyPatch(typeof(MainMenu), "OnSpawn")]
-	public static class MainMenu_OnSpawn_Patch
+	private static class MainMenu_OnSpawn_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix()
+		private static void Postfix()
 		{
 			// Ignore all collisions with the glitter puft layer except for itself, where we need to re-enable it
 			for (var i = 0; i < 32; i++)

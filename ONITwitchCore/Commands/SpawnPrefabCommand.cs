@@ -4,7 +4,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class SpawnPrefabCommand : CommandBase
+internal class SpawnPrefabCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

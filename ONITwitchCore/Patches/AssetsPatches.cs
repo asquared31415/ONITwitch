@@ -4,13 +4,13 @@ using ONITwitchCore.Content;
 
 namespace ONITwitchCore.Patches;
 
-public static class AssetsPatches
+internal static class AssetsPatches
 {
 	[HarmonyPatch(typeof(Assets), "CreatePrefabs")]
-	public static class Assets_CreatePrefabs_Patch
+	private static class Assets_CreatePrefabs_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix()
+		private static void Postfix()
 		{
 			ComponentsExt.CollectFloorTiles();
 		}

@@ -2,7 +2,7 @@ using ONITwitchCore.Content;
 
 namespace ONITwitchCore.Cmps;
 
-public class ToiletsExt : KMonoBehaviour
+internal class ToiletsExt : KMonoBehaviour
 {
 	protected override void OnSpawn()
 	{

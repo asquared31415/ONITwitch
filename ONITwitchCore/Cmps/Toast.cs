@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace ONITwitchCore.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class Toast : KMonoBehaviour
+internal class Toast : KMonoBehaviour
 {
 	[NonSerialized] public float HoverTime = 15f;
 

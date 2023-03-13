@@ -7,7 +7,7 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
-public class ResearchTechCommand : CommandBase
+internal class ResearchTechCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

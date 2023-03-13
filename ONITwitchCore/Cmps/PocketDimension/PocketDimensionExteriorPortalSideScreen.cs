@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Cmps.PocketDimension;
 
-public class PocketDimensionExteriorPortalSideScreen : KMonoBehaviour, ISidescreenButtonControl
+internal class PocketDimensionExteriorPortalSideScreen : KMonoBehaviour, ISidescreenButtonControl
 {
 #pragma warning disable CS0649
 	[MyCmpReq] private PocketDimensionExteriorPortal exteriorPortal;

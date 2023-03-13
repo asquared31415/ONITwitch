@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ONITwitchCore.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class DamageOverTime : KMonoBehaviour
+internal class DamageOverTime : KMonoBehaviour
 {
 	[Serialize] private float secondsRemaining;
 	[Serialize] private float secondsPerTick;

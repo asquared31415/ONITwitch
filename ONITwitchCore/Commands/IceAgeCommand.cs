@@ -7,7 +7,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class IceAgeCommand : CommandBase
+internal class IceAgeCommand : CommandBase
 {
 	// prevent these liquids from freezing
 	// Magma: freezes the core too quickly and irreparably

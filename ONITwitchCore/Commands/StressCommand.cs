@@ -3,7 +3,7 @@ using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
-public class StressCommand : CommandBase
+internal class StressCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

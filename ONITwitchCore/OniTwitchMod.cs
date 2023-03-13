@@ -17,9 +17,9 @@ using Object = UnityEngine.Object;
 namespace ONITwitch;
 
 [UsedImplicitly]
-public class OniTwitchMod : UserMod2
+internal class OniTwitchMod : UserMod2
 {
-	public static ModIntegration ModIntegration;
+	internal static ModIntegration ModIntegration;
 
 	public override void OnLoad(Harmony harmony)
 	{
@@ -32,7 +32,7 @@ public class OniTwitchMod : UserMod2
 		RegisterDevTools();
 	}
 
-	public const string DecorPackOneStaticID = "DecorPackA";
+	private const string DecorPackOneStaticID = "DecorPackA";
 
 	public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
 	{
@@ -58,10 +58,10 @@ public class OniTwitchMod : UserMod2
 }
 
 [HarmonyPatch(typeof(HoverTextConfiguration), "DrawTitle")]
-public static class CellNumInTitle
+internal static class CellNumInTitle
 {
 	[UsedImplicitly]
-	public static void Postfix(HoverTextDrawer drawer, HoverTextConfiguration __instance)
+	private static void Postfix(HoverTextDrawer drawer, HoverTextConfiguration __instance)
 	{
 		if (Camera.main != null)
 		{
@@ -76,10 +76,10 @@ public static class CellNumInTitle
 }
 
 [HarmonyPatch(typeof(KImGuiUtil), nameof(KImGuiUtil.SetKAssertCB))]
-public static class ImGui_Patch
+internal static class ImGui_Patch
 {
 	[UsedImplicitly]
-	public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig)
+	private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig)
 	{
 		return new[] { new CodeInstruction(OpCodes.Ret) };
 	}

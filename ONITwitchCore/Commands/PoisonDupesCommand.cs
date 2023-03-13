@@ -4,7 +4,7 @@ using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
-public class PoisonDupesCommand : CommandBase
+internal class PoisonDupesCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

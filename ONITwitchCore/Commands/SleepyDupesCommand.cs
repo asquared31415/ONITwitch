@@ -5,7 +5,7 @@ using ONITwitchCore.Toasts;
 namespace ONITwitchCore.Commands;
 
 // TODO: this is EffectCommand but with a different toast, can this be merged?
-public class SleepyDupesCommand : CommandBase
+internal class SleepyDupesCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

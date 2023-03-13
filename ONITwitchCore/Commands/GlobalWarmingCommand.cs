@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
-public class GlobalWarmingCommand : CommandBase
+internal class GlobalWarmingCommand : CommandBase
 {
 	public override void Run(object data)
 	{

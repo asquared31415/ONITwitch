@@ -12,7 +12,7 @@ using Object = UnityEngine.Object;
 
 namespace ONITwitchCore;
 
-public static class ModAssets
+internal static class ModAssets
 {
 	private const string ToastManifestName = "ONITwitchCore.Resources.toast";
 	private const string OptionsManifestName = "ONITwitchCore.Resources.twitch_options";
@@ -29,26 +29,26 @@ public static class ModAssets
 		public static GameObject ConfigPopup;
 	}
 
-	public static TMP_FontAsset NotoSans;
-	public static TMP_FontAsset GrayStroke;
+	private static TMP_FontAsset notoSans;
+	private static TMP_FontAsset grayStroke;
 
 	public static void LoadAssets()
 	{
 		var fonts = new List<TMP_FontAsset>(Resources.FindObjectsOfTypeAll<TMP_FontAsset>());
-		NotoSans = fonts.FirstOrDefault(f => f.name == "NotoSans-Regular");
-		GrayStroke = fonts.FirstOrDefault(f => f.name == "GRAYSTROKE REGULAR SDF");
+		notoSans = fonts.FirstOrDefault(f => f.name == "NotoSans-Regular");
+		grayStroke = fonts.FirstOrDefault(f => f.name == "GRAYSTROKE REGULAR SDF");
 
 		var toastBundle = LoadBundle(ToastManifestName);
 		if (toastBundle != null)
 		{
 			Toasts.NormalToastPrefab = toastBundle.LoadAsset<GameObject>("assets/singletoast.prefab");
-			FixText(Toasts.NormalToastPrefab.transform.Find("TitleContainer").gameObject, GrayStroke);
-			FixText(Toasts.NormalToastPrefab.transform.Find("BodyContainer").gameObject, NotoSans);
+			FixText(Toasts.NormalToastPrefab.transform.Find("TitleContainer").gameObject, grayStroke);
+			FixText(Toasts.NormalToastPrefab.transform.Find("BodyContainer").gameObject, notoSans);
 			Toasts.NormalToastPrefab.SetActive(false);
 			
 			Toasts.ClickableToastPrefab = toastBundle.LoadAsset<GameObject>("assets/clickabletoast.prefab");
-			FixText(Toasts.ClickableToastPrefab.transform.Find("TitleContainer").gameObject, GrayStroke);
-			FixText(Toasts.ClickableToastPrefab.transform.Find("BodyContainer").gameObject, NotoSans);
+			FixText(Toasts.ClickableToastPrefab.transform.Find("TitleContainer").gameObject, grayStroke);
+			FixText(Toasts.ClickableToastPrefab.transform.Find("BodyContainer").gameObject, notoSans);
 			Toasts.ClickableToastPrefab.SetActive(false);
 		}
 
@@ -58,23 +58,23 @@ public static class ModAssets
 			Options.GenericOptionsPrefab = optionsBundle.LoadAsset<GameObject>("TwitchGenericOptionsUI.prefab");
 			FixText(
 				Options.GenericOptionsPrefab.transform.Find("TitleBar").gameObject,
-				GrayStroke,
+				grayStroke,
 				20
 			);
 			FixText(
 				Options.GenericOptionsPrefab.transform.Find("Content").gameObject,
-				NotoSans
+				notoSans
 			);
 			FixText(
 				Options.GenericOptionsPrefab.transform.Find("Buttons").gameObject,
-				NotoSans,
+				notoSans,
 				16
 			);
 			Options.GenericOptionsPrefab.SetActive(false);
 
 			Options.ConfigPopup = optionsBundle.LoadAsset<GameObject>("TwitchConfigUI.prefab");
-			FixText(Options.ConfigPopup.transform.Find("TitleBar").gameObject, GrayStroke, 20);
-			FixText(Options.ConfigPopup.transform.Find("Content").gameObject, NotoSans);
+			FixText(Options.ConfigPopup.transform.Find("TitleBar").gameObject, grayStroke, 20);
+			FixText(Options.ConfigPopup.transform.Find("Content").gameObject, notoSans);
 			Options.ConfigPopup.SetActive(false);
 		}
 	}

@@ -3,9 +3,9 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Content;
 
-public class DimensionClosingDiagnostic : ColonyDiagnostic
+internal class DimensionClosingDiagnostic : ColonyDiagnostic
 {
-	public const string Id = TwitchModInfo.ModPrefix + "PocketDimIsClosingSoon";
+	private const string Id = TwitchModInfo.ModPrefix + "PocketDimIsClosingSoon";
 
 	public DimensionClosingDiagnostic(int worldID) : base(
 		worldID,

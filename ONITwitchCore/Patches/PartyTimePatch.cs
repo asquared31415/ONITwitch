@@ -6,18 +6,18 @@ using UnityEngine;
 namespace ONITwitchCore.Patches;
 
 [HarmonyPatch(typeof(LightBufferCompositor), "OnRenderImage")]
-public static class PartyTimePatch
+internal static class PartyTimePatch
 {
-	private static Material hsvMaterial;
-	private static readonly int HueProperty = Shader.PropertyToID("_Hue");
-	private static readonly int SaturationProperty = Shader.PropertyToID("_Saturation");
-
 	public static bool Enabled;
 
 	public static float Intensity = 2.0f;
 
+	private static Material hsvMaterial;
+	private static readonly int HueProperty = Shader.PropertyToID("_Hue");
+	private static readonly int SaturationProperty = Shader.PropertyToID("_Saturation");
+
 	[UsedImplicitly]
-	public static void Postfix(RenderTexture src, RenderTexture dest) 
+	private static void Postfix(RenderTexture src, RenderTexture dest)
 	{
 		if (hsvMaterial == null)
 		{

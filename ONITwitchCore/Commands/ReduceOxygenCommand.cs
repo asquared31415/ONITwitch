@@ -6,7 +6,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class ReduceOxygenCommand : CommandBase
+internal class ReduceOxygenCommand : CommandBase
 {
 	private static readonly CellModifyMassEvent ModifyEvent = new(
 		"TwitchModifiedElement",

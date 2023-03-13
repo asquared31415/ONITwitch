@@ -16,16 +16,16 @@ using UnityEngine;
 
 namespace ONITwitchCore;
 
-public class TwitchChatConnection
+internal class TwitchChatConnection
 {
-	public enum CapStatus
+	private enum CapStatus
 	{
 		Requested,
 		Enabled,
 		NotAcknowledged,
 	}
 
-	public static readonly Uri TwitchChatUri = new("wss://irc-ws.chat.twitch.tv:443");
+	private static readonly Uri TwitchChatUri = new("wss://irc-ws.chat.twitch.tv:443");
 
 	private readonly ClientWebSocket socket = new();
 
@@ -544,43 +544,4 @@ public class TwitchChatConnection
 		var bytes = s.ToArray();
 		return Encoding.UTF8.GetString(bytes);
 	}
-}
-
-public struct ConnectionResult
-{
-	public ResultState State;
-
-	// only present if the state is Closed
-	[CanBeNull] public WebSocketCloseStatus? CloseState;
-
-	// only present if the state is Error
-	[CanBeNull] public WebSocketException ErrorException;
-
-	public enum ResultState
-	{
-		NotConnected,
-		Open,
-		Closed,
-		Error,
-		UnknownException,
-	}
-
-	public override string ToString()
-	{
-		return State switch
-		{
-			ResultState.NotConnected => "Not yet connected",
-			ResultState.Open => "Open",
-			ResultState.Closed => $"Closed ({CloseState})",
-			ResultState.Error => $"Error ({ErrorException})",
-			ResultState.UnknownException => "Unknown Exception",
-			_ => throw new ArgumentOutOfRangeException(),
-		};
-	}
-}
-
-public struct ReceiveMessageResult
-{
-	public bool IsSuccess { get; internal set; }
-	[CanBeNull] public string Message { get; internal set; }
 }

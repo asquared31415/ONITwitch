@@ -7,7 +7,7 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
-public class RainPrefabCommand : CommandBase
+internal class RainPrefabCommand : CommandBase
 {
 	private const float TimePerItem = 0.1f;
 

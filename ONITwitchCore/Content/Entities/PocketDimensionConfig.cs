@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ONITwitchCore.Content.Entities;
 
 [UsedImplicitly]
-public class PocketDimensionConfig : IEntityConfig
+internal class PocketDimensionConfig : IEntityConfig
 {
 	public const string Id = TwitchModInfo.ModPrefix + nameof(PocketDimensionConfig);
 

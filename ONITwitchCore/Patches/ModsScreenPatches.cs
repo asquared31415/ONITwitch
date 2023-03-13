@@ -11,16 +11,16 @@ using Object = UnityEngine.Object;
 
 namespace ONITwitchCore.Patches;
 
-public static class ModsScreenPatches
+internal static class ModsScreenPatches
 {
 	private static GameObject canvas;
 
 	[HarmonyPatch(typeof(ModsScreen), "BuildDisplay")]
-	public static class ModsScreen_BuildDisplay_Patch
+	private static class ModsScreen_BuildDisplay_Patch
 	{
 		[UsedImplicitly]
 		// object because its a List<private struct>
-		public static void Postfix(object ___displayedMods)
+		private static void Postfix(object ___displayedMods)
 		{
 			AddSettingsButton((IEnumerable) ___displayedMods);
 		}

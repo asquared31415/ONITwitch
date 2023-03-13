@@ -13,11 +13,9 @@ using DataManager = EventLib.DataManager;
 using EventGroup = EventLib.EventGroup;
 using EventManager = EventLib.EventManager;
 
-// using ONITwitchLib;
-
 namespace ONITwitchCore.Config;
 
-public class UserCommandConfigManager
+internal class UserCommandConfigManager
 {
 	public static UserCommandConfigManager Instance => instance ??= new UserCommandConfigManager();
 

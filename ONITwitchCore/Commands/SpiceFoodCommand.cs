@@ -7,7 +7,7 @@ using STRINGS;
 
 namespace ONITwitchCore.Commands;
 
-public class SpiceFoodCommand : CommandBase
+internal class SpiceFoodCommand : CommandBase
 {
 	private static readonly AccessTools.FieldRef<Edible, List<SpiceInstance>> SpicesAccessor =
 		AccessTools.FieldRefAccess<Edible, List<SpiceInstance>>("spices");

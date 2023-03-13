@@ -17,7 +17,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 namespace ONITwitchCore;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class VoteController : KMonoBehaviour
+internal class VoteController : KMonoBehaviour
 {
 	public enum VotingState
 	{

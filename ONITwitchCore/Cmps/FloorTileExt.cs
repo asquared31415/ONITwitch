@@ -2,8 +2,10 @@ using ONITwitchCore.Content;
 
 namespace ONITwitchCore.Cmps;
 
-// component to add to all things that should be considered "floor tiles"
-public class FloorTileExt : KMonoBehaviour
+/// <summary>
+/// Component to add to all things that should be considered "floor tiles". 
+/// </summary>
+internal class FloorTileExt : KMonoBehaviour
 {
 	protected override void OnSpawn()
 	{

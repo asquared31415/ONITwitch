@@ -6,9 +6,9 @@ using UnityEngine;
 namespace ONITwitchCore.Content.Entities;
 
 [UsedImplicitly]
-public class GlitterMeatConfig : IEntityConfig
+internal class GlitterMeatConfig : IEntityConfig
 {
-	public const string Id = TwitchModInfo.ModPrefix + nameof(GlitterMeatConfig);
+	private const string Id = TwitchModInfo.ModPrefix + nameof(GlitterMeatConfig);
 
 	public GameObject CreatePrefab()
 	{

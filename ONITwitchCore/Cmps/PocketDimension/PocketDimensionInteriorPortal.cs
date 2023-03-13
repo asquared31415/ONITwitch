@@ -5,7 +5,7 @@ using ONITwitchLib.Utils;
 namespace ONITwitchCore.Cmps.PocketDimension;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class PocketDimensionInteriorPortal : KMonoBehaviour
+internal class PocketDimensionInteriorPortal : KMonoBehaviour
 {
 	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
 

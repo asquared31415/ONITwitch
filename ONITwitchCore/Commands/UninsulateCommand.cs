@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
-public class UninsulateCommand : CommandBase
+internal class UninsulateCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

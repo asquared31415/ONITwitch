@@ -9,7 +9,7 @@ using STRINGS;
 
 namespace ONITwitchCore.Config;
 
-public class CredentialsConfig
+internal class CredentialsConfig
 {
 	private static CredentialsConfig instance;
 
@@ -63,7 +63,7 @@ public class CredentialsConfig
 	}
 }
 
-public record struct Credentials([NotNull] string Nick, [NotNull] string Oauth)
+internal record struct Credentials([NotNull] string Nick, [NotNull] string Oauth)
 {
 	public Credentials() : this("", "")
 	{

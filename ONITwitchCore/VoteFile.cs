@@ -11,7 +11,7 @@ using UnityEngine;
 namespace ONITwitchCore;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class VoteFile : KMonoBehaviour
+internal class VoteFile : KMonoBehaviour
 {
 	private const float FileUpdateTime = 1f / 3f;
 	private float accum;
@@ -66,7 +66,7 @@ public class VoteFile : KMonoBehaviour
 						throw new ArgumentOutOfRangeException();
 				}
 
-				var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.Data.VotesPath);
+				var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.SettingsData.VotesPath);
 				Task.Run(
 					() => { File.WriteAllText(filePath, fileText); }
 				);
@@ -76,7 +76,7 @@ public class VoteFile : KMonoBehaviour
 
 	protected override void OnCleanUp()
 	{
-		var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.Data.VotesPath);
+		var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.SettingsData.VotesPath);
 		File.WriteAllText(filePath, "Voting not yet started");
 		base.OnCleanUp();
 	}

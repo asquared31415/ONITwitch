@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 namespace ONITwitchCore.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class RainPrefab : KMonoBehaviour
+internal class RainPrefab : KMonoBehaviour
 {
 	private float timePerItem;
 	private int countRemaining;

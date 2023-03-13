@@ -8,16 +8,16 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class ElementPatches
+internal static class ElementPatches
 {
 	[HarmonyPatch(typeof(ElementLoader), nameof(ElementLoader.Load))]
-	public static class ElementLoader_Load_Patch
+	private static class ElementLoader_Load_Patch
 	{
 		private static readonly AccessTools.FieldRef<object, Tag> SubstanceNameTag =
 			AccessTools.FieldRefAccess<Tag>(typeof(Substance), "nameTag");
 
 		[UsedImplicitly]
-		public static void Prefix(Dictionary<string, SubstanceTable> substanceTablesByDlc)
+		private static void Prefix(Dictionary<string, SubstanceTable> substanceTablesByDlc)
 		{
 			var trav = Traverse.Create(substanceTablesByDlc[DlcManager.VANILLA_ID]);
 			var substanceList = trav.Field<List<Substance>>("list").Value;
@@ -42,7 +42,7 @@ public static class ElementPatches
 		}
 
 		[UsedImplicitly]
-		public static void Postfix()
+		private static void Postfix()
 		{
 			var unbreakable = ElementLoader.FindElementByHash(TwitchSimHashes.IndestructibleElement);
 			SubstanceNameTag(unbreakable.substance) = TagManager.Create(nameof(TwitchSimHashes.IndestructibleElement));

@@ -11,21 +11,18 @@ using UnityEngine;
 using DataManager = EventLib.DataManager;
 using EventInfo = EventLib.EventInfo;
 using Object = UnityEngine.Object;
-using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore;
 
-public class TwitchDevTool : DevTool
+internal class TwitchDevTool : DevTool
 {
-	public static TwitchDevTool Instance { get; private set; }
+	internal static TwitchDevTool Instance { get; private set; }
 
 	private int selectedCell = Grid.InvalidCell;
 	private bool debugClosestCell;
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
-
-	private static GameObject canvas;
 
 	public TwitchDevTool()
 	{

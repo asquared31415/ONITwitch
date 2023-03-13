@@ -4,13 +4,13 @@ using ONITwitchCore.Content;
 
 namespace ONITwitchCore.Patches;
 
-public static class DbPatches
+internal static class DbPatches
 {
 	[HarmonyPatch(typeof(Db), nameof(Db.Initialize))]
-	public static class Db_Initialize_Patch
+	private static class Db_Initialize_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix()
+		private static void Postfix()
 		{
 			ModAssets.LoadAssets();
 			DefaultCommands.SetupCommands();

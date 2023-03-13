@@ -11,13 +11,13 @@ using UnityEngine.EventSystems;
 
 namespace ONITwitchCore.Patches;
 
-public static class DevToolPatches
+internal static class DevToolPatches
 {
 	[HarmonyPatch(typeof(SelectTool), nameof(SelectTool.OnLeftClickDown))]
-	public static class SelectTool_OnLeftClickDown_Patch
+	private static class SelectTool_OnLeftClickDown_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix(SelectTool __instance)
+		private static void Postfix(SelectTool __instance)
 		{
 			if (TwitchDevTool.Instance != null)
 			{
@@ -27,10 +27,10 @@ public static class DevToolPatches
 	}
 
 	[HarmonyPatch(typeof(DevToolManager), nameof(DevToolManager.UpdateShouldShowTools))]
-	public class DevToolKeybindFix
+	private class DevToolKeybindFix
 	{
 		[UsedImplicitly]
-		public static void Postfix(ref bool ___toggleKeyWasDown, ref bool ___showImGui)
+		private static void Postfix(ref bool ___toggleKeyWasDown, ref bool ___showImGui)
 		{
 			var flag = Input.GetKeyDown(KeyCode.Hash) && Input.GetKey(KeyCode.LeftControl);
 			if (!___toggleKeyWasDown & flag)
@@ -40,18 +40,18 @@ public static class DevToolPatches
 	}
 
 	[HarmonyPatch(typeof(DevToolUI), nameof(DevToolUI.PingHoveredObject))]
-	public static class DevToolNoPingCrashFix
+	private static class DevToolNoPingCrashFix
 	{
-		private static readonly MethodInfo InternalPingMethod = AccessTools.Method(typeof(DevToolUI), "Internal_Ping");
+		private static readonly MethodInfo privatePingMethod = AccessTools.Method(typeof(DevToolUI), "private_Ping");
 
 		[UsedImplicitly]
-		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig, ILGenerator generator)
+		private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig, ILGenerator generator)
 		{
 			var codes = orig.ToList();
-			var pingCallIdx = codes.FindLastIndex(ci => ci.Calls(InternalPingMethod));
+			var pingCallIdx = codes.FindLastIndex(ci => ci.Calls(privatePingMethod));
 			if (pingCallIdx == -1)
 			{
-				Log.Warn("Unable to find Internal_Ping call to fix dev ui ping crash");
+				Log.Warn("Unable to find private_Ping call to fix dev ui ping crash");
 				return codes;
 			}
 

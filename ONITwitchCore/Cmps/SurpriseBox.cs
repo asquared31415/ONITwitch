@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Cmps;
 
-public class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
+internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 {
 	public string SidescreenButtonText => STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.NAME;
 

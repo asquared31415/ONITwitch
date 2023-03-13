@@ -6,15 +6,15 @@ using ONITwitchLib;
 
 namespace ONITwitchCore.Patches;
 
-public static class TranslationPatches
+internal static class TranslationPatches
 {
 	[HarmonyPatch(typeof(Localization), nameof(Localization.Initialize))]
-	public static class Localization_Initialize_Patch
+	private static class Localization_Initialize_Patch
 	{
 		// https://forums.kleientertainment.com/forums/topic/123339-guide-for-creating-translatable-mods
 
 		[UsedImplicitly]
-		public static void Postfix()
+		private static void Postfix()
 		{
 			var root = typeof(STRINGS);
 

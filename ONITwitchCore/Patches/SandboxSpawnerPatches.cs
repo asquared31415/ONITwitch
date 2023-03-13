@@ -5,13 +5,13 @@ using ONITwitchCore.Content.Entities;
 
 namespace ONITwitchCore.Patches;
 
-public static class SandboxSpawnerPatches
+internal static class SandboxSpawnerPatches
 {
 	[HarmonyPatch(typeof(SandboxToolParameterMenu), "ConfigureEntitySelector")]
-	public static class SandboxToolParameterMenu_ConfigureEntitySelector_Patch
+	private static class SandboxToolParameterMenu_ConfigureEntitySelector_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix(SandboxToolParameterMenu __instance)
+		private static void Postfix(SandboxToolParameterMenu __instance)
 		{
 			var twitchSearchFilter = new SandboxToolParameterMenu.SelectorValue.SearchFilter(
 				"Twitch Integration",

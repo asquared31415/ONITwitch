@@ -4,7 +4,7 @@ using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
-public class PartyTimeCommand : CommandBase
+internal class PartyTimeCommand : CommandBase
 {
 	public override void Run(object data)
 	{

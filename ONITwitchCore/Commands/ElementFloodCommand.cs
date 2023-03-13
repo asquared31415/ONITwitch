@@ -4,7 +4,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class ElementFloodCommand : CommandBase
+internal class ElementFloodCommand : CommandBase
 {
 	private static readonly CellElementEvent SpawnEvent = new(
 		"TwitchSpawnedElement",

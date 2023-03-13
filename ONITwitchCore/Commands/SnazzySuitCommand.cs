@@ -6,7 +6,7 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Commands;
 
-public class SnazzySuitCommand : CommandBase
+internal class SnazzySuitCommand : CommandBase
 {
 	public override void Run(object data)
 	{

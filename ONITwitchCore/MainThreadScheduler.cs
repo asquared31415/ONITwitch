@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace ONITwitchCore;
 
-public class MainThreadScheduler : KMonoBehaviour
+internal class MainThreadScheduler : KMonoBehaviour
 {
 	private static MainThreadScheduler instance;
 	private readonly ConcurrentQueue<System.Action> actions = new();

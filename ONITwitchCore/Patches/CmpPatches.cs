@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class CmpPatches
+internal static class CmpPatches
 {
 	[HarmonyPatch]
-	public static class AllToiletsPatch
+	private static class AllToiletsPatch
 	{
 		[UsedImplicitly]
-		public static IEnumerable<MethodBase> TargetMethods()
+		private static IEnumerable<MethodBase> TargetMethods()
 		{
 			yield return AccessTools.Method(
 				typeof(OuthouseConfig),
@@ -30,17 +30,17 @@ public static class CmpPatches
 		}
 
 		[UsedImplicitly]
-		public static void Postfix(GameObject go)
+		private static void Postfix(GameObject go)
 		{
 			go.AddOrGet<ToiletsExt>();
 		}
 	}
 
 	[HarmonyPatch(typeof(InsulationTileConfig), nameof(InsulationTileConfig.DoPostConfigureComplete))]
-	public static class InsulatedTilesPatch
+	private static class InsulatedTilesPatch
 	{
 		[UsedImplicitly]
-		public static void Postfix(GameObject go)
+		private static void Postfix(GameObject go)
 		{
 			go.AddOrGet<InsulatedTileExt>();
 		}

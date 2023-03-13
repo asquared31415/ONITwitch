@@ -2,7 +2,7 @@ using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
-public class PeeCommand : CommandBase
+internal class PeeCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

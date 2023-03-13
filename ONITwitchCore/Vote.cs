@@ -8,7 +8,7 @@ using EventInfo = EventLib.EventInfo;
 
 namespace ONITwitchCore;
 
-public class Vote
+internal class Vote
 {
 	// map from user ID to index they voted for
 	private readonly Dictionary<string, int> userVotes = new();
@@ -67,9 +67,9 @@ public class Vote
 		return tiedMaxVotes[randIdx];
 	}
 
-	public class VoteCount
+	internal class VoteCount
 	{
-		public EventInfo EventInfo { get; internal set; }
+		public EventInfo EventInfo { get; }
 		public int Count { get; internal set; }
 
 		public VoteCount(EventInfo eventInfo, int count)

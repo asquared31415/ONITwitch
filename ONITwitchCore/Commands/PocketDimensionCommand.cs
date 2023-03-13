@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Commands;
 
-public class PocketDimensionCommand : CommandBase
+internal class PocketDimensionCommand : CommandBase
 {
 	public override void Run(object data)
 	{

@@ -8,7 +8,7 @@ namespace ONITwitchCore.Integration.DecorPackA;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 // used to access data from GlitterLight2D off the mood lamps
-public class GlitterMoodLampAccessor : KMonoBehaviour
+internal class GlitterMoodLampAccessor : KMonoBehaviour
 {
 	private static readonly Type GlitterLampType =
 		Type.GetType("DecorPackA.Buildings.MoodLamp.GlitterLight2D, DecorPackA");

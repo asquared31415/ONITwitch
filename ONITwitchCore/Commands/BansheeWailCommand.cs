@@ -3,7 +3,7 @@ using STRINGS;
 
 namespace ONITwitchCore.Commands;
 
-public class BansheeWailCommand : CommandBase
+internal class BansheeWailCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

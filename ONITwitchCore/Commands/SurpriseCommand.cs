@@ -3,7 +3,7 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;
 
-public class SurpriseCommand : CommandBase
+internal class SurpriseCommand : CommandBase
 {
 	public override void Run(object data)
 	{

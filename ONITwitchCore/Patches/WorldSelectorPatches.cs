@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class WorldSelectorPatches
+internal static class WorldSelectorPatches
 {
 	[HarmonyPatch(typeof(WorldSelector), "SortRows")]
-	public static class WorldSelector_SortRows_Patch
+	private static class WorldSelector_SortRows_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix(WorldSelector __instance)
+		private static void Postfix(WorldSelector __instance)
 		{
 			// TODO: Disabled as to not stomp other mods, figure out a way to do this if nested worlds ever work
 			// SortRows(__instance.worldRows);

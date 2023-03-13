@@ -11,13 +11,13 @@ using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore.Patches;
 
-public static class MainMenuPatches
+internal static class MainMenuPatches
 {
 	[HarmonyPatch(typeof(MainMenu), "OnSpawn")]
-	public static class MainMenu_OnSpawn_Patch
+	private static class MainMenu_OnSpawn_Patch
 	{
 		[UsedImplicitly]
-		public static void Postfix()
+		private static void Postfix()
 		{
 			var credentials = CredentialsConfig.Instance.Credentials;
 			ValidateNick(credentials.Nick);

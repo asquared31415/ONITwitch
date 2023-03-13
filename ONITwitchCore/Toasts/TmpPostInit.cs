@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ONITwitchCore.Toasts;
 
-public class TmpPostInit : KMonoBehaviour
+internal class TmpPostInit : KMonoBehaviour
 {
 	[SerializeField] public TextAlignmentOptions alignment;
 

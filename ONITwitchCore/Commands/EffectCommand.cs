@@ -3,7 +3,7 @@ using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
-public class EffectCommand : CommandBase
+internal class EffectCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 namespace ONITwitchCore.Cmps.PocketDimension;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
+internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 {
 	public const string BorderTemplate = "TwitchIntegration/PocketDimensionBorder";
 	public const string MeepTemplate = "TwitchIntegration/MeepFace";
@@ -53,7 +53,7 @@ public class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	}
 
 	// The fraction of the lifetime remaining, clamped between 0 and 1
-	public float GetFractionLifetimeRemaining()
+	private float GetFractionLifetimeRemaining()
 	{
 		return Mathf.Clamp01(Lifetime / MaxLifetime);
 	}

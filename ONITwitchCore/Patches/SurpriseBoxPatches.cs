@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace ONITwitchCore.Patches;
 
-public static class SurpriseBoxPatches
+internal static class SurpriseBoxPatches
 {
 	[HarmonyPatch]
-	public static class EnabledEntityPatches
+	private static class EnabledEntityPatches
 	{
 		[UsedImplicitly]
-		public static IEnumerable<MethodBase> TargetMethods()
+		private static IEnumerable<MethodBase> TargetMethods()
 		{
 			yield return AccessTools.Method(typeof(DustCometConfig), nameof(DustCometConfig.CreatePrefab));
 			yield return AccessTools.Method(typeof(FoodCometConfig), nameof(FoodCometConfig.CreatePrefab));
@@ -32,17 +32,17 @@ public static class SurpriseBoxPatches
 		}
 
 		[UsedImplicitly]
-		public static void Postfix(GameObject __result)
+		private static void Postfix(GameObject __result)
 		{
 			__result.AddTag(ExtraTags.SurpriseBoxForceEnabled);
 		}
 	}
 
 	[HarmonyPatch]
-	public static class DisabledEntityPatches
+	private static class DisabledEntityPatches
 	{
 		[UsedImplicitly]
-		public static IEnumerable<MethodBase> TargetMethods()
+		private static IEnumerable<MethodBase> TargetMethods()
 		{
 			// doesnt like being spawned manually without special care
 			yield return AccessTools.Method(typeof(MinionConfig), nameof(MinionConfig.CreatePrefab));
@@ -51,7 +51,7 @@ public static class SurpriseBoxPatches
 		}
 
 		[UsedImplicitly]
-		public static void Postfix(GameObject __result)
+		private static void Postfix(GameObject __result)
 		{
 			__result.AddTag(ExtraTags.SurpriseBoxForceDisabled);
 		}

@@ -3,7 +3,7 @@ using ONITwitchCore.Toasts;
 
 namespace ONITwitchCore.Commands;
 
-public class EclipseCommand : CommandBase
+internal class EclipseCommand : CommandBase
 {
 	public override void Run(object data)
 	{
