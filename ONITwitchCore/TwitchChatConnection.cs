@@ -104,6 +104,7 @@ internal class TwitchChatConnection
 
 					Thread.Sleep(50);
 				}
+				// ReSharper disable once FunctionNeverReturns : intentional loop
 			},
 			cancellationToken
 		);
@@ -135,6 +136,7 @@ internal class TwitchChatConnection
 
 					await Task.Delay(50, cancellationToken);
 				}
+				// ReSharper disable once FunctionNeverReturns : intentional loop
 			},
 			cancellationToken
 		);
@@ -364,7 +366,7 @@ internal class TwitchChatConnection
 		Color32? color = null;
 		if (tags.TryGetValue("color", out var colorTag) && !colorTag.Value.IsNullOrWhiteSpace())
 		{
-			var colorStr = colorTag.Value;
+			var colorStr = colorTag.Value!;
 			if (ColorUtil.TryParseHexString(colorStr, out var parsed))
 			{
 				color = parsed;

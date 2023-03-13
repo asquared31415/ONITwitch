@@ -1,3 +1,4 @@
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
@@ -29,6 +30,12 @@ internal class ElementFloodCommand : CommandBase
 		);
 
 		var element = ElementUtil.FindElementByNameFast((string) data);
+		if (element == null)
+		{
+			Log.Warn($"Unable to find element {(string) data}");
+			return;
+		}
+
 		// ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
 		var mass = element.id switch
 		{

@@ -148,6 +148,7 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 				var val = (PerlinSimplexNoise.noise(xPos * xFrequency, yPos * yFrequency, seed) + 1) / 2;
 				var idx = (int) Mathf.Floor(val * numElements);
 				var defaultValues = elements[idx].defaultValues;
+				// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags : the lower bits are flags
 				var mass = (elements[idx].state & (Element.State) Element.StateMask) switch
 				{
 					Element.State.Vacuum => 0f,

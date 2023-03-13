@@ -37,7 +37,8 @@ internal class SpawnElementPoolCommand : CommandBase
 		const float liquidMass = 500f;
 		const float solidMass = 1000f;
 
-		var mass = (element.state & Element.State.Solid) switch
+		// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags : the lower bits are flags
+		var mass = (element.state & (Element.State) Element.StateMask) switch
 		{
 			Element.State.Gas => gasMass,
 			Element.State.Liquid => liquidMass,
