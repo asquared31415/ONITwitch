@@ -2,7 +2,6 @@ using System.Linq;
 using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Content;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;

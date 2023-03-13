@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
 using UnityEngine;
 using UnityEngine.EventSystems;

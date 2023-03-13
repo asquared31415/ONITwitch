@@ -3,7 +3,6 @@ using System.Linq;
 using HarmonyLib;
 using ONITwitchCore.Toasts;
 using ONITwitchLib.Logger;
-using STRINGS;
 
 namespace ONITwitchCore.Commands;
 

@@ -5,7 +5,6 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitchCore.Cmps;
 using ONITwitchCore.Config;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 

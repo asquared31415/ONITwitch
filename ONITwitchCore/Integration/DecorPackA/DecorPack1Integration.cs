@@ -1,7 +1,6 @@
 using System;
 using HarmonyLib;
 using ONITwitchCore.Integration.DecorPackA.Patches;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Integration.DecorPackA;

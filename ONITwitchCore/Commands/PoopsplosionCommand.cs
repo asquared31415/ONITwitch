@@ -1,6 +1,5 @@
 using System.Linq;
 using ONITwitchCore.Content;
-using ONITwitchLib;
 using ONITwitchLib.Utils;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 

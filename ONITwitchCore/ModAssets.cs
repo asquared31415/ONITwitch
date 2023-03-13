@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using ONITwitchCore.Toasts;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
 using TMPro;
 using UnityEngine;

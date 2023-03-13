@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using ONITwitchCore.Config;
 using ONITwitchCore.Settings;
 using ONITwitchCore.Toasts;
 using ONITwitchLib.Logger;

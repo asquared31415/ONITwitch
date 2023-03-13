@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitchLib.Logger;
-using UnityEngine;
 
 namespace ONITwitchLib.Utils;
 
