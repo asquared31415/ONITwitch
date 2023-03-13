@@ -15,8 +15,202 @@ using UnityEngine;
 
 namespace ONITwitchCore.Content;
 
+/// <summary>
+/// Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
+/// </summary>
+[PublicAPI]
 public static class PocketDimensionGenerator
 {
+	/// <summary>
+	/// Adds the specified generation config to the pool for pocket dimensions.
+	/// </summary>
+	/// <param name="config">The generation to add.</param>
+	/// <seealso cref="BasePocketDimensionGeneration"/>
+	/// <seealso cref="TemplatePocketDimensionGeneration"/>
+	/// <seealso cref="NoisePocketDimensionGeneration"/>
+	/// <seealso cref="CustomPocketDimensionGeneration"/>
+	[PublicAPI]
+	public static void AddGenerationConfig([NotNull] BasePocketDimensionGeneration config)
+	{
+		PocketDimensionSettings.Add(config);
+	}
+
+	/// <summary>
+	/// Generates a new pocket dimension, with its outside portal placed at the specified cell.
+	/// </summary>
+	/// <param name="exteriorPortalCell">The cell to generate the outside portal.</param>
+	/// <returns>The <see cref="GameObject"/> of the exterior door of the portal.</returns>
+	[PublicAPI]
+	[NotNull]
+	public static GameObject GenerateDimension(int exteriorPortalCell)
+	{
+		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
+		dimension.SetActive(true);
+		var world = WorldUtil.CreateWorldWithTemplate(
+			dimension,
+			PocketDimension.DimensionSize,
+			PocketDimension.BorderTemplate,
+			world =>
+			{
+				var pocketDim = world.GetComponent<PocketDimension>();
+
+				var settings = PocketDimensionSettings.Where(
+						setting => (setting.RequiredSkillId == null) || Components.LiveMinionIdentities.Items.Any(
+							minion => minion.TryGetComponent(out MinionResume resume) &&
+									  resume.HasMasteredSkill(setting.RequiredSkillId)
+						)
+					)
+					.GetRandom();
+
+				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
+				pocketDim.MaxLifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
+
+				// generate the world
+				// natural tiles, prefabs, and possibly a nested dimension
+				settings.Generate(world);
+
+				// remove the old polygons and re-add the one we want.
+				var overworldCell = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
+
+				var internalStart = world.WorldOffset + PocketDimension.InternalOffset -
+									Vector2I.one;
+				var internalEnd = world.WorldOffset +
+								  PocketDimension.InternalOffset +
+								  PocketDimension.InternalSize +
+								  Vector2I.one;
+				var verts = new List<Vector2>
+				{
+					internalStart,
+					internalStart with { y = internalEnd.y },
+					internalEnd,
+					internalStart with { x = internalEnd.x },
+				};
+				overworldCell.Value.poly = new Polygon(verts);
+				overworldCell.Value.zoneType = settings.ZoneType;
+
+				// fill area around the world with void
+
+				// below world
+				for (var x = 0; x < PocketDimension.DimensionSize.x; x++)
+				{
+					for (var y = 0; y < 2; y++)
+					{
+						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
+						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
+						Grid.Visible[cell] = 0;
+						Grid.PreventFogOfWarReveal[cell] = true;
+					}
+				}
+
+				// above world (4 tiles high for the surrounding no build zone)
+				for (var x = 0; x < PocketDimension.DimensionSize.x; x++)
+				{
+					for (var y = PocketDimension.DimensionSize.y - 4;
+						 y < PocketDimension.DimensionSize.y;
+						 y++)
+					{
+						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
+						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
+						Grid.Visible[cell] = 0;
+						Grid.PreventFogOfWarReveal[cell] = true;
+					}
+				}
+
+				// left of world
+				for (var x = 0; x < 2; x++)
+				{
+					for (var y = 2; y < PocketDimension.DimensionSize.y - 2; y++)
+					{
+						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
+						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
+						Grid.Visible[cell] = 0;
+						Grid.PreventFogOfWarReveal[cell] = true;
+					}
+				}
+
+				// right of world
+				for (var x = PocketDimension.DimensionSize.x - 2;
+					 x < PocketDimension.DimensionSize.x;
+					 x++)
+				{
+					for (var y = 2; y < PocketDimension.DimensionSize.y - 2; y++)
+					{
+						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
+						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
+						Grid.Visible[cell] = 0;
+						Grid.PreventFogOfWarReveal[cell] = true;
+					}
+				}
+
+				var portalPos = world.WorldOffset + PocketDimension.InternalOffset;
+
+				// Make a ceiling above the door and open up the cells the door is on
+				// Ceiling needed to ensure that falling tiles don't block the door
+				SimMessages.ReplaceElement(
+					Grid.PosToCell(portalPos + new Vector2I(0, 2)),
+					SimHashes.Unobtanium,
+					null,
+					20_000f
+				);
+				SimMessages.ReplaceElement(Grid.PosToCell(portalPos), SimHashes.Vacuum, null, 0, 0);
+				SimMessages.ReplaceElement(
+					Grid.PosToCell(portalPos + new Vector2I(0, 1)),
+					SimHashes.Vacuum,
+					null,
+					0,
+					0
+				);
+			}
+		);
+
+		if (world == null)
+		{
+			// throw this instead of NREing later, it will be handled by the event error handler
+			throw new Exception("Unable to create a world for a pocket dimension");
+		}
+
+		// This setup happens immediately, before the world spawns, and before the template is placed
+		var exteriorBuildingDef = Assets.GetBuildingDef(PocketDimensionExteriorPortalConfig.Id);
+		var exteriorDoor = exteriorBuildingDef.Create(
+			Grid.CellToPosCBC(exteriorPortalCell, exteriorBuildingDef.SceneLayer),
+			null,
+			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
+			null,
+			0.0001f,
+			exteriorBuildingDef.BuildingComplete
+		);
+
+		var portalPos = world.WorldOffset + PocketDimension.InternalOffset;
+		var interiorBuildingDef = Assets.GetBuildingDef(PocketDimensionInteriorPortalConfig.Id);
+		var interiorDoor = interiorBuildingDef.Create(
+			new Vector3(portalPos.x, portalPos.y),
+			null,
+			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
+			null,
+			0.0001f,
+			interiorBuildingDef.BuildingComplete
+		);
+
+		var exteriorPortal = exteriorDoor.GetComponent<PocketDimensionExteriorPortal>();
+		var interiorPortal = interiorDoor.GetComponent<PocketDimensionInteriorPortal>();
+
+		exteriorPortal.CreatedWorldIdx = world.id;
+		exteriorPortal.InteriorPortal = new Ref<PocketDimensionInteriorPortal>(interiorPortal);
+
+		var exteriorPortalRef = new Ref<PocketDimensionExteriorPortal>(exteriorPortal);
+		interiorPortal.ExteriorPortal = exteriorPortalRef;
+
+		world.GetComponent<PocketDimension>().ExteriorPortal = exteriorPortalRef;
+
+		// no light or rads
+		world.sunlightFixedTrait = FIXEDTRAITS.SUNLIGHT.NAME.NONE;
+		world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
+		world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
+		world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
+
+		return exteriorDoor;
+	}
+
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
 	private static readonly List<BasePocketDimensionGeneration> PocketDimensionSettings = new()
 	{
@@ -28,8 +222,7 @@ public static class PocketDimensionGenerator
 		new TemplatePocketDimensionGeneration(
 			1f,
 			SubWorld.ZoneType.Space,
-			"TwitchIntegration/TrollFace",
-			canSpawnSubDimensions: false
+			"TwitchIntegration/TrollFace"
 		),
 		// Meep face
 		new TemplatePocketDimensionGeneration(
@@ -246,180 +439,4 @@ public static class PocketDimensionGenerator
 			"Mining3"
 		),
 	};
-
-	// used via reflection for mod compatibility
-	[UsedImplicitly]
-	public static void AddGenerationConfig(BasePocketDimensionGeneration config)
-	{
-		PocketDimensionSettings.Add(config);
-	}
-
-	public static GameObject GenerateDimension(int exteriorPortalCell)
-	{
-		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
-		dimension.SetActive(true);
-		var world = WorldUtil.CreateWorldWithTemplate(
-			dimension,
-			PocketDimension.DimensionSize,
-			PocketDimension.BorderTemplate,
-			world =>
-			{
-				var pocketDim = world.GetComponent<PocketDimension>();
-
-				var settings = PocketDimensionSettings.Where(
-						setting => (setting.RequiredSkillId == null) || Components.LiveMinionIdentities.Items.Any(
-							minion => minion.TryGetComponent(out MinionResume resume) &&
-									  resume.HasMasteredSkill(setting.RequiredSkillId)
-						)
-					)
-					.GetRandom();
-
-				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
-				pocketDim.MaxLifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
-
-				// generate the world
-				// natural tiles, prefabs, and possibly a nested dimension
-				settings.Generate(world);
-
-				// remove the old polygons and re-add the one we want.
-				var overworldCell = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
-
-				var internalStart = world.WorldOffset + PocketDimension.InternalOffset -
-									Vector2I.one;
-				var internalEnd = world.WorldOffset +
-								  PocketDimension.InternalOffset +
-								  PocketDimension.InternalSize +
-								  Vector2I.one;
-				var verts = new List<Vector2>
-				{
-					internalStart,
-					internalStart with { y = internalEnd.y },
-					internalEnd,
-					internalStart with { x = internalEnd.x },
-				};
-				overworldCell.Value.poly = new Polygon(verts);
-				overworldCell.Value.zoneType = settings.ZoneType;
-
-				// fill area around the world with void
-
-				// below world
-				for (var x = 0; x < PocketDimension.DimensionSize.x; x++)
-				{
-					for (var y = 0; y < 2; y++)
-					{
-						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
-						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
-						Grid.Visible[cell] = 0;
-						Grid.PreventFogOfWarReveal[cell] = true;
-					}
-				}
-
-				// above world (4 tiles high for the surrounding no build zone)
-				for (var x = 0; x < PocketDimension.DimensionSize.x; x++)
-				{
-					for (var y = PocketDimension.DimensionSize.y - 4;
-						 y < PocketDimension.DimensionSize.y;
-						 y++)
-					{
-						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
-						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
-						Grid.Visible[cell] = 0;
-						Grid.PreventFogOfWarReveal[cell] = true;
-					}
-				}
-
-				// left of world
-				for (var x = 0; x < 2; x++)
-				{
-					for (var y = 2; y < PocketDimension.DimensionSize.y - 2; y++)
-					{
-						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
-						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
-						Grid.Visible[cell] = 0;
-						Grid.PreventFogOfWarReveal[cell] = true;
-					}
-				}
-
-				// right of world
-				for (var x = PocketDimension.DimensionSize.x - 2;
-					 x < PocketDimension.DimensionSize.x;
-					 x++)
-				{
-					for (var y = 2; y < PocketDimension.DimensionSize.y - 2; y++)
-					{
-						var cell = Grid.XYToCell(world.WorldOffset.x + x, world.WorldOffset.y + y);
-						SimMessages.ReplaceElement(cell, SimHashes.Void, null, 0);
-						Grid.Visible[cell] = 0;
-						Grid.PreventFogOfWarReveal[cell] = true;
-					}
-				}
-
-				var portalPos = world.WorldOffset + PocketDimension.InternalOffset;
-
-				// Make a ceiling above the door and open up the cells the door is on
-				// Ceiling needed to ensure that falling tiles don't block the door
-				SimMessages.ReplaceElement(
-					Grid.PosToCell(portalPos + new Vector2I(0, 2)),
-					SimHashes.Unobtanium,
-					null,
-					20_000f
-				);
-				SimMessages.ReplaceElement(Grid.PosToCell(portalPos), SimHashes.Vacuum, null, 0, 0);
-				SimMessages.ReplaceElement(
-					Grid.PosToCell(portalPos + new Vector2I(0, 1)),
-					SimHashes.Vacuum,
-					null,
-					0,
-					0
-				);
-			}
-		);
-
-		if (world == null)
-		{
-			// throw this instead of NREing later, it will be handled by the event error handler
-			throw new Exception("Unable to create a world for a pocket dimension");
-		}
-
-		// This setup happens immediately, before the world spawns, and before the template is placed
-		var exteriorBuildingDef = Assets.GetBuildingDef(PocketDimensionExteriorPortalConfig.Id);
-		var exteriorDoor = exteriorBuildingDef.Create(
-			Grid.CellToPosCBC(exteriorPortalCell, exteriorBuildingDef.SceneLayer),
-			null,
-			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
-			null,
-			0.0001f,
-			exteriorBuildingDef.BuildingComplete
-		);
-
-		var portalPos = world.WorldOffset + PocketDimension.InternalOffset;
-		var interiorBuildingDef = Assets.GetBuildingDef(PocketDimensionInteriorPortalConfig.Id);
-		var interiorDoor = interiorBuildingDef.Create(
-			new Vector3(portalPos.x, portalPos.y),
-			null,
-			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
-			null,
-			0.0001f,
-			interiorBuildingDef.BuildingComplete
-		);
-
-		var exteriorPortal = exteriorDoor.GetComponent<PocketDimensionExteriorPortal>();
-		var interiorPortal = interiorDoor.GetComponent<PocketDimensionInteriorPortal>();
-
-		exteriorPortal.CreatedWorldIdx = world.id;
-		exteriorPortal.InteriorPortal = new Ref<PocketDimensionInteriorPortal>(interiorPortal);
-
-		var exteriorPortalRef = new Ref<PocketDimensionExteriorPortal>(exteriorPortal);
-		interiorPortal.ExteriorPortal = exteriorPortalRef;
-
-		world.GetComponent<PocketDimension>().ExteriorPortal = exteriorPortalRef;
-
-		// no light or rads
-		world.sunlightFixedTrait = FIXEDTRAITS.SUNLIGHT.NAME.NONE;
-		world.sunlight = FIXEDTRAITS.SUNLIGHT.NONE;
-		world.cosmicRadiationFixedTrait = FIXEDTRAITS.COSMICRADIATION.NAME.NONE;
-		world.cosmicRadiation = FIXEDTRAITS.COSMICRADIATION.NONE;
-
-		return exteriorDoor;
-	}
 }

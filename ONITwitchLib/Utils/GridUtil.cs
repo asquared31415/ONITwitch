@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -8,9 +9,16 @@ using UnityEngine;
 
 namespace ONITwitchLib.Utils;
 
+/// <summary>
+/// Provides utilities for searching the <see cref="Grid"/>.
+/// </summary>
+[PublicAPI]
 public static class GridUtil
 {
-	public static readonly List<Direction> CellNeighbors = new()
+	/// <summary>
+	/// The directions that are neighbors to any cell.
+	/// </summary>
+	[PublicAPI] public static readonly List<Direction> CellNeighbors = new()
 	{
 		Direction.Down,
 		Direction.Right,
@@ -18,25 +26,49 @@ public static class GridUtil
 		Direction.Up,
 	};
 
+	/// <summary>
+	/// Gets all neighbors of a cell that are valid and in the same world.
+	/// </summary>
+	/// <param name="cell">The base cell.</param>
+	/// <returns>An enumerable of all cells that are in bounds neighbors of <paramref name="cell"/>.</returns>
+	/// <seealso cref="CellNeighbors"/>
+	/// <seealso cref="Grid.IsValidCell"/>
+	/// <seealso cref="Grid.AreCellsInSameWorld"/>
+	[PublicAPI]
+	[NotNull]
 	public static IEnumerable<int> GetNeighborsInBounds(int cell)
 	{
 		return CellNeighbors.Select(dir => Grid.GetCellInDirection(cell, dir))
 			.Where(n => Grid.IsValidCell(n) && Grid.AreCellsInSameWorld(cell, n));
 	}
 
-	public static bool IsCellFoundationEmpty(int cell)
-	{
-		var isFoundation = Grid.Foundation[cell];
-		var validCell = Grid.IsValidBuildingCell(cell);
-		var isDiggable = Grid.Element[cell].hardness < byte.MaxValue;
-		return !isFoundation && validCell && isDiggable;
-	}
-
-	public static IEnumerable<int> GetNeighborsWithBuildingClearance(int cell)
+	/// <summary>
+	/// Gets the neighbors of a cell that do not have foundation.
+	/// </summary>
+	/// <param name="cell">The base cell.</param>
+	/// <returns>An enumerable of cells that are neighbors of <paramref name="cell"/> and that are clear for foundation.</returns>
+	/// <seealso cref="CellNeighbors"/>
+	/// <seealso cref="IsCellFoundationEmpty"/>
+	[PublicAPI]
+	[NotNull]
+	public static IEnumerable<int> GetNeighborsWithFoundationClearance(int cell)
 	{
 		return GetNeighborsInBounds(cell).Where(IsCellFoundationEmpty);
 	}
 
+	/// <summary>
+	/// Gets whether a cell is empty of solids and foundation.
+	/// </summary>
+	/// <param name="cell">The cell to check.</param>
+	/// <returns>
+	/// <see langword="true"/> if <paramref name="cell"/> is not a foundation, is a valid cell for building,
+	/// and is not solid, otherwise <see langword="false"/>.
+	/// </returns>
+	/// <seealso cref="Grid.Foundation"/>
+	/// <seealso cref="Grid.IsValidBuildingCell"/>
+	/// <seealso cref="Grid.IsSolidCell"/>
+	/// <seealso cref="IsCellFoundationEmpty"/>
+	[PublicAPI]
 	public static bool IsCellEmpty(int cell)
 	{
 		var isFoundation = Grid.Foundation[cell];
@@ -45,8 +77,42 @@ public static class GridUtil
 		return !isFoundation && validCell && isOpen;
 	}
 
-	public const int NearestEmptyCellDepth = 40;
+	/// <summary>
+	/// Gets whether a cell is empty for the purposes of foundation and if it is not maximum hardness.
+	/// </summary>
+	/// <param name="cell">The cell to check.</param>
+	/// <returns>
+	/// <see langword="true"/> if <paramref name="cell"/> is not a foundation, is a valid cell for building,
+	/// and is diggable, otherwise <see langword="false"/>.
+	/// </returns>
+	/// <seealso cref="Grid.Foundation"/>
+	/// <seealso cref="Grid.IsValidBuildingCell"/>
+	/// <seealso cref="Grid.Element"/>
+	/// <seealso cref="IsCellEmpty"/>
+	[PublicAPI]
+	public static bool IsCellFoundationEmpty(int cell)
+	{
+		var isFoundation = Grid.Foundation[cell];
+		var validCell = Grid.IsValidBuildingCell(cell);
+		var isDiggable = Grid.Element[cell].hardness < byte.MaxValue;
+		return !isFoundation && validCell && isDiggable;
+	}
 
+	/// <summary>
+	/// Finds the nearest empty cell within <inheritdoc cref="NearestEmptyCellDepth"/> cells of <paramref name="baseCell"/>.
+	/// </summary>
+	/// <param name="baseCell">The cell to begin searching from.</param>
+	/// <returns>
+	/// The nearest cell that is not solid, within the same world as <paramref name="baseCell"/>,
+	/// or <see cref="Grid.InvalidCell"/> (-1) if one cannot be found in range.
+	/// </returns>
+	/// <remarks>
+	/// This search is based on <c>GameUtil.FloodFillFind</c>, which does a breadth first search,
+	/// moving out approximately equally in all directions
+	/// </remarks>
+	/// <seealso cref="GameUtil.FloodFillFind{T}"/>
+	/// <seealso cref="IsCellEmpty"/>
+	[PublicAPI]
 	public static int NearestEmptyCell(int baseCell)
 	{
 		var emptyCell = GameUtil.FloodFillFind<object>(
@@ -66,6 +132,22 @@ public static class GridUtil
 		return emptyCell;
 	}
 
+	/// <summary>
+	/// Finds the nearest empty cell within <inheritdoc cref="NearestEmptyCellDepth"/> cells of <paramref name="baseCell"/>
+	/// that also has all neighbors empty. 
+	/// </summary>
+	/// <param name="baseCell">The cell to begin searching from.</param>
+	/// <returns>
+	/// The nearest cell within the same world as <paramref name="baseCell"/> that is not solid and has all neighbors
+	/// empty, or <see cref="Grid.InvalidCell"/> (-1) if one cannot be found in range.
+	/// </returns>
+	/// <remarks>
+	/// This search is based on <c>GameUtil.FloodFillFind</c>, which does a breadth first search,
+	/// moving out approximately equally in all directions
+	/// </remarks>
+	/// <seealso cref="GameUtil.FloodFillFind{T}"/>
+	/// <seealso cref="IsCellEmpty"/>
+	[PublicAPI]
 	public static int FindCellWithCavityClearance(int baseCell)
 	{
 		var emptyCell = GameUtil.FloodFillFind<object>(
@@ -90,9 +172,24 @@ public static class GridUtil
 		return emptyCell;
 	}
 
+	/// <summary>
+	/// Finds the nearest cell that does not have a foundation within <inheritdoc cref="NearestEmptyCellDepth"/> cells
+	/// of <paramref name="baseCell"/> where its neighbors also all have no foundation. 
+	/// </summary>
+	/// <param name="baseCell">The cell to begin searching from.</param>
+	/// <returns>
+	/// The nearest cell within the same world as <paramref name="baseCell"/> that is not foundation and where all
+	/// neighbors do not have foundation, or <see cref="Grid.InvalidCell"/> (-1) if one cannot be found in range.
+	/// </returns>
+	/// <remarks>
+	/// This search is based on <c>GameUtil.FloodFillFind</c>, which does a breadth first search,
+	/// moving out approximately equally in all directions
+	/// </remarks>
+	/// <seealso cref="GameUtil.FloodFillFind{T}"/>
+	/// <seealso cref="IsCellFoundationEmpty"/>
+	[PublicAPI]
 	public static int FindCellWithFoundationClearance(int baseCell)
 	{
-		var clusterIdx = ClusterManager.Instance.activeWorldId;
 		var emptyCell = GameUtil.FloodFillFind<object>(
 			(cell, _) =>
 			{
@@ -124,11 +221,13 @@ public static class GridUtil
 	/// <param name="maxSize">The maximum number of cells to collect.</param>
 	/// <param name="invalidVisitedCells">All of the cells that were visited that were not considered valid.</param>
 	/// <returns>A HashSet containing the cells that were valid.</returns>
+	[PublicAPI]
+	[NotNull]
 	public static HashSet<int> FloodCollectCells(
 		int startCell,
-		Func<int, bool> cellValid,
+		[NotNull] Func<int, bool> cellValid,
 		int maxSize = 1000,
-		HashSet<int> invalidVisitedCells = null
+		[CanBeNull] HashSet<int> invalidVisitedCells = null
 	)
 	{
 		var result = new HashSet<int>();
@@ -165,11 +264,26 @@ public static class GridUtil
 		return result;
 	}
 
+	/// <summary>
+	/// Iterates over a region of cells defined by a <see cref="Game.SimActiveRegion"/>.
+	/// </summary>
+	/// <param name="region">The region of cells to iterate.</param>
+	/// <returns>An enumerable containing every cell within the region.</returns>
+	[PublicAPI]
+	[NotNull]
 	public static IEnumerable<int> IterateCellRegion(Game.SimActiveRegion region)
 	{
 		return IterateCellRegion(region.region.first, region.region.second);
 	}
 
+	/// <summary>
+	/// Iterates over a region of cells defined by a minimum and a maximum.
+	/// </summary>
+	/// <param name="min">The minimum bounds of the region.</param>
+	/// <param name="max">The maximum bounds of the region.</param>
+	/// <returns>An enumerable containing every cell within the region.</returns>
+	[PublicAPI]
+	[NotNull]
 	public static IEnumerable<int> IterateCellRegion(Vector2I min, Vector2I max)
 	{
 		for (var y = min.y; y < max.y; y++)
@@ -181,68 +295,31 @@ public static class GridUtil
 		}
 	}
 
-	private static readonly AccessTools.FieldRef<Game, List<Game.SimActiveRegion>> SimRegionsDelegate =
-		AccessTools.FieldRefAccess<Game, List<Game.SimActiveRegion>>(
-			AccessTools.DeclaredField(typeof(Game), "simActiveRegions")
-		);
-
+	/// <summary>
+	/// Iterates over all cells that the game considers currently active.
+	/// </summary>
+	/// <returns>An enumerable containing all active cells.</returns>
+	/// <remarks>As of Mergedown, the game activates whole planets at a time, based on whether they are discovered.</remarks>
+	[PublicAPI]
+	[NotNull]
 	public static IEnumerable<int> ActiveSimCells()
 	{
 		var activeSimRegions = SimRegionsDelegate(Game.Instance);
 		return activeSimRegions.SelectMany(IterateCellRegion);
 	}
 
-	[CanBeNull]
-	public static Vector2? LineSegmentIntersectsBox(Vector2 start, Vector2 end, Vector2I boxStart)
-	{
-		var boxEnd = boxStart + Vector2I.one;
-
-		var x1t = (boxStart.x - start.x) / (end.x - start.x);
-		var x2t = (boxEnd.x - start.x) / (end.x - start.x);
-		// swap such that 2 is always greater than or equal to 1
-		if (x1t > x2t)
-		{
-			(x2t, x1t) = (x1t, x2t);
-		}
-
-		var y1t = (boxStart.y - start.y) / (end.y - start.y);
-		var y2t = (boxEnd.y - start.y) / (end.y - start.y);
-		// swap such that 2 is always greater than or equal to 1
-		if (y1t > y2t)
-		{
-			(y2t, y1t) = (y1t, y2t);
-		}
-
-		// if the second x axis is crossed before the first y, or the second y before the first x, then the line is outside the cell
-		if ((x2t < y1t) || (y2t < x1t))
-		{
-			return null;
-		}
-
-		var tmin = Mathf.Max(x1t, y1t);
-		var tmax = Mathf.Min(x2t, y2t);
-		if (tmin > tmax)
-		{
-			(tmax, tmin) = (tmin, tmax);
-		}
-
-		var dir = end - start;
-		// return the first collision that is in bounds of the segment
-		if (tmin is >= 0 and <= 1)
-		{
-			return start + tmin * dir;
-		}
-
-		if (tmax is >= 0 and <= 1)
-		{
-			return start + tmax * dir;
-		}
-
-		return null;
-	}
-
-	// Finds a cell near the input cell that can have the passed building built	
-	// returns -1 if such a cell cannot be found
+	/// <summary>
+	/// Finds the nearest cell that can have the passed <see cref="BuildingDef"/> built,
+	/// or <see cref="Grid.InvalidCell"/> (-1) if a cell cannot be found.
+	/// </summary>
+	/// <param name="cell">The cell to begin searching.</param>
+	/// <param name="building">The building to check placement for.</param>
+	/// <param name="orientation">The orientation of the building.</param>
+	/// <returns>
+	/// The nearest cell to <paramref name="cell"/> that can support building <paramref name="building"/> with
+	/// <paramref name="orientation"/> orientation.
+	/// </returns>
+	[PublicAPI]
 	public static int FindCellOpenToBuilding(
 		int cell,
 		[NotNull] BuildingDef building,
@@ -250,8 +327,8 @@ public static class GridUtil
 	)
 	{
 		var foundCell = GameUtil.FloodFillFind<object>(
-			(cell, _) => building.IsValidPlaceLocation(null, cell, orientation, false, out var _) &&
-						 building.IsValidBuildLocation(null, cell, orientation, false, out var _),
+			(testCell, _) => building.IsValidPlaceLocation(null, testCell, orientation, false, out var _) &&
+							 building.IsValidBuildLocation(null, testCell, orientation, false, out var _),
 			null,
 			cell,
 			1_000,
@@ -261,4 +338,12 @@ public static class GridUtil
 
 		return foundCell;
 	}
+
+	/// <summary>40</summary>
+	private const int NearestEmptyCellDepth = 40;
+
+	private static readonly AccessTools.FieldRef<Game, List<Game.SimActiveRegion>> SimRegionsDelegate =
+		AccessTools.FieldRefAccess<Game, List<Game.SimActiveRegion>>(
+			AccessTools.DeclaredField(typeof(Game), "simActiveRegions")
+		);
 }

@@ -8,16 +8,35 @@ using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
 
+/// <summary>
+/// A group of associated <see cref="EventInfo"/>s with relative weights.
+/// <see cref="EventInfo"/>s in an <see cref="EventGroup"/> will attempt to be spread out for variety.
+/// </summary>
+[PublicAPI]
 public class EventGroup
 {
-	internal readonly object Obj;
-
+	/// <summary>
+	/// Gets an existing <see cref="EventGroup"/> with a specified name, or creates it if it does not exist.
+	/// </summary>
+	/// <param name="name">The name of the <see cref="EventGroup"/> to get or create.</param>
+	/// <returns>The group that was found or created.</returns>
+	[PublicAPI]
+	[Pure]
+	[NotNull]
 	public static EventGroup GetOrCreateGroup([NotNull] string name)
 	{
 		return new EventGroup(CreateEventGroupDelegate(name));
 	}
 
-	[MustUseReturnValue("The group should be added to the TwitchDeckManager to actually be useful")]
+	/// <summary>
+	/// Creates an <see cref="EventInfo"/> with a unique <see cref="EventGroup"/> that has a default name and no other <see cref="EventInfo"/>s.
+	/// </summary>
+	/// <param name="id">The id of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="weight">The weight of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="friendlyName">The friendly name of the <see cref="EventInfo"/> to create.</param>
+	/// <returns>The newly created <see cref="EventInfo"/> and its unique <see cref="EventGroup"/>.</returns>
+	[PublicAPI]
+	[MustUseReturnValue("The group should be added to the TwitchDeckManager to be used")]
 	public static (EventInfo EventInfo, EventGroup Group) DefaultSingleEventGroup(
 		[NotNull] string id,
 		int weight,
@@ -28,22 +47,48 @@ public class EventGroup
 		return (new EventInfo(info), new EventGroup(group));
 	}
 
+	/// <summary>
+	/// Creates a new <see cref="EventInfo"/> in this <see cref="EventGroup"/>.
+	/// </summary>
+	/// <param name="id">The id of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="weight">The weight of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="friendlyName">The friendly name of the <see cref="EventInfo"/> to create.</param>
+	/// <returns>The newly created <see cref="EventInfo"/>.</returns>
+	[PublicAPI]
 	[NotNull]
 	public EventInfo AddEvent([NotNull] string id, int weight, [CanBeNull] string friendlyName = null)
 	{
 		return new EventInfo(addEventDelegate(id, weight, friendlyName));
 	}
 
+	/// <summary>
+	/// Sets the weight of a specified <see cref="EventInfo"/> in the group.
+	/// </summary>
+	/// <param name="eventInfo">The <see cref="EventInfo"/> to change the weight for.</param>
+	/// <param name="weight">The new weight.</param>
+	/// <exception cref="ArgumentOutOfRangeException"><paramref name="weight"/> is less than 0.</exception>
+	[PublicAPI]
 	public void SetWeight([NotNull] EventInfo eventInfo, int weight)
 	{
 		setWeightDelegate(eventInfo.EventInfoInstance, weight);
 	}
 
+	/// <summary>
+	/// Removes the specified <see cref="EventInfo"/> from the group.
+	/// </summary>
+	/// <param name="item">The <see cref="EventInfo"/> to remove.</param>
+	[PublicAPI]
 	public void RemoveEvent([NotNull] EventInfo item)
 	{
 		removeEventDelegate(item.EventInfoInstance);
 	}
 
+	/// <summary>
+	/// Gets a the weight of each <see cref="EventInfo"/> in the group.
+	/// </summary>
+	/// <returns>A read-only dictionary of each <see cref="EventInfo"/> and its corresponding weight.</returns>
+	[PublicAPI]
+	[Pure]
 	[NotNull]
 	public IReadOnlyDictionary<EventInfo, int> GetWeights()
 	{
@@ -58,6 +103,8 @@ public class EventGroup
 	{
 		return Obj.ToString();
 	}
+
+	internal readonly object Obj;
 
 	private static readonly Func<object, object> CreateEventGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
 		AccessTools.Method(EventInterface.EventGroupType, "GetOrCreateGroup"),

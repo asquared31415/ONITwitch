@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
+// ReSharper disable once CheckNamespace : this must be kept for compatibility reasons (TODO: fix for 1.0?)
 namespace EventLib;
 
+/// <summary>
+/// Provides a way to obtain a method by its id.
+/// </summary>
+[PublicAPI]
 public class EventManager
 {
 	private static EventManager instance;

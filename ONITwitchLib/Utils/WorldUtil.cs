@@ -8,8 +8,21 @@ using UnityEngine.UI;
 
 namespace ONITwitchLib.Utils;
 
+/// <summary>
+/// Utilities for working with worlds.
+/// </summary>
+[PublicAPI]
 public static class WorldUtil
 {
+	/// <summary>
+	/// Allocates <see cref="Grid"/> space for a world and creates the world with a template, calling the callback once the template is placed.
+	/// </summary>
+	/// <param name="worldGo">The object that is an instance of a <see cref="ClusterGridEntity"/> to set up as the world.</param>
+	/// <param name="size">The size of the world to create, in cells.</param>
+	/// <param name="template">The template to place in the world.</param>
+	/// <param name="callback">If present, the callback to call after placing the template.</param>
+	/// <returns>The <see cref="WorldContainer"/> for the newly created world.</returns>
+	[PublicAPI]
 	[CanBeNull]
 	public static WorldContainer CreateWorldWithTemplate(
 		[NotNull] GameObject worldGo,
@@ -48,12 +61,12 @@ public static class WorldUtil
 		return null;
 	}
 
-	private delegate void RefreshTogglesDelegate(WorldSelector instance);
-
-	[CanBeNull] private static RefreshTogglesDelegate refreshToggles;
-
-	// Refreshes the specified world index in the world selector, or refreshes the entire selector if no index is provided
-	public static void RefreshWorldSelector(int? worldIndex)
+	/// <summary>
+	///	Refreshes the specified world index in the world selector, or refreshes the entire selector if no index is provided. 
+	/// </summary>
+	/// <param name="worldIndex">The index of the world to refresh.</param>
+	[PublicAPI]
+	public static void RefreshWorldSelector([CanBeNull] int? worldIndex = null)
 	{
 		refreshToggles ??=
 			AccessTools.MethodDelegate<RefreshTogglesDelegate>(
@@ -100,12 +113,16 @@ public static class WorldUtil
 		}
 	}
 
-	[CanBeNull] private static AccessTools.FieldRef<ColonyDiagnosticUtility, Dictionary<int, List<ColonyDiagnostic>>>
-		diagnosticDict;
-
+	/// <summary>
+	/// Adds a diagnostic to a world.
+	/// </summary>
+	/// <param name="worldIdx">The index of the world to add to.</param>
+	/// <param name="diagnostic">The diagnostic to add.</param>
+	/// <param name="displaySetting">When to display the diagnostic in the world selector.</param>
+	[PublicAPI]
 	public static void AddDiagnostic(
 		int worldIdx,
-		ColonyDiagnostic diagnostic,
+		[NotNull] ColonyDiagnostic diagnostic,
 		ColonyDiagnosticUtility.DisplaySetting displaySetting = ColonyDiagnosticUtility.DisplaySetting.AlertOnly
 	)
 	{
@@ -136,4 +153,11 @@ public static class WorldUtil
 			ColonyDiagnosticUtility.Instance.diagnosticDisplaySettings[worldIdx].Add(diagnostic.id, displaySetting);
 		}
 	}
+
+	private delegate void RefreshTogglesDelegate(WorldSelector instance);
+
+	[CanBeNull] private static RefreshTogglesDelegate refreshToggles;
+
+	[CanBeNull] private static AccessTools.FieldRef<ColonyDiagnosticUtility, Dictionary<int, List<ColonyDiagnostic>>>
+		diagnosticDict;
 }

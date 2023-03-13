@@ -8,10 +8,21 @@ namespace ONITwitchLib;
 /// <summary>
 /// Represents an event that is known to the <see cref="EventManager"/>.
 /// </summary>
+[PublicAPI]
 public class EventInfo
 {
-	[NotNull] public string Id => getIdDelegate();
+	/// <summary>
+	/// The full namespaced ID of the <see cref="EventInfo"/>.
+	/// </summary>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
+	[NotNull]
+	public string Id => getIdDelegate();
 
+	/// <summary>
+	/// The friendly name of the <see cref="EventInfo"/>.
+	/// </summary>
+	[PublicAPI]
 	[CanBeNull]
 	public string FriendlyName
 	{
@@ -19,11 +30,33 @@ public class EventInfo
 		set => friendlyNameRef(EventInfoInstance) = value;
 	}
 
-	[NotNull] public string EventNamespace => getEventNamespaceDelegate();
-	[NotNull] public string EventId => getEventIdDelegate();
+	/// <summary>
+	/// The namespace of the <see cref="EventInfo"/>.
+	/// </summary>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
+	[NotNull]
+	public string EventNamespace => getEventNamespaceDelegate();
 
-	[NotNull] public EventGroup Group => new(getGroupDelegate());
+	/// <summary>
+	/// The ID of the <see cref="EventInfo"/>, without the <see cref="EventNamespace"/>.
+	/// </summary>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
+	[NotNull]
+	public string EventId => getEventIdDelegate();
 
+	/// <summary>
+	/// The <see cref="EventGroup"/> of the <see cref="EventInfo"/>.
+	/// </summary>
+	[PublicAPI]
+	[NotNull]
+	public EventGroup Group => new(getGroupDelegate());
+
+	/// <summary>
+	/// The <see cref="ONITwitchLib.Danger"/> of the <see cref="EventInfo"/>. 
+	/// </summary>
+	[PublicAPI]
 	[CanBeNull]
 	public Danger? Danger
 	{
@@ -39,26 +72,67 @@ public class EventInfo
 		}
 	}
 
+	/// <summary>
+	/// Adds an <see cref="System.Action{T}"/> that is invoked with the event's data when the event is triggered.
+	/// </summary>
+	/// <param name="listener">The action to invoke when the event is triggered.</param>
+	/// <seealso cref="DataManager"/>
+	/// <seealso cref="Trigger"/>
+	[PublicAPI]
 	public void AddListener([NotNull] Action<object> listener)
 	{
 		addListenerDelegate(listener);
 	}
 
+	/// <summary>
+	/// Removes an <see cref="System.Action{T}"/> from the list of actions that are run when an event is triggered, if it exists. 
+	/// </summary>
+	/// <param name="listener">The action to remove.</param>
+	/// <seealso cref="Trigger"/>
+	[PublicAPI]
 	public void RemoveListener([NotNull] Action<object> listener)
 	{
 		removeListenerDelegate(listener);
 	}
 
+	/// <summary>
+	/// Triggers the event with the specified data by calling each registered listener.
+	/// Callers are expected to provide the correct type and values of data for this <see cref="EventInfo"/>.
+	/// The correct data can typically be found in the <see cref="DataManager"/>.
+	/// </summary>
+	/// <param name="data">The data to call each listener with.</param>
+	/// <seealso cref="AddListener"/>
+	[PublicAPI]
 	public void Trigger(object data)
 	{
 		triggerDelegate(data);
 	}
 
+	/// <summary>
+	/// Adds a condition to the event that should be run to determine if the event should run.
+	/// </summary>
+	/// <param name="condition">
+	/// A function that takes an object parameter to be called with the event's data,
+	/// and returns <see langword="true"/> if the event should be run and <see langword="false"/> if it should not. 
+	/// </param>
+	/// <seealso cref="Trigger"/>
+	/// <seealso cref="DataManager"/>
+	/// <seealso cref="CheckCondition"/>
+	[PublicAPI]
 	public void AddCondition([NotNull] Func<object, bool> condition)
 	{
 		addConditionDelegate(condition);
 	}
 
+	/// <summary>
+	/// Checks whether an event should be run by invoking each of its conditions and returning <see langword="false"/>
+	/// if any of the conditions return <see langword="false"/>.
+	/// </summary>
+	/// <param name="data">The data to be passed to each condition.</param>
+	/// <returns><see langword="false"/> if any of the conditions return false, otherwise <see langword="true"/>.</returns>
+	/// <seealso cref="AddCondition"/>
+	/// <seealso cref="Trigger"/>
+	[PublicAPI]
 	public bool CheckCondition(object data)
 	{
 		return checkConditionDelegate(data);
@@ -68,6 +142,10 @@ public class EventInfo
 	/// Gets a string representation of the event.
 	/// </summary>
 	/// <returns>The friendly name of the event, if it exists, or the ID of the event otherwise.</returns>
+	/// <seealso cref="FriendlyName"/>
+	/// <seealso cref="Id"/>
+	/// <seealso cref="EventNamespace"/>
+	/// <seealso cref="EventId"/>
 	public override string ToString()
 	{
 		return EventInfoInstance.ToString();

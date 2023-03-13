@@ -5,19 +5,26 @@ using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
 
+/// <summary>
+/// Provides methods to manipulate data of <see cref="EventInfo"/>s
+/// </summary>
+[PublicAPI]
 public class DataManager
 {
 	/// <summary>
-	/// Gets the instance of the data manager from the twitch mod.
+	/// The instance of the data manager.
 	/// Only safe to access if the Twitch mod is active.
 	/// </summary>
+	[PublicAPI]
+	[NotNull]
 	public static DataManager Instance => instance ??= new DataManager();
 
 	/// <summary>
 	/// Sets the data for an event.
 	/// </summary>
-	/// <param name="info">The <see cref="EventInfo"/> for the event to modify</param>
-	/// <param name="data">The new data for the event</param>
+	/// <param name="info">The <see cref="EventInfo"/> for the event to modify.</param>
+	/// <param name="data">The new data for the event.</param>
+	[PublicAPI]
 	public void SetDataForEvent([NotNull] EventInfo info, object data)
 	{
 		setDataForEventDelegate(info.EventInfoInstance, data);
@@ -26,8 +33,10 @@ public class DataManager
 	/// <summary>
 	/// Gets the data for an event.
 	/// </summary>
-	/// <param name="info">The <see cref="EventInfo"/> for the event to get data for</param>
-	/// <returns>The data for the event, if it exists, or <c>null</c> otherwise.</returns>
+	/// <param name="info">The <see cref="EventInfo"/> for the event to get data for.</param>
+	/// <returns>The data for the event, if it exists, otherwise <see langword="null"/></returns>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
 	[CanBeNull]
 	public object GetDataForEvent([NotNull] EventInfo info)
 	{

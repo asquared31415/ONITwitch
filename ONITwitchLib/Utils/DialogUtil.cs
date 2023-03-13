@@ -2,8 +2,21 @@ using JetBrains.Annotations;
 
 namespace ONITwitchLib.Utils;
 
+/// <summary>
+/// Methods to create pop up dialogs.
+/// </summary>
+[PublicAPI]
 public static class DialogUtil
 {
+	/// <summary>
+	/// Creates a dialog with only a confirm action.
+	/// </summary>
+	/// <param name="title">The title of the dialog.</param>
+	/// <param name="text">The message in the body of the dialog.</param>
+	/// <param name="confirmText">The text on the confirm button.</param>
+	/// <param name="onConfirm">If not <see langword="null"/>, the action to call when the confirm button is pressed.</param>
+	/// <returns>The newly created dialog.</returns>
+	[PublicAPI]
 	public static KScreen MakeDialog(
 		string title,
 		string text,
@@ -27,6 +40,19 @@ public static class DialogUtil
 		return screen;
 	}
 
+	/// <summary>
+	/// Creates a dialog with confirm, cancel, and optionally a third button.
+	/// </summary>
+	/// <param name="title">The title of the dialog.</param>
+	/// <param name="text">The message in the body of the dialog.</param>
+	/// <param name="confirmText">The text on the confirm button.</param>
+	/// <param name="onConfirm">If not <see langword="null"/>, the action to call when the confirm button is pressed.</param>
+	/// <param name="cancelText">The text on the cancel button.</param>
+	/// <param name="onCancel">If not <see langword="null"/>, the action to call when the cancel button is pressed.</param>
+	/// <param name="thirdText">The text on the third button.</param>
+	/// <param name="thirdAction">If not <see langword="null"/>, the action to call when the third button is pressed.</param>
+	/// <returns>The newly created dialog.</returns>
+	[PublicAPI]
 	public static KScreen MakeDialog(
 		string title,
 		string text,

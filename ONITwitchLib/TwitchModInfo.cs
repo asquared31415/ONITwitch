@@ -7,25 +7,31 @@ namespace ONITwitchLib;
 /// <summary>
 /// Various information about the Twitch mod, primarily for integrations.
 /// </summary>
+[PublicAPI]
 public static class TwitchModInfo
 {
-	public const string ModPrefix = "ONITwitch.";
+	/// <summary>
+	/// The prefix that the twitch mod uses for IDs, with a few exceptions
+	/// </summary>
+	[PublicAPI] public const string ModPrefix = "ONITwitch.";
 
-	public const string StaticID = "asquared31415.TwitchIntegration";
-	
-	private const string TwitchTypeName = "ONITwitch.OniTwitchMod, ONITwitch";
-	private static Type mainTwitchType;
-	
+	/// <summary>
+	/// The static ID of the Twitch mod.
+	/// </summary>
+	[PublicAPI] public const string StaticID = "asquared31415.TwitchIntegration";
+
 	/// <summary>
 	/// True if the Twitch mod has been detected, false otherwise.
 	/// Safe to access even if the Twitch mod is not installed or active.
 	/// </summary>
+	[PublicAPI]
 	public static bool TwitchIsPresent => MainTwitchModType != null;
-	
+
 	/// <summary>
 	/// The Type for the main Twitch mod's UserMod2, if it exists. null if it cannot be found.
 	/// Safe to access even if the Twitch mod is not installed or active. 
 	/// </summary>
+	[PublicAPI]
 	[CanBeNull]
 	public static Type MainTwitchModType => mainTwitchType ??= Type.GetType(TwitchTypeName);
 
@@ -33,20 +39,20 @@ public static class TwitchModInfo
 	/// The mod folder containing the Twitch mod dll.
 	/// Only valid if the Twitch mod is active.
 	/// </summary>
-	public static readonly string MainModFolder =
+	[PublicAPI] public static readonly string MainModFolder =
 		TwitchIsPresent ? Directory.GetParent(MainTwitchModType!.Assembly.Location)!.FullName : "";
 
-	public const string CredentialsFileName = "SECRET_credentials.json";
-	
 	/// <summary>
-	/// Only valid if the Twitch mod is active.
+	/// The filename of the config file containing the main Twitch mod config.
 	/// </summary>
-	public static readonly string CredentialsPath = Path.Combine(MainModFolder, CredentialsFileName);
-	
-	public const string ConfigName = "config.json";
+	[PublicAPI] public const string ConfigName = "config.json";
 
 	/// <summary>
+	/// The path to the config file containing the main Twitch mod config.
 	/// Only valid if the Twitch mod is active.
 	/// </summary>
-	public static readonly string ConfigPath = Path.Combine(MainModFolder, ConfigName);
+	[PublicAPI] public static readonly string ConfigPath = Path.Combine(MainModFolder, ConfigName);
+
+	private const string TwitchTypeName = "ONITwitch.OniTwitchMod, ONITwitch";
+	private static Type mainTwitchType;
 }

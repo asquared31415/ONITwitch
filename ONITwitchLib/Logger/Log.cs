@@ -2,6 +2,11 @@ using System.Diagnostics;
 
 namespace ONITwitchLib.Logger;
 
+// TODO: is this public API (add annotation)
+
+/// <summary>
+/// Provides methods for emitting log messages from the Twitch mod.
+/// </summary>
 public static class Log
 {
 	/// <summary>

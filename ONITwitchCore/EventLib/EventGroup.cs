@@ -7,27 +7,32 @@ using JetBrains.Annotations;
 using KMod;
 using ONITwitchCore;
 using ONITwitchCore.Config;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
 
+// ReSharper disable once CheckNamespace : this must be kept for compatibility reasons (TODO: fix for 1.0?)
 namespace EventLib;
 
+/// <summary>
+/// A group of associated <see cref="EventInfo"/>s with relative weights.
+/// <see cref="EventInfo"/>s in an <see cref="EventGroup"/> will attempt to be spread out for variety.
+/// </summary>
+[PublicAPI]
 public class EventGroup
 {
-	public static Dictionary<Assembly, string> AssemblyIdMap;
-
+	// TODO: expose these properties
 	[NotNull] public readonly string Name;
+
 	public int TotalWeight => weights.Values.Sum();
 
 	public event Action<EventGroup> OnGroupChanged;
 
-	private readonly Dictionary<EventInfo, int> weights = new();
-
-	private EventGroup([NotNull] string name)
-	{
-		Name = name;
-	}
-
+	/// <summary>
+	/// Gets an existing <see cref="EventGroup"/> with a specified name, or creates it if it does not exist.
+	/// </summary>
+	/// <param name="name">The name of the <see cref="EventGroup"/> to get or create.</param>
+	/// <returns>The group that was found or created.</returns>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
 	[NotNull]
 	public static EventGroup GetOrCreateGroup([NotNull] string name)
 	{
@@ -35,7 +40,15 @@ public class EventGroup
 		return existing ?? new EventGroup(name);
 	}
 
-	[MustUseReturnValue("The group should be added to the TwitchDeckManager to actually be useful")]
+	/// <summary>
+	/// Creates an <see cref="EventInfo"/> with a unique <see cref="EventGroup"/> that has a default name and no other <see cref="EventInfo"/>s.
+	/// </summary>
+	/// <param name="id">The id of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="weight">The weight of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="friendlyName">The friendly name of the <see cref="EventInfo"/> to create.</param>
+	/// <returns>The newly created <see cref="EventInfo"/> and its unique <see cref="EventGroup"/>.</returns>
+	[PublicAPI]
+	[MustUseReturnValue("The group should be added to the TwitchDeckManager to be used")]
 	public static (EventInfo EventInfo, EventGroup Group) DefaultSingleEventGroup(
 		[NotNull] string id,
 		int weight,
@@ -46,6 +59,14 @@ public class EventGroup
 		return CommonDefaultSingleEventGroup(callingAssembly, id, weight, friendlyName);
 	}
 
+	/// <summary>
+	/// Creates a new <see cref="EventInfo"/> in this <see cref="EventGroup"/>.
+	/// </summary>
+	/// <param name="id">The id of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="weight">The weight of the <see cref="EventInfo"/> to create.</param>
+	/// <param name="friendlyName">The friendly name of the <see cref="EventInfo"/> to create.</param>
+	/// <returns>The newly created <see cref="EventInfo"/>.</returns>
+	[PublicAPI]
 	[NotNull]
 	public EventInfo AddEvent([NotNull] string id, int weight, [CanBeNull] string friendlyName = null)
 	{
@@ -94,15 +115,32 @@ public class EventGroup
 		}
 	}
 
+	/// <summary>
+	/// Sets the weight of a specified <see cref="EventInfo"/> in the group.
+	/// </summary>
+	/// <param name="eventInfo">The <see cref="EventInfo"/> to change the weight for.</param>
+	/// <param name="weight">The new weight.</param>
+	/// <exception cref="ArgumentOutOfRangeException"><paramref name="weight"/> is less than 0.</exception>
+	[PublicAPI]
 	public void SetWeight([NotNull] EventInfo eventInfo, int weight)
 	{
 		if (weights.ContainsKey(eventInfo))
 		{
+			if (weight < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(weight), weight, "Weight must be non-negative.");
+			}
+
 			weights[eventInfo] = weight;
 			InvokeOnChanged();
 		}
 	}
 
+	/// <summary>
+	/// Removes the specified <see cref="EventInfo"/> from the group.
+	/// </summary>
+	/// <param name="item">The <see cref="EventInfo"/> to remove.</param>
+	[PublicAPI]
 	public void RemoveEvent([NotNull] EventInfo item)
 	{
 		if (weights.ContainsKey(item))
@@ -112,6 +150,12 @@ public class EventGroup
 		}
 	}
 
+	/// <summary>
+	/// Gets a the weight of each <see cref="EventInfo"/> in the group.
+	/// </summary>
+	/// <returns>A read-only dictionary of each <see cref="EventInfo"/> and its corresponding weight.</returns>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
 	[NotNull]
 	public IReadOnlyDictionary<EventInfo, int> GetWeights()
 	{
@@ -120,11 +164,25 @@ public class EventGroup
 		return new ReadOnlyDictionary<EventInfo, int>(new Dictionary<EventInfo, int>(weights));
 	}
 
+	public override string ToString()
+	{
+		return $"Group {Name}";
+	}
+
+	private readonly Dictionary<EventInfo, int> weights = new();
+
+	private EventGroup([NotNull] string name)
+	{
+		Name = name;
+	}
+
 	internal void AddEventInfoInternal([NotNull] EventInfo eventInfo, int weight)
 	{
 		weights[eventInfo] = weight;
 		InvokeOnChanged();
 	}
+
+	internal static Dictionary<Assembly, string> AssemblyIdMap;
 
 	private static string GetEventNamespace([NotNull] Assembly callingAssembly)
 	{
@@ -136,25 +194,20 @@ public class EventGroup
 		else
 		{
 			// Warning for mod devs to be present even on the release versions 
-			Log.Warn($"Unable to find a static ID for assembly {callingAssembly} to determine its namespace (did you try to register an event before the twitch mod's OnAllModsLoaded?)");
+			Log.Warn(
+				$"Unable to find a static ID for assembly {callingAssembly} to determine its namespace (did you try to register an event before the twitch mod's OnAllModsLoaded?)"
+			);
 			modNamespace = "";
 		}
 
 		return modNamespace;
 	}
 
-	/// <summary>
-	/// This is not stable
-	/// </summary>
+	[System.Diagnostics.Contracts.Pure]
 	[NotNull]
-	public static string GetItemDefaultGroupName([NotNull] string eventNamespace, [NotNull] string id)
+	internal static string GetItemDefaultGroupName([NotNull] string eventNamespace, [NotNull] string id)
 	{
 		return $"__<nogroup>__{eventNamespace}.{id}_{eventNamespace.GetHashCode()}.{id.GetHashCode()}_";
-	}
-
-	public override string ToString()
-	{
-		return $"Group {Name}";
 	}
 
 	private void InvokeOnChanged()
@@ -193,6 +246,7 @@ public class EventGroup
 		}
 	}
 
+	[MustUseReturnValue]
 	private static (EventInfo EventInfo, EventGroup Group) CommonDefaultSingleEventGroup(
 		[NotNull] Assembly callingAssembly,
 		[NotNull] string id,
@@ -241,7 +295,9 @@ public class EventGroup
 	}
 
 	[Obsolete("Used as a cast helper for the reflection lib", true)]
-	[UsedImplicitly]
+	[PublicAPI(
+		"This is not part of the public API. It exists solely for merged library internals. However, removing this is a breaking change."
+	)]
 	private static (object, object) InternalDefaultSingleEventGroup(
 		[NotNull] string id,
 		int weight,

@@ -3,58 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchCore.Cmps.PocketDimension;
-using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
 using ProcGen;
 using UnityEngine;
 
 namespace ONITwitchCore.Content;
 
+/// <summary>
+/// The base class for pocket dimension generation configs.
+/// </summary>
+[PublicAPI]
 public abstract class BasePocketDimensionGeneration
 {
-	public float CyclesLifetime;
-	public SubWorld.ZoneType ZoneType;
-
-	[CanBeNull] public string RequiredSkillId;
-
-	[CanBeNull] private readonly List<string> prefabIds;
-
-	private readonly bool canSpawnSubDimensions;
-
-	// TODO: enable once sub-dimensions are less totally broken
-	private const bool DEBUG_BROKEN_AllowNestedDimensions = false;
-
-	public BasePocketDimensionGeneration(
+	/// <summary>
+	/// Instantiates a new generation config with no tile generation data.
+	/// </summary>
+	/// <param name="cyclesLifetime">The number of cycles for the dimension to stay open.</param>
+	/// <param name="zoneType">The zone type of the dimension.</param>
+	/// <param name="requiredSkillId">The required skill ID for this dimension to be considered for generation.</param>
+	/// <param name="prefabIds">The list of prefabs that should spawn in this dimension.</param>
+	[PublicAPI]
+	protected BasePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
+		[CanBeNull] List<string> prefabIds = null
 	)
 	{
 		CyclesLifetime = cyclesLifetime;
 		ZoneType = zoneType;
 		RequiredSkillId = requiredSkillId;
 		this.prefabIds = prefabIds;
-		// TODO: enable once sub-dimensions are less totally broken
-		this.canSpawnSubDimensions = DEBUG_BROKEN_AllowNestedDimensions & canSpawnSubDimensions;
-	}
-
-	public void Generate(WorldContainer world)
-	{
-		GenerateTiles(world);
-		GeneratePrefabs(world);
-
-		// 5% chance to spawn another pocket dimension inside
-		if (canSpawnSubDimensions && (ThreadRandom.Next(20) == 0))
-		{
-			GenerateSubDimension(world);
-		}
 	}
 
 	protected abstract void GenerateTiles(WorldContainer world);
 
-	private void GeneratePrefabs(WorldContainer world)
+	protected virtual void GeneratePrefabs(WorldContainer world)
 	{
 		if (prefabIds != null)
 		{
@@ -71,19 +55,19 @@ public abstract class BasePocketDimensionGeneration
 		}
 	}
 
-	private static void GenerateSubDimension(WorldContainer world)
+	internal void Generate(WorldContainer world)
 	{
-		var pos = world.WorldOffset + GetRandomInteriorOffset();
-		var go = Util.KInstantiate(Assets.GetPrefab(DevPocketDimensionGeneratorConfig.Id), (Vector2) pos);
-		go.SetActive(true);
-
-		var pocketDim = world.GetComponent<PocketDimension>();
-		// if a dimension was spawned inside, increase the lifetime by 3 more cycles
-		// TODO: tune this 3 cycles, and adjust comment above
-		// TODO: is there a way to get the children to spawn fully first, and wait for that, to add their lifetime
-		pocketDim.Lifetime += 3 * Constants.SECONDS_PER_CYCLE;
-		pocketDim.MaxLifetime += 3 * Constants.SECONDS_PER_CYCLE;
+		GenerateTiles(world);
+		GeneratePrefabs(world);
 	}
+
+	internal float CyclesLifetime { get; }
+
+	internal SubWorld.ZoneType ZoneType { get; }
+
+	[CanBeNull] internal string RequiredSkillId { get; }
+
+	[CanBeNull] private readonly List<string> prefabIds;
 
 	private static Vector2I GetRandomInteriorOffset()
 	{
@@ -111,9 +95,8 @@ public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
 		SubWorld.ZoneType zoneType,
 		string template,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
-	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds, canSpawnSubDimensions)
+		[CanBeNull] List<string> prefabIds = null
+	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
 	{
 		this.template = template;
 	}
@@ -140,9 +123,8 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 		float xFrequency,
 		float yFrequency,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
-	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds, canSpawnSubDimensions)
+		[CanBeNull] List<string> prefabIds = null
+	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
 	{
 		this.hashes = hashes;
 		this.xFrequency = xFrequency;
@@ -191,22 +173,36 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 [UsedImplicitly]
 public class CustomPocketDimensionGeneration : BasePocketDimensionGeneration
 {
-	private readonly Action<WorldContainer> generateTilesAction;
-
 	public CustomPocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
-		Action<WorldContainer> generateTilesAction,
+		[NotNull] Action<WorldContainer> generateTilesAction,
+		[CanBeNull] Action<WorldContainer> generatePrefabsAction,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
-	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds, canSpawnSubDimensions)
+		[CanBeNull] List<string> prefabIds = null
+	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
 	{
 		this.generateTilesAction = generateTilesAction;
+		this.generatePrefabsAction = generatePrefabsAction;
 	}
 
 	protected override void GenerateTiles(WorldContainer world)
 	{
 		generateTilesAction(world);
 	}
+
+	protected override void GeneratePrefabs(WorldContainer world)
+	{
+		if (generatePrefabsAction != null)
+		{
+			generatePrefabsAction(world);
+		}
+		else
+		{
+			base.GeneratePrefabs(world);
+		}
+	}
+
+	[NotNull] private readonly Action<WorldContainer> generateTilesAction;
+	[CanBeNull] private readonly Action<WorldContainer> generatePrefabsAction;
 }

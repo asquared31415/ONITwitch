@@ -6,6 +6,8 @@ using JetBrains.Annotations;
 
 namespace ONITwitchLib;
 
+// TODO: is this public API (maybe not?)
+#pragma warning disable CS1591
 public static class IrcParser
 {
 	// message must be a single message, it must not contain any CRLF

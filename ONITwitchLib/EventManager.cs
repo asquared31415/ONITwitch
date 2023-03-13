@@ -5,6 +5,10 @@ using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
 
+/// <summary>
+/// Provides a way to obtain a method by its id.
+/// </summary>
+[PublicAPI]
 public class EventManager
 {
 	/// <summary>

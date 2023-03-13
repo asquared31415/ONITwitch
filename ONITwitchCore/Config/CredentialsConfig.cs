@@ -13,6 +13,10 @@ public class CredentialsConfig
 {
 	private static CredentialsConfig instance;
 
+	private const string CredentialsFileName = "SECRET_credentials.json";
+
+	private static readonly string CredentialsPath = Path.Combine(TwitchModInfo.MainModFolder, CredentialsFileName);
+
 	public static CredentialsConfig Instance => instance ??= new CredentialsConfig();
 
 	public Credentials Credentials;
@@ -21,7 +25,7 @@ public class CredentialsConfig
 	{
 		try
 		{
-			var text = File.ReadAllText(TwitchModInfo.CredentialsPath);
+			var text = File.ReadAllText(CredentialsPath);
 			Credentials = JsonConvert.DeserializeObject<Credentials>(text);
 			if (!Credentials.Oauth.StartsWith("oauth:"))
 			{
@@ -32,7 +36,7 @@ public class CredentialsConfig
 		{
 			Credentials = new Credentials();
 			File.WriteAllText(
-				TwitchModInfo.CredentialsPath,
+				CredentialsPath,
 				JsonConvert.SerializeObject(Credentials, Formatting.Indented)
 			);
 		}
@@ -42,7 +46,7 @@ public class CredentialsConfig
 			Log.Warn($"{je}");
 			Credentials = new Credentials();
 			File.WriteAllText(
-				TwitchModInfo.CredentialsPath,
+				CredentialsPath,
 				JsonConvert.SerializeObject(Credentials, Formatting.Indented)
 			);
 			DialogUtil.MakeDialog(

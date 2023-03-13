@@ -7,16 +7,37 @@ using ONITwitchLib.Utils;
 
 namespace ONITwitchLib.Core;
 
+/// <summary>
+/// Provides methods to manipulate the deck of events 
+/// </summary>
+[PublicAPI]
 public class TwitchDeckManager
 {
+	/// <summary>
+	/// The instance of the deck manager.
+	/// Only safe to access if the Twitch mod is active.
+	/// </summary>
+	[PublicAPI]
+	[NotNull]
 	public static TwitchDeckManager Instance => instance ??= GetDeckManager();
 
+	/// <summary>
+	/// Adds an <see cref="EventGroup"/> of actions to the deck
+	/// </summary>
+	/// <param name="group"></param>
+	[PublicAPI]
 	public void AddGroup([NotNull] EventGroup group)
 	{
 		addGroupDelegate(group.Obj);
 	}
 
-	[MustUseReturnValue]
+	/// <summary>
+	/// Gets the <see cref="EventGroup"/> with the name specified by <paramref name="name"/>, if it exists in the deck.
+	/// </summary>
+	/// <param name="name">The name of the group to retrieve.</param>
+	/// <returns>The group, if it exists, otherwise <see langword="null"/>.</returns>
+	[PublicAPI]
+	[MustUseReturnValue("This retrieves a group without modifying anything")]
 	[CanBeNull]
 	public EventGroup GetGroup([NotNull] string name)
 	{
@@ -24,13 +45,24 @@ public class TwitchDeckManager
 		return ret != null ? new EventGroup(ret) : null;
 	}
 
-	[MustUseReturnValue]
+	/// <summary>
+	/// Gets all <see cref="EventGroup"/>s registered in the deck.
+	/// </summary>
+	/// <returns>An enumerable containing the groups in the deck.</returns>
+	[PublicAPI]
+	[System.Diagnostics.Contracts.Pure]
 	[NotNull]
 	public IEnumerable<EventGroup> GetGroups()
 	{
 		return getGroupsDelegate().Select(o => new EventGroup(o));
 	}
 
+	/// <summary>
+	/// Draws an <see cref="EventInfo"/> from the deck, shuffling if necessary.
+	/// </summary>
+	/// <returns>The drawn event.</returns>
+	[PublicAPI]
+	[MustUseReturnValue]
 	[CanBeNull]
 	public EventInfo Draw()
 	{
@@ -40,10 +72,8 @@ public class TwitchDeckManager
 
 	private static Func<object> twitchDeckManagerInstanceDelegate;
 
-	/// <summary>
-	/// Gets the instance of the deck manager from the twitch mod.
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
+	[MustUseReturnValue]
+	[NotNull]
 	private static TwitchDeckManager GetDeckManager()
 	{
 		if (twitchDeckManagerInstanceDelegate == null)

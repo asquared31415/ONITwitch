@@ -35,7 +35,7 @@ public class PoopsplosionCommand : CommandBase
 				element.defaultValues.temperature
 			);
 
-			foreach (var cell in GridUtil.GetNeighborsWithBuildingClearance(baseCell))
+			foreach (var cell in GridUtil.GetNeighborsWithFoundationClearance(baseCell))
 			{
 				SimMessages.ReplaceAndDisplaceElement(
 					cell,

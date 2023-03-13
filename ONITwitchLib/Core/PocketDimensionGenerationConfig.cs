@@ -5,11 +5,15 @@ using ProcGen;
 
 namespace ONITwitchLib.Core;
 
+/// <summary>
+/// The base class for pocket dimension generation configs. You should not use this.
+/// Extending it will not work properly, as none of the types you create will extend the base mod.
+/// Use <see cref="CustomPocketDimensionGeneration"/> to do custom dimension generation.
+/// </summary>
+[PublicAPI]
 public abstract class BasePocketDimensionGeneration
 {
-	[NotNull] internal readonly object Inst;
-
-	public BasePocketDimensionGeneration([NotNull] object inst)
+	internal BasePocketDimensionGeneration([NotNull] object inst)
 	{
 		if (!CoreTypes.BasePocketDimensionGenerationType.IsInstanceOfType(inst))
 		{
@@ -21,6 +25,8 @@ public abstract class BasePocketDimensionGeneration
 
 		Inst = inst;
 	}
+
+	[NotNull] internal readonly object Inst;
 }
 
 public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
@@ -30,8 +36,7 @@ public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
 		SubWorld.ZoneType zoneType,
 		string template,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
+		[CanBeNull] List<string> prefabIds = null
 	) : base(
 		Activator.CreateInstance(
 			CoreTypes.TemplatePocketDimensionGenerationType,
@@ -39,8 +44,7 @@ public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
 			zoneType,
 			template,
 			requiredSkillId,
-			prefabIds,
-			canSpawnSubDimensions
+			prefabIds
 		)
 	)
 	{
