@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -13,9 +14,11 @@ namespace ONITwitchCore.Patches;
 internal static class DevToolPatches
 {
 	[HarmonyPatch(typeof(SelectTool), nameof(SelectTool.OnLeftClickDown))]
+	// ReSharper disable once InconsistentNaming
 	private static class SelectTool_OnLeftClickDown_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(SelectTool __instance)
 		{
 			if (TwitchDevTool.Instance != null)
@@ -29,6 +32,7 @@ internal static class DevToolPatches
 	private class DevToolKeybindFix
 	{
 		[UsedImplicitly]
+		[SuppressMessage("ReSharper", "InconsistentNaming")]
 		private static void Postfix(ref bool ___toggleKeyWasDown, ref bool ___showImGui)
 		{
 			var flag = Input.GetKeyDown(KeyCode.Hash) && Input.GetKey(KeyCode.LeftControl);
@@ -41,13 +45,13 @@ internal static class DevToolPatches
 	[HarmonyPatch(typeof(DevToolUI), nameof(DevToolUI.PingHoveredObject))]
 	private static class DevToolNoPingCrashFix
 	{
-		private static readonly MethodInfo privatePingMethod = AccessTools.Method(typeof(DevToolUI), "private_Ping");
+		private static readonly MethodInfo PrivatePingMethod = AccessTools.Method(typeof(DevToolUI), "private_Ping");
 
 		[UsedImplicitly]
 		private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig, ILGenerator generator)
 		{
 			var codes = orig.ToList();
-			var pingCallIdx = codes.FindLastIndex(ci => ci.Calls(privatePingMethod));
+			var pingCallIdx = codes.FindLastIndex(ci => ci.Calls(PrivatePingMethod));
 			if (pingCallIdx == -1)
 			{
 				Log.Warn("Unable to find private_Ping call to fix dev ui ping crash");

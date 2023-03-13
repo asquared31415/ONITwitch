@@ -34,9 +34,11 @@ internal static class PauseMenuPatches
 	}
 
 	[HarmonyPatch(typeof(PauseScreen), "OnPrefabInit")]
+	// ReSharper disable once InconsistentNaming
 	private static class PauseScreen_OnPrefabInit_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		// buttons is an array cast to IList in the PauseScreen
 		// need to copy to a List and resize and reassign
 		private static void Postfix(ref IList<KButtonMenu.ButtonInfo> ___buttons)
@@ -54,9 +56,11 @@ internal static class PauseMenuPatches
 	private static readonly Color PressedTwitchColor = new Color32(0xB5, 0x67, 0xFF, 0xFF);
 
 	[HarmonyPatch(typeof(KButtonMenu), nameof(KButtonMenu.RefreshButtons))]
+	// ReSharper disable once InconsistentNaming
 	private static class PauseScreen_RefreshButtons_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(KButtonMenu __instance)
 		{
 			if (__instance is PauseScreen && (TwitchButtonInfo.uibutton != null))

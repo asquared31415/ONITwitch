@@ -18,6 +18,7 @@ public class TestTwitchExtension : UserMod2
 [HarmonyPatch(typeof(Db))]
 [HarmonyPatch("Initialize")]
 [HarmonyAfter("asquared31415.TwitchIntegration")]
+// ReSharper disable once InconsistentNaming
 public static class Db_Initialize_Patch
 {
 	[UsedImplicitly]
@@ -100,10 +101,10 @@ public static class Db_Initialize_Patch
 		);
 		PocketDimensionGenerator.AddGenerationConfig(genConfig);
 
-		var group = TwitchDeckManager.Instance.GetGroup("aaaaaa");
+		var group = TwitchDeckManager.Instance.GetGroup("TestExtGroup");
 		if (group != null)
 		{
-			group.AddEvent("aaaa", 0);
+			group.AddEvent("TestExtEvent", 0);
 		}
 	}
 }

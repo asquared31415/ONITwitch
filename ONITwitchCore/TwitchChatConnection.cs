@@ -487,7 +487,7 @@ internal class TwitchChatConnection
 	{
 		if (!message.EndsWith("\r\n"))
 		{
-			// remove all counts of either \r or \n and then readd to normalize it
+			// remove all counts of either \r or \n and then re-add to normalize it
 			message = message.TrimEnd('\r', '\n') + "\r\n";
 		}
 

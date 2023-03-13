@@ -9,6 +9,7 @@ namespace ONITwitchCore.Patches;
 internal static class TranslationPatches
 {
 	[HarmonyPatch(typeof(Localization), nameof(Localization.Initialize))]
+	// ReSharper disable once InconsistentNaming
 	private static class Localization_Initialize_Patch
 	{
 		// https://forums.kleientertainment.com/forums/topic/123339-guide-for-creating-translatable-mods

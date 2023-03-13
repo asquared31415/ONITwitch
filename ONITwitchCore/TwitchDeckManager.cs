@@ -159,9 +159,9 @@ public class TwitchDeckManager
 			}
 
 			// first spread the items out by separating them by 1/n and applying a random multiplier between 1-(1/n+1) and 1+(1/n+1)
-			var nRecip = 1.0f / group.TotalWeight;
-			var spaceMin = nRecip * (1 - 1.0f / (group.TotalWeight + 1));
-			var spaceMax = nRecip * (1 + 1.0f / (group.TotalWeight + 1));
+			var reciprocal = 1.0f / group.TotalWeight;
+			var spaceMin = reciprocal * (1 - 1.0f / (group.TotalWeight + 1));
+			var spaceMax = reciprocal * (1 + 1.0f / (group.TotalWeight + 1));
 
 			var items = new List<EventInfo>();
 			foreach (var (item, weight) in group.GetWeights())

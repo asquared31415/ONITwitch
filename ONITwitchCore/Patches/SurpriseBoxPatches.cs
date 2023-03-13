@@ -32,6 +32,7 @@ internal static class SurpriseBoxPatches
 		}
 
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(GameObject __result)
 		{
 			__result.AddTag(ExtraTags.SurpriseBoxForceEnabled);
@@ -51,6 +52,7 @@ internal static class SurpriseBoxPatches
 		}
 
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(GameObject __result)
 		{
 			__result.AddTag(ExtraTags.SurpriseBoxForceDisabled);

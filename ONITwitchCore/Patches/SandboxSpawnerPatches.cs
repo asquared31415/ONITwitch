@@ -8,9 +8,11 @@ namespace ONITwitchCore.Patches;
 internal static class SandboxSpawnerPatches
 {
 	[HarmonyPatch(typeof(SandboxToolParameterMenu), "ConfigureEntitySelector")]
+	// ReSharper disable once InconsistentNaming
 	private static class SandboxToolParameterMenu_ConfigureEntitySelector_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(SandboxToolParameterMenu __instance)
 		{
 			var twitchSearchFilter = new SandboxToolParameterMenu.SelectorValue.SearchFilter(

@@ -7,6 +7,7 @@ namespace ONITwitchCore.Patches;
 internal static class DbPatches
 {
 	[HarmonyPatch(typeof(Db), nameof(Db.Initialize))]
+	// ReSharper disable once InconsistentNaming
 	private static class Db_Initialize_Patch
 	{
 		[UsedImplicitly]

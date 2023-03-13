@@ -7,6 +7,7 @@ namespace ONITwitchCore.Patches;
 internal static class AssetsPatches
 {
 	[HarmonyPatch(typeof(Assets), "CreatePrefabs")]
+	// ReSharper disable once InconsistentNaming
 	private static class Assets_CreatePrefabs_Patch
 	{
 		[UsedImplicitly]

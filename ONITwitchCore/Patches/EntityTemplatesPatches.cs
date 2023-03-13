@@ -29,9 +29,11 @@ public static class EntityTemplatesPatches
 	private static readonly Dictionary<Tag, Tag> BabyToAdultMap = new();
 
 	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToFertileCreature))]
+	// ReSharper disable once InconsistentNaming
 	public static class ExtendEntityToFertileCreature_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		public static void Prefix(string eggId, string baby_id)
 		{
 			EggToBabyMap[eggId] = baby_id;
@@ -39,9 +41,11 @@ public static class EntityTemplatesPatches
 	}
 
 	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToBeingABaby))]
+	// ReSharper disable once InconsistentNaming
 	public static class ExtendEntityToBeingABaby_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		public static void Prefix(GameObject prefab, Tag adult_prefab_id)
 		{
 			if (prefab.TryGetComponent(out KPrefabID prefabID))

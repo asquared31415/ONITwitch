@@ -11,6 +11,7 @@ namespace ONITwitchCore.Patches;
 internal static class ElementPatches
 {
 	[HarmonyPatch(typeof(ElementLoader), nameof(ElementLoader.Load))]
+	// ReSharper disable once InconsistentNaming
 	private static class ElementLoader_Load_Patch
 	{
 		private static readonly AccessTools.FieldRef<object, Tag> SubstanceNameTag =

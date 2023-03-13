@@ -165,7 +165,7 @@ public static class PocketDimensionGenerator
 
 		if (world == null)
 		{
-			// throw this instead of NREing later, it will be handled by the event error handler
+			// throw this instead of NRE-ing later, it will be handled by the event error handler
 			throw new Exception("Unable to create a world for a pocket dimension");
 		}
 

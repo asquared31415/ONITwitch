@@ -13,6 +13,7 @@ namespace ONITwitchCore.Patches;
 internal static class MainMenuPatches
 {
 	[HarmonyPatch(typeof(MainMenu), "OnSpawn")]
+	// ReSharper disable once InconsistentNaming
 	private static class MainMenu_OnSpawn_Patch
 	{
 		[UsedImplicitly]

@@ -59,6 +59,7 @@ internal class OniTwitchMod : UserMod2
 internal static class CellNumInTitle
 {
 	[UsedImplicitly]
+	// ReSharper disable once InconsistentNaming
 	private static void Postfix(HoverTextDrawer drawer, HoverTextConfiguration __instance)
 	{
 		if (Camera.main != null)
@@ -74,6 +75,7 @@ internal static class CellNumInTitle
 }
 
 [HarmonyPatch(typeof(KImGuiUtil), nameof(KImGuiUtil.SetKAssertCB))]
+// ReSharper disable once InconsistentNaming
 internal static class ImGui_Patch
 {
 	[UsedImplicitly]

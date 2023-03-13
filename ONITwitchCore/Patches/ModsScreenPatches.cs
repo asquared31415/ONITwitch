@@ -16,10 +16,12 @@ internal static class ModsScreenPatches
 	private static GameObject canvas;
 
 	[HarmonyPatch(typeof(ModsScreen), "BuildDisplay")]
+	// ReSharper disable once InconsistentNaming
 	private static class ModsScreen_BuildDisplay_Patch
 	{
 		[UsedImplicitly]
 		// object because its a List<private struct>
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(object ___displayedMods)
 		{
 			AddSettingsButton((IEnumerable) ___displayedMods);
