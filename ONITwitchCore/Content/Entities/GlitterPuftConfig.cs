@@ -116,7 +116,7 @@ internal class GlitterPuftConfig : IEntityConfig
 
 		go.AddOrGet<GlitterPuft>();
 		const int numSparkles = 2;
-		go.AddOrGet<SparkleFollower>().NumSparkles = numSparkles;
+		go.AddOrGet<SparkleFollower>().numSparkles = numSparkles;
 
 		return go;
 	}

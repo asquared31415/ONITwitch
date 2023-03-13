@@ -8,6 +8,7 @@ namespace ONITwitchCore.Cmps.PocketDimension;
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class PocketDimensionExteriorPortal : KMonoBehaviour
 {
+	// ReSharper disable once InconsistentNaming
 	[Serialize] [SerializeField] public int CreatedWorldIdx = ClusterManager.INVALID_WORLD_IDX;
 
 	[Serialize] public Ref<PocketDimensionInteriorPortal> InteriorPortal;

@@ -8,8 +8,8 @@ namespace ONITwitchCore.Cmps;
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class SparkleFollower : KMonoBehaviour, ISim200ms
 {
-	[Serialize] [SerializeField] public int NumSparkles = 5;
-	[Serialize] [SerializeField] public Vector2 Offset = Vector2.zero;
+	[Serialize] [SerializeField] public int numSparkles = 5;
+	[Serialize] [SerializeField] public Vector2 offset = Vector2.zero;
 
 	private readonly List<GameObject> sparkles = new();
 
@@ -17,7 +17,7 @@ internal class SparkleFollower : KMonoBehaviour, ISim200ms
 	{
 		base.OnSpawn();
 
-		for (var i = 0; i < NumSparkles; i++)
+		for (var i = 0; i < numSparkles; i++)
 		{
 			sparkles.Add(
 				GameUtil.KInstantiate(
@@ -34,7 +34,7 @@ internal class SparkleFollower : KMonoBehaviour, ISim200ms
 		foreach (var sparkle in sparkles)
 		{
 			var rand = (Vector3) Random.insideUnitCircle / 8f;
-			sparkle.transform.position = transform.position + (Vector3) Offset + rand;
+			sparkle.transform.position = transform.position + (Vector3) offset + rand;
 		}
 	}
 

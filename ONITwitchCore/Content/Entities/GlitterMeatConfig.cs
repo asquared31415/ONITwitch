@@ -32,8 +32,8 @@ internal class GlitterMeatConfig : IEntityConfig
 		);
 
 		var sparkles = go.AddOrGet<SparkleFollower>();
-		sparkles.NumSparkles = 1;
-		sparkles.Offset = new Vector2(0, -0.4f);
+		sparkles.numSparkles = 1;
+		sparkles.offset = new Vector2(0, -0.4f);
 
 		return go;
 	}

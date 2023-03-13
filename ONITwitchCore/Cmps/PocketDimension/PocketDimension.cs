@@ -21,7 +21,9 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
 
 	// defaults to make sure that it doesn't think it's dead on spawn
+	// ReSharper disable once InconsistentNaming
 	[Serialize] public float Lifetime = 1;
+	// ReSharper disable once InconsistentNaming
 	[Serialize] public float MaxLifetime = 1;
 
 #pragma warning disable 649
