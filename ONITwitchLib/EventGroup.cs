@@ -99,6 +99,10 @@ public class EventGroup
 		return dict;
 	}
 
+	/// <summary>
+	/// Displays a string representation of a group using its name.
+	/// </summary>
+	/// <returns>A string representation of the object.</returns>
 	public override string ToString()
 	{
 		return Obj.ToString();
