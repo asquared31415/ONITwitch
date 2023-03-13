@@ -63,7 +63,7 @@ internal static class DevToolPatches
 			// close the dev tool UI
 			codes.Insert(idx++, CodeInstruction.Call(typeof(DevTool), "ClosePanel"));
 			codes.Insert(idx++, new CodeInstruction(OpCodes.Ret));
-			codes.Insert(idx++, new CodeInstruction(OpCodes.Nop).WithLabels(normalLabel));
+			codes.Insert(idx, new CodeInstruction(OpCodes.Nop).WithLabels(normalLabel));
 
 			return codes;
 		}

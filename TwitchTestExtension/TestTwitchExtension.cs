@@ -29,7 +29,6 @@ public static class Db_Initialize_Patch
 			return;
 		}
 
-		var eventInst = EventManager.Instance;
 		var dataInst = DataManager.Instance;
 		var deckInst = TwitchDeckManager.Instance;
 
@@ -44,7 +43,7 @@ public static class Db_Initialize_Patch
 				}
 
 				// throws NRE
-				var len = FakeNotNull().Length;
+				var unused = FakeNotNull().Length;
 			}
 		);
 		deckInst.AddGroup(crashGroup);

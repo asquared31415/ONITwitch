@@ -1,10 +1,13 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedType.Global
 // ReSharper disable UnusedMember.Global
+// ReSharper disable MemberHidesStaticFromOuterClass
+// ReSharper disable IdentifierTypo
+
+#pragma warning disable CS1591
 
 using ONITwitchLib.Utils;
 
-#pragma warning disable CS1591
 namespace ONITwitchCore;
 
 public static class STRINGS

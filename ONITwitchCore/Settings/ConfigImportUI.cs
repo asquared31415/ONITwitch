@@ -86,7 +86,7 @@ internal class ConfigImportUI : KScreen
 				ShowError();
 			}
 		}
-		catch (FormatException e)
+		catch (FormatException)
 		{
 			Log.Warn($"Invalid base64 {config}");
 			ShowError();

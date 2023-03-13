@@ -41,10 +41,6 @@ internal class TwitchChatConnection
 
 	public event TwitchMessageHandler OnTwitchMessage;
 
-	public TwitchChatConnection()
-	{
-	}
-
 	public void Start()
 	{
 		Task.Run(
@@ -465,7 +461,7 @@ internal class TwitchChatConnection
 
 	private bool CheckCapsEnabled()
 	{
-		foreach (var (key, status) in capStatuses)
+		foreach (var (_, status) in capStatuses)
 		{
 			if (status != CapStatus.Enabled)
 			{

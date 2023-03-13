@@ -101,7 +101,7 @@ internal static class GenericModSettings
 
 						File.Copy(TwitchModInfo.ConfigPath, backupPath);
 					}
-					catch (Exception e)
+					catch (Exception)
 					{
 						// ignored
 					}

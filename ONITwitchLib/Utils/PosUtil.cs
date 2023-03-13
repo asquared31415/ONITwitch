@@ -55,7 +55,6 @@ public static class PosUtil
 	{
 		if (Camera.main != null)
 		{
-			var clampedMouseScreenPos = ClampedMousePos();
 			var worldPoint = Camera.main.ScreenToWorldPoint(ClampedMousePos());
 
 			var theta = Random.value * Mathf.PI * 2;
