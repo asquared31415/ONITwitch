@@ -11,13 +11,10 @@ internal class SurpriseCommand : CommandBase
 		do
 		{
 			info = TwitchDeckManager.Instance.Draw();
-		} while ((info != null) && (info.Id == "asquared31415.TwitchIntegration.Surprise"));
+		} while (info!.Id == "asquared31415.TwitchIntegration.Surprise");
 
-		if (info != null)
-		{
-			var eventData = DataManager.Instance.GetDataForEvent(info);
-			Log.Info($"Surprise triggering {info}({info.Id})");
-			info.Trigger(eventData);
-		}
+		var eventData = DataManager.Instance.GetDataForEvent(info);
+		Log.Info($"Surprise triggering {info}({info.Id})");
+		info.Trigger(eventData);
 	}
 }

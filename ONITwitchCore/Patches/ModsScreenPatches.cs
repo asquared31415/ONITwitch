@@ -27,12 +27,12 @@ internal static class ModsScreenPatches
 			AddSettingsButton((IEnumerable) ___displayedMods);
 		}
 
-		private static FieldInfo ModIdxField = AccessTools.Field(
+		private static readonly FieldInfo ModIdxField = AccessTools.Field(
 			Type.GetType("ModsScreen+DisplayedMod, Assembly-CSharp"),
 			"mod_index"
 		);
 
-		private static FieldInfo RectTransformField = AccessTools.Field(
+		private static readonly FieldInfo RectTransformField = AccessTools.Field(
 			Type.GetType("ModsScreen+DisplayedMod, Assembly-CSharp"),
 			"rect_transform"
 		);

@@ -26,7 +26,7 @@ internal class FartCommand : CommandBase
 	private static readonly AccessTools.FieldRef<HashedString[]> WorkAnimsGetter =
 		AccessTools.StaticFieldRefAccess<HashedString[]>(AccessTools.Field(typeof(Flatulence), "WorkLoopAnims"));
 
-	private void DoFart(GameObject dupe, float fartMass)
+	private static void DoFart(GameObject dupe, float fartMass)
 	{
 		// most of this logic copied from `Flatulence`
 		var dupePos = dupe.transform.position;

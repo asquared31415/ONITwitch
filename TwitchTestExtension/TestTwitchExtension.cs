@@ -102,10 +102,7 @@ public static class Db_Initialize_Patch
 		PocketDimensionGenerator.AddGenerationConfig(genConfig);
 
 		var group = TwitchDeckManager.Instance.GetGroup("TestExtGroup");
-		if (group != null)
-		{
-			group.AddEvent("TestExtEvent", 0);
-		}
+		group?.AddEvent("TestExtEvent", 0);
 	}
 }
 

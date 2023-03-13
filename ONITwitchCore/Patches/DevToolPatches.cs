@@ -29,7 +29,7 @@ internal static class DevToolPatches
 	}
 
 	[HarmonyPatch(typeof(DevToolManager), nameof(DevToolManager.UpdateShouldShowTools))]
-	private class DevToolKeybindFix
+	private static class DevToolKeybindFix
 	{
 		[UsedImplicitly]
 		[SuppressMessage("ReSharper", "InconsistentNaming")]

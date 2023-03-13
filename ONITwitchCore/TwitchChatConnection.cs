@@ -33,7 +33,7 @@ internal class TwitchChatConnection
 
 	private readonly Dictionary<string, CapStatus> capStatuses = new();
 
-	private ConcurrentQueue<IrcMessage> messageQueue = new();
+	private readonly ConcurrentQueue<IrcMessage> messageQueue = new();
 
 	public bool IsAuthenticated { get; private set; }
 
@@ -422,14 +422,14 @@ internal class TwitchChatConnection
 							Log.Warn(we);
 							break;
 						}
-						case Exception e:
+						case Exception:
 						{
 							// the interleaved warns and debugs are intentional so that a release build doesn't
 							// have extra crap in it
 							Log.Warn("An unexpected exception occurred when connecting");
-							Log.Debug(e.GetType());
-							Log.Warn(e.Message);
-							Log.Debug(e.StackTrace);
+							Log.Debug(ie.GetType());
+							Log.Warn(ie.Message);
+							Log.Debug(ie.StackTrace);
 							return;
 						}
 					}

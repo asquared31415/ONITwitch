@@ -19,7 +19,7 @@ internal class MorphCommand : CommandBase
 		}
 	}
 
-	private void DoMorph(GameObject orig)
+	private static void DoMorph(GameObject orig)
 	{
 		// based on GravitasCreatureManipulator.Instance.SpawnMorph, but better
 		// try to get a morph, first from the fertility monitor for adults, then go through the baby to get the adult if needed

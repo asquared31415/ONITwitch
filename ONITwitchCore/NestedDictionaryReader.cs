@@ -30,7 +30,7 @@ internal class NestedDictionaryReader : JsonConverter
 			case JsonToken.StartObject:
 				return ReadObject(reader);
 			case JsonToken.StartArray:
-				return this.ReadArray(reader);
+				return ReadArray(reader);
 			case JsonToken.Integer:
 			case JsonToken.Float:
 			case JsonToken.String:

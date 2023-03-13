@@ -1,9 +1,11 @@
+using JetBrains.Annotations;
 using ONITwitchCore.Cmps;
 using ONITwitchLib;
 using UnityEngine;
 
 namespace ONITwitchCore.Content.Entities;
 
+[UsedImplicitly]
 internal class SurpriseBoxConfig : IEntityConfig
 {
 	public const string Id = TwitchModInfo.ModPrefix + nameof(SurpriseBoxConfig);

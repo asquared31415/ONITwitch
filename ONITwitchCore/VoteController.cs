@@ -24,7 +24,7 @@ internal class VoteController : KMonoBehaviour
 		NotStarted,
 		VoteInProgress,
 		VoteDelay,
-		Error
+		Error,
 	}
 
 	private TwitchChatConnection connection;

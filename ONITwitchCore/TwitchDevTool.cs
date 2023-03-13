@@ -211,7 +211,7 @@ internal class TwitchDevTool : DevTool
 		};
 		var pos = Grid.CellToPos(cell) with
 		{
-			z = Grid.GetLayerZ(Grid.SceneLayer.FXFront2)
+			z = Grid.GetLayerZ(Grid.SceneLayer.FXFront2),
 		};
 		lineRenderer.SetPositions(
 			new[]

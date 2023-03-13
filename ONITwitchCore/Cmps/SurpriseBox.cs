@@ -32,7 +32,7 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 		started = true;
 	}
 
-	private bool PrefabIsValid(KPrefabID prefab)
+	private static bool PrefabIsValid(KPrefabID prefab)
 	{
 		// never allow a force disabled object
 		if (prefab.HasTag(ExtraTags.SurpriseBoxForceDisabled))
@@ -53,12 +53,7 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 		}
 
 		// dont spawn the compostable copies of things
-		if (prefab.TryGetComponent(out Compostable compostable) && compostable.isMarkedForCompost)
-		{
-			return false;
-		}
-
-		return true;
+		return !prefab.TryGetComponent(out Compostable compostable) || !compostable.isMarkedForCompost;
 	}
 
 	private IEnumerator SpawnGifts()

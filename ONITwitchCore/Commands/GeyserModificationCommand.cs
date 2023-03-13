@@ -51,9 +51,7 @@ internal class GeyserModificationCommand : CommandBase
 			var idx = worldContainer.id;
 			geysers.AddRange(
 				Components.Geysers.GetItems(idx)
-					.Where(
-						geyser => geyser.TryGetComponent(out Uncoverable uncoverable) ? uncoverable.IsUncovered : true
-					)
+					.Where(geyser => !geyser.TryGetComponent(out Uncoverable uncoverable) || uncoverable.IsUncovered)
 			);
 		}
 
