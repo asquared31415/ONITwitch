@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
@@ -27,7 +28,7 @@ public class EventManager
 	public EventInfo GetEventByID([NotNull] string eventNamespace, [NotNull] string id)
 	{
 		var output = getEventByIdDelegate(eventNamespace, id);
-		if (output.GetType() != EventInterface.EventInfoType)
+		if (output.GetType() != CoreTypes.EventInfoType)
 		{
 			throw new Exception("event by id type");
 		}
@@ -43,14 +44,14 @@ public class EventManager
 	{
 		if (eventManagerInstanceDelegate == null)
 		{
-			var prop = AccessTools.Property(EventInterface.EventManagerType, "Instance");
+			var prop = AccessTools.Property(CoreTypes.EventManagerType, "Instance");
 			var propInfo = prop.GetGetMethod();
 
 			var retType = propInfo.ReturnType;
-			if (retType != EventInterface.EventManagerType)
+			if (retType != CoreTypes.EventManagerType)
 			{
 				throw new Exception(
-					$"The Instance property on {EventInterface.EventManagerType.AssemblyQualifiedName} does not return an instance of {EventInterface.EventManagerType}"
+					$"The Instance property on {CoreTypes.EventManagerType.AssemblyQualifiedName} does not return an instance of {CoreTypes.EventManagerType}"
 				);
 			}
 

@@ -8,6 +8,7 @@ using HarmonyLib;
 using KSerialization;
 using ONITwitchCore.Settings;
 using ONITwitchLib;
+using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
 using UnityEngine;
 using DataManager = EventLib.DataManager;

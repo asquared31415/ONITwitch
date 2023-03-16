@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
@@ -111,15 +112,15 @@ public class EventGroup
 	internal readonly object Obj;
 
 	private static readonly Func<object, object> CreateEventGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-		AccessTools.Method(EventInterface.EventGroupType, "GetOrCreateGroup"),
+		AccessTools.Method(CoreTypes.EventGroupType, "GetOrCreateGroup"),
 		null,
 		typeof(string),
-		EventInterface.EventGroupType
+		CoreTypes.EventGroupType
 	);
 
 	private static readonly Func<object, object, object, object> DefaultSingleEventGroupDelegate =
 		DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.Method(EventInterface.EventGroupType, "InternalDefaultSingleEventGroup"),
+			AccessTools.Method(CoreTypes.EventGroupType, "InternalDefaultSingleEventGroup"),
 			null,
 			typeof(string),
 			typeof(int),
@@ -141,28 +142,28 @@ public class EventGroup
 	private void SetupDelegates()
 	{
 		addEventDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.Method(EventInterface.EventGroupType, "AddEvent"),
+			AccessTools.Method(CoreTypes.EventGroupType, "AddEvent"),
 			Obj,
 			typeof(string),
 			typeof(int),
 			typeof(string),
-			EventInterface.EventInfoType
+			CoreTypes.EventInfoType
 		);
 		setWeightDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			AccessTools.Method(EventInterface.EventGroupType, "SetWeight"),
+			AccessTools.Method(CoreTypes.EventGroupType, "SetWeight"),
 			Obj,
-			EventInterface.EventInfoType,
+			CoreTypes.EventInfoType,
 			typeof(int)
 		);
 		removeEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			AccessTools.Method(EventInterface.EventGroupType, "RemoveEvent"),
+			AccessTools.Method(CoreTypes.EventGroupType, "RemoveEvent"),
 			Obj,
-			EventInterface.EventInfoType
+			CoreTypes.EventInfoType
 		);
 		getWeightsDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.Method(EventInterface.EventGroupType, "GetWeights"),
+			AccessTools.Method(CoreTypes.EventGroupType, "GetWeights"),
 			Obj,
-			typeof(IReadOnlyDictionary<,>).MakeGenericType(EventInterface.EventInfoType, typeof(int))
+			typeof(IReadOnlyDictionary<,>).MakeGenericType(CoreTypes.EventInfoType, typeof(int))
 		);
 	}
 }

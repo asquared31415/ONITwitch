@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
@@ -171,49 +172,49 @@ public class EventInfo
 		EventInfoInstance = instance;
 
 		getIdDelegate = DelegateUtil.CreateDelegate<Func<string>>(
-			AccessTools.PropertyGetter(EventInterface.EventInfoType, "Id"),
+			AccessTools.PropertyGetter(CoreTypes.EventInfoType, "Id"),
 			EventInfoInstance
 		);
-		friendlyNameRef = AccessTools.FieldRefAccess<string>(EventInterface.EventInfoType, "FriendlyName");
+		friendlyNameRef = AccessTools.FieldRefAccess<string>(CoreTypes.EventInfoType, "FriendlyName");
 		getEventNamespaceDelegate = DelegateUtil.CreateDelegate<Func<string>>(
-			AccessTools.PropertyGetter(EventInterface.EventInfoType, "EventNamespace"),
+			AccessTools.PropertyGetter(CoreTypes.EventInfoType, "EventNamespace"),
 			EventInfoInstance
 		);
 		getEventIdDelegate = DelegateUtil.CreateDelegate<Func<string>>(
-			AccessTools.PropertyGetter(EventInterface.EventInfoType, "EventId"),
+			AccessTools.PropertyGetter(CoreTypes.EventInfoType, "EventId"),
 			EventInfoInstance
 		);
 		getGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.PropertyGetter(EventInterface.EventInfoType, "Group"),
+			AccessTools.PropertyGetter(CoreTypes.EventInfoType, "Group"),
 			EventInfoInstance,
-			EventInterface.EventGroupType
+			CoreTypes.EventGroupType
 		);
 		getDangerDelegate = DelegateUtil.CreateDelegate<Func<int?>>(
-			AccessTools.Method(EventInterface.EventInfoType, "GetDangerInt"),
+			AccessTools.Method(CoreTypes.EventInfoType, "GetDangerInt"),
 			EventInfoInstance
 		);
 		setDangerDelegate = DelegateUtil.CreateDelegate<Action<int?>>(
-			AccessTools.Method(EventInterface.EventInfoType, "SetDangerInt"),
+			AccessTools.Method(CoreTypes.EventInfoType, "SetDangerInt"),
 			EventInfoInstance
 		);
 		addListenerDelegate = DelegateUtil.CreateDelegate<Action<Action<object>>>(
-			AccessTools.Method(EventInterface.EventInfoType, "AddListener"),
+			AccessTools.Method(CoreTypes.EventInfoType, "AddListener"),
 			EventInfoInstance
 		);
 		removeListenerDelegate = DelegateUtil.CreateDelegate<Action<Action<object>>>(
-			AccessTools.Method(EventInterface.EventInfoType, "RemoveListener"),
+			AccessTools.Method(CoreTypes.EventInfoType, "RemoveListener"),
 			EventInfoInstance
 		);
 		triggerDelegate = DelegateUtil.CreateDelegate<Action<object>>(
-			AccessTools.Method(EventInterface.EventInfoType, "Trigger"),
+			AccessTools.Method(CoreTypes.EventInfoType, "Trigger"),
 			EventInfoInstance
 		);
 		addConditionDelegate = DelegateUtil.CreateDelegate<Action<Func<object, bool>>>(
-			AccessTools.Method(EventInterface.EventInfoType, "AddCondition"),
+			AccessTools.Method(CoreTypes.EventInfoType, "AddCondition"),
 			EventInfoInstance
 		);
 		checkConditionDelegate = DelegateUtil.CreateDelegate<Func<object, bool>>(
-			AccessTools.Method(EventInterface.EventInfoType, "CheckCondition"),
+			AccessTools.Method(CoreTypes.EventInfoType, "CheckCondition"),
 			EventInfoInstance
 		);
 	}

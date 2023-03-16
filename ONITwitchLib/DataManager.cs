@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Core;
 using ONITwitchLib.Utils;
 
 namespace ONITwitchLib;
@@ -53,14 +54,14 @@ public class DataManager
 	{
 		if (dataManagerInstanceDelegate == null)
 		{
-			var prop = AccessTools.Property(EventInterface.DataManagerType, "Instance");
+			var prop = AccessTools.Property(CoreTypes.DataManagerType, "Instance");
 			var propInfo = prop.GetGetMethod();
 
 			var retType = propInfo.ReturnType;
-			if (retType != EventInterface.DataManagerType)
+			if (retType != CoreTypes.DataManagerType)
 			{
 				throw new Exception(
-					$"The Instance property on {EventInterface.DataManagerType.AssemblyQualifiedName} does not return an instance of {EventInterface.DataManagerType}"
+					$"The Instance property on {CoreTypes.DataManagerType.AssemblyQualifiedName} does not return an instance of {CoreTypes.DataManagerType}"
 				);
 			}
 
@@ -71,15 +72,15 @@ public class DataManager
 		var inst = dataManagerInstanceDelegate();
 
 		setDataForEventDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			AccessTools.Method(EventInterface.DataManagerType, "SetDataForEvent"),
+			AccessTools.Method(CoreTypes.DataManagerType, "SetDataForEvent"),
 			inst,
-			EventInterface.EventInfoType,
+			CoreTypes.EventInfoType,
 			typeof(object)
 		);
 		getDataForEventDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.Method(EventInterface.DataManagerType, "GetDataForEvent"),
+			AccessTools.Method(CoreTypes.DataManagerType, "GetDataForEvent"),
 			inst,
-			EventInterface.EventInfoType,
+			CoreTypes.EventInfoType,
 			typeof(object)
 		);
 	}

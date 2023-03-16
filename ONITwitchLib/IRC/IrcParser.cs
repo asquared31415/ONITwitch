@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.IRC;
 
 // TODO: is this public API (maybe not?)
 #pragma warning disable CS1591

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ONITwitchLib;
+namespace ONITwitchLib.IRC;
 
 /// <summary>
 /// Information about a user, from their most recent chat message.  Primary key is the <paramref name="UserId"/>.

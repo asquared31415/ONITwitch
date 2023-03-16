@@ -78,14 +78,14 @@ public class TwitchDeckManager
 	{
 		if (twitchDeckManagerInstanceDelegate == null)
 		{
-			var prop = AccessTools.Property(EventInterface.TwitchDeckManagerType, "Instance");
+			var prop = AccessTools.Property(CoreTypes.TwitchDeckManagerType, "Instance");
 			var propInfo = prop.GetGetMethod();
 
 			var retType = propInfo.ReturnType;
-			if (retType != EventInterface.TwitchDeckManagerType)
+			if (retType != CoreTypes.TwitchDeckManagerType)
 			{
 				throw new Exception(
-					$"The Instance property on {EventInterface.TwitchDeckManagerType.AssemblyQualifiedName} does not return an instance of {EventInterface.TwitchDeckManagerType}"
+					$"The Instance property on {CoreTypes.TwitchDeckManagerType.AssemblyQualifiedName} does not return an instance of {CoreTypes.TwitchDeckManagerType}"
 				);
 			}
 
@@ -106,23 +106,23 @@ public class TwitchDeckManager
 	private TwitchDeckManager(object inst)
 	{
 		drawDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.DeclaredMethod(EventInterface.TwitchDeckManagerType, "Draw"),
+			AccessTools.DeclaredMethod(CoreTypes.TwitchDeckManagerType, "Draw"),
 			inst,
-			EventInterface.EventInfoType
+			CoreTypes.EventInfoType
 		);
 		addGroupDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			AccessTools.Method(EventInterface.TwitchDeckManagerType, "AddGroup"),
+			AccessTools.Method(CoreTypes.TwitchDeckManagerType, "AddGroup"),
 			inst,
-			EventInterface.EventGroupType
+			CoreTypes.EventGroupType
 		);
 		getGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.Method(EventInterface.TwitchDeckManagerType, "GetGroup"),
+			AccessTools.Method(CoreTypes.TwitchDeckManagerType, "GetGroup"),
 			inst,
 			typeof(string),
-			EventInterface.EventGroupType
+			CoreTypes.EventGroupType
 		);
 		getGroupsDelegate = DelegateUtil.CreateDelegate<Func<IEnumerable<object>>>(
-			AccessTools.Method(EventInterface.TwitchDeckManagerType, "InternalGetGroups"),
+			AccessTools.Method(CoreTypes.TwitchDeckManagerType, "InternalGetGroups"),
 			inst
 		);
 	}

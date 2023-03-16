@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using ONITwitchCore.Config;
 using ONITwitchLib;
+using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
