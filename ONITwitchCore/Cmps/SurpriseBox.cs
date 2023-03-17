@@ -13,6 +13,12 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 
 	public string SidescreenButtonTooltip => STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP;
 
+	public int HorizontalGroupID()
+	{
+		// TODO: what is this
+		return -1;
+	}
+
 	public int ButtonSideScreenSortOrder() => 0;
 
 	[Serialize] private bool started;

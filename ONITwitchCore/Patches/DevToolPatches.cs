@@ -45,7 +45,7 @@ internal static class DevToolPatches
 	[HarmonyPatch(typeof(DevToolUI), nameof(DevToolUI.PingHoveredObject))]
 	private static class DevToolNoPingCrashFix
 	{
-		private static readonly MethodInfo PrivatePingMethod = AccessTools.Method(typeof(DevToolUI), "private_Ping");
+		private static readonly MethodInfo PrivatePingMethod = AccessTools.Method(typeof(DevToolUI), "Internal_Ping");
 
 		[UsedImplicitly]
 		private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig, ILGenerator generator)

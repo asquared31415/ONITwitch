@@ -44,6 +44,12 @@ internal class PocketDimensionInteriorDoorSideScreen : KMonoBehaviour, ISidescre
 		}
 	}
 
+	public int HorizontalGroupID()
+	{
+		// TODO: what is this
+		return -1;
+	}
+
 	public int ButtonSideScreenSortOrder()
 	{
 		return 0;

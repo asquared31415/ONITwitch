@@ -60,8 +60,7 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 		float xFrequency,
 		float yFrequency,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
+		[CanBeNull] List<string> prefabIds = null
 	) : base(
 		Activator.CreateInstance(
 			CoreTypes.NoisePocketDimensionGenerationType,
@@ -71,8 +70,7 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 			xFrequency,
 			yFrequency,
 			requiredSkillId,
-			prefabIds,
-			canSpawnSubDimensions
+			prefabIds
 		)
 	)
 	{
@@ -89,25 +87,25 @@ public class CustomPocketDimensionGeneration : BasePocketDimensionGeneration
 	/// <param name="cyclesLifetime"></param>
 	/// <param name="zoneType"></param>
 	/// <param name="generateTilesAction"></param>
+	/// <param name="generatePrefabsAction"></param>
 	/// <param name="requiredSkillId"></param>
 	/// <param name="prefabIds"></param>
-	/// <param name="canSpawnSubDimensions"></param>
 	public CustomPocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
-		Action<WorldContainer> generateTilesAction,
+		[NotNull] Action<WorldContainer> generateTilesAction,
+		[CanBeNull] Action<WorldContainer> generatePrefabsAction,
 		[CanBeNull] string requiredSkillId = null,
-		[CanBeNull] List<string> prefabIds = null,
-		bool canSpawnSubDimensions = true
+		[CanBeNull] List<string> prefabIds = null
 	) : base(
 		Activator.CreateInstance(
 			CoreTypes.CustomPocketDimensionGenerationType,
 			cyclesLifetime,
 			zoneType,
 			generateTilesAction,
+			generatePrefabsAction,
 			requiredSkillId,
-			prefabIds,
-			canSpawnSubDimensions
+			prefabIds
 		)
 	)
 	{
