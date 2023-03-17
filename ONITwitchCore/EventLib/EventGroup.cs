@@ -33,7 +33,7 @@ public class EventGroup
 	public int TotalWeight => weights.Values.Sum();
 
 	/// <summary>
-	/// An event that fires when a group is changed, called with the group that changed.
+	/// An event that fires when the group is changed, called with the group that changed.
 	/// </summary>
 	[PublicAPI]
 	public event Action<EventGroup> OnGroupChanged;
@@ -48,6 +48,12 @@ public class EventGroup
 	[NotNull]
 	public static EventGroup GetOrCreateGroup([NotNull] string name)
 	{
+		// be sure that the name is not null, even if people don't respect the api
+		if (name == null)
+		{
+			throw new ArgumentNullException(nameof(name));
+		}
+
 		var existing = TwitchDeckManager.Instance.GetGroup(name);
 		return existing ?? new EventGroup(name);
 	}
@@ -322,5 +328,15 @@ public class EventGroup
 	{
 		var callingAssembly = Assembly.GetCallingAssembly();
 		return CommonDefaultSingleEventGroup(callingAssembly, id, weight, friendlyName);
+	}
+
+	// `action` is just a wrapper for an `Action` stored on the merge lib side and passes the `this` of the merge lib instead
+	[Obsolete("Used as a helper for the reflection lib", true)]
+	[PublicAPI(
+		"This is not part of the public API. It exists solely for merged library internals. However, removing this is a breaking change."
+	)]
+	private void AddMergeLibChangedListener([NotNull] System.Action action)
+	{
+		OnGroupChanged += _ => action();
 	}
 }

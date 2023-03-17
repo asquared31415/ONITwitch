@@ -86,6 +86,21 @@ public static class Db_Initialize_Patch
 		);
 		deckInst.AddGroup(extGroup);
 
+		void GroupChanged(EventGroup group)
+		{
+			Log.Info($"Group changed, total weight: {group.TotalWeight}");
+		}
+
+		Log.Info("Adding group changed listener");
+		extGroup.OnGroupChanged += GroupChanged;
+		extGroup.SetWeight(manualGroupEvent, 10);
+		extGroup.SetWeight(manualGroupEvent, 1);
+		extGroup.OnGroupChanged -= GroupChanged;
+		Log.Info("Removing group changed listener");
+		extGroup.SetWeight(manualGroupEvent, 10);
+		extGroup.SetWeight(manualGroupEvent, 1);
+		Log.Info("Done changing weights");
+
 		// create a custom pocket dimension
 		var genConfig = new NoisePocketDimensionGeneration(
 			3f,

@@ -17,6 +17,25 @@ namespace ONITwitchLib;
 public class EventGroup
 {
 	/// <summary>
+	/// The name of the group.
+	/// </summary>
+	[PublicAPI]
+	[NotNull]
+	public string Name => getNameDelegate(Obj);
+
+	/// <summary>
+	/// The total weight of the group.
+	/// </summary>
+	[PublicAPI]
+	public int TotalWeight => getTotalWeightDelegate();
+
+	/// <summary>
+	/// An event that fires when the group is changed, called with the group that changed.
+	/// </summary>
+	[PublicAPI]
+	public event Action<EventGroup> OnGroupChanged = _ => { };
+
+	/// <summary>
 	/// Gets an existing <see cref="EventGroup"/> with a specified name, or creates it if it does not exist.
 	/// </summary>
 	/// <param name="name">The name of the <see cref="EventGroup"/> to get or create.</param>
@@ -109,8 +128,6 @@ public class EventGroup
 		return Obj.ToString();
 	}
 
-	internal readonly object Obj;
-
 	private static readonly Func<object, object> CreateEventGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
 		AccessTools.Method(CoreTypes.EventGroupType, "GetOrCreateGroup"),
 		null,
@@ -128,12 +145,20 @@ public class EventGroup
 			typeof((object, object))
 		);
 
+	internal readonly object Obj;
+
 	internal EventGroup(object inst)
 	{
 		Obj = inst;
 		SetupDelegates();
+
+		// add our listener to the group
+		AccessTools.Method(CoreTypes.EventGroupType, "AddMergeLibChangedListener", new[] { typeof(System.Action) })
+			.Invoke(Obj, new object[] { () => OnGroupChanged(this) });
 	}
 
+	private AccessTools.FieldRef<object, string> getNameDelegate;
+	private Func<int> getTotalWeightDelegate;
 	private Func<object, object, object, object> addEventDelegate;
 	private Action<object, object> setWeightDelegate;
 	private Action<object> removeEventDelegate;
@@ -141,6 +166,11 @@ public class EventGroup
 
 	private void SetupDelegates()
 	{
+		getNameDelegate = AccessTools.FieldRefAccess<string>(CoreTypes.EventGroupType, "Name");
+		getTotalWeightDelegate = DelegateUtil.CreateDelegate<Func<int>>(
+			AccessTools.PropertyGetter(CoreTypes.EventGroupType, "TotalWeight"),
+			Obj
+		);
 		addEventDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
 			AccessTools.Method(CoreTypes.EventGroupType, "AddEvent"),
 			Obj,
