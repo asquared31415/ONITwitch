@@ -7,10 +7,12 @@ namespace ONITwitchLib.Core;
 
 /// <summary>
 /// Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
+/// TODO: implement this
 /// </summary>
 [PublicAPI]
 public static class PocketDimensionGenerator
 {
+/*
 	/// <summary>
 	/// Adds the specified generation config to the pool for pocket dimensions.
 	/// </summary>
@@ -24,7 +26,7 @@ public static class PocketDimensionGenerator
 	{
 		AddGenerationDelegate(config.Inst);
 	}
-	
+
 	// TODO: Add GenerateDimension
 
 	private static readonly Action<object> AddGenerationDelegate =
@@ -33,4 +35,5 @@ public static class PocketDimensionGenerator
 			null,
 			CoreTypes.BasePocketDimensionGenerationType
 		);
+	*/
 }

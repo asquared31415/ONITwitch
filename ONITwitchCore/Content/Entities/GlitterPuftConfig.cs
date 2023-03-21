@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Klei.AI;
 using ONITwitchCore.Cmps;
+using ONITwitchLib;
 using TUNING;
 using UnityEngine;
 
@@ -9,10 +10,9 @@ namespace ONITwitchCore.Content.Entities;
 [UsedImplicitly]
 internal class GlitterPuftConfig : IEntityConfig
 {
-	// suboptimal, but required for save compat, might be able to fix to "ONITwitch." later
-	public const string Id = "TI." + nameof(GlitterPuftConfig);
+	public const string Id = TwitchModInfo.ModPrefix + nameof(GlitterPuftConfig);
 	
-	private const string BaseTraitId = "TI." + "GlitterPuftBaseTrait";
+	private const string BaseTraitId = TwitchModInfo.ModPrefix + "GlitterPuftBaseTrait";
 	private const string Anim = "TI_GlitterPuft_kanim";
 
 	private static readonly Tag SpeciesTag = GameTags.Creatures.Species.PuftSpecies;

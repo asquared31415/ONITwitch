@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Klei.AI;
+using ONITwitchLib;
 
 namespace ONITwitchCore.Content;
 
@@ -13,7 +14,7 @@ public static class CustomEffects
 	/// An effect that increases a duplicant's Athletics by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect AthleticsUpEffect = new(
-		"ONITwitch.AttributeAthleticsUp",
+		TwitchModInfo.ModPrefix + "AttributeAthleticsUp",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -26,7 +27,7 @@ public static class CustomEffects
 	/// An effect that decreases a duplicant's Athletics by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect AthleticsDownEffect = new(
-		"ONITwitch.AttributeAthleticsDown",
+		TwitchModInfo.ModPrefix + "AttributeAthleticsDown",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -39,7 +40,7 @@ public static class CustomEffects
 	/// An effect that increases a duplicant's Construction by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect ConstructionUpEffect = new(
-		"ONITwitch.AttributeConstructionUp",
+		TwitchModInfo.ModPrefix + "AttributeConstructionUp",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -52,7 +53,7 @@ public static class CustomEffects
 	/// An effect that decreases a duplicant's Construction by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect ConstructionDownEffect = new(
-		"ONITwitch.AttributeConstructionDown",
+		TwitchModInfo.ModPrefix + "AttributeConstructionDown",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -65,7 +66,7 @@ public static class CustomEffects
 	/// An effect that increases a duplicant's Excavation by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect ExcavationUpEffect = new(
-		"ONITwitch.AttributeExcavationUp",
+		TwitchModInfo.ModPrefix + "AttributeExcavationUp",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -78,7 +79,7 @@ public static class CustomEffects
 	/// An effect that decreases a duplicant's Excavation by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect ExcavationDownEffect = new(
-		"ONITwitch.AttributeExcavationDown",
+		TwitchModInfo.ModPrefix + "AttributeExcavationDown",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -91,7 +92,7 @@ public static class CustomEffects
 	/// An effect that increases a duplicant's Strength by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect StrengthUpEffect = new(
-		"ONITwitch.AttributeStrengthUp",
+		TwitchModInfo.ModPrefix + "AttributeStrengthUp",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -104,7 +105,7 @@ public static class CustomEffects
 	/// An effect that decreases a duplicant's Strength by 5 for 2 cycles.
 	/// </summary>
 	[PublicAPI] public static readonly Effect StrengthDownEffect = new(
-		"ONITwitch.AttributeStrengthDown",
+		TwitchModInfo.ModPrefix + "AttributeStrengthDown",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.TOOLTIP,
 		2 * Constants.SECONDS_PER_CYCLE,
@@ -117,7 +118,7 @@ public static class CustomEffects
 	/// An effect that makes a duplicant's stamina decrease rapidly, faster than sleep can recover.
 	/// </summary>
 	[PublicAPI] public static readonly Effect SleepyEffect = new(
-		"ONITwitch.SleepyDupesEffect",
+		TwitchModInfo.ModPrefix + "SleepyDupesEffect",
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.NAME,
 		STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.TOOLTIP,
 		0.5f * Constants.SECONDS_PER_CYCLE,

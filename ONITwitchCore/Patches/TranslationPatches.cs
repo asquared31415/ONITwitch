@@ -38,7 +38,7 @@ internal static class TranslationPatches
 						typeof(STRINGS).Assembly,
 					}
 				);
-			LocString.CreateLocStringKeys(root, "ONITwitch.");
+			LocString.CreateLocStringKeys(root, TwitchModInfo.ModPrefix);
 
 			// Load user created translation files
 			LoadOverrideStrings();

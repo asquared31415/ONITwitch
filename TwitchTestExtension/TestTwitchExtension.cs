@@ -6,7 +6,6 @@ using KMod;
 using ONITwitchLib;
 using ONITwitchLib.Core;
 using ONITwitchLib.Logger;
-using ProcGen;
 
 namespace TwitchTestExtension;
 
@@ -100,21 +99,6 @@ public static class Db_Initialize_Patch
 		extGroup.SetWeight(manualGroupEvent, 10);
 		extGroup.SetWeight(manualGroupEvent, 1);
 		Log.Info("Done changing weights");
-
-		// create a custom pocket dimension
-		var genConfig = new NoisePocketDimensionGeneration(
-			3f,
-			SubWorld.ZoneType.Metallic,
-			new List<SimHashes>
-			{
-				SimHashes.Gold,
-				SimHashes.Aluminum,
-				SimHashes.Copper,
-			},
-			0.1f,
-			0.1f
-		);
-		PocketDimensionGenerator.AddGenerationConfig(genConfig);
 
 		var group = TwitchDeckManager.Instance.GetGroup("TestExtGroup");
 		group?.AddEvent("TestExtEvent", 0);

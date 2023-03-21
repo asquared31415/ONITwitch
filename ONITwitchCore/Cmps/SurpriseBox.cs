@@ -96,7 +96,7 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 			GameComps.Fallers.Add(go, velocity);
 
 			GameScheduler.Instance.Schedule(
-				"ONITwitch.RemoveSurpriseFaller",
+				"TwitchRemoveSurpriseBoxFaller",
 				15f,
 				_ =>
 				{

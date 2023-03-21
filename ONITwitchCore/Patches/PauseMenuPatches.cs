@@ -23,7 +23,7 @@ internal static class PauseMenuPatches
 
 		var controller = Game.Instance.gameObject.AddOrGet<VoteController>();
 		GameScheduler.Instance.ScheduleNextFrame(
-			"ONITwitch.StartVotes",
+			"TwitchStartVotes",
 			_ =>
 			{
 				var started = controller.StartVote();

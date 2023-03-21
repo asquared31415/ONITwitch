@@ -202,7 +202,7 @@ internal class TwitchDevTool : DevTool
 
 	private void AddDebugMarker(int cell, Color color)
 	{
-		var go = new GameObject("ONITwitch.DebugLine");
+		var go = new GameObject(TwitchModInfo.ModPrefix + "DebugLine");
 		go.SetActive(true);
 		var lineRenderer = go.AddComponent<LineRenderer>();
 		lineRenderer.material = new Material(Shader.Find("Klei/Biome/Unlit Transparent"))
@@ -228,7 +228,7 @@ internal class TwitchDevTool : DevTool
 
 	private void AddDebugLine(int startCell, int endCell, Color color)
 	{
-		var gameObject = new GameObject("ONITwitch.DebugLine");
+		var gameObject = new GameObject(TwitchModInfo.ModPrefix + "DebugLine");
 		gameObject.SetActive(true);
 		var lineRenderer = gameObject.AddComponent<LineRenderer>();
 		lineRenderer.material = new Material(Shader.Find("Klei/Biome/Unlit Transparent"))
