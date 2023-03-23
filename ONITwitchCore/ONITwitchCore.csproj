@@ -9,6 +9,12 @@
         <MainMod>true</MainMod>
         <DocumentationFile>bin\$(Configuration)\net471\ONITwitchCore.xml</DocumentationFile>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\net471\ONITwitch.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\net471\ONITwitch.xml</DocumentationFile>
+    </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
     </ItemGroup>
