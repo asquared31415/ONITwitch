@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
-using DataManager = EventLib.DataManager;
-using EventGroup = EventLib.EventGroup;
-using EventManager = EventLib.EventManager;
+using DataManager = ONITwitchCore.EventLib.DataManager;
+using EventGroup = ONITwitchCore.EventLib.EventGroup;
+using EventManager = ONITwitchCore.EventLib.EventManager;
 
 namespace ONITwitchCore.Config;
 

@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Emit;
-using EventLib;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
-using ONITwitchCore;
+using ONITwitchCore.EventLib;
 using ONITwitchCore.Integration;
 using ONITwitchCore.Integration.DecorPackA;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-// ReSharper disable once CheckNamespace
-// This has to be kept for compat reasons
-namespace ONITwitch;
+namespace ONITwitchCore;
 
 [UsedImplicitly]
 internal class OniTwitchMod : UserMod2

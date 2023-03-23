@@ -1,4 +1,4 @@
-using EventLib;
+using ONITwitchCore.EventLib;
 using ONITwitchLib.Logger;
 
 namespace ONITwitchCore.Commands;

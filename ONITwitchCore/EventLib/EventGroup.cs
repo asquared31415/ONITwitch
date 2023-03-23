@@ -5,12 +5,10 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using KMod;
-using ONITwitchCore;
 using ONITwitchCore.Config;
 using ONITwitchLib.Logger;
 
-// ReSharper disable once CheckNamespace : this must be kept for compatibility reasons (TODO: fix for 1.0?)
-namespace EventLib;
+namespace ONITwitchCore.EventLib;
 
 /// <summary>
 /// A group of associated <see cref="EventInfo"/>s with relative weights.

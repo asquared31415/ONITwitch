@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 using ONITwitchCore.Settings;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
-using DataManager = EventLib.DataManager;
-using EventGroup = EventLib.EventGroup;
-using EventInfo = EventLib.EventInfo;
+using DataManager = ONITwitchCore.EventLib.DataManager;
+using EventGroup = ONITwitchCore.EventLib.EventGroup;
+using EventInfo = ONITwitchCore.EventLib.EventInfo;
 
 namespace ONITwitchCore;
 

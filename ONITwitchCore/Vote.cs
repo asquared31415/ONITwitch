@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchLib;
-using EventInfo = EventLib.EventInfo;
+using EventInfo = ONITwitchCore.EventLib.EventInfo;
 
 namespace ONITwitchCore;
 

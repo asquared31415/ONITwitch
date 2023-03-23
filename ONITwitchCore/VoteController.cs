@@ -11,8 +11,8 @@ using ONITwitchLib;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
 using UnityEngine;
-using DataManager = EventLib.DataManager;
-using EventInfo = EventLib.EventInfo;
+using DataManager = ONITwitchCore.EventLib.DataManager;
+using EventInfo = ONITwitchCore.EventLib.EventInfo;
 using ToastManager = ONITwitchCore.Toasts.ToastManager;
 
 namespace ONITwitchCore;

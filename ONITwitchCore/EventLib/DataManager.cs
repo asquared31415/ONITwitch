@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using ONITwitchCore.Config;
 
-// ReSharper disable once CheckNamespace : this must be kept for compatibility reasons (TODO: fix for 1.0?)
-namespace EventLib;
+namespace ONITwitchCore.EventLib;
 
 /// <summary>
 /// Provides methods to manipulate data of <see cref="EventInfo"/>s

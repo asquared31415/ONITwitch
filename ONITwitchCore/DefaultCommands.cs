@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using ONITwitch;
 using ONITwitchCore.Commands;
 using ONITwitchCore.Content;
 using ONITwitchCore.Content.Entities;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
-using DataManager = EventLib.DataManager;
-using EventGroup = EventLib.EventGroup;
-using EventInfo = EventLib.EventInfo;
+using DataManager = ONITwitchCore.EventLib.DataManager;
+using EventGroup = ONITwitchCore.EventLib.EventGroup;
+using EventInfo = ONITwitchCore.EventLib.EventInfo;
 
 namespace ONITwitchCore;
 

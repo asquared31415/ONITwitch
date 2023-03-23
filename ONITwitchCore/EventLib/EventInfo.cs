@@ -1,14 +1,12 @@
 using System;
 using System.Collections;
 using JetBrains.Annotations;
-using ONITwitchCore;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using STRINGS;
 
-// ReSharper disable once CheckNamespace : must be kept for compatibility (TODO: maybe fix for 1.0?)
-namespace EventLib;
+namespace ONITwitchCore.EventLib;
 
 /// <summary>
 /// Represents an event that is known to the <see cref="EventManager"/>.
@@ -61,7 +59,7 @@ public class EventInfo
 	/// Adds an <see cref="System.Action{T}"/> that is invoked with the event's data when the event is triggered.
 	/// </summary>
 	/// <param name="listener">The action to invoke when the event is triggered.</param>
-	/// <seealso cref="DataManager"/>
+	/// <seealso cref="ONITwitchCore.EventLib.DataManager"/>
 	/// <seealso cref="Trigger"/>
 	[PublicAPI]
 	public void AddListener([NotNull] Action<object> listener)
@@ -86,7 +84,7 @@ public class EventInfo
 	/// <summary>
 	/// Triggers the event with the specified data by calling each registered listener.
 	/// Callers are expected to provide the correct type and values of data for this <see cref="EventInfo"/>.
-	/// The correct data can typically be found in the <see cref="DataManager"/>.
+	/// The correct data can typically be found in the <see cref="ONITwitchCore.EventLib.DataManager"/>.
 	/// </summary>
 	/// <param name="data">The data to call each listener with.</param>
 	/// <seealso cref="AddListener"/>
@@ -127,7 +125,7 @@ public class EventInfo
 	/// and returns <see langword="true"/> if the event should be run and <see langword="false"/> if it should not. 
 	/// </param>
 	/// <seealso cref="Trigger"/>
-	/// <seealso cref="DataManager"/>
+	/// <seealso cref="ONITwitchCore.EventLib.DataManager"/>
 	/// <seealso cref="CheckCondition"/>
 	[PublicAPI]
 	public void AddCondition([NotNull] Func<object, bool> condition)

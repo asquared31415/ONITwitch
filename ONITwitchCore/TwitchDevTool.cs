@@ -8,8 +8,8 @@ using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
-using DataManager = EventLib.DataManager;
-using EventInfo = EventLib.EventInfo;
+using DataManager = ONITwitchCore.EventLib.DataManager;
+using EventInfo = ONITwitchCore.EventLib.EventInfo;
 using Object = UnityEngine.Object;
 
 namespace ONITwitchCore;

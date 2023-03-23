@@ -144,19 +144,19 @@ public static class CoreTypes
 	private const string ToastManagerTypeName = "ONITwitchCore.Toasts.ToastManager, ONITwitch";
 	private static Type toastManagerType;
 
-	private const string EventManagerTypeName = "EventLib.EventManager, ONITwitch";
+	private const string EventManagerTypeName = "ONITwitchCore.EventLib.EventManager, ONITwitch";
 	private static Type eventManagerType;
 
-	private const string EventInfoTypeName = "EventLib.EventInfo, ONITwitch";
+	private const string EventInfoTypeName = "ONITwitchCore.EventLib.EventInfo, ONITwitch";
 	private static Type eventInfoType;
 
-	private const string DataManagerTypeName = "EventLib.DataManager, ONITwitch";
+	private const string DataManagerTypeName = "ONITwitchCore.EventLib.DataManager, ONITwitch";
 	private static Type dataManagerType;
 
 	private const string TwitchDeckManagerTypeName = "ONITwitchCore.TwitchDeckManager, ONITwitch";
 	private static Type twitchDeckManagerType;
 
-	private const string EventGroupTypeName = "EventLib.EventGroup, ONITwitch";
+	private const string EventGroupTypeName = "ONITwitchCore.EventLib.EventGroup, ONITwitch";
 	private static Type eventGroupType;
 
 #endregion
