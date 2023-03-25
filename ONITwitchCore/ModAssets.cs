@@ -2,19 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 internal static class ModAssets
 {
-	private const string ToastManifestName = "ONITwitchCore.Resources.toast";
-	private const string OptionsManifestName = "ONITwitchCore.Resources.twitch_options";
+	private const string ToastManifestName = "ONITwitch.Resources.toast";
+	private const string OptionsManifestName = "ONITwitch.Resources.twitch_options";
 
 	public static class Toasts
 	{
@@ -114,6 +114,8 @@ internal static class ModAssets
 			Object.DestroyImmediate(text);
 			var locText = go.AddComponent<LocText>();
 			locText.text = content;
+			// TODO: UI translation
+			locText.key = "";
 			locText.font = font;
 			locText.fontStyle = FontStyles.Normal;
 			locText.fontSize = fontSize;

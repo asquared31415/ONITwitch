@@ -3,13 +3,13 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
-using ONITwitchCore.EventLib;
-using ONITwitchCore.Integration;
-using ONITwitchCore.Integration.DecorPackA;
+using ONITwitch.EventLib;
+using ONITwitch.Integration;
+using ONITwitch.Integration.DecorPackA;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 [UsedImplicitly]
 internal class OniTwitchMod : UserMod2

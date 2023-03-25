@@ -1,10 +1,10 @@
 using System;
 using HarmonyLib;
 using KSerialization;
-using ONITwitchCore.Cmps;
+using ONITwitch.Cmps;
 using UnityEngine;
 
-namespace ONITwitchCore.Integration.DecorPackA;
+namespace ONITwitch.Integration.DecorPackA;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 // used to access data from GlitterLight2D off the mood lamps

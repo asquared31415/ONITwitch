@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class SpiceFoodCommand : CommandBase
 {

@@ -3,12 +3,12 @@ using System.Net;
 using System.Text.RegularExpressions;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps;
-using ONITwitchCore.Config;
+using ONITwitch.Cmps;
+using ONITwitch.Config;
 using ONITwitchLib.Logger;
-using ToastManager = ONITwitchCore.Toasts.ToastManager;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class MainMenuPatches
 {

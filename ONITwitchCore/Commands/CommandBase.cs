@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 /// <summary>
 /// The base class for all events in the core mod.

@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.CustomElements;
+using ONITwitch.CustomElements;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class ElementPatches
 {

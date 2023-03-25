@@ -8,7 +8,7 @@
 
 using ONITwitchLib.Utils;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 public static class STRINGS
 {

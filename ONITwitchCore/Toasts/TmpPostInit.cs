@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace ONITwitchCore.Toasts;
+namespace ONITwitch.Toasts;
 
 internal class TmpPostInit : KMonoBehaviour
 {

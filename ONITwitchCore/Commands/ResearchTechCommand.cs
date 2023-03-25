@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class ResearchTechCommand : CommandBase
 {

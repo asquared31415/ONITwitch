@@ -9,7 +9,7 @@ using ONITwitchLib.Logger;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class DevToolPatches
 {

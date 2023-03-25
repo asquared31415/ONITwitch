@@ -3,13 +3,13 @@ using System.Collections;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Settings;
+using ONITwitch.Settings;
 using ONITwitchLib;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class ModsScreenPatches
 {

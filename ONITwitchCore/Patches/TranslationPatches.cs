@@ -1,10 +1,10 @@
 using System.IO;
-using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class TranslationPatches
 {
@@ -19,33 +19,14 @@ internal static class TranslationPatches
 		{
 			var root = typeof(STRINGS);
 
-			// we need to manually register under the `ONITwitch` namespace because that's what lots of IDs assume
-			// but it's not the assembly's namespace, so this has to be manually added so that the assembly gets updated
-			AccessTools.Method(
-					typeof(Localization),
-					"AddAssembly",
-					new[]
-					{
-						typeof(string),
-						typeof(Assembly),
-					}
-				)
-				.Invoke(
-					null,
-					new object[]
-					{
-						"ONITwitch",
-						typeof(STRINGS).Assembly,
-					}
-				);
-			LocString.CreateLocStringKeys(root, TwitchModInfo.ModPrefix);
+			// register strings with namespace
+			Localization.RegisterForTranslation(root);
+
+			// Register strings without namespace
+			LocString.CreateLocStringKeys(root, null);
 
 			// Load user created translation files
 			LoadOverrideStrings();
-
-			// Register strings without namespace
-			// because we already loaded user translations, custom languages will overwrite these
-			LocString.CreateLocStringKeys(root, null);
 
 			// Creates template for users to edit
 			Localization.GenerateStringsTemplate(root, Path.Combine(KMod.Manager.GetDirectory(), "strings_templates"));
@@ -59,7 +40,9 @@ internal static class TranslationPatches
 				var path = Path.Combine(TwitchModInfo.MainModFolder, "translations", locale.Code + ".po");
 				if (File.Exists(path))
 				{
-					Localization.OverloadStrings(Localization.LoadStringsFile(path, false));
+					Log.Debug($"Loading translation for locale {locale.Code}");
+					var stringsFile = Localization.LoadStringsFile(path, false);
+					Localization.OverloadStrings(stringsFile);
 				}
 			}
 		}

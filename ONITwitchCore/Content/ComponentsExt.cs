@@ -1,7 +1,7 @@
 using System.Linq;
-using ONITwitchCore.Cmps;
+using ONITwitch.Cmps;
 
-namespace ONITwitchCore.Content;
+namespace ONITwitch.Content;
 
 internal static class ComponentsExt
 {

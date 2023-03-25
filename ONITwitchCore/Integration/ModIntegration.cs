@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using KMod;
 
-namespace ONITwitchCore.Integration;
+namespace ONITwitch.Integration;
 
 internal class ModIntegration
 {

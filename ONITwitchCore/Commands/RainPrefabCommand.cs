@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using ONITwitchCore.Cmps;
-using ONITwitchCore.Patches;
-using ONITwitchCore.Toasts;
+using ONITwitch.Cmps;
+using ONITwitch.Patches;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class RainPrefabCommand : CommandBase
 {

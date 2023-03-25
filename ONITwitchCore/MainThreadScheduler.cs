@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using JetBrains.Annotations;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 internal class MainThreadScheduler : KMonoBehaviour
 {

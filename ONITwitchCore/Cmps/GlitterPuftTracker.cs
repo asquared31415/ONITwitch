@@ -1,9 +1,9 @@
 using KSerialization;
-using ONITwitchCore.Integration.DecorPackA;
+using ONITwitch.Integration.DecorPackA;
 using ONITwitchLib.Logger;
 using UnityEngine;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 // This is put on a bare GO directly and that GO should not have a SaveLoadRoot
 // nothing should be saved

@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Klei.AI;
 using ONITwitchLib;
 
-namespace ONITwitchCore.Content;
+namespace ONITwitch.Content;
 
 /// <summary>
 /// Custom effects that the core mod uses.

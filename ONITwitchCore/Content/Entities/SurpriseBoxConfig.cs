@@ -1,9 +1,9 @@
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps;
+using ONITwitch.Cmps;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitchCore.Content.Entities;
+namespace ONITwitch.Content.Entities;
 
 [UsedImplicitly]
 internal class SurpriseBoxConfig : IEntityConfig

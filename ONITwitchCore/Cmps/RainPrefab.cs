@@ -7,7 +7,7 @@ using ONITwitchLib.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class RainPrefab : KMonoBehaviour

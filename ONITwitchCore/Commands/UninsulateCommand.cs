@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using ONITwitchCore.Content;
-using ONITwitchCore.Toasts;
+using ONITwitch.Content;
+using ONITwitch.Toasts;
 using UnityEngine;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class UninsulateCommand : CommandBase
 {

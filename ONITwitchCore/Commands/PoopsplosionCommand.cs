@@ -1,9 +1,9 @@
 using System.Linq;
-using ONITwitchCore.Content;
+using ONITwitch.Content;
 using ONITwitchLib.Utils;
-using ToastManager = ONITwitchCore.Toasts.ToastManager;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class PoopsplosionCommand : CommandBase
 {

@@ -1,10 +1,10 @@
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps.PocketDimension;
+using ONITwitch.Cmps.PocketDimension;
 using ONITwitchLib;
 using TUNING;
 using UnityEngine;
 
-namespace ONITwitchCore.Content.Buildings;
+namespace ONITwitch.Content.Buildings;
 
 [UsedImplicitly]
 internal class PocketDimensionInteriorPortalConfig : IBuildingConfig

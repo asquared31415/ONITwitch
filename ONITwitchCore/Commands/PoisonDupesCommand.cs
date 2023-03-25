@@ -1,8 +1,8 @@
 using System.Linq;
-using ONITwitchCore.Cmps;
-using ONITwitchCore.Toasts;
+using ONITwitch.Cmps;
+using ONITwitch.Toasts;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class PoisonDupesCommand : CommandBase
 {

@@ -1,6 +1,6 @@
-using ONITwitchCore.Content;
+using ONITwitch.Content;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 internal class InsulatedTileExt : KMonoBehaviour
 {

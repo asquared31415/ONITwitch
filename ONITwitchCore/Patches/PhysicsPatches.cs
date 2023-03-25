@@ -1,9 +1,9 @@
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps;
+using ONITwitch.Cmps;
 using UnityEngine;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class PhysicsPatches
 {

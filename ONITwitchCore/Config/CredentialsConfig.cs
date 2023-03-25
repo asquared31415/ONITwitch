@@ -7,7 +7,7 @@ using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using STRINGS;
 
-namespace ONITwitchCore.Config;
+namespace ONITwitch.Config;
 
 internal class CredentialsConfig
 {

@@ -1,10 +1,10 @@
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps;
-using ONITwitchCore.Settings;
+using ONITwitch.Cmps;
+using ONITwitch.Settings;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ONITwitchCore.Toasts;
+namespace ONITwitch.Toasts;
 
 /// <summary>
 /// Provides methods for creating toasts.

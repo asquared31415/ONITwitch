@@ -1,7 +1,7 @@
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Content;
+namespace ONITwitch.Content;
 
 internal class DimensionClosingDiagnostic : ColonyDiagnostic
 {

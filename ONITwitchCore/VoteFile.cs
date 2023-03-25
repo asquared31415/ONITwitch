@@ -3,11 +3,11 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using KSerialization;
-using ONITwitchCore.Settings;
+using ONITwitch.Settings;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class VoteFile : KMonoBehaviour

@@ -53,6 +53,6 @@ public static class TwitchModInfo
 	/// </summary>
 	[PublicAPI] public static readonly string ConfigPath = Path.Combine(MainModFolder, ConfigName);
 
-	private const string TwitchTypeName = "ONITwitchCore.OniTwitchMod, ONITwitch";
+	private const string TwitchTypeName = "ONITwitch.OniTwitchMod, ONITwitch";
 	private static Type mainTwitchType;
 }

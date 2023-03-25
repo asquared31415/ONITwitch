@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace ONITwitchCore.Integration.DecorPackA.Patches;
+namespace ONITwitch.Integration.DecorPackA.Patches;
 
 // ReSharper disable once InconsistentNaming
 internal static class MoodLampConfig_DoPostConfigureComplete_Patch

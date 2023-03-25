@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using ONITwitchCore.Settings;
-using ONITwitchCore.Toasts;
+using ONITwitch.Settings;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using UnityEngine;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class SpawnDupeCommand : CommandBase
 {

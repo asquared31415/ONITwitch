@@ -1,7 +1,7 @@
 using KSerialization;
 using UnityEngine;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class Eclipse : KMonoBehaviour, ISim200ms

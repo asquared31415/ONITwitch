@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchLib;
-using EventInfo = ONITwitchCore.EventLib.EventInfo;
+using EventInfo = ONITwitch.EventLib.EventInfo;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 internal class Vote
 {

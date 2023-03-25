@@ -1,9 +1,9 @@
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Content.Entities;
+using ONITwitch.Content.Entities;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class SandboxSpawnerPatches
 {

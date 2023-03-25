@@ -1,9 +1,9 @@
 using System.Linq;
 using ONITwitchLib;
 using UnityEngine;
-using ToastManager = ONITwitchCore.Toasts.ToastManager;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class SkillCommand : CommandBase
 {

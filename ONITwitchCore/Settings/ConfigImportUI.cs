@@ -5,7 +5,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ONITwitchCore.Config;
+using ONITwitch.Config;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using STRINGS;
@@ -13,7 +13,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ONITwitchCore.Settings;
+namespace ONITwitch.Settings;
 
 internal class ConfigImportUI : KScreen
 {

@@ -3,7 +3,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 [HarmonyPatch(typeof(LightBufferCompositor), "OnRenderImage")]
 internal static class PartyTimePatch

@@ -1,7 +1,7 @@
 using KSerialization;
 using ONITwitchLib.Utils;
 
-namespace ONITwitchCore.Cmps.PocketDimension;
+namespace ONITwitch.Cmps.PocketDimension;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class PocketDimensionInteriorPortal : KMonoBehaviour

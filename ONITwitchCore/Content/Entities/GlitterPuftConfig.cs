@@ -1,11 +1,11 @@
 using JetBrains.Annotations;
 using Klei.AI;
-using ONITwitchCore.Cmps;
+using ONITwitch.Cmps;
 using ONITwitchLib;
 using TUNING;
 using UnityEngine;
 
-namespace ONITwitchCore.Content.Entities;
+namespace ONITwitch.Content.Entities;
 
 [UsedImplicitly]
 internal class GlitterPuftConfig : IEntityConfig

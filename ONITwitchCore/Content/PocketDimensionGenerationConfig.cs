@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps.PocketDimension;
+using ONITwitch.Cmps.PocketDimension;
 using ONITwitchLib;
 using ProcGen;
 using UnityEngine;
 
-namespace ONITwitchCore.Content;
+namespace ONITwitch.Content;
 
 /// <summary>
 /// The base class for pocket dimension generation configs.

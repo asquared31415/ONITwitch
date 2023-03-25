@@ -1,9 +1,9 @@
 using System.Linq;
 using Klei.AI;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 using UnityEngine;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class MorphCommand : CommandBase
 {

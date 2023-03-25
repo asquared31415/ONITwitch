@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using KSerialization;
-using ONITwitchCore.Integration.DecorPackA;
+using ONITwitch.Integration.DecorPackA;
 using TUNING;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 // Most of the gradient and color logic is taken from Aki's Glitter Puft mood light
 [SerializationConfig(MemberSerialization.OptIn)]

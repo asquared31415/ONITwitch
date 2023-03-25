@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitchCore.Content.Entities;
+namespace ONITwitch.Content.Entities;
 
 // An entity used to generate a pocket dimension portal at its current location
 [UsedImplicitly]

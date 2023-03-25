@@ -5,15 +5,15 @@ using Delaunay.Geo;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Klei;
-using ONITwitchCore.Cmps.PocketDimension;
-using ONITwitchCore.Content.Buildings;
-using ONITwitchCore.Content.Entities;
+using ONITwitch.Cmps.PocketDimension;
+using ONITwitch.Content.Buildings;
+using ONITwitch.Content.Entities;
 using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
 using UnityEngine;
 
-namespace ONITwitchCore.Content;
+namespace ONITwitch.Content;
 
 /// <summary>
 /// Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.

@@ -1,7 +1,7 @@
-using ONITwitchCore.EventLib;
+using ONITwitch.EventLib;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class SurpriseCommand : CommandBase
 {

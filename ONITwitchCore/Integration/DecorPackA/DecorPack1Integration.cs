@@ -1,9 +1,9 @@
 using System;
 using HarmonyLib;
-using ONITwitchCore.Integration.DecorPackA.Patches;
+using ONITwitch.Integration.DecorPackA.Patches;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Integration.DecorPackA;
+namespace ONITwitch.Integration.DecorPackA;
 
 internal static class DecorPack1Integration
 {

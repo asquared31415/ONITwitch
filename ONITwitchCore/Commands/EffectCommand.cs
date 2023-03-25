@@ -1,7 +1,7 @@
 using Klei.AI;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class EffectCommand : CommandBase
 {

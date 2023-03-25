@@ -6,16 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using HarmonyLib;
 using KSerialization;
-using ONITwitchCore.Settings;
-using ONITwitchLib;
+using ONITwitch.Settings;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
 using UnityEngine;
-using DataManager = ONITwitchCore.EventLib.DataManager;
-using EventInfo = ONITwitchCore.EventLib.EventInfo;
-using ToastManager = ONITwitchCore.Toasts.ToastManager;
+using DataManager = ONITwitch.EventLib.DataManager;
+using EventInfo = ONITwitch.EventLib.EventInfo;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class VoteController : KMonoBehaviour

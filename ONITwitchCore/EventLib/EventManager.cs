@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace ONITwitchCore.EventLib;
+namespace ONITwitch.EventLib;
 
 /// <summary>
 /// Provides a way to obtain a method by its id.

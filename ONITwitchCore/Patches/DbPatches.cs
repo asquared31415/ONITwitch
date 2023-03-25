@@ -1,8 +1,8 @@
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Content;
+using ONITwitch.Content;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class DbPatches
 {

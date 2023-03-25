@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using KSerialization;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class TimedGeyserTuning : KMonoBehaviour, ISim200ms

@@ -1,12 +1,12 @@
 using System.Globalization;
-using ONITwitchCore.Config;
+using ONITwitch.Config;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ONITwitchCore.Settings;
+namespace ONITwitch.Settings;
 
 internal class GenericModSettingsUI : KScreen
 {

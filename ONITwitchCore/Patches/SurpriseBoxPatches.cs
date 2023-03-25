@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class SurpriseBoxPatches
 {

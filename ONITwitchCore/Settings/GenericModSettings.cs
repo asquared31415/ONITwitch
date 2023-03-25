@@ -7,7 +7,7 @@ using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using STRINGS;
 
-namespace ONITwitchCore.Settings;
+namespace ONITwitch.Settings;
 
 internal static class GenericModSettings
 {

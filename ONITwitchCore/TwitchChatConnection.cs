@@ -8,14 +8,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using ONITwitchCore.Config;
-using ONITwitchLib;
+using ONITwitch.Config;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 internal class TwitchChatConnection
 {

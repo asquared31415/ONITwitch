@@ -7,6 +7,11 @@ Aki:
  - Helped creating the informational toast popup
  - Testing beta versions for mod integration
  - Miscellaneous code
+ - Surprise Box animation
 
 pether.pg:
  - Testing beta versions for mod integration
+
+SGT_Imalas:
+ - Testing beta versions for mod integration
+ - German translation

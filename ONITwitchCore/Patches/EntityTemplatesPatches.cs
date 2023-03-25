@@ -6,7 +6,7 @@ using UnityEngine;
 // none of these are actually public APIs
 #pragma warning disable CS1591
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 /// <summary>
 /// Not a public API

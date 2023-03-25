@@ -2,7 +2,7 @@ using KSerialization;
 using ONITwitchLib.Logger;
 using UnityEngine;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class DamageOverTime : KMonoBehaviour

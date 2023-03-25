@@ -5,10 +5,10 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using KMod;
-using ONITwitchCore.Config;
+using ONITwitch.Config;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.EventLib;
+namespace ONITwitch.EventLib;
 
 /// <summary>
 /// A group of associated <see cref="EventInfo"/>s with relative weights.

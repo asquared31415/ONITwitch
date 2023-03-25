@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace ONITwitchCore.Config;
+namespace ONITwitch.Config;
 
 internal class CommandConfig
 {

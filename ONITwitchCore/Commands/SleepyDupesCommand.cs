@@ -1,8 +1,8 @@
 using Klei.AI;
-using ONITwitchCore.Content;
-using ONITwitchCore.Toasts;
+using ONITwitch.Content;
+using ONITwitch.Toasts;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 // TODO: this is EffectCommand but with a different toast, can this be merged?
 internal class SleepyDupesCommand : CommandBase

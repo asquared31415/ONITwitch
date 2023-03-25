@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using ONITwitchCore.Settings;
+using ONITwitch.Settings;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
-using DataManager = ONITwitchCore.EventLib.DataManager;
-using EventGroup = ONITwitchCore.EventLib.EventGroup;
-using EventInfo = ONITwitchCore.EventLib.EventInfo;
+using DataManager = ONITwitch.EventLib.DataManager;
+using EventGroup = ONITwitch.EventLib.EventGroup;
+using EventInfo = ONITwitch.EventLib.EventInfo;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 /// <summary>
 /// Provides methods to manipulate the deck of events 

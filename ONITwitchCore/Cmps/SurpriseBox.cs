@@ -5,7 +5,7 @@ using KSerialization;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 {

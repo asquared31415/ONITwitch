@@ -1,7 +1,8 @@
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
+using ONITwitchLib.Logger;
 using STRINGS;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class BansheeWailCommand : CommandBase
 {

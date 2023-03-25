@@ -6,7 +6,7 @@ using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using STRINGS;
 
-namespace ONITwitchCore.EventLib;
+namespace ONITwitch.EventLib;
 
 /// <summary>
 /// Represents an event that is known to the <see cref="EventManager"/>.
@@ -59,7 +59,7 @@ public class EventInfo
 	/// Adds an <see cref="System.Action{T}"/> that is invoked with the event's data when the event is triggered.
 	/// </summary>
 	/// <param name="listener">The action to invoke when the event is triggered.</param>
-	/// <seealso cref="ONITwitchCore.EventLib.DataManager"/>
+	/// <seealso cref="DataManager"/>
 	/// <seealso cref="Trigger"/>
 	[PublicAPI]
 	public void AddListener([NotNull] Action<object> listener)
@@ -84,7 +84,7 @@ public class EventInfo
 	/// <summary>
 	/// Triggers the event with the specified data by calling each registered listener.
 	/// Callers are expected to provide the correct type and values of data for this <see cref="EventInfo"/>.
-	/// The correct data can typically be found in the <see cref="ONITwitchCore.EventLib.DataManager"/>.
+	/// The correct data can typically be found in the <see cref="DataManager"/>.
 	/// </summary>
 	/// <param name="data">The data to call each listener with.</param>
 	/// <seealso cref="AddListener"/>
@@ -100,9 +100,9 @@ public class EventInfo
 			var debugName = FriendlyName != null ? $"{FriendlyName} ({Id})" : $"({Id})";
 			Log.Warn($"crash while processing event {debugName}: {e}");
 			DialogUtil.MakeDialog(
-				ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.TITLE,
+				STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.TITLE,
 				string.Format(
-					ONITwitchCore.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT,
+					STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT,
 					debugName,
 					e.Message
 				),
@@ -125,7 +125,7 @@ public class EventInfo
 	/// and returns <see langword="true"/> if the event should be run and <see langword="false"/> if it should not. 
 	/// </param>
 	/// <seealso cref="Trigger"/>
-	/// <seealso cref="ONITwitchCore.EventLib.DataManager"/>
+	/// <seealso cref="DataManager"/>
 	/// <seealso cref="CheckCondition"/>
 	[PublicAPI]
 	public void AddCondition([NotNull] Func<object, bool> condition)

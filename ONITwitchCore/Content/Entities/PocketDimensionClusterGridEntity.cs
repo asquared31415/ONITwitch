@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using KSerialization;
-using ONITwitchCore.Content.Buildings;
+using ONITwitch.Content.Buildings;
 
-namespace ONITwitchCore.Content.Entities;
+namespace ONITwitch.Content.Entities;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class PocketDimensionClusterGridEntity : ClusterGridEntity

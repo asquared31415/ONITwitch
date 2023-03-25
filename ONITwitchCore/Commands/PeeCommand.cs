@@ -1,6 +1,6 @@
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class PeeCommand : CommandBase
 {

@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using ONITwitchCore.Commands;
-using ONITwitchCore.Content;
-using ONITwitchCore.Content.Entities;
+using ONITwitch.Commands;
+using ONITwitch.Content;
+using ONITwitch.Content.Entities;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
-using DataManager = ONITwitchCore.EventLib.DataManager;
-using EventGroup = ONITwitchCore.EventLib.EventGroup;
-using EventInfo = ONITwitchCore.EventLib.EventInfo;
+using DataManager = ONITwitch.EventLib.DataManager;
+using EventGroup = ONITwitch.EventLib.EventGroup;
+using EventInfo = ONITwitch.EventLib.EventInfo;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 internal static class DefaultCommands
 {
@@ -711,7 +711,7 @@ internal static class DefaultCommands
 
 	private record struct CommandInfo(
 		[NotNull] string Id,
-		[NotNull] LocString Name,
+		[NotNull] string Name,
 		[NotNull] CommandBase Command,
 		[CanBeNull] object Data,
 		[CanBeNull] Danger? Danger,

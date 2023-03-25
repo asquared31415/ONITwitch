@@ -1,8 +1,8 @@
-using ONITwitchCore.Content.Entities;
-using ONITwitchCore.Toasts;
+using ONITwitch.Content.Entities;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class SurpriseBoxCommand : CommandBase
 {

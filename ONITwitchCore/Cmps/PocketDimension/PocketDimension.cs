@@ -1,13 +1,13 @@
 using System.Linq;
 using HarmonyLib;
 using KSerialization;
-using ONITwitchCore.Content;
+using ONITwitch.Content;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ONITwitchCore.Cmps.PocketDimension;
+namespace ONITwitch.Cmps.PocketDimension;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms

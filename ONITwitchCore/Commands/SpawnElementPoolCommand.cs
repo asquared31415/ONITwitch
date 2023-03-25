@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using ONITwitchLib.Utils;
 using UnityEngine;
-using ToastManager = ONITwitchCore.Toasts.ToastManager;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class SpawnElementPoolCommand : CommandBase
 {

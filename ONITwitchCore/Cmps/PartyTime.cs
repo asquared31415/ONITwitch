@@ -1,8 +1,8 @@
 using KSerialization;
-using ONITwitchCore.Patches;
+using ONITwitch.Patches;
 using UnityEngine;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class PartyTime : KMonoBehaviour

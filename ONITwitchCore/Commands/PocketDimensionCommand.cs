@@ -1,10 +1,10 @@
-using ONITwitchCore.Content;
-using ONITwitchCore.Content.Buildings;
-using ONITwitchCore.Toasts;
+using ONITwitch.Content;
+using ONITwitch.Content.Buildings;
+using ONITwitch.Toasts;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class PocketDimensionCommand : CommandBase
 {

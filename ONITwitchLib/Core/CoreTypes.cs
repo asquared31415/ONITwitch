@@ -106,57 +106,57 @@ public static class CoreTypes
 	private const string DangerTypeName = "ONITwitchLib.Danger, ONITwitch";
 	private static Type dangerType;
 
-	private const string CommandBaseTypeName = "ONITwitchCore.Commands.CommandBase, ONITwitch";
+	private const string CommandBaseTypeName = "ONITwitch.Commands.CommandBase, ONITwitch";
 	private static Type commandType;
 
-	private const string CommandBaseExtTypeName = "ONITwitchCore.Commands.CommandBaseExt, ONITwitch";
+	private const string CommandBaseExtTypeName = "ONITwitch.Commands.CommandBaseExt, ONITwitch";
 	private static Type commandExtType;
 
 	private const string PocketDimensionGeneratorTypeName =
-		"ONITwitchCore.Content.PocketDimensionGenerator, ONITwitch";
+		"ONITwitch.Content.PocketDimensionGenerator, ONITwitch";
 
 	private static Type pocketDimensionGeneratorType;
 
 	// Base pocket dimension generation config
 	private const string BasePocketDimensionGenerationTypeName =
-		"ONITwitchCore.Content.BasePocketDimensionGeneration, ONITwitch";
+		"ONITwitch.Content.BasePocketDimensionGeneration, ONITwitch";
 
 	private static Type basePocketDimensionGenerationType;
 
 	// Template-based pocket dimension generation config
 	private const string TemplatePocketDimensionGenerationTypeName =
-		"ONITwitchCore.Content.TemplatePocketDimensionGeneration, ONITwitch";
+		"ONITwitch.Content.TemplatePocketDimensionGeneration, ONITwitch";
 
 	private static Type templatePocketDimensionGenerationType;
 
 	// Noise-based pocket dimension generation config
 	private const string NoisePocketDimensionGenerationTypeName =
-		"ONITwitchCore.Content.NoisePocketDimensionGeneration, ONITwitch";
+		"ONITwitch.Content.NoisePocketDimensionGeneration, ONITwitch";
 
 	private static Type noisePocketDimensionGenerationType;
 
 	// Custom function pocket dimension generation config
 	private const string CustomPocketDimensionGenerationTypeName =
-		"ONITwitchCore.Content.CustomPocketDimensionGeneration, ONITwitch";
+		"ONITwitch.Content.CustomPocketDimensionGeneration, ONITwitch";
 
 	private static Type customPocketDimensionGenerationType;
 
-	private const string ToastManagerTypeName = "ONITwitchCore.Toasts.ToastManager, ONITwitch";
+	private const string ToastManagerTypeName = "ONITwitch.Toasts.ToastManager, ONITwitch";
 	private static Type toastManagerType;
 
-	private const string EventManagerTypeName = "ONITwitchCore.EventLib.EventManager, ONITwitch";
+	private const string EventManagerTypeName = "ONITwitch.EventLib.EventManager, ONITwitch";
 	private static Type eventManagerType;
 
-	private const string EventInfoTypeName = "ONITwitchCore.EventLib.EventInfo, ONITwitch";
+	private const string EventInfoTypeName = "ONITwitch.EventLib.EventInfo, ONITwitch";
 	private static Type eventInfoType;
 
-	private const string DataManagerTypeName = "ONITwitchCore.EventLib.DataManager, ONITwitch";
+	private const string DataManagerTypeName = "ONITwitch.EventLib.DataManager, ONITwitch";
 	private static Type dataManagerType;
 
-	private const string TwitchDeckManagerTypeName = "ONITwitchCore.TwitchDeckManager, ONITwitch";
+	private const string TwitchDeckManagerTypeName = "ONITwitch.TwitchDeckManager, ONITwitch";
 	private static Type twitchDeckManagerType;
 
-	private const string EventGroupTypeName = "ONITwitchCore.EventLib.EventGroup, ONITwitch";
+	private const string EventGroupTypeName = "ONITwitch.EventLib.EventGroup, ONITwitch";
 	private static Type eventGroupType;
 
 #endregion

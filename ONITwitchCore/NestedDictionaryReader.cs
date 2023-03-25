@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 // Mostly copied from https://stackoverflow.com/questions/11561597/deserialize-json-recursively-to-idictionarystring-object/31250524#31250524
 internal class NestedDictionaryReader : JsonConverter

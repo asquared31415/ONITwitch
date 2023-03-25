@@ -4,7 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class PauseMenuPatches
 {

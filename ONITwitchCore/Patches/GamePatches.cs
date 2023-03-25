@@ -1,8 +1,8 @@
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchCore.Cmps;
+using ONITwitch.Cmps;
 
-namespace ONITwitchCore.Patches;
+namespace ONITwitch.Patches;
 
 internal static class GamePatches
 {

@@ -9,11 +9,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
-using DataManager = ONITwitchCore.EventLib.DataManager;
-using EventGroup = ONITwitchCore.EventLib.EventGroup;
-using EventManager = ONITwitchCore.EventLib.EventManager;
+using DataManager = ONITwitch.EventLib.DataManager;
+using EventGroup = ONITwitch.EventLib.EventGroup;
+using EventManager = ONITwitch.EventLib.EventManager;
 
-namespace ONITwitchCore.Config;
+namespace ONITwitch.Config;
 
 internal class UserCommandConfigManager
 {

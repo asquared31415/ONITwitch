@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace ONITwitchCore.CustomElements;
+namespace ONITwitch.CustomElements;
 
 /// <summary>
 /// SimHashes for the Twitch mod.

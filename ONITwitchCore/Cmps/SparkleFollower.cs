@@ -3,7 +3,7 @@ using KSerialization;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class SparkleFollower : KMonoBehaviour, ISim200ms

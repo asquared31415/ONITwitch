@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using ImGuiNET;
 using JetBrains.Annotations;
-using ONITwitchCore.Patches;
+using ONITwitch.Patches;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
-using DataManager = ONITwitchCore.EventLib.DataManager;
-using EventInfo = ONITwitchCore.EventLib.EventInfo;
+using DataManager = ONITwitch.EventLib.DataManager;
+using EventInfo = ONITwitch.EventLib.EventInfo;
 using Object = UnityEngine.Object;
 
-namespace ONITwitchCore;
+namespace ONITwitch;
 
 internal class TwitchDevTool : DevTool
 {

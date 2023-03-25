@@ -62,7 +62,7 @@ public static class Db_Initialize_Patch
 		// register the group into the deck
 		deckInst.AddGroup(extEventGroup);
 
-		var rainPrefabType = Type.GetType("ONITwitchCore.Commands.RainPrefabCommand, ONITwitch")!;
+		var rainPrefabType = Type.GetType("ONITwitch.Commands.RainPrefabCommand, ONITwitch")!;
 		var commandBase = new CommandBase(rainPrefabType);
 
 		var (extRain, extRainGroup) = EventGroup.DefaultSingleEventGroup("CustomRainEvent", 1, "Custom Rain Event");

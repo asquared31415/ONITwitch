@@ -1,8 +1,8 @@
 using HarmonyLib;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 using UnityEngine;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class FartCommand : CommandBase
 {

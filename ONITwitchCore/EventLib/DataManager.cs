@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using ONITwitchCore.Config;
+using ONITwitch.Config;
 
-namespace ONITwitchCore.EventLib;
+namespace ONITwitch.EventLib;
 
 /// <summary>
 /// Provides methods to manipulate data of <see cref="EventInfo"/>s

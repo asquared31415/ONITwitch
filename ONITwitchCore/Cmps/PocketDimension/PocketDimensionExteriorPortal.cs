@@ -3,7 +3,7 @@ using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
-namespace ONITwitchCore.Cmps.PocketDimension;
+namespace ONITwitch.Cmps.PocketDimension;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class PocketDimensionExteriorPortal : KMonoBehaviour

@@ -1,10 +1,10 @@
 using System.Linq;
-using ONITwitchCore.Toasts;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
 
-namespace ONITwitchCore.Commands;
+namespace ONITwitch.Commands;
 
 internal class GlobalWarmingCommand : CommandBase
 {

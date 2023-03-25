@@ -6,7 +6,7 @@ using ONITwitchLib.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ONITwitchCore.Cmps;
+namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class Toast : KMonoBehaviour
