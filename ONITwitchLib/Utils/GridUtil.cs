@@ -325,8 +325,25 @@ public static class GridUtil
 	)
 	{
 		var foundCell = GameUtil.FloodFillFind<object>(
-			(testCell, _) => building.IsValidPlaceLocation(null, testCell, orientation, false, out var _) &&
-							 building.IsValidBuildLocation(null, testCell, orientation, false, out var _),
+			(testCell, _) =>
+			{
+				// check that each cell is not solid
+				foreach (var buildingPlacementOffset in building.PlacementOffsets)
+				{
+					var buildingCell = Grid.OffsetCell(
+						testCell,
+						Rotatable.GetRotatedCellOffset(buildingPlacementOffset, orientation)
+					);
+					if (!IsCellEmpty(buildingCell))
+					{
+						return false;
+					}
+				}
+
+				var ret = building.IsValidPlaceLocation(null, testCell, orientation, false, out var _) &&
+						  building.IsValidBuildLocation(null, testCell, orientation, false, out var _);
+				return ret;
+			},
 			null,
 			cell,
 			1_000,

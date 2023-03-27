@@ -106,7 +106,7 @@ internal static class DefaultCommands
 		RegisterCommand(
 			new CommandInfo(
 				"ElementGroupGas",
-				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_METAL,
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_GAS,
 				new SpawnElementPoolCommand(),
 				new List<string>
 				{

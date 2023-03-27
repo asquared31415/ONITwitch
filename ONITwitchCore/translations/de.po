@@ -49,7 +49,7 @@ msgid ""
 "A portal that should hopefully return your duplicants back where they came "
 "from."
 msgstr ""
-"Ein Portal, welches den Duplikanten hoffentlich einen Rückweg ermöglicht"
+"Ein Portal, welches den Duplikanten hoffentlich einen Rückweg ermöglicht."
 
 #. ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH.POCKETDIMENSIONINTERIORPORTALCONFIG.NAME
 msgctxt ""
@@ -69,8 +69,7 @@ msgid "Glitter Puft"
 msgstr "Glitzerpuft"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.NAME
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.NAME"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.NAME"
 msgid "Athletics Down"
 msgstr "Athletik runter"
 
@@ -81,14 +80,12 @@ msgid "TODO"
 msgstr "TODO"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.NAME
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.NAME"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.NAME"
 msgid "Athletics Up"
 msgstr "Athletik hoch"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP"
 msgid "TODO"
 msgstr "TODO"
 
@@ -100,14 +97,12 @@ msgstr "Bauen runter"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.TOOLTIP
 msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN."
-"TOOLTIP"
+"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.TOOLTIP"
 msgid "TODO"
 msgstr "TODO"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.NAME
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.NAME"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.NAME"
 msgid "Construction Up"
 msgstr "Bauen hoch"
 
@@ -118,8 +113,7 @@ msgid "TODO"
 msgstr "TODO"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.NAME
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.NAME"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.NAME"
 msgid "Excavation Down"
 msgstr "Graben runter"
 
@@ -130,8 +124,7 @@ msgid "TODO"
 msgstr "TODO"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.NAME
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.NAME"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.NAME"
 msgid "Excavation Up"
 msgstr "Graben hoch"
 
@@ -144,16 +137,15 @@ msgstr "TODO"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.NAME"
 msgid "Incredibly Sleepy"
-msgstr "unglaublich schläfrig"
+msgstr "Unglaublich schläfrig"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.TOOLTIP
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.TOOLTIP"
 msgid "Incredibly Exhausted"
-msgstr "unglaublich erschöpft"
+msgstr "Unglaublich erschöpft"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.NAME
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.NAME"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.NAME"
 msgid "Strength Down"
 msgstr "Stärke runter"
 
@@ -169,8 +161,7 @@ msgid "Strength Up"
 msgstr "Stärke hoch"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP
-msgctxt ""
-"ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP"
+msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP"
 msgid "TODO"
 msgstr "TODO"
 
@@ -207,21 +198,19 @@ msgid "Glitter Meat"
 msgstr "Glitzerfleisch"
 
 #. ONITwitch.STRINGS.ITEMS.ONITWITCH.DEV_POCKET_DIMENSION_GENERATOR.DESC
-msgctxt ""
-"ONITwitch.STRINGS.ITEMS.ONITWITCH.DEV_POCKET_DIMENSION_GENERATOR.DESC"
+msgctxt "ONITwitch.STRINGS.ITEMS.ONITWITCH.DEV_POCKET_DIMENSION_GENERATOR.DESC"
 msgid "Generates a Pocket Dimension"
 msgstr "Erzeugt eine Taschendimension"
 
 #. ONITwitch.STRINGS.ITEMS.ONITWITCH.DEV_POCKET_DIMENSION_GENERATOR.NAME
-msgctxt ""
-"ONITwitch.STRINGS.ITEMS.ONITWITCH.DEV_POCKET_DIMENSION_GENERATOR.NAME"
+msgctxt "ONITwitch.STRINGS.ITEMS.ONITWITCH.DEV_POCKET_DIMENSION_GENERATOR.NAME"
 msgid "Pocket Dimension Generator"
 msgstr "Taschendimensionsgenerator"
 
 #. ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.DESC
 msgctxt "ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.DESC"
 msgid ""
-msgstr ""
+msgstr "TODO"
 
 #. ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.EFFECT
 msgctxt "ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.EFFECT"
@@ -363,7 +352,7 @@ msgstr "Ethanolflut"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.FLOOD_GOLD
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.FLOOD_GOLD"
 msgid "Gold Rain"
-msgstr "goldener Regen"
+msgstr "Goldener Regen"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.FLOOD_LAVA
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.FLOOD_LAVA"
@@ -393,12 +382,12 @@ msgstr "Flut"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.GEYSER_MODIFICATION
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.GEYSER_MODIFICATION"
 msgid "Tune Geyser"
-msgstr "verstärke Geysir"
+msgstr "Verstärke Geysir"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.GLOBAL_WARMING
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.GLOBAL_WARMING"
 msgid "Global Warming"
-msgstr "globale Erwärmung"
+msgstr "Klimaerwärmung"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.ICE_AGE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.ICE_AGE"
@@ -423,7 +412,7 @@ msgstr "Party-Zeit"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.PEE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.PEE"
 msgid "Gold Rain"
-msgstr "goldener Regen"
+msgstr "Goldener Regen"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.POCKET_DIMENSION
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.POCKET_DIMENSION"
@@ -453,7 +442,7 @@ msgstr "Diamantregen"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_GOLD
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_GOLD"
 msgid "Gold Rain"
-msgstr "goldener Regen"
+msgstr "Goldener Regen"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_MORB_AMORBUS
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_MORB_AMORBUS"
@@ -578,7 +567,7 @@ msgstr "Uninsoliere Ziegel"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY"
 msgid "All of your duplicants are releasing their urge to scream"
-msgstr "Alle deine Duplikanten lassen ihrer Wut freien Lauf"
+msgstr "Alle deine Duplikanten lassen ihren angestauten Wehklagen freien Lauf"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE"
@@ -598,7 +587,7 @@ msgstr "Sonnenfinsternis"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.EFFECT.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.EFFECT.BODY_FORMAT"
 msgid "All dupes have had the {0} effect applied"
-msgstr "Alle Duplikanten haben den {0} Effekt erhalten"
+msgstr "Alle Duplikanten haben den Effekt \"{0}\" erhalten"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.EFFECT.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.EFFECT.TITLE"
@@ -608,7 +597,7 @@ msgstr "Effekt angewandt"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.ELEMENT_GROUP.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.ELEMENT_GROUP.BODY_FORMAT"
 msgid "A chunk of {0} has appeared"
-msgstr "Ein Brocken von {0} ist erschienen"
+msgstr "Ein bisschen {0} ist erschienen"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.ELEMENT_GROUP.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.ELEMENT_GROUP.TITLE"
@@ -628,7 +617,9 @@ msgstr "Abstimmung abgeschlossen"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.FART.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.FART.BODY"
 msgid "All of your duplicants have farted. What was in that Frost Burger?"
-msgstr "Alle deine Duplikanten haben gefurzt. Was war in dem Frostburger?"
+msgstr ""
+"Alle deine Duplikanten haben gefurzt.\n"
+"Was war wohl in dem Frostburger?"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.FART.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.FART.TITLE"
@@ -648,7 +639,7 @@ msgstr "Bombardierte Schlafzimmer"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.FLOOD.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.FLOOD.BODY_FORMAT"
 msgid "A flood of {0} was spawned"
-msgstr "Eine Flut von {0} wurde erzeugt"
+msgstr "Eine {0}flut wurde erzeugt"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.FLOOD.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.FLOOD.TITLE"
@@ -656,10 +647,9 @@ msgid "Flood"
 msgstr "Flut"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT
-msgctxt ""
-"ONITwitch.STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT"
+msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.BODY_FORMAT"
 msgid "Geyser {0} is temporarily tuned"
-msgstr "Geysir {0} ist temporär verstärkt"
+msgstr "{0} ist temporär verstärkt"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.TITLE"
@@ -674,7 +664,7 @@ msgstr "Steigende Temperaturen auf {0}"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.GLOBAL_WARMING.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.GLOBAL_WARMING.TITLE"
 msgid "Global Warming"
-msgstr "Globale Erwärmung"
+msgstr "Klimaerwärmung"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.ICE_AGE.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.ICE_AGE.BODY_FORMAT"
@@ -760,7 +750,7 @@ msgstr "Kacksplosion"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.RAIN_PREFAB.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.RAIN_PREFAB.BODY_FORMAT"
 msgid "A rain of {0} is starting"
-msgstr "Ein Regen von {0} startet"
+msgstr "Ein {0}regen startet"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.RAIN_PREFAB.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.RAIN_PREFAB.TITLE"
@@ -832,7 +822,7 @@ msgstr "Objekt erzeugt"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.BODY"
 msgid "All food has had spices applied"
-msgstr "Alles Essen wurde mit neuen Gewürzmischungen nachgewürzt"
+msgstr "Alles Essen wurde nachgewürzt"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.TITLE"
@@ -996,8 +986,7 @@ msgstr "Dimension anzeigen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN.TOOLTIP
 msgctxt ""
-"ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN."
-"TOOLTIP"
+"ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN.TOOLTIP"
 msgid "TODO"
 msgstr "TODO"
 
@@ -1009,15 +998,14 @@ msgstr "Basiswelt anzeigen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.TOOLTIP
 msgctxt ""
-"ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN."
-"TOOLTIP"
+"ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.TOOLTIP"
 msgid "TODO"
 msgstr "TODO"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.SETTINGS.BUTTON_NAME
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.SETTINGS.BUTTON_NAME"
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr "Optionen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.NAME
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.NAME"
@@ -1042,7 +1030,7 @@ msgstr "Es wurde für keine der Optionen abgestimmt"
 #. ONITwitch.STRINGS.ONITWITCH.VOTE_CONTROLLER.START_VOTE_HEADER
 msgctxt "ONITwitch.STRINGS.ONITWITCH.VOTE_CONTROLLER.START_VOTE_HEADER"
 msgid "Starting new vote! "
-msgstr "Starte neue Abstimmung!"
+msgstr "Starte neue Abstimmung! "
 
 #. ONITwitch.STRINGS.ONITWITCH.VOTE_INFO_FILE.ERROR
 msgctxt "ONITwitch.STRINGS.ONITWITCH.VOTE_INFO_FILE.ERROR"
