@@ -105,7 +105,7 @@ internal class GenericModSettingsUI : KScreen
 			);
 
 
-		transform.Find("Buttons/Version").GetComponent<LocText>().text = "v" + Global.Instance.modManager.mods
+		transform.Find("Buttons/Version/VersionText").GetComponent<LocText>().text = "v" + Global.Instance.modManager.mods
 			.Find(mod => mod.staticID == TwitchModInfo.StaticID)
 			.packagedModInfo
 			.version;

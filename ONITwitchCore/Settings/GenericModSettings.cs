@@ -29,7 +29,7 @@ internal static class GenericModSettings
 		public int Version = 0;
 
 		public string ChannelName = "";
-		public float VoteDelay = 900;
+		public float VoteDelay = 600;
 		public float VoteTime = 60;
 		public int VoteCount = 3;
 		public bool UseTwitchNameColors = true;

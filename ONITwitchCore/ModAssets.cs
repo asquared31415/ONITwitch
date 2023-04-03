@@ -113,9 +113,7 @@ internal static class ModAssets
 			var go = text.gameObject;
 			Object.DestroyImmediate(text);
 			var locText = go.AddComponent<LocText>();
-			locText.text = content;
-			// TODO: UI translation
-			locText.key = "";
+			locText.key = content;
 			locText.font = font;
 			locText.fontStyle = FontStyles.Normal;
 			locText.fontSize = fontSize;

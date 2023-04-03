@@ -126,10 +126,15 @@ public static class ToastManager
 
 		var toast = Util.KInstantiateUI(prefab, canvas);
 		var toastCmp = toast.AddOrGet<Toast>();
+
+		// Set keys to empty string to prevent localizing. The string passed in should be localized.
 		toastCmp.Title = toast.transform.GetChild(0).GetChild(0).GetComponent<LocText>();
+		toastCmp.Title.key = "";
 		toastCmp.Title.text = title;
 		toastCmp.Body = toast.transform.GetChild(1).GetChild(0).GetComponent<LocText>();
+		toastCmp.Body.key = "";
 		toastCmp.Body.text = body;
+
 		toastCmp.Focus = Toast.FocusKind.None;
 
 		return toast;

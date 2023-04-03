@@ -472,6 +472,104 @@ public static class STRINGS
 
 		public static class UI
 		{
+			public static class APPLY
+			{
+				public static readonly LocString TEXT = "Apply";
+			}
+
+			public static class CONFIG
+			{
+				public static readonly LocString TITLE = "Twitch Integration Settings";
+
+				public static class CHANNEL_NAME
+				{
+					public static readonly LocString TEXT = "Channel Name";
+
+					public static readonly LocString TOOLTIP =
+						"The name of the Twitch channel to interact with.\nThis should be your username (example: asquared31415).";
+				}
+
+				public static class TIME_BETWEEN_VOTES
+				{
+					public static readonly LocString TEXT = "Time Between Votes";
+
+					public static readonly LocString TOOLTIP =
+						"The amount of real time, in seconds, that should pass between the end of one vote and the start of the next. (example: 600)";
+				}
+
+				public static class VOTING_TIME
+				{
+					public static readonly LocString TEXT = "Voting Time";
+
+					public static readonly LocString TOOLTIP =
+						"The amount of real time, in seconds, that a vote should be active for. (example: 60)";
+				}
+
+				public static class OPTIONS_PER_VOTE
+				{
+					public static readonly LocString TEXT = "Options per Vote (1-5)";
+					public static readonly LocString TOOLTIP = "";
+				}
+
+				public static class USE_TWITCH_COLORS
+				{
+					public static readonly LocString TEXT = "Use Twitch Username Colors";
+
+					public static readonly LocString TOOLTIP =
+						"Whether to copy a chatter's username color to their duplicant's name, if they are spawned.\nNote: If a user has not set their username color manually, it will be white, even though Twitch chat picks a random color.";
+				}
+
+				public static class SHOW_TOASTS
+				{
+					public static readonly LocString TEXT = "Show Toasts";
+
+					public static readonly LocString TOOLTIP =
+						"Whether to show any notifications from the Twitch Integration mod or any events.";
+				}
+
+				public static class SHOW_START_TOASTS
+				{
+					public static readonly LocString TEXT = "Show Vote Choice Toasts";
+
+					public static readonly LocString TOOLTIP =
+						"Whether to show notifications when a vote starts. This can be disabled if you want to not know what chat is voting on.";
+				}
+
+				public static class MIN_DANGER
+				{
+					public static readonly LocString TEXT = "Min Danger";
+
+					public static readonly LocString TOOLTIP =
+						"Events with a danger less than this setting will not appear.";
+				}
+
+				public static class MAX_DANGER
+				{
+					public static readonly LocString TEXT = "Max Danger";
+
+					public static readonly LocString TOOLTIP =
+						"Events with a danger greater than this setting will not appear.";
+				}
+
+				public static class EDIT
+				{
+					public static readonly LocString TEXT = "Edit Config";
+
+					public static readonly LocString TOOLTIP =
+						"Opens a page in a browser to edit the current event config.";
+				}
+			}
+
+			public static class DANGER
+			{
+				public static readonly LocString NONE = "None";
+				public static readonly LocString SMALL = "Small";
+				public static readonly LocString MEDIUM = "Medium";
+				public static readonly LocString HIGH = "High";
+				public static readonly LocString EXTREME = "Extreme";
+				public static readonly LocString DEADLY = "Deadly";
+			}
+
 			public static class DIALOGS
 			{
 				public static class DEADLY_CONFIG
@@ -482,6 +580,13 @@ public static class STRINGS
 						$"The Deadly danger has events that can {"<i><b>directly kill your duplicants</b></i>".Colored(ColorUtil.RedWarningColor)} or cause extremely deadly things to happen, often with no opportunity to prevent it.  Do not get too attached to your dupes.";
 
 					public static readonly LocString CONTINUE = "Continue".Colored(ColorUtil.RedWarningColor);
+				}
+
+				public static class EVENT_CONFIG
+				{
+					public static readonly LocString TITLE = "Twitch Integration Event Config";
+
+					public static readonly LocString PASTE = "Paste Config Here";
 				}
 
 				public static class EVENT_ERROR
