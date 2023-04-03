@@ -42,6 +42,9 @@ internal class PocketDimensionExteriorPortalConfig : IBuildingConfig
 	{
 		// Portal component needs to be here to serialize
 		go.AddOrGet<PocketDimensionExteriorPortal>();
+
+		// make sure this doesn't count for building it outside the start biome
+		go.AddTag(GameTags.TemplateBuilding);
 	}
 
 	public override void DoPostConfigureComplete(GameObject go)
@@ -58,7 +61,7 @@ internal class PocketDimensionExteriorPortalConfig : IBuildingConfig
 		light.shape = LightShape.Circle;
 		light.drawOverlay = false;
 		light.Lux = 1800;
-		
+
 		var prefabID = go.GetComponent<KPrefabID>();
 		prefabID.AddTag(GameTags.NoRocketRefund);
 

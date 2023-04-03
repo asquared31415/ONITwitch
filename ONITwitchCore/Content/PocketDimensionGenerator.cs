@@ -176,7 +176,7 @@ public static class PocketDimensionGenerator
 			null,
 			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
 			null,
-			0.0001f,
+			0 + Constants.CELSIUS2KELVIN,
 			exteriorBuildingDef.BuildingComplete
 		);
 
@@ -187,7 +187,7 @@ public static class PocketDimensionGenerator
 			null,
 			new List<Tag> { SimHashes.Unobtanium.CreateTag() },
 			null,
-			0.0001f,
+			0 + Constants.CELSIUS2KELVIN,
 			interiorBuildingDef.BuildingComplete
 		);
 

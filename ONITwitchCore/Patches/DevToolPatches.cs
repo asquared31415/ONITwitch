@@ -27,6 +27,7 @@ internal static class DevToolPatches
 		}
 	}
 
+#if DEBUG
 	[HarmonyPatch(typeof(DevToolManager), nameof(DevToolManager.UpdateShouldShowTools))]
 	private static class DevToolKeybindFix
 	{
@@ -34,11 +35,10 @@ internal static class DevToolPatches
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
 		private static void Postfix(ref bool ___showImGui)
 		{
-		#if DEBUG
 			___showImGui = true;
-		#endif
 		}
 	}
+#endif
 
 	[HarmonyPatch(typeof(DevToolUI), nameof(DevToolUI.PingHoveredObject))]
 	private static class DevToolNoPingCrashFix
