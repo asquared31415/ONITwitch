@@ -6,7 +6,6 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitchLib.Logger;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace ONITwitch.Patches;
@@ -33,12 +32,11 @@ internal static class DevToolPatches
 	{
 		[UsedImplicitly]
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
-		private static void Postfix(ref bool ___toggleKeyWasDown, ref bool ___showImGui)
+		private static void Postfix(ref bool ___showImGui)
 		{
-			var flag = Input.GetKeyDown(KeyCode.Hash) && Input.GetKey(KeyCode.LeftControl);
-			if (!___toggleKeyWasDown & flag)
-				___showImGui = !___showImGui;
-			___toggleKeyWasDown = flag;
+		#if DEBUG
+			___showImGui = true;
+		#endif
 		}
 	}
 

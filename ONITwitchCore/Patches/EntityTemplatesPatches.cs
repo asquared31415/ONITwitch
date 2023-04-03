@@ -8,9 +8,6 @@ using UnityEngine;
 
 namespace ONITwitch.Patches;
 
-/// <summary>
-/// Not a public API
-/// </summary>
 public static class EntityTemplatesPatches
 {
 	[MustUseReturnValue]
