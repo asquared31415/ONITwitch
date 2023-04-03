@@ -2,10 +2,9 @@ using System.Diagnostics;
 
 namespace ONITwitchLib.Logger;
 
-// TODO: is this public API (add annotation)
-
 /// <summary>
 /// Provides methods for emitting log messages from the Twitch mod.
+/// This uses a hard coded [Twitch Integration] string, which you likely do not want.
 /// </summary>
 public static class Log
 {
@@ -20,7 +19,7 @@ public static class Log
 	}
 
 	/// <summary>
-	/// Prints a message at the INFO level
+	/// Prints a message at the INFO level.
 	/// </summary>
 	/// <param name="msg">The object to print.</param>
 	public static void Info(object msg)
@@ -29,7 +28,7 @@ public static class Log
 	}
 
 	/// <summary>
-	/// Prints a message at the WARN level
+	/// Prints a message at the WARN level.
 	/// </summary>
 	/// <param name="msg">The object to print.</param>
 	public static void Warn(object msg)
