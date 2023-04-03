@@ -293,7 +293,6 @@ public struct IrcMessage
 
 	public override string ToString()
 	{
-		// TODO: redact PASS messages
 		var sb = new StringBuilder();
 		if (Tags.Count > 0)
 		{
@@ -305,10 +304,17 @@ public struct IrcMessage
 		}
 
 		sb.Append($"{Prefix} {Command} ");
-		foreach (var arg in Args)
+		if (Command.Command == IrcCommandType.PASS)
 		{
-			sb.Append(arg);
-			sb.Append(" ");
+			sb.Append("XXXXXXXXXX");
+		}
+		else
+		{
+			foreach (var arg in Args)
+			{
+				sb.Append(arg);
+				sb.Append(" ");
+			}
 		}
 
 		return sb.ToString();

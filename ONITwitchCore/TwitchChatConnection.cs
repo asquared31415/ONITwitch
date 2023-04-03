@@ -120,16 +120,7 @@ internal class TwitchChatConnection
 					while (messageQueue.TryDequeue(out var message))
 					{
 						var textMessage = message.GetIrcString();
-						/*
-						if (!message.Command.IsNumeric && (message.Command.Command.Value == IrcCommandType.PASS))
-						{
-							Debug.Log("Sending IRC message: PASS <REDACTED>");
-						}
-						else
-						{
-							Debug.Log($"Sending IRC message: {textMessage}");
-						}
-						*/
+						Log.Debug($"Sending IRC message: {textMessage}");
 
 						await SendRawTextMessage(textMessage);
 					}
