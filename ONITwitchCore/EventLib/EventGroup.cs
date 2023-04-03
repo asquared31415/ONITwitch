@@ -17,8 +17,6 @@ namespace ONITwitch.EventLib;
 [PublicAPI]
 public class EventGroup
 {
-	// TODO: expose these properties
-
 	/// <summary>
 	/// The name of the group.
 	/// </summary>

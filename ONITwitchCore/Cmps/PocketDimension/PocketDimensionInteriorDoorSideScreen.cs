@@ -46,7 +46,6 @@ internal class PocketDimensionInteriorDoorSideScreen : KMonoBehaviour, ISidescre
 
 	public int HorizontalGroupID()
 	{
-		// TODO: what is this
 		return -1;
 	}
 

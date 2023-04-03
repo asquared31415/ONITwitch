@@ -15,7 +15,6 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 
 	public int HorizontalGroupID()
 	{
-		// TODO: what is this
 		return -1;
 	}
 
