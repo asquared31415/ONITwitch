@@ -21,17 +21,17 @@ public static class STRINGS
 				public static class POCKETDIMENSIONEXTERIORPORTALCONFIG
 				{
 					public static readonly LocString NAME = "Pocket Dimension Portal";
-					public static readonly LocString DESC = "TODO";
+					public static readonly LocString DESC = "";
 					public static readonly LocString EFFECT = "A portal to an unknown dimension.";
 				}
 
 				public static class POCKETDIMENSIONINTERIORPORTALCONFIG
 				{
 					public static readonly LocString NAME = "Return Portal";
-					public static readonly LocString DESC = "TODO";
+					public static readonly LocString DESC = "";
 
-					public static readonly LocString EFFECT
-						= "A portal that should hopefully return your duplicants back where they came from.";
+					public static readonly LocString EFFECT =
+						"A portal that returns your duplicants back where they came from.";
 				}
 			}
 		}
@@ -55,7 +55,6 @@ public static class STRINGS
 
 	public static class DUPLICANTS
 	{
-		// TODO: fix all the strings here
 		public static class MODIFIERS
 		{
 			public static class ONITWITCH
@@ -63,37 +62,37 @@ public static class STRINGS
 				public static class ATHLETICS_UP
 				{
 					public static readonly LocString NAME = "Athletics Up";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class ATHLETICS_DOWN
 				{
 					public static readonly LocString NAME = "Athletics Down";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class CONSTRUCTION_UP
 				{
 					public static readonly LocString NAME = "Construction Up";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class CONSTRUCTION_DOWN
 				{
 					public static readonly LocString NAME = "Construction Down";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class EXCAVATION_UP
 				{
 					public static readonly LocString NAME = "Excavation Up";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class EXCAVATION_DOWN
 				{
 					public static readonly LocString NAME = "Excavation Down";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class SLEEPY
@@ -105,13 +104,13 @@ public static class STRINGS
 				public static class STRENGTH_UP
 				{
 					public static readonly LocString NAME = "Strength Up";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 
 				public static class STRENGTH_DOWN
 				{
 					public static readonly LocString NAME = "Strength Down";
-					public static readonly LocString TOOLTIP = "TODO";
+					public static readonly LocString TOOLTIP = "Caused by Twitch Chat";
 				}
 			}
 		}
@@ -508,7 +507,9 @@ public static class STRINGS
 				public static class OPTIONS_PER_VOTE
 				{
 					public static readonly LocString TEXT = "Options per Vote (1-5)";
-					public static readonly LocString TOOLTIP = "";
+
+					public static readonly LocString TOOLTIP =
+						"The number of options that should be available to vote for.";
 				}
 
 				public static class USE_TWITCH_COLORS
@@ -628,13 +629,13 @@ public static class STRINGS
 			public static class POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN
 			{
 				public static readonly LocString NAME = "View Dimension";
-				public static readonly LocString TOOLTIP = "TODO";
+				public static readonly LocString TOOLTIP = "View the dimension that this portal is attached to";
 			}
 
 			public static class POCKET_DIMENSION_INTERIOR_SIDE_SCREEN
 			{
 				public static readonly LocString NAME = "View Parent";
-				public static readonly LocString TOOLTIP = "TODO";
+				public static readonly LocString TOOLTIP = "View the world that holds this dimension";
 			}
 
 			public static class SETTINGS
@@ -645,7 +646,7 @@ public static class STRINGS
 			public static class SURPRISE_BOX_SIDE_SCREEN
 			{
 				public static readonly LocString NAME = "Open";
-				public static readonly LocString TOOLTIP = "TODO";
+				public static readonly LocString TOOLTIP = "Open this box to receive your surprise!";
 			}
 		}
 
