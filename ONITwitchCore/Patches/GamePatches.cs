@@ -17,7 +17,7 @@ internal static class GamePatches
 			__instance.gameObject.AddOrGet<VoteController>();
 			__instance.gameObject.AddOrGet<VoteFile>();
 
-			__instance.gameObject.AddOrGet<Eclipse>();
+			__instance.gameObject.AddOrGet<OniTwitchEclipse>();
 		}
 	}
 }

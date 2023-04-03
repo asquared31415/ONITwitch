@@ -32,7 +32,7 @@ internal static class CmpPatches
 		[UsedImplicitly]
 		private static void Postfix(GameObject go)
 		{
-			go.AddOrGet<ToiletsExt>();
+			go.AddOrGet<OniTwitchToiletsExt>();
 		}
 	}
 
@@ -42,7 +42,7 @@ internal static class CmpPatches
 		[UsedImplicitly]
 		private static void Postfix(GameObject go)
 		{
-			go.AddOrGet<InsulatedTileExt>();
+			go.AddOrGet<OniTwitchInsulatedTileExt>();
 		}
 	}
 }

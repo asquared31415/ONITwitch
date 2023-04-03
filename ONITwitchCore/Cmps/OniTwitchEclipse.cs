@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-internal class Eclipse : KMonoBehaviour, ISim200ms
+internal class OniTwitchEclipse : KMonoBehaviour, ISim200ms
 {
 	[Serialize] [SerializeField] private float timeRemaining;
 

@@ -40,7 +40,7 @@ internal class RainPrefabCommand : CommandBase
 			prefabIds = ExtractMorphs(fertilityDef.initialBreedingWeights);
 		}
 
-		var rainPrefab = Game.Instance.gameObject.AddOrGet<RainPrefab>();
+		var rainPrefab = Game.Instance.gameObject.AddOrGet<OniTwitchRainPrefab>();
 		rainPrefab.Initialize(TimePerItem, count, prefabIds);
 
 		ToastManager.InstantiateToast(

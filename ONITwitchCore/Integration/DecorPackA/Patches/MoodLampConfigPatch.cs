@@ -9,6 +9,6 @@ internal static class MoodLampConfig_DoPostConfigureComplete_Patch
 	[UsedImplicitly]
 	public static void Postfix(GameObject go)
 	{
-		go.AddOrGet<GlitterMoodLampAccessor>();
+		go.AddOrGet<OniTwitchGlitterMoodLampAccessor>();
 	}
 }

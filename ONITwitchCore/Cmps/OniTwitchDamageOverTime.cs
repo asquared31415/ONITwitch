@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-internal class DamageOverTime : KMonoBehaviour
+internal class OniTwitchDamageOverTime : KMonoBehaviour
 {
 	[Serialize] private float secondsRemaining;
 	[Serialize] private float secondsPerTick;

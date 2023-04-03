@@ -50,7 +50,7 @@ internal class GlitterPuftTracker : KMonoBehaviour
 		if (other != collider2D)
 		{
 			if ((other.transform.parent.GetComponent<GlitterPuft>() != null) ||
-				(other.transform.parent.GetComponent<GlitterMoodLampAccessor>() != null))
+				(other.transform.parent.GetComponent<OniTwitchGlitterMoodLampAccessor>() != null))
 			{
 				thisPuft.PuftGroup.Add(other.gameObject);
 			}
@@ -68,7 +68,7 @@ internal class GlitterPuftTracker : KMonoBehaviour
 		if (other != collider2D)
 		{
 			if ((other.transform.parent.GetComponent<GlitterPuft>() != null) ||
-				(other.transform.parent.GetComponent<GlitterMoodLampAccessor>() != null))
+				(other.transform.parent.GetComponent<OniTwitchGlitterMoodLampAccessor>() != null))
 			{
 				if (!thisPuft.PuftGroup.Remove(other.gameObject))
 				{

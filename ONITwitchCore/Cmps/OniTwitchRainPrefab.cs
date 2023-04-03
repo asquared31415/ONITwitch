@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-internal class RainPrefab : KMonoBehaviour
+internal class OniTwitchRainPrefab : KMonoBehaviour
 {
 	private float timePerItem;
 	private int countRemaining;

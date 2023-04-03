@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ONITwitch.Cmps;
 
 [SerializationConfig(MemberSerialization.OptIn)]
-internal class PartyTime : KMonoBehaviour
+internal class OniTwitchPartyTime : KMonoBehaviour
 {
 	// ReSharper disable once InconsistentNaming
 	[Serialize] [SerializeField] public float TimeRemaining;

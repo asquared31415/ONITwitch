@@ -42,7 +42,7 @@ internal static class MainMenuPatches
 			if (!errMsg.IsNullOrWhiteSpace())
 			{
 				var toastGo = ToastManager.InstantiateToast("Invalid Credentials", errMsg);
-				if ((toastGo != null) && toastGo.TryGetComponent(out Toast toast))
+				if ((toastGo != null) && toastGo.TryGetComponent(out OniTwitchToast toast))
 				{
 					toast.HoverTime = 60f;
 				}
@@ -103,7 +103,7 @@ internal static class MainMenuPatches
 			if (!errMsg.IsNullOrWhiteSpace())
 			{
 				var toastGo = ToastManager.InstantiateToast("Invalid Credentials", errMsg);
-				if ((toastGo != null) && toastGo.TryGetComponent(out Toast toast))
+				if ((toastGo != null) && toastGo.TryGetComponent(out OniTwitchToast toast))
 				{
 					toast.HoverTime = 60f;
 				}

@@ -53,9 +53,9 @@ public static class ToastManager
 			return null;
 		}
 
-		var toastCmp = go.GetComponent<Toast>();
+		var toastCmp = go.GetComponent<OniTwitchToast>();
 
-		toastCmp.Focus = Toast.FocusKind.Position;
+		toastCmp.Focus = OniTwitchToast.FocusKind.Position;
 		toastCmp.FocusPos = pos;
 
 		go.SetActive(true);
@@ -83,9 +83,9 @@ public static class ToastManager
 			return null;
 		}
 
-		var toastCmp = go.GetComponent<Toast>();
+		var toastCmp = go.GetComponent<OniTwitchToast>();
 
-		toastCmp.Focus = Toast.FocusKind.Object;
+		toastCmp.Focus = OniTwitchToast.FocusKind.Object;
 		toastCmp.FocusGo = target;
 
 		go.SetActive(true);
@@ -125,7 +125,7 @@ public static class ToastManager
 		}
 
 		var toast = Util.KInstantiateUI(prefab, canvas);
-		var toastCmp = toast.AddOrGet<Toast>();
+		var toastCmp = toast.AddOrGet<OniTwitchToast>();
 
 		// Set keys to empty string to prevent localizing. The string passed in should be localized.
 		toastCmp.Title = toast.transform.GetChild(0).GetChild(0).GetComponent<LocText>();
@@ -135,7 +135,7 @@ public static class ToastManager
 		toastCmp.Body.key = "";
 		toastCmp.Body.text = body;
 
-		toastCmp.Focus = Toast.FocusKind.None;
+		toastCmp.Focus = OniTwitchToast.FocusKind.None;
 
 		return toast;
 	}

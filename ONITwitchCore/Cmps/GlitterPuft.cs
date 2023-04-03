@@ -97,7 +97,7 @@ internal class GlitterPuft : KMonoBehaviour, ISim33ms
 					{
 						otherVal = otherGlitter.prevT;
 					}
-					else if (otherPuft.TryGetComponent<GlitterMoodLampAccessor>(out var glitterMoodLampAccessor))
+					else if (otherPuft.TryGetComponent<OniTwitchGlitterMoodLampAccessor>(out var glitterMoodLampAccessor))
 					{
 						if (glitterMoodLampAccessor.IsActiveGlitterLamp())
 						{

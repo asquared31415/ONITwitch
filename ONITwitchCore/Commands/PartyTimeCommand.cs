@@ -9,7 +9,7 @@ internal class PartyTimeCommand : CommandBase
 	public override void Run(object data)
 	{
 		var time = (float) (double) data;
-		var partyTime = Game.Instance.gameObject.AddOrGet<PartyTime>();
+		var partyTime = Game.Instance.gameObject.AddOrGet<OniTwitchPartyTime>();
 		partyTime.TimeRemaining = time;
 		partyTime.enabled = true;
 		PartyTimePatch.Enabled = true;

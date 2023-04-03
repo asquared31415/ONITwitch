@@ -2,17 +2,17 @@ using ONITwitch.Content;
 
 namespace ONITwitch.Cmps;
 
-internal class ToiletsExt : KMonoBehaviour
+internal class OniTwitchInsulatedTileExt : KMonoBehaviour
 {
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		ComponentsExt.Toilets.Add(this);
+		ComponentsExt.InsulatedTiles.Add(this);
 	}
 
 	protected override void OnCleanUp()
 	{
-		ComponentsExt.Toilets.Remove(this);
+		ComponentsExt.InsulatedTiles.Remove(this);
 		base.OnCleanUp();
 	}
 }
