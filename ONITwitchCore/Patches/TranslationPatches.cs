@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitchLib;
@@ -19,14 +20,18 @@ internal static class TranslationPatches
 		{
 			var root = typeof(STRINGS);
 
-			// register strings with namespace
-			Localization.RegisterForTranslation(root);
-
-			// Register strings without namespace
-			LocString.CreateLocStringKeys(root, null);
+			// register manually first so that the override works
+			AccessTools.Method(typeof(Localization), "AddAssembly", new[] { typeof(string), typeof(Assembly) })
+				.Invoke(null, new object[] { "ONITwitch", typeof(OniTwitchMod).Assembly });
 
 			// Load user created translation files
+			// load before creating keys so that `Strings` has the right values
 			LoadOverrideStrings();
+
+			// register strings with namespace
+			LocString.CreateLocStringKeys(root, "ONITwitch.");
+			// Register strings without namespace
+			LocString.CreateLocStringKeys(root, null);
 
 			// Creates template for users to edit
 			Localization.GenerateStringsTemplate(root, Path.Combine(KMod.Manager.GetDirectory(), "strings_templates"));

@@ -17,8 +17,8 @@ msgstr ""
 msgctxt ""
 "ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH."
 "POCKETDIMENSIONEXTERIORPORTALCONFIG.DESC"
-msgid "TODO"
-msgstr "TODO"
+msgid ""
+msgstr ""
 
 #. ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH.POCKETDIMENSIONEXTERIORPORTALCONFIG.EFFECT
 msgctxt ""
@@ -38,18 +38,17 @@ msgstr "Taschendimensionsportal"
 msgctxt ""
 "ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH."
 "POCKETDIMENSIONINTERIORPORTALCONFIG.DESC"
-msgid "TODO"
-msgstr "TODO"
+msgid ""
+msgstr ""
 
 #. ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH.POCKETDIMENSIONINTERIORPORTALCONFIG.EFFECT
 msgctxt ""
 "ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH."
 "POCKETDIMENSIONINTERIORPORTALCONFIG.EFFECT"
-msgid ""
-"A portal that should hopefully return your duplicants back where they came "
-"from."
+msgid "A portal that returns your duplicants back where they came from."
 msgstr ""
-"Ein Portal, welches den Duplikanten hoffentlich einen Rückweg ermöglicht."
+"Ein Portal, welches den Duplikanten einen Rückweg zu ihrem Ursprungsort "
+"ermöglicht."
 
 #. ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH.POCKETDIMENSIONINTERIORPORTALCONFIG.NAME
 msgctxt ""
@@ -76,8 +75,8 @@ msgstr "Athletik runter"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.NAME"
@@ -86,8 +85,8 @@ msgstr "Athletik hoch"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.NAME
 msgctxt ""
@@ -98,8 +97,8 @@ msgstr "Bauen runter"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.NAME"
@@ -109,8 +108,8 @@ msgstr "Bauen hoch"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.NAME"
@@ -120,8 +119,8 @@ msgstr "Graben runter"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.NAME"
@@ -131,8 +130,8 @@ msgstr "Graben hoch"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.SLEEPY.NAME"
@@ -152,8 +151,8 @@ msgstr "Stärke runter"
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.NAME
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.NAME"
@@ -162,8 +161,8 @@ msgstr "Stärke hoch"
 
 #. ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP
 msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Caused by Twitch Chat"
+msgstr "Verursacht durch den Twitch-Chat"
 
 #. ONITwitch.STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.DESC
 msgctxt "ONITwitch.STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.DESC"
@@ -210,7 +209,7 @@ msgstr "Taschendimensionsgenerator"
 #. ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.DESC
 msgctxt "ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.DESC"
 msgid ""
-msgstr "TODO"
+msgstr ""
 
 #. ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.EFFECT
 msgctxt "ONITwitch.STRINGS.ITEMS.ONITWITCH.SURPRISEBOXCONFIG.EFFECT"
@@ -894,6 +893,181 @@ msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.UNINSULATE_TILES.TITLE"
 msgid "Tiles Uninsulated"
 msgstr "Uninsolierte Ziegel"
 
+#. ONITwitch.STRINGS.ONITWITCH.UI.APPLY.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.APPLY.TEXT"
+msgid "Apply"
+msgstr "Anwenden"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.CHANNEL_NAME.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.CHANNEL_NAME.TEXT"
+msgid "Channel Name"
+msgstr "Kanalname"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.CHANNEL_NAME.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.CHANNEL_NAME.TOOLTIP"
+msgid ""
+"The name of the Twitch channel to interact with.\n"
+"This should be your username (example: asquared31415)."
+msgstr ""
+"Der Name des Twitch-Kanals, auf welchem die Interaktionen stattfinden.\n"
+"Das sollte dein Nutzername sein (Beispiel: asquared31415)."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TEXT"
+msgid "Edit Config"
+msgstr "Konfiguration anpassen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TOOLTIP"
+msgid "Opens a page in a browser to edit the current event config."
+msgstr ""
+"Öffnet eine Website im Browser zur Anpassung der aktuellen "
+"Eventkonfiguration."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TEXT"
+msgid "Max Danger"
+msgstr "Höchste Gefahrenstufe"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TOOLTIP"
+msgid "Events with a danger greater than this setting will not appear."
+msgstr ""
+"Events mit einer höheren Gefahrenstufe als hier eingestellt werden nicht "
+"erscheinen."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MIN_DANGER.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MIN_DANGER.TEXT"
+msgid "Min Danger"
+msgstr "Niedrigste Gefahrenstufe"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MIN_DANGER.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MIN_DANGER.TOOLTIP"
+msgid "Events with a danger less than this setting will not appear."
+msgstr ""
+"Events mit einer niedrigeren Gefahrenstufe als hier eingestellt werden nicht "
+"erscheinen."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.OPTIONS_PER_VOTE.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.OPTIONS_PER_VOTE.TEXT"
+msgid "Options per Vote (1-5)"
+msgstr "Anzahl an Abstimmungsoptionen (1-5)"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.OPTIONS_PER_VOTE.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.OPTIONS_PER_VOTE.TOOLTIP"
+msgid "The number of options that should be available to vote for."
+msgstr "Anzahl an Optionen, die bei einer Abstimmung angezeigt werden sollen."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TEXT"
+msgid "Show Vote Choice Toasts"
+msgstr "Abstimmungsoptionen anzeigen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TOOLTIP"
+msgid ""
+"Whether to show notifications when a vote starts. This can be disabled if "
+"you want to not know what chat is voting on."
+msgstr ""
+"Wenn aktiviert, werden bei Start einer Abstimmung die Optionen in einem "
+"kleinen Benachrichtigungsfenster kurz eingeblendet. Dies kann deaktiviert "
+"werden, wenn innerhalb des Spiels nicht angezeigt werden soll, was die "
+"Optionen der Abstimmung sind."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TEXT"
+msgid "Show Toasts"
+msgstr "Benachrichtigungsfenster anzeigen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TOOLTIP"
+msgid ""
+"Whether to show any notifications from the Twitch Integration mod or any "
+"events."
+msgstr ""
+"Kontrolliert, ob Benachrichtigungsfenster des Twitch-Integration-Mods und "
+"seiner Events angezeigt werden."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.TIME_BETWEEN_VOTES.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.TIME_BETWEEN_VOTES.TEXT"
+msgid "Time Between Votes"
+msgstr "Zeit zwischen Abstimmungen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.TIME_BETWEEN_VOTES.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.TIME_BETWEEN_VOTES.TOOLTIP"
+msgid ""
+"The amount of real time, in seconds, that should pass between the end of one "
+"vote and the start of the next. (example: 600)"
+msgstr ""
+"Abklingzeit vom Ende einer Abstimmung zum Beginn der Nächsten in "
+"(Echtzeit-)Sekunden (z.B. 600 = 10 Minuten)."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.TITLE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.TITLE"
+msgid "Twitch Integration Settings"
+msgstr "Twitch Integration Einstellungen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TEXT"
+msgid "Use Twitch Username Colors"
+msgstr "Nutze Twitch-Nutzer-Farbe"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TOOLTIP"
+msgid ""
+"Whether to copy a chatter's username color to their duplicant's name, if "
+"they are spawned.\n"
+"Note: If a user has not set their username color manually, it will be white, "
+"even though Twitch chat picks a random color."
+msgstr ""
+"Entscheidet, ob bei Erzeugung einer Duplikantenkopie eines Chatnutzers "
+"dessen Twitch-Farbe in den Namen mitübernommen wird.\n"
+"Zu beachten: Nutzer ohne manuell eingestellte Farbe werden als weiß "
+"interpretiert, auch wenn im Chat eine Zufallsfarbe angezeigt wird."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TEXT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TEXT"
+msgid "Voting Time"
+msgstr "Abstimmungszeit"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TOOLTIP
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TOOLTIP"
+msgid ""
+"The amount of real time, in seconds, that a vote should be active for. "
+"(example: 60)"
+msgstr ""
+"Zeit in (Echtzeit-)Sekunden, welche die Abstimmung aktiv sein soll. (z.B. 60)"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DANGER.DEADLY
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.DEADLY"
+msgid "Deadly"
+msgstr "Tödlich"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DANGER.EXTREME
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.EXTREME"
+msgid "Extreme"
+msgstr "Extrem"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DANGER.HIGH
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.HIGH"
+msgid "High"
+msgstr "Hoch"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DANGER.MEDIUM
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.MEDIUM"
+msgid "Medium"
+msgstr "Mittel"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DANGER.NONE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.NONE"
+msgid "None"
+msgstr "Keine"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DANGER.SMALL
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.SMALL"
+msgid "Small"
+msgstr "Minimal"
+
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.BODY"
 msgid ""
@@ -916,6 +1090,16 @@ msgstr "<color=#FE2F2FFF>Fortsetzen</color>"
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.TITLE"
 msgid "Deadly Settings"
 msgstr "Gefahrenstufe \"Tödlich\""
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_CONFIG.PASTE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_CONFIG.PASTE"
+msgid "Paste Config Here"
+msgstr "Hier Konfiguration einfügen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_CONFIG.TITLE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_CONFIG.TITLE"
+msgid "Twitch Integration Event Config"
+msgstr "Twitch Integration Ereignis-Konfiguration"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.BODY_FORMAT"
@@ -987,8 +1171,8 @@ msgstr "Dimension anzeigen"
 #. ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "View the dimension that this portal is attached to"
+msgstr "Zeig mir die Dimension wo dieses Portal hinführt"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.NAME
 msgctxt ""
@@ -999,8 +1183,8 @@ msgstr "Basiswelt anzeigen"
 #. ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.TOOLTIP
 msgctxt ""
 "ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "View the world that holds this dimension"
+msgstr "Zeig mir die Welt wo diese Taschendimension geöffnet wurde"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.SETTINGS.BUTTON_NAME
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.SETTINGS.BUTTON_NAME"
@@ -1014,8 +1198,8 @@ msgstr "Öffnen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP"
-msgid "TODO"
-msgstr "TODO"
+msgid "Open this box to receive your surprise!"
+msgstr "Mach diese Box auf, um deine Überraschung zu erhalten!"
 
 #. ONITwitch.STRINGS.ONITWITCH.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.VOTE_CONTROLLER.CHOSEN_VOTE_FORMAT"
