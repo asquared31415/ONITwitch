@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
+using ONITwitch.Settings;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using TMPro;
@@ -44,7 +45,7 @@ internal static class ModAssets
 			FixText(Toasts.NormalToastPrefab.transform.Find("TitleContainer").gameObject, grayStroke);
 			FixText(Toasts.NormalToastPrefab.transform.Find("BodyContainer").gameObject, notoSans);
 			Toasts.NormalToastPrefab.SetActive(false);
-			
+
 			Toasts.ClickableToastPrefab = toastBundle.LoadAsset<GameObject>("assets/clickabletoast.prefab");
 			FixText(Toasts.ClickableToastPrefab.transform.Find("TitleContainer").gameObject, grayStroke);
 			FixText(Toasts.ClickableToastPrefab.transform.Find("BodyContainer").gameObject, notoSans);
@@ -70,6 +71,7 @@ internal static class ModAssets
 				16
 			);
 			Options.GenericOptionsPrefab.SetActive(false);
+			Options.GenericOptionsPrefab.AddOrGet<GenericModSettingsUI>();
 
 			Options.ConfigPopup = optionsBundle.LoadAsset<GameObject>("TwitchConfigUI.prefab");
 			FixText(Options.ConfigPopup.transform.Find("TitleBar").gameObject, grayStroke, 20);

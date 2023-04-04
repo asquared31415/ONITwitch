@@ -6,15 +6,11 @@ using JetBrains.Annotations;
 using ONITwitch.Settings;
 using ONITwitchLib;
 using UnityEngine;
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
 namespace ONITwitch.Patches;
 
 internal static class ModsScreenPatches
 {
-	private static GameObject canvas;
-
 	[HarmonyPatch(typeof(ModsScreen), "BuildDisplay")]
 	// ReSharper disable once InconsistentNaming
 	private static class ModsScreen_BuildDisplay_Patch
@@ -63,27 +59,11 @@ internal static class ModsScreenPatches
 
 		private static void OpenModSettingsScreen()
 		{
-			if (canvas == null)
-			{
-				canvas = new GameObject("SettingsCanvas");
-				var canvasCmp = canvas.AddComponent<Canvas>();
-				canvasCmp.renderMode = RenderMode.ScreenSpaceOverlay;
-				canvasCmp.sortingOrder = 100;
-				canvasCmp.pixelPerfect = true;
-
-				var scaler = canvas.AddComponent<CanvasScaler>();
-				scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-				scaler.referenceResolution = new Vector2(1920, 1080);
-
-				canvas.AddComponent<GraphicRaycaster>();
-
-				Object.DontDestroyOnLoad(canvas);
-				canvas.SetActive(true);
-			}
-
-			var settings = Util.KInstantiateUI(ModAssets.Options.GenericOptionsPrefab, canvas);
-			settings.AddOrGet<GenericModSettingsUI>();
-			settings.SetActive(true);
+			Util.KInstantiateUI(
+					ModAssets.Options.GenericOptionsPrefab,
+					MainMenu.Instance.transform.parent.gameObject
+				)
+				.SetActive(true);
 		}
 	}
 }

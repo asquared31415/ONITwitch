@@ -105,7 +105,8 @@ internal class GenericModSettingsUI : KScreen
 			);
 
 
-		transform.Find("Buttons/Version/VersionText").GetComponent<LocText>().text = "v" + Global.Instance.modManager.mods
+		transform.Find("Buttons/Version/VersionText").GetComponent<LocText>().text = "v" + Global.Instance.modManager
+			.mods
 			.Find(mod => mod.staticID == TwitchModInfo.StaticID)
 			.packagedModInfo
 			.version;
@@ -225,7 +226,7 @@ internal class GenericModSettingsUI : KScreen
 
 	public override void OnKeyDown(KButtonEvent e)
 	{
-		if (!confirmExitDialogActive && e.TryConsume(Action.Escape))
+		if (!confirmExitDialogActive && (e.TryConsume(Action.Escape) || e.TryConsume(Action.MouseRight)))
 		{
 			CloseMenu();
 		}
