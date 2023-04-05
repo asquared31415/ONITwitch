@@ -24,24 +24,33 @@ internal static class MainMenuPatches
 			ValidateToken(credentials.Oauth);
 		}
 
+		private static readonly Regex NickRegex = new("^[A-Za-z0-9][A-Za-z0-9_]*$");
+
 		private static void ValidateNick(string nick)
 		{
 			string errMsg = null;
 			if (nick.IsNullOrWhiteSpace())
 			{
 				Log.Warn("Null or whitespace nick in credentials");
-				errMsg = "The credentials file does not have a Twitch login name set";
+				errMsg = STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.NO_LOGIN;
 			}
 			else if (nick.Contains("/") || nick.Contains("\\"))
 			{
 				Log.Warn($"Nick contained a slash: {nick}");
-				errMsg =
-					"The Twitch nickname in the credentials file contained a slash.  The nickname should be <i>only</i> the name you use to log in to Twitch.";
+				errMsg = STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.NICK_CONTAINS_SLASH;
+			}
+			else if (!NickRegex.IsMatch(nick))
+			{
+				Log.Warn($"Nick did not match ^[A-Za-z0-9][A-Za-z0-9_]*$ {nick}");
+				errMsg = STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.INVALID_NICK;
 			}
 
 			if (!errMsg.IsNullOrWhiteSpace())
 			{
-				var toastGo = ToastManager.InstantiateToast("Invalid Credentials", errMsg);
+				var toastGo = ToastManager.InstantiateToast(
+					STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.TITLE,
+					errMsg
+				);
 				if ((toastGo != null) && toastGo.TryGetComponent(out OniTwitchToast toast))
 				{
 					toast.HoverTime = 60f;
@@ -64,7 +73,7 @@ internal static class MainMenuPatches
 			if (!match.Success || (match.Index != 0))
 			{
 				Log.Warn("oauth did not match the regex `[0-9a-zA-Z]+`");
-				errMsg = "Invalid OAuth token!\nThe OAuth token should be composed of only numbers and letters.";
+				errMsg = STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.MALFORMED_OAUTH;
 			}
 			else
 			{
@@ -72,8 +81,7 @@ internal static class MainMenuPatches
 				const string twitchTokenValidateUri = "https://id.twitch.tv/oauth2/validate";
 
 				var request = WebRequest.CreateHttp(twitchTokenValidateUri);
-				var headers = new WebHeaderCollection
-					{ { "Authorization", $"Bearer {oauth}" } };
+				var headers = new WebHeaderCollection { { "Authorization", $"Bearer {oauth}" } };
 				request.Headers = headers;
 				try
 				{
@@ -88,21 +96,23 @@ internal static class MainMenuPatches
 						var httpResponse = (HttpWebResponse) r;
 						Log.Warn($"Error validating oauth token with twitch.  Status: {httpResponse.StatusCode}");
 						errMsg = httpResponse.StatusCode == HttpStatusCode.Unauthorized
-							? "The OAuth token is invalid or has expired.  Please generate a new token following the instructions in the README."
-							: "An unknown error occured when validating your OAuth token with Twitch.";
+							? STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.EXPIRED_OAUTH
+							: STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.UNKNOWN_OAUTH_ERR;
 					}
 					else
 					{
 						Log.Warn("Error validating oauth token with twitch.  No response.");
-						errMsg =
-							"An unknown error occured when validating your OAuth token with Twitch. (No response from server)";
+						errMsg = STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.CONNECTION_OAUTH_ERR;
 					}
 				}
 			}
 
 			if (!errMsg.IsNullOrWhiteSpace())
 			{
-				var toastGo = ToastManager.InstantiateToast("Invalid Credentials", errMsg);
+				var toastGo = ToastManager.InstantiateToast(
+					STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.TITLE,
+					errMsg
+				);
 				if ((toastGo != null) && toastGo.TryGetComponent(out OniTwitchToast toast))
 				{
 					toast.HoverTime = 60f;
