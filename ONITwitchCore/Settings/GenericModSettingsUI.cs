@@ -36,18 +36,28 @@ internal class GenericModSettingsUI : KScreen
 		channelInput.characterLimit = 25;
 		channelInput.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
 
+		AddToolTip("Content/ChannelName/Label", STRINGS.ONITWITCH.UI.CONFIG.CHANNEL_NAME.TOOLTIP);
+
 		voteDelayInput = HookUpInput("Content/VoteDelay/InputField");
 		voteDelayInput.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
 
+		AddToolTip("Content/VoteDelay/Label", STRINGS.ONITWITCH.UI.CONFIG.TIME_BETWEEN_VOTES.TOOLTIP);
+
 		voteTimeInput = HookUpInput("Content/VoteTime/InputField");
 		voteTimeInput.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
+
+		AddToolTip("Content/VoteTime/Label", STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TOOLTIP);
 
 		voteCountInput = HookUpInput("Content/VoteCount/InputField");
 		voteCountInput.characterLimit = 3;
 		voteCountInput.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
 
+		AddToolTip("Content/VoteCount/Label", STRINGS.ONITWITCH.UI.CONFIG.OPTIONS_PER_VOTE.TOOLTIP);
+
 		useTwitchNameColorsToggle = transform.Find("Content/UseTwitchColors").GetComponent<Toggle>();
 		useTwitchNameColorsToggle.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
+
+		AddToolTip("Content/UseTwitchColors/Label", STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TOOLTIP);
 
 		showToastsToggle = transform.Find("Content/ShowToasts").GetComponent<Toggle>();
 		showToastsToggle.onValueChanged.AddListener(
@@ -64,11 +74,21 @@ internal class GenericModSettingsUI : KScreen
 			}
 		);
 
+		AddToolTip("Content/ShowToasts/Label", STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TOOLTIP);
+
 		showVoteChoicesToggle = transform.Find("Content/SubToastSettings/ShowVoteStartToast").GetComponent<Toggle>();
 		showVoteChoicesToggle.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
 
+		AddToolTip(
+			"Content/SubToastSettings/ShowVoteStartToast/Label",
+			STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TOOLTIP
+		);
+
 		minDangerSlider = transform.Find("Content/MinDangerInput/SliderContainer/Slider").GetComponent<Slider>();
+		AddToolTip("Content/MinDangerInput/Label", STRINGS.ONITWITCH.UI.CONFIG.MIN_DANGER.TOOLTIP);
+
 		maxDangerSlider = transform.Find("Content/MaxDangerInput/SliderContainer/Slider").GetComponent<Slider>();
+		AddToolTip("Content/MaxDangerInput/Label", STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TOOLTIP);
 
 		minDangerSlider.onValueChanged.AddListener(
 			newVal =>
@@ -103,6 +123,7 @@ internal class GenericModSettingsUI : KScreen
 					config.SetActive(true);
 				}
 			);
+		AddToolTip("Content/EditConfig/EditConfigButton", STRINGS.ONITWITCH.UI.CONFIG.EDIT.TOOLTIP);
 
 
 		transform.Find("Buttons/Version/VersionText").GetComponent<LocText>().text = "v" + Global.Instance.modManager
@@ -182,6 +203,17 @@ internal class GenericModSettingsUI : KScreen
 		input.textComponent = inputGo.transform.Find("Text Area/Text").GetComponent<TMP_Text>();
 
 		return input;
+	}
+
+	private void AddToolTip(string path, string tooltipStr)
+	{
+		var toolTip = transform.Find(path).gameObject.AddOrGet<ToolTip>();
+		toolTip.tooltipPivot = new Vector2(0.5f, 0f);
+		toolTip.tooltipPositionOffset = new Vector2(toolTip.WrapWidth / 2f, 0f);
+		toolTip.parentPositionAnchor = new Vector2(0f, 0f);
+
+		ToolTipScreen.Instance.SetToolTip(toolTip);
+		toolTip.SetSimpleTooltip(tooltipStr);
 	}
 
 	private void ApplySettings()

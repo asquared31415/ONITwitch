@@ -485,7 +485,7 @@ public static class STRINGS
 					public static readonly LocString TEXT = "Channel Name";
 
 					public static readonly LocString TOOLTIP =
-						"The name of the Twitch channel to interact with.\nThis should be your username (example: asquared31415).";
+						"The name of the Twitch channel to interact with.\nThis should be your username. (example: asquared31415)";
 				}
 
 				public static class TIME_BETWEEN_VOTES
@@ -522,7 +522,7 @@ public static class STRINGS
 
 				public static class SHOW_TOASTS
 				{
-					public static readonly LocString TEXT = "Show Toasts";
+					public static readonly LocString TEXT = "Show Notifications";
 
 					public static readonly LocString TOOLTIP =
 						"Whether to show any notifications from the Twitch Integration mod or any events.";
@@ -530,10 +530,10 @@ public static class STRINGS
 
 				public static class SHOW_START_TOASTS
 				{
-					public static readonly LocString TEXT = "Show Vote Choice Toasts";
+					public static readonly LocString TEXT = "Show Vote Choice Notifications";
 
 					public static readonly LocString TOOLTIP =
-						"Whether to show notifications when a vote starts. This can be disabled if you want to not know what chat is voting on.";
+						"Whether to show notifications when a vote starts. This can be disabled if you want to not know what options chat has.";
 				}
 
 				public static class MIN_DANGER
@@ -554,10 +554,10 @@ public static class STRINGS
 
 				public static class EDIT
 				{
-					public static readonly LocString TEXT = "Edit Config";
+					public static readonly LocString TEXT = "Edit Event Config";
 
 					public static readonly LocString TOOLTIP =
-						"Opens a page in a browser to edit the current event config.";
+						"Opens a page in a browser to edit the current event config. (WARNING: SPOILERS)";
 				}
 			}
 
