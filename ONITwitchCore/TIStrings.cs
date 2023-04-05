@@ -640,6 +640,15 @@ public static class STRINGS
 					public static readonly LocString BODY =
 						"An unknown version of the Twitch Integration config was encountered and the config had to be reset. Your old config has been saved to config_bak.json.";
 				}
+
+				public static class UNSAVED_CONFIG
+				{
+					public static readonly LocString TITLE = "Unsaved Changes";
+					public static readonly LocString BODY = "There are unsaved changes, are you sure you want to exit?";
+					public static readonly LocString SAVE = "Save Changes";
+					public static readonly LocString BACK = "Go Back";
+					public static readonly LocString DISCARD = "Discard Changes";
+				}
 			}
 
 			public static class PAUSE_MENU

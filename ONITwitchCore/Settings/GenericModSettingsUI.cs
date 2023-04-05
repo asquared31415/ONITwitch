@@ -171,17 +171,17 @@ internal class GenericModSettingsUI : KScreen
 		{
 			confirmExitDialogActive = true;
 			DialogUtil.MakeDialog(
-				"Unsaved Changes",
-				"There are unsaved changes, are you sure you want to exit?",
-				"Save Changes",
+				STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.TITLE,
+				STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.BODY,
+				STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.SAVE,
 				() =>
 				{
 					ApplySettings();
 					confirmExitDialogActive = false;
 				},
-				"Go Back",
+				STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.BACK,
 				() => { confirmExitDialogActive = false; },
-				"Discard Changes".Colored(ColorUtil.RedWarningColor),
+				((string) STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.DISCARD).Colored(ColorUtil.RedWarningColor),
 				() =>
 				{
 					Destroy(gameObject);
