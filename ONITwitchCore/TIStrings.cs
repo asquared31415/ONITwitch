@@ -573,6 +573,14 @@ public static class STRINGS
 
 			public static class DIALOGS
 			{
+				public static class CONNECTION_ERROR
+				{
+					public static readonly LocString TITLE = "Connection Error";
+
+					public static readonly LocString BODY_FORMAT =
+						"The connection to Twitch failed {0} times. This may be caused by a bad internet connection.";
+				}
+
 				public static class DEADLY_CONFIG
 				{
 					public static readonly LocString TITLE = "Deadly Settings";
@@ -631,6 +639,20 @@ public static class STRINGS
 				{
 					public static readonly LocString TITLE = "Invalid Config";
 					public static readonly LocString BODY = "The config provided was invalid";
+				}
+
+				public static class NO_VOTES
+				{
+					public static readonly LocString TITLE = "Cannot Start Vote";
+					public static readonly LocString BODY = "No events were able to be drawn.";
+				}
+
+				public static class NOT_AUTHENTICATED
+				{
+					public static readonly LocString TITLE = "Not Authenticated";
+
+					public static readonly LocString BODY =
+						"You are not authenticated with Twitch. The vote cannot be started. This may be caused by incorrect or missing credentials.";
 				}
 
 				public static class UNKNOWN_SAVE

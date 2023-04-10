@@ -59,8 +59,8 @@ internal class VoteController : KMonoBehaviour
 		{
 			Log.Warn("Not yet authenticated, unable to start vote!");
 			DialogUtil.MakeDialog(
-				"TODO: Not Authenticated",
-				"TODO: You are not authenticated with Twitch, the vote cannot be started.",
+				STRINGS.ONITWITCH.UI.DIALOGS.NOT_AUTHENTICATED.TITLE,
+				STRINGS.ONITWITCH.UI.DIALOGS.NOT_AUTHENTICATED.BODY,
 				UI.CONFIRMDIALOG.OK,
 				null
 			);
@@ -90,8 +90,8 @@ internal class VoteController : KMonoBehaviour
 		{
 			Log.Warn("Unable to draw any events! Canceling.");
 			DialogUtil.MakeDialog(
-				"TODO: Unable to Start Votes",
-				"TODO: Unable to start a vote, no events were drawn.",
+				STRINGS.ONITWITCH.UI.DIALOGS.NO_VOTES.TITLE,
+				STRINGS.ONITWITCH.UI.DIALOGS.NO_VOTES.BODY,
 				UI.CONFIRMDIALOG.OK,
 				null
 			);

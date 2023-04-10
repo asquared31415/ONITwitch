@@ -94,7 +94,7 @@ internal class TwitchConnection
 					}
 					catch (Exception e)
 					{
-						// TODO: maybe warn here?
+						// TODO: maybe UI warn here?
 						Log.Warn("An unexpected exception occurred when connecting");
 						Log.Debug(e.GetType());
 						Log.Warn(e.Message);
@@ -108,8 +108,8 @@ internal class TwitchConnection
 					{
 						Log.Warn("An error occurred");
 						DialogUtil.MakeDialog(
-							"TODO: WS error",
-							$"TODO: The connection failed {maxAttempts} times. This may be an internet error.",
+							STRINGS.ONITWITCH.UI.DIALOGS.CONNECTION_ERROR.TITLE,
+							string.Format(STRINGS.ONITWITCH.UI.DIALOGS.CONNECTION_ERROR.BODY_FORMAT, maxAttempts),
 							UI.CONFIRMDIALOG.OK,
 							null
 						);
