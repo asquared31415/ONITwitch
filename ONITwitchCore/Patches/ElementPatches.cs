@@ -31,7 +31,7 @@ internal static class ElementPatches
 			material.mainTexture = tex;
 
 			var substance = ModUtil.CreateSubstance(
-				nameof(TwitchSimHashes.IndestructibleElement),
+				nameof(TwitchSimHashes.OniTwitchIndestructibleElement),
 				Element.State.Solid,
 				animFile,
 				material,
@@ -45,8 +45,8 @@ internal static class ElementPatches
 		[UsedImplicitly]
 		private static void Postfix()
 		{
-			var unbreakable = ElementLoader.FindElementByHash(TwitchSimHashes.IndestructibleElement);
-			SubstanceNameTag(unbreakable.substance) = TagManager.Create(nameof(TwitchSimHashes.IndestructibleElement));
+			var unbreakable = ElementLoader.FindElementByHash(TwitchSimHashes.OniTwitchIndestructibleElement);
+			SubstanceNameTag(unbreakable.substance) = TagManager.Create(nameof(TwitchSimHashes.OniTwitchIndestructibleElement));
 		}
 	}
 }

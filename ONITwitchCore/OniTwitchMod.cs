@@ -3,9 +3,11 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
+using ONITwitch.CustomElements;
 using ONITwitch.EventLib;
 using ONITwitch.Integration;
 using ONITwitch.Integration.DecorPackA;
+using ONITwitchLib.Logger;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -23,6 +25,8 @@ internal class OniTwitchMod : UserMod2
 		var mainThreadObject = new GameObject("MainThreadScheduler");
 		mainThreadObject.AddOrGet<MainThreadScheduler>();
 		Object.DontDestroyOnLoad(mainThreadObject);
+		
+		Log.Debug($"Element Hash: {TwitchSimHashes.OniTwitchIndestructibleElement}");
 
 		RegisterDevTools();
 	}

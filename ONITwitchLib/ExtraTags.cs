@@ -12,11 +12,11 @@ public static class ExtraTags
 	/// A tag that explicitly enables prefabs to be spawned by the Surprise Box, even if it would not by default.
 	/// </summary>
 	[PublicAPI]
-	public static Tag SurpriseBoxForceEnabled = nameof(SurpriseBoxForceEnabled);
+	public static Tag OniTwitchSurpriseBoxForceEnabled = nameof(OniTwitchSurpriseBoxForceEnabled);
 
 	/// <summary>
 	/// A tag that explicitly stops prefabs from being spawned by the Surprise Box, even if the prefab could by default.
 	/// </summary>
 	[PublicAPI]
-	public static Tag SurpriseBoxForceDisabled = nameof(SurpriseBoxForceDisabled);
+	public static Tag OniTwitchSurpriseBoxForceDisabled = nameof(OniTwitchSurpriseBoxForceDisabled);
 }

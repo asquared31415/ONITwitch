@@ -40,13 +40,13 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 	private static bool PrefabIsValid(KPrefabID prefab)
 	{
 		// never allow a force disabled object
-		if (prefab.HasTag(ExtraTags.SurpriseBoxForceDisabled))
+		if (prefab.HasTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled))
 		{
 			return false;
 		}
 
 		// explicitly enabled objects
-		if (prefab.HasTag(ExtraTags.SurpriseBoxForceEnabled))
+		if (prefab.HasTag(ExtraTags.OniTwitchSurpriseBoxForceEnabled))
 		{
 			return true;
 		}

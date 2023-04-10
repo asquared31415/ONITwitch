@@ -164,8 +164,8 @@ msgctxt "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP"
 msgid "Caused by Twitch Chat"
 msgstr "Verursacht durch den Twitch-Chat"
 
-#. ONITwitch.STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.DESC
-msgctxt "ONITwitch.STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.DESC"
+#. ONITwitch.STRINGS.ELEMENTS.ONITWITCHINDESTRUCTIBLEELEMENT.DESC
+msgctxt "ONITwitch.STRINGS.ELEMENTS.ONITWITCHINDESTRUCTIBLEELEMENT.DESC"
 msgid ""
 "(Nt) Neutronium is a mysterious and extremely resilient element.\n"
 "\n"
@@ -175,8 +175,8 @@ msgstr ""
 "\n"
 "Es kann mit keinem Werkzeug der Duplikanten abgebaut werden."
 
-#. ONITwitch.STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.NAME
-msgctxt "ONITwitch.STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.NAME"
+#. ONITwitch.STRINGS.ELEMENTS.ONITWITCHINDESTRUCTIBLEELEMENT.NAME
+msgctxt "ONITwitch.STRINGS.ELEMENTS.ONITWITCHINDESTRUCTIBLEELEMENT.NAME"
 msgid "<link=\"UNOBTANIUM\">Neutrollium</link>"
 msgstr "<link=\"UNOBTANIUM\">Neutrollium</link>"
 

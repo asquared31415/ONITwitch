@@ -13,5 +13,5 @@ public static class TwitchSimHashes
 	/// that let users destroy Neutronium.
 	/// </summary>
 	[PublicAPI]
-	public static readonly SimHashes IndestructibleElement = (SimHashes) Hash.SDBMLower(nameof(IndestructibleElement));
+	public static readonly SimHashes OniTwitchIndestructibleElement = (SimHashes) Hash.SDBMLower(nameof(OniTwitchIndestructibleElement));
 }

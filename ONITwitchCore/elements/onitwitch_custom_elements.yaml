@@ -1,6 +1,6 @@
 ---
 elements:
-  - elementId: IndestructibleElement
+  - elementId: OniTwitchIndestructibleElement
     specificHeatCapacity: 0
     thermalConductivity: 0
     solidSurfaceAreaMultiplier: 0
@@ -8,7 +8,7 @@ elements:
     gasSurfaceAreaMultiplier: 0
     strength: 0
     highTemp: 10000
-    highTempTransitionTarget: IndestructibleElement
+    highTempTransitionTarget: OniTwitchIndestructibleElement
     defaultTemperature: 1
     defaultMass: 20000
     maxMass: 20000
@@ -21,5 +21,5 @@ elements:
     buildMenuSort: 1
     isDisabled: false
     state: Solid
-    localizationID: STRINGS.ELEMENTS.INDESTRUCTIBLEELEMENT.NAME
+    localizationID: STRINGS.ELEMENTS.ONITWITCHINDESTRUCTIBLEELEMENT.NAME
     dlcId: ""

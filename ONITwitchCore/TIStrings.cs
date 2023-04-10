@@ -118,7 +118,7 @@ public static class STRINGS
 
 	public static class ELEMENTS
 	{
-		public static class INDESTRUCTIBLEELEMENT
+		public static class ONITWITCHINDESTRUCTIBLEELEMENT
 		{
 			public static readonly LocString NAME = global::STRINGS.UI.FormatAsLink(
 				"Neutrollium",
