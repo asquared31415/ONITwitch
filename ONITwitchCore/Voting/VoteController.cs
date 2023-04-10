@@ -181,7 +181,6 @@ internal class VoteController : KMonoBehaviour
 
 	private void Update()
 	{
-		Log.Debug($"Vote controller: {State}");
 		switch (State)
 		{
 			case VotingState.NotStarted:
