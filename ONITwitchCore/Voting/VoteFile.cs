@@ -7,7 +7,7 @@ using ONITwitch.Settings;
 using ONITwitchLib;
 using UnityEngine;
 
-namespace ONITwitch;
+namespace ONITwitch.Voting;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class VoteFile : KMonoBehaviour
@@ -22,8 +22,9 @@ internal class VoteFile : KMonoBehaviour
 		{
 			accum -= FileUpdateTime;
 
-			if (Game.Instance.TryGetComponent<VoteController>(out var voteController))
+			if (VoteController.Instance != null)
 			{
+				var voteController = VoteController.Instance;
 				string fileText;
 				switch (voteController.State)
 				{

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using ONITwitchLib;
 using EventInfo = ONITwitch.EventLib.EventInfo;
 
-namespace ONITwitch;
+namespace ONITwitch.Voting;
 
 internal class Vote
 {

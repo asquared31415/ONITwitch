@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ONITwitch.Settings;
 using ONITwitch.Toasts;
+using ONITwitch.Voting;
 using ONITwitchLib.Logger;
 using UnityEngine;
 
@@ -19,10 +20,9 @@ internal class SpawnDupeCommand : CommandBase
 	{
 		string name = null;
 		Color? color = null;
-		if ((Game.Instance != null) &&
-			Game.Instance.TryGetComponent<VoteController>(out var voteController))
+		if (VoteController.Instance != null)
 		{
-			var users = voteController.SeenUsersById.Values.ToList();
+			var users = VoteController.Instance.SeenUsersById.Values.ToList();
 			users.RemoveAll(
 				n => Components.LiveMinionIdentities.Items.Any(
 					i => i.name.ToLowerInvariant().Contains(n.DisplayName.ToLowerInvariant())

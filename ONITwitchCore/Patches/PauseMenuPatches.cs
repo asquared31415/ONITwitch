@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitch.Voting;
 using UnityEngine;
 
 namespace ONITwitch.Patches;
@@ -21,12 +22,11 @@ internal static class PauseMenuPatches
 		TwitchButtonInfo.isEnabled = false;
 		PauseScreen.Instance.RefreshButtons();
 
-		var controller = Game.Instance.gameObject.AddOrGet<VoteController>();
 		GameScheduler.Instance.ScheduleNextFrame(
 			"TwitchStartVotes",
 			_ =>
 			{
-				var started = controller.StartVote();
+				var started = VoteController.Instance.StartVote();
 				TwitchButtonInfo.isEnabled = !started;
 				PauseScreen.Instance.RefreshButtons();
 			}

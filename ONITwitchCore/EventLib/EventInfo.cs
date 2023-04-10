@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using JetBrains.Annotations;
+using ONITwitch.Voting;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
@@ -110,9 +111,9 @@ public class EventInfo
 				null
 			);
 
-			if ((Game.Instance != null) && Game.Instance.TryGetComponent(out VoteController controller))
+			if (VoteController.Instance != null)
 			{
-				controller.SetError();
+				VoteController.Instance.SetError();
 			}
 		}
 	}

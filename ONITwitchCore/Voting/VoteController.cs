@@ -2,23 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using HarmonyLib;
 using KSerialization;
 using ONITwitch.Settings;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
+using STRINGS;
 using UnityEngine;
 using DataManager = ONITwitch.EventLib.DataManager;
 using EventInfo = ONITwitch.EventLib.EventInfo;
 using ToastManager = ONITwitch.Toasts.ToastManager;
 
-namespace ONITwitch;
+namespace ONITwitch.Voting;
 
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class VoteController : KMonoBehaviour
 {
+	public static VoteController Instance;
+
 	public enum VotingState
 	{
 		NotStarted,
@@ -26,8 +28,6 @@ internal class VoteController : KMonoBehaviour
 		VoteDelay,
 		Error,
 	}
-
-	private TwitchChatConnection connection;
 
 	public VotingState State { get; private set; } = VotingState.NotStarted;
 
@@ -38,35 +38,32 @@ internal class VoteController : KMonoBehaviour
 
 	public readonly Dictionary<string, TwitchUserInfo> SeenUsersById = new();
 
+	private TwitchConnection connection;
+
 	protected override void OnSpawn()
 	{
 		base.OnSpawn();
-		connection = new TwitchChatConnection();
-		connection.OnTwitchMessage += OnTwitchMessage;
-		connection.Start();
-		Task.Run(
-			() =>
-			{
-				while (true)
-				{
-					if (connection.IsAuthenticated)
-					{
-						connection.JoinRoom(GenericModSettings.Data.ChannelName);
-						break;
-					}
 
-					Thread.Sleep(200);
-				}
-			}
-		);
+		Instance = this;
+
+		connection = new TwitchConnection();
+		connection.OnReady += () => { connection.JoinRoom(GenericModSettings.Data.ChannelName); };
+		connection.OnChatMessage += OnTwitchMessage;
+		connection.Start();
 	}
 
 	// returns whether the vote was successfully started
 	public bool StartVote()
 	{
-		if (!connection.IsAuthenticated)
+		if (!connection.IsReady)
 		{
 			Log.Warn("Not yet authenticated, unable to start vote!");
+			DialogUtil.MakeDialog(
+				"TODO: Not Authenticated",
+				"TODO: You are not authenticated with Twitch, the vote cannot be started.",
+				UI.CONFIRMDIALOG.OK,
+				null
+			);
 			return false;
 		}
 
@@ -92,6 +89,12 @@ internal class VoteController : KMonoBehaviour
 		if (eventOptions.Count == 0)
 		{
 			Log.Warn("Unable to draw any events! Canceling.");
+			DialogUtil.MakeDialog(
+				"TODO: Unable to Start Votes",
+				"TODO: Unable to start a vote, no events were drawn.",
+				UI.CONFIRMDIALOG.OK,
+				null
+			);
 			State = VotingState.Error;
 			return false;
 		}
@@ -103,10 +106,9 @@ internal class VoteController : KMonoBehaviour
 		}
 
 		Log.Info($"{voteMsg}");
+		connection.SendTextMessage(GenericModSettings.Data.ChannelName, voteMsg.ToString());
 
 		CurrentVote = new Vote(eventOptions);
-
-		connection.SendTextMessage(GenericModSettings.Data.ChannelName, voteMsg.ToString());
 
 		if (GenericModSettings.Data.ShowVoteStartToasts)
 		{
@@ -123,6 +125,12 @@ internal class VoteController : KMonoBehaviour
 		State = VotingState.VoteInProgress;
 
 		return true;
+	}
+
+	public void Stop()
+	{
+		State = VotingState.NotStarted;
+		CurrentVote = null;
 	}
 
 	internal void SetError()
@@ -173,6 +181,7 @@ internal class VoteController : KMonoBehaviour
 
 	private void Update()
 	{
+		Log.Debug($"Vote controller: {State}");
 		switch (State)
 		{
 			case VotingState.NotStarted:
@@ -214,31 +223,30 @@ internal class VoteController : KMonoBehaviour
 		}
 	}
 
-	protected override void OnCleanUp()
-	{
-		State = VotingState.NotStarted;
-		CurrentVote = null;
-		base.OnCleanUp();
-	}
-
 	// forgive any leading whitespace, then match at least 1 number
 	private static readonly Regex StartsWithNumber = new(@"^\s*(?<num>\d+)");
 
+	// This may not be called on the main thread!!!
 	private void OnTwitchMessage(TwitchMessage message)
 	{
-		SeenUsersById[message.UserInfo.UserId] = message.UserInfo;
-		if ((State == VotingState.VoteInProgress) && (CurrentVote != null))
-		{
-			var userId = message.UserInfo.UserId;
-			var match = StartsWithNumber.Match(message.Message);
-			if (match.Success)
+		MainThreadScheduler.Schedule(
+			() =>
 			{
-				var numStr = match.Groups["num"].Value;
-				if (int.TryParse(numStr, out var num))
+				SeenUsersById[message.UserInfo.UserId] = message.UserInfo;
+				if ((State == VotingState.VoteInProgress) && (CurrentVote != null))
 				{
-					CurrentVote.AddVote(userId, num);
+					var userId = message.UserInfo.UserId;
+					var match = StartsWithNumber.Match(message.Message);
+					if (match.Success)
+					{
+						var numStr = match.Groups["num"].Value;
+						if (int.TryParse(numStr, out var num))
+						{
+							CurrentVote.AddVote(userId, num);
+						}
+					}
 				}
 			}
-		}
+		);
 	}
 }

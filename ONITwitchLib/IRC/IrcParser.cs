@@ -259,6 +259,9 @@ public struct IrcMessage
 		Args = args;
 	}
 
+	/// <summary>
+	/// BE CAREFUL EXPOSING THIS TO ANYTHING!!! IT MAY CONTAIN SECRETS!!!
+	/// </summary>
 	public string GetIrcString()
 	{
 		// TODO: tags
@@ -271,7 +274,7 @@ public struct IrcMessage
 		sb.Append(Command.ToString());
 		sb.Append(" ");
 
-		if (Args.Count > 1)
+		if (Args?.Count > 1)
 		{
 			for (var idx = 0; idx < Args.Count - 1; idx++)
 			{
@@ -283,7 +286,7 @@ public struct IrcMessage
 			sb.Append(":");
 			sb.Append(Args[Args.Count - 1]);
 		}
-		else if (Args.Count == 1)
+		else if (Args?.Count == 1)
 		{
 			sb.Append(Args[0]);
 		}
@@ -304,6 +307,7 @@ public struct IrcMessage
 		}
 
 		sb.Append($"{Prefix} {Command} ");
+		// IT IS CRUCIAL THAT THIS NEVER GETS REMOVED
 		if (Command.Command == IrcCommandType.PASS)
 		{
 			sb.Append("XXXXXXXXXX");
@@ -350,6 +354,31 @@ public struct IrcCommand
 	public override string ToString()
 	{
 		return IsNumeric ? NumericId.ToString() : Command.ToString();
+	}
+
+	public bool Equals(IrcCommand other)
+	{
+		return IsNumeric ? NumericId == other.NumericId : Command == other.Command;
+	}
+
+	public override bool Equals(object obj)
+	{
+		return obj is IrcCommand other && Equals(other);
+	}
+
+	public override int GetHashCode()
+	{
+		return IsNumeric ? NumericId.GetHashCode() : Command.GetHashCode();
+	}
+
+	public static bool operator ==(IrcCommand lhs, IrcCommand rhs)
+	{
+		return lhs.Equals(rhs);
+	}
+
+	public static bool operator !=(IrcCommand lhs, IrcCommand rhs)
+	{
+		return !lhs.Equals(rhs);
 	}
 }
 

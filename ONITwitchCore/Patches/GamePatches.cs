@@ -1,6 +1,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitch.Cmps;
+using ONITwitch.Voting;
 
 namespace ONITwitch.Patches;
 
@@ -14,10 +15,23 @@ internal static class GamePatches
 		// ReSharper disable once InconsistentNaming
 		private static void Postfix(Game __instance)
 		{
-			__instance.gameObject.AddOrGet<VoteController>();
 			__instance.gameObject.AddOrGet<VoteFile>();
 
 			__instance.gameObject.AddOrGet<OniTwitchEclipse>();
+		}
+	}
+
+	[HarmonyPatch(typeof(Game), "OnCleanUp")]
+	// ReSharper disable once InconsistentNaming
+	public static class Game_OnCleanUp_Patch
+	{
+		[UsedImplicitly]
+		private static void Postfix()
+		{
+			if (VoteController.Instance != null)
+			{
+				VoteController.Instance.Stop();
+			}
 		}
 	}
 }

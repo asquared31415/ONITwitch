@@ -5,7 +5,10 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitch.Cmps;
 using ONITwitch.Config;
+using ONITwitch.Voting;
 using ONITwitchLib.Logger;
+using UnityEngine;
+using Object = UnityEngine.Object;
 using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Patches;
@@ -22,6 +25,10 @@ internal static class MainMenuPatches
 			var credentials = CredentialsConfig.Instance.Credentials;
 			ValidateNick(credentials.Nick);
 			ValidateToken(credentials.Oauth);
+
+			var voteControllerGo = new GameObject("TwitchVoteController");
+			voteControllerGo.AddComponent<VoteController>();
+			Object.DontDestroyOnLoad(voteControllerGo);
 		}
 
 		private static readonly Regex NickRegex = new("^[A-Za-z0-9][A-Za-z0-9_]*$");
