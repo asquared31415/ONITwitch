@@ -1,6 +1,7 @@
 using System;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitchLib.Attributes;
 using ONITwitchLib.Utils;
 
 namespace ONITwitchLib.Core;
@@ -9,7 +10,7 @@ namespace ONITwitchLib.Core;
 /// Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
 /// TODO: implement this
 /// </summary>
-[PublicAPI]
+[NotPublicAPI] // make this public API once it's implemented
 public static class PocketDimensionGenerator
 {
 /*

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using ONITwitchLib.Attributes;
 
 namespace ONITwitchLib.IRC;
 
-// TODO: is this public API (maybe not?)
 #pragma warning disable CS1591
+[NotPublicAPI]
 public static class IrcParser
 {
 	// message must be a single message, it must not contain any CRLF
@@ -195,7 +196,9 @@ public static class IrcParser
 		return argsList;
 	}
 }
-
+#pragma warning restore CS1591
+#pragma warning disable CS1591
+[NotPublicAPI]
 public struct IrcMessage
 {
 	[NotNull] public Dictionary<string, IrcTag> Tags { get; internal set; }
@@ -324,7 +327,9 @@ public struct IrcMessage
 		return sb.ToString();
 	}
 }
-
+#pragma warning restore CS1591
+#pragma warning disable CS1591
+[NotPublicAPI]
 public struct IrcCommand
 {
 	public bool IsNumeric { get; }
@@ -381,8 +386,11 @@ public struct IrcCommand
 		return !lhs.Equals(rhs);
 	}
 }
-
+#pragma warning restore CS1591
+#pragma warning disable CS1591
 // ReSharper disable InconsistentNaming
+// ReSharper disable IdentifierTypo
+[NotPublicAPI]
 public enum IrcCommandType
 {
 	JOIN,
@@ -406,8 +414,11 @@ public enum IrcCommandType
 	USERSTATE,
 	WHISPER,
 }
+// ReSharper restore IdentifierTypo
 // ReSharper restore InconsistentNaming
-
+#pragma warning restore CS1591
+#pragma warning disable CS1591
+[NotPublicAPI]
 public struct IrcTag
 {
 	public bool IsClientTag { get; }
@@ -445,3 +456,4 @@ public struct IrcTag
 		return Vendor != null ? $"{Vendor}/{TagName}" : TagName;
 	}
 }
+#pragma warning restore CS1591

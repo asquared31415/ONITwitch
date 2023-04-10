@@ -7,6 +7,9 @@ using ONITwitchLib;
 using ProcGen;
 using UnityEngine;
 
+// TODO: remove this once everything gets properly implemented
+#pragma warning disable CS1591
+
 namespace ONITwitch.Content;
 
 /// <summary>

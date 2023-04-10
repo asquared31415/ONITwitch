@@ -1,9 +1,10 @@
 using System;
+using ONITwitchLib.Attributes;
 
 namespace ONITwitchLib.IRC;
 
-// TODO: is this public API (maybe not?)
 #pragma warning disable CS1591
+[NotPublicAPI]
 public class TwitchMessage : EventArgs
 {
 	public TwitchUserInfo UserInfo { get; }

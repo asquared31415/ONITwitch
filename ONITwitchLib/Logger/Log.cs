@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using ONITwitchLib.Attributes;
 
 namespace ONITwitchLib.Logger;
 
@@ -6,6 +7,7 @@ namespace ONITwitchLib.Logger;
 /// Provides methods for emitting log messages from the Twitch mod.
 /// This uses a hard coded [Twitch Integration] string, which you likely do not want.
 /// </summary>
+[NotPublicAPI]
 public static class Log
 {
 	/// <summary>

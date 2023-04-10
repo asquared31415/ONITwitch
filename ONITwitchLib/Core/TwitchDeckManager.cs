@@ -15,7 +15,6 @@ public class TwitchDeckManager
 {
 	/// <summary>
 	/// The instance of the deck manager.
-	/// Only safe to access if the Twitch mod is active.
 	/// </summary>
 	[PublicAPI]
 	[NotNull]

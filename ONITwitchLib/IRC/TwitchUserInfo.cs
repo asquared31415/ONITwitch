@@ -1,3 +1,4 @@
+using ONITwitchLib.Attributes;
 using UnityEngine;
 
 namespace ONITwitchLib.IRC;
@@ -11,6 +12,7 @@ namespace ONITwitchLib.IRC;
 /// <param name="IsModerator">Whether this user is a moderator.</param>
 /// <param name="IsSubscriber">Whether this user is a subscriber.</param>
 /// <param name="IsVip">Whether this user is a VIP.</param>
+[NotPublicAPI]
 public record struct TwitchUserInfo(
 	string UserId,
 	string DisplayName,
