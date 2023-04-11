@@ -69,11 +69,13 @@ internal class TwitchConnection
 						var ready = OnReady;
 						ready?.Invoke();
 
+						var cancellation = new CancellationTokenSource();
+
 						// Start up reader and writer threads
 						// From this point forwards, no other code may call any socket methods while these are running
 						// Multiple threads calling into the same socket code can crash and corrupt state
-						var readerTask = Task.Run(Reader);
-						var writerTask = Task.Run(Writer);
+						var readerTask = Task.Run(() => Reader(cancellation.Token), cancellation.Token);
+						var writerTask = Task.Run(() => Writer(cancellation.Token), cancellation.Token);
 
 						// re-join any channels that were already joined
 						foreach (var channel in joinedChannels)
@@ -81,21 +83,35 @@ internal class TwitchConnection
 							JoinRoom(channel);
 						}
 
-						// Wait reader or writer, if either finish, that is because of an exception
-						Task.WaitAny(readerTask, writerTask);
+						var tasks = new[] { readerTask, writerTask };
+						var completedIdx = Task.WaitAny(tasks);
+						// if WaitAny completed, it was due to an exception or cancellation
+
+						var completedTaskStr = completedIdx == 0 ? "Reader" : "Writer";
+						var e = tasks[completedIdx].Exception;
+						Log.Warn(
+							e != null
+								? $"{completedTaskStr} failed with exception {e}"
+								: $"{completedTaskStr} failed due to cancellation"
+						);
+
+						// kill other tasks by canceling the token
+						cancellation.Cancel();
 					}
 					catch (WebSocketException we)
 					{
 						Log.Warn($"Unexpected websocket exception: {we.Message}");
+						Log.Debug(we.StackTrace);
 					}
 					catch (ThreadAbortException)
 					{
+						Log.Warn("Thread aborted");
 						throw;
 					}
 					catch (Exception e)
 					{
 						// TODO: maybe UI warn here?
-						Log.Warn("An unexpected exception occurred when connecting");
+						Log.Warn("An unexpected exception occurred");
 						Log.Debug(e.GetType());
 						Log.Warn(e.Message);
 						Log.Debug(e.StackTrace);
@@ -276,7 +292,7 @@ internal class TwitchConnection
 		// wait for GLOBALUSERSTATE
 		while (true)
 		{
-			var message = await GetMessage();
+			var message = await GetMessage(CancellationToken.None);
 			if (message.Command.Command == IrcCommandType.GLOBALUSERSTATE)
 			{
 				Log.Info(
@@ -289,11 +305,12 @@ internal class TwitchConnection
 		}
 	}
 
-	private async Task Reader()
+	private async Task Reader(CancellationToken cancellationToken)
 	{
 		while (true)
 		{
-			var message = await GetMessage();
+			cancellationToken.ThrowIfCancellationRequested();
+			var message = await GetMessage(cancellationToken);
 
 			// don't pass on certain messages like PING
 			if (HandleSystemMessage(message))
@@ -362,10 +379,11 @@ internal class TwitchConnection
 		// ReSharper disable once FunctionNeverReturns
 	}
 
-	private async Task Writer()
+	private async Task Writer(CancellationToken cancellationToken)
 	{
 		while (true)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			if (outgoingMessages.TryDequeue(out var msg))
 			{
 				await SendMessageImmediate(msg);
@@ -396,7 +414,7 @@ internal class TwitchConnection
 		);
 	}
 
-	private async Task<IrcMessage> GetMessage()
+	private async Task<IrcMessage> GetMessage(CancellationToken cancellationToken)
 	{
 		if (incomingMessages.Count > 0)
 		{
@@ -406,12 +424,13 @@ internal class TwitchConnection
 		// receive messages until at least one is successfully queued
 		do
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			var buffer = new ArraySegment<byte>(new byte[8192]);
 			using var s = new MemoryStream();
 			WebSocketReceiveResult result;
 			do
 			{
-				result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+				result = await socket.ReceiveAsync(buffer, cancellationToken);
 				s.Write(buffer.Array!, buffer.Offset, result.Count);
 			} while (result.EndOfMessage != true);
 

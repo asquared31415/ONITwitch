@@ -578,7 +578,7 @@ public static class STRINGS
 					public static readonly LocString TITLE = "Connection Error";
 
 					public static readonly LocString BODY_FORMAT =
-						"The connection to Twitch failed {0} times. This may be caused by a bad internet connection.";
+						"The connection to Twitch failed {0} times. This may be caused by a bad internet connection or invalid credentials.";
 				}
 
 				public static class DEADLY_CONFIG
