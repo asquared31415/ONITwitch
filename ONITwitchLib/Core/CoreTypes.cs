@@ -4,98 +4,64 @@ using JetBrains.Annotations;
 namespace ONITwitchLib.Core;
 
 /// <summary>
-/// Contains <see cref="Type"/>s of many types in the main Twitch mod.
+/// Contains <see cref="Type"/>s of many types in the main Twitch Integration mod.
 /// </summary>
+/// <remarks>
+/// These types are only present if the Twitch Integration mod is active. 
+/// </remarks>
 [PublicAPI]
 public static class CoreTypes
 {
-	// TODO: need to update all these docs
-
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of the <see cref="EventManager"/> from the core Twitch Integration mod.
 	/// </summary>
-	[NotNull]
+	[CanBeNull]
 	public static Type EventManagerType => (eventManagerType ??= Type.GetType(EventManagerTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of <see cref="EventInfo"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type EventInfoType => (eventInfoType ??= Type.GetType(EventInfoTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of the <see cref="DataManager"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type DataManagerType => (dataManagerType ??= Type.GetType(DataManagerTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of the <see cref="TwitchDeckManager"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type TwitchDeckManagerType => (twitchDeckManagerType ??= Type.GetType(TwitchDeckManagerTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of <see cref="EventGroup"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type EventGroupType => (eventGroupType ??= Type.GetType(EventGroupTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of <see cref="Danger"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type DangerType => (dangerType ??= Type.GetType(DangerTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of <see cref="CommandBase"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type CommandType => (commandType ??= Type.GetType(CommandBaseTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of CommandBaseExt from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type CommandExtType => (commandExtType ??= Type.GetType(CommandBaseExtTypeName))!;
 
 	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
-	[NotNull]
-	public static Type PocketDimensionGeneratorType =>
-		(pocketDimensionGeneratorType ??= Type.GetType(PocketDimensionGeneratorTypeName))!;
-
-	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
-	[NotNull]
-	public static Type BasePocketDimensionGenerationType =>
-		(basePocketDimensionGenerationType ??= Type.GetType(BasePocketDimensionGenerationTypeName))!;
-
-	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
-	[NotNull]
-	public static Type TemplatePocketDimensionGenerationType => (templatePocketDimensionGenerationType ??=
-		Type.GetType(TemplatePocketDimensionGenerationTypeName))!;
-
-	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
-	[NotNull]
-	public static Type NoisePocketDimensionGenerationType =>
-		(noisePocketDimensionGenerationType ??= Type.GetType(NoisePocketDimensionGenerationTypeName))!;
-
-	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
-	/// </summary>
-	[NotNull]
-	public static Type CustomPocketDimensionGenerationType => (customPocketDimensionGenerationType ??=
-		Type.GetType(CustomPocketDimensionGenerationTypeName))!;
-
-	/// <summary>
-	/// Only safe to access if the Twitch mod is active.
+	/// The type of the <see cref="ToastManager"/> from the core Twitch Integration mod.
 	/// </summary>
 	[NotNull]
 	public static Type ToastManagerType => (toastManagerType ??= Type.GetType(ToastManagerTypeName))!;

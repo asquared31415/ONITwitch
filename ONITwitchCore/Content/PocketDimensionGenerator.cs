@@ -317,7 +317,6 @@ public static class PocketDimensionGenerator
 			0.1f,
 			0.1f
 		),
-		// TODO: maybe phosphor/iron jungle biome?
 		// ocean biome
 		new NoisePocketDimensionGeneration(
 			4f,
@@ -417,7 +416,6 @@ public static class PocketDimensionGenerator
 			0.2f,
 			0.15f
 		),
-		// TODO: oil biome?
 		// Obsidian, niobium
 		new NoisePocketDimensionGeneration(
 			4f,
