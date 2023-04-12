@@ -71,11 +71,40 @@ internal class TwitchConnection
 
 						var cancellation = new CancellationTokenSource();
 
+						// set up a task that monitors the last time that a PING was received from Twitch
+						lastPingUtcTicks = System.DateTime.UtcNow.Ticks;
+						var timeoutTask = Task.Run(
+							async () =>
+							{
+								while (true)
+								{
+									cancellation.Token.ThrowIfCancellationRequested();
+
+									var original = Interlocked.Read(ref lastPingUtcTicks);
+									var diff = TimeSpan.FromTicks(System.DateTime.UtcNow.Ticks - original);
+									const double minuteTimeout = 8;
+									if (diff.TotalMinutes > minuteTimeout)
+									{
+										Log.Warn(
+											$"No PING received from Twitch in {minuteTimeout} minutes, assuming the connection to be dead."
+										);
+										cancellation.Cancel();
+										break;
+									}
+
+									await Task.Delay(15000, cancellation.Token);
+								}
+							},
+							cancellation.Token
+						);
+
+
 						// Start up reader and writer threads
 						// From this point forwards, no other code may call any socket methods while these are running
 						// Multiple threads calling into the same socket code can crash and corrupt state
 						var readerTask = Task.Run(() => Reader(cancellation.Token), cancellation.Token);
 						var writerTask = Task.Run(() => Writer(cancellation.Token), cancellation.Token);
+
 
 						// re-join any channels that were already joined
 						foreach (var channel in joinedChannels)
@@ -83,11 +112,16 @@ internal class TwitchConnection
 							JoinRoom(channel);
 						}
 
-						var tasks = new[] { readerTask, writerTask };
+						var tasks = new[] { readerTask, writerTask, timeoutTask };
 						var completedIdx = Task.WaitAny(tasks);
 						// if WaitAny completed, it was due to an exception or cancellation
 
-						var completedTaskStr = completedIdx == 0 ? "Reader" : "Writer";
+						var completedTaskStr = completedIdx switch
+						{
+							0 => "Reader",
+							1 => "Writer",
+							_ => "Timeout Monitor",
+						};
 						var e = tasks[completedIdx].Exception;
 						Log.Warn(
 							e != null
@@ -165,6 +199,8 @@ internal class TwitchConnection
 
 	[NotNull] private readonly HashSet<string> joinedChannels = new();
 
+	private long lastPingUtcTicks;
+
 	// Returns whether to pass the message on to listeners
 	private bool HandleSystemMessage(IrcMessage message)
 	{
@@ -194,6 +230,7 @@ internal class TwitchConnection
 			}
 			case IrcCommandType.PING:
 			{
+				Interlocked.Exchange(ref lastPingUtcTicks, System.DateTime.UtcNow.Ticks);
 				outgoingMessages.Enqueue(new IrcMessage(IrcCommandType.PONG));
 				return false;
 			}
