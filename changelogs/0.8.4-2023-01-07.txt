@@ -1,0 +1,31 @@
+Twitch Mod Version 0.8.4
+
+***BREAKING CHANGES***
+ - Basically everything, sorry, but see the following post for patches to fix it
+ - All singletons now use an `Instance` property on the appropriate class
+ - Everything starts in `EventGroup` now, all events have *exactly one* group.
+ - Either use the constructor with a group name and use `AddEvent` to add groups to it, or use the `DefaultSingleEventGroup` method to get a simple group with just one item
+ - The group ***must*** be added to the `TwitchDeckManager` usung `AddGroup` or they will not show up in votes
+ - Most properties except data are now fields or methods on `EventInfo`:
+   - `EventInfo::AddListener` to add a lstener for an event
+   - `EventInfo::RemoveListener` to remove a listener
+   - `EventInfo::FriendlyName` to get/set the friendly name of an event
+   - `EventInfo::Danger` to get/set the danger of an event
+   - `EventInfo::AddCondition` to add a condition for an event
+   - `EventInfo::CheckCondition` to check whether all conditions of an event pass
+   - `EventInfo::Trigger` to trigger an event
+ - `DataManager` is the same besides the change to use `DataManager.Instance` to access it
+
+**Additions**
+ - Improvements to the dev tool menu:
+   - Default events sorted first, other namespaces sorted by staticID
+   - Within a group, events are sorted by friendly name first, then ID
+   - New search bar that searches friendly name and ID
+
+ - New Global Warming event: heats liquids, gasses, and ice
+
+
+**Fixes**
+ - Fix Surprise Box art and use a new sidscreen (thanks Aki!)
+ - Fix dupes getting stuck peeing after they were voted to pee by chat
+ - Vote overlay timer now properly updates when the game is paused

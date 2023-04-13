@@ -1,0 +1,4 @@
+**1.0.0-beta.2 (2023-03-23)**
+
+**Changes:**
+ - Updated game version to 548880

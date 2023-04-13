@@ -1,0 +1,11 @@
+**1.0.0-beta.5 (2023-04-10)**
+
+**Changes:**
+ - Twitch connection can now detect when the connection times out, for example due to the internet breaking
+     or the connection dropping without closing.
+     Restarts after 8 minutes since the last ping from Twitch, Twitch is expected to send a ping every 5 minutes.
+ - Example mod updated to reflect naming conventions and more comments.
+
+***Note:***
+This is expected to be the final major changes before a full release. 
+One more release is likely, to update translations and docs, but that does not effect users of the API.

@@ -1,0 +1,13 @@
+**1.0.0-beta.5 (2023-04-10)**
+
+***Breaking Changes:***
+ - Namespaced `OniTwitchSurpriseBoxForceEnabled` and `OniTwitchSurpriseBoxForceDisabled` tags
+ - Namespaced `OniTwitchIndestructibleElement`
+
+Changes:
+ - Twitch chat connection is now more reliable, can retry failed connections, and can report errors instead of failing silently or crashing
+ - Add translations for more UI
+ - Add tooltips to the config UI
+ - Config UI can properly be closed with a right click
+ - More errors can be translated
+ - Pocket dimension portal now doesn't trigger 0K or Outdoor Renovations achievements
