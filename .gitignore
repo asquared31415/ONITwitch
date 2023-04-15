@@ -16,7 +16,3 @@ weight_tests/
 
 # rust target folder
 target/
-
-
-node_modules/
-twitch_integration_site/dist/
