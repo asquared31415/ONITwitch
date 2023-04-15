@@ -178,10 +178,12 @@ internal class UserCommandConfigManager
 					}
 					else
 					{
-						var groupName = config.GroupName ?? EventGroup.GetItemDefaultGroupName(
-							eventId.EventNamespace,
-							eventId.EventId
-						);
+						var groupName = string.IsNullOrEmpty(config.GroupName)
+							? EventGroup.GetItemDefaultGroupName(
+								eventId.EventNamespace,
+								eventId.EventId
+							)
+							: config.GroupName;
 						var newGroup = EventGroup.GetOrCreateGroup(groupName);
 						eventId.MoveToGroup(newGroup, config.Weight);
 						deckInst.AddGroup(newGroup);
