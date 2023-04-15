@@ -78,6 +78,7 @@ public static class CoreTypes
 	private const string CommandBaseExtTypeName = "ONITwitch.Commands.CommandBaseExt, ONITwitch";
 	private static Type commandExtType;
 
+#pragma warning disable CS0169
 	private const string PocketDimensionGeneratorTypeName =
 		"ONITwitch.Content.PocketDimensionGenerator, ONITwitch";
 
@@ -106,6 +107,7 @@ public static class CoreTypes
 		"ONITwitch.Content.CustomPocketDimensionGeneration, ONITwitch";
 
 	private static Type customPocketDimensionGenerationType;
+#pragma warning restore CS0169
 
 	private const string ToastManagerTypeName = "ONITwitch.Toasts.ToastManager, ONITwitch";
 	private static Type toastManagerType;

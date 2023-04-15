@@ -30,7 +30,7 @@ internal class UserCommandConfigManager
 	public static void OpenConfigEditor()
 	{
 		var config = GetEncodedConfig();
-		App.OpenWebURL($"https://onitwitchzmkqgu2n-oni-twitch.functions.fnc.fr-par.scw.cloud/data?data={config}");
+		App.OpenWebURL($"https://asquared31415.github.io/twitchintegration/config/#{config}");
 	}
 
 	[NotNull]
