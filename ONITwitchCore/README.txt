@@ -21,3 +21,9 @@ Config
     Min Danger: Events with a danger less than this setting will not appear.
     Max Danger: Events with a danger greater than this setting will not appear.
     Edit Event Config: Opens a page in a browser to edit the current event config. (WARNING: SPOILERS)
+
+For Developers:
+    If you'd like to have your mods add new events that can be chosen by chat, see the developer documentation on
+    how to add integration to your mod.  This is only an optional dependency, so it doesn't affect users that do not
+    have the Twitch Integration mod installed.
+    https://asquared31415.github.io/twitchintegration/dev_docs/ 
