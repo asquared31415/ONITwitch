@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using ImGuiNET;
 using JetBrains.Annotations;
 using ONITwitch.Patches;
@@ -20,6 +22,10 @@ internal class TwitchDevTool : DevTool
 
 	private int selectedCell = Grid.InvalidCell;
 	private bool debugClosestCell;
+	private bool delayEvent;
+
+	private bool cameraPathMode;
+	[NotNull] private readonly List<CameraPathPoint> camPoints = new();
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
@@ -32,6 +38,15 @@ internal class TwitchDevTool : DevTool
 	public void SelectedCell(int cell)
 	{
 		selectedCell = cell;
+
+		// Handle adding a new cell to the camera positions
+		if (cameraPathMode)
+		{
+			AddCameraCell(cell);
+		}
+
+
+		// Debug lines for closest cell
 		foreach (var line in testingLines)
 		{
 			Object.Destroy(line);
@@ -96,6 +111,28 @@ internal class TwitchDevTool : DevTool
 			// ==========================================================
 			// Game is active at this point
 			// ==========================================================
+
+			ImGui.Checkbox("Edit camera path", ref cameraPathMode);
+			// clear the points when the box is unchecked
+			if (!cameraPathMode)
+			{
+				camPoints.Clear();
+			}
+
+			ImGui.TextUnformatted("Camera Path");
+			ImGuiEx.TooltipForPrevious("Click an entry in the list to move to that entry");
+			ImGui.SameLine();
+			if (ImGui.Button("Execute Path"))
+			{
+				ExecuteCameraPath();
+			}
+
+			DrawCameraPointsTable();
+
+			ImGui.Separator();
+
+
+			ImGui.Checkbox("Delay Events by 5 seconds", ref delayEvent);
 
 			ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
 
@@ -167,7 +204,11 @@ internal class TwitchDevTool : DevTool
 							{
 								Log.Debug($"Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
 								var data = dataInst.GetDataForEvent(eventInfo);
-								eventInfo.Trigger(data);
+								GameScheduler.Instance.Schedule(
+									"dev trigger event",
+									5,
+									_ => { eventInfo.Trigger(data); }
+								);
 							}
 						}
 					}
@@ -189,6 +230,35 @@ internal class TwitchDevTool : DevTool
 		}
 
 		ClearStyle();
+	}
+
+	private void DrawCameraPointsTable()
+	{
+		if (ImGui.BeginTable("twitch_camera_points", 2, ImGuiTableFlags.RowBg))
+		{
+			ImGui.TableSetupColumn("Position");
+			ImGui.TableSetupColumn("Orthographic Size");
+			ImGui.TableHeadersRow();
+
+			foreach (var camPoint in camPoints)
+			{
+				ImGui.TableNextRow();
+
+				ImGui.TableNextColumn();
+				ImGui.Text(camPoint.Position.ToString());
+				if (ImGui.IsItemClicked())
+				{
+					CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
+				}
+
+				ImGui.TableNextColumn();
+				ImGui.Text(camPoint.OrthographicSize.ToString("F1"));
+
+				// TODO: add wait time column with editing features
+			}
+
+			ImGui.EndTable();
+		}
 	}
 
 	private static void ColoredBullet(Color color)
@@ -327,5 +397,71 @@ internal class TwitchDevTool : DevTool
 		}
 
 		return filtered;
+	}
+
+	private struct CameraPathPoint
+	{
+		internal Vector2 Position;
+		internal float OrthographicSize;
+		internal float WaitTime;
+	}
+
+	private void AddCameraCell(int cell)
+	{
+		// layer does not matter, the camera is at one position
+		var pos = (Vector2) Grid.CellToPosCCC(cell, Grid.SceneLayer.Front);
+		var point = new CameraPathPoint
+		{
+			Position = pos,
+			OrthographicSize = CameraController.Instance.OrthographicSize,
+			WaitTime = 2,
+		};
+		Log.Debug($"adding camera path {point}");
+		camPoints.Add(point);
+	}
+
+	// Makes the camera into cinematic mode, and then moves between the points specified in the cam points
+	private void ExecuteCameraPath()
+	{
+		Log.Debug("Executing camera path");
+
+		IEnumerator Path()
+		{
+			CameraController.Instance.SetWorldInteractive(false);
+			
+			DebugHandler.ScreenshotMode = false;
+			DebugHandler.ToggleScreenshotMode();
+			
+			var trav = new Traverse(CameraController.Instance);
+			trav.Field<bool>("cinemaCamEnabled").Value = true;
+			ManagementMenu.Instance.CloseAll();
+
+			using (var points = camPoints.GetEnumerator())
+			{
+				points.MoveNext();
+				Log.Debug($"Starting camera at {points.Current}");
+				CameraController.Instance.SetPosition(points.Current.Position);
+				yield return new WaitForSecondsRealtime(points.Current.WaitTime);
+				while (points.MoveNext())
+				{
+					var camPoint = points.Current;
+					Log.Debug($"Moving to {camPoint}");
+					CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
+					yield return new WaitUntil(
+						() => ((Vector2) CameraController.Instance.transform.position - camPoint.Position).magnitude <
+							  0.001
+					);
+					yield return new WaitForSecondsRealtime(camPoint.WaitTime);
+				}
+			}
+
+			Log.Debug("Camera path complete");
+
+			trav.Field<bool>("cinemaCamEnabled").Value = false;
+			DebugHandler.ToggleScreenshotMode();
+			CameraController.Instance.SetWorldInteractive(true);
+		}
+
+		CameraController.Instance.StartCoroutine(Path());
 	}
 }

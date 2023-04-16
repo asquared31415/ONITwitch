@@ -35,6 +35,12 @@ internal static class DevToolPatches
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
 		private static void Postfix(ref bool ___showImGui)
 		{
+			if ((CameraController.Instance != null) && CameraController.Instance.FreeCameraEnabled)
+			{
+				___showImGui = false;
+				return;
+			}
+
 			___showImGui = true;
 		}
 	}
