@@ -16,16 +16,14 @@ using Object = UnityEngine.Object;
 
 namespace ONITwitch;
 
-internal class TwitchDevTool : DevTool
+internal partial class TwitchDevTool : DevTool
 {
 	internal static TwitchDevTool Instance { get; private set; }
 
-	private int selectedCell = Grid.InvalidCell;
+	// Flags for options that the user can toggle
+	private bool cameraPathMode;
 	private bool debugClosestCell;
 	private bool delayEvent;
-
-	private bool cameraPathMode;
-	[NotNull] private readonly List<CameraPathPoint> camPoints = new();
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
@@ -37,40 +35,16 @@ internal class TwitchDevTool : DevTool
 
 	public void SelectedCell(int cell)
 	{
-		selectedCell = cell;
-
-		// Handle adding a new cell to the camera positions
+		// Add a new cell to the camera positions
+		// Call only once, the camera positions store the cell
 		if (cameraPathMode)
 		{
 			AddCameraCell(cell);
 		}
 
-
-		// Debug lines for closest cell
-		foreach (var line in testingLines)
-		{
-			Object.Destroy(line);
-		}
-
-		testingLines.Clear();
-
 		if (debugClosestCell)
 		{
-			var closest = GridUtil.NearestEmptyCell(selectedCell);
-			if (closest != -1)
-			{
-				if (closest != selectedCell)
-				{
-					AddDebugMarker(selectedCell, Color.yellow with { a = 0.4f });
-					AddDebugLine(selectedCell, closest, Color.green with { a = 0.4f });
-				}
-
-				AddDebugMarker(closest, Color.green with { a = 0.4f });
-			}
-			else
-			{
-				AddDebugMarker(selectedCell, Color.red with { a = 0.8f });
-			}
+			AddClosestCellMarker(cell);
 		}
 	}
 
@@ -100,6 +74,14 @@ internal class TwitchDevTool : DevTool
 
 	protected override void RenderTo(DevPanel panel)
 	{
+		// clear the markers at the start of each frame
+		foreach (var line in debugMarkers)
+		{
+			Object.Destroy(line);
+		}
+
+		debugMarkers.Clear();
+
 		SetStyle();
 
 		// ==========================================================
@@ -112,115 +94,150 @@ internal class TwitchDevTool : DevTool
 			// Game is active at this point
 			// ==========================================================
 
-			ImGui.Checkbox("Edit camera path", ref cameraPathMode);
-			// clear the points when the box is unchecked
-			if (!cameraPathMode)
+			if (ImGui.CollapsingHeader("Camera Path"))
 			{
-				camPoints.Clear();
+				ImGui.Checkbox("Edit camera path", ref cameraPathMode);
+				ImGuiEx.TooltipForPrevious(
+					"When this is enabled, click a tile in the world to set the camera's position to the middle of that tile"
+				);
+
+				ImGui.SameLine();
+
+				// Make the Execute Path button disabled if there's no path
+				if (camPoints.Count == 0)
+				{
+					ImGuiBindingsEx.igPushItemFlag(1 << 2, true);
+					ImGui.PushStyleVar(ImGuiStyleVar.Alpha, ImGui.GetStyle().Alpha * 0.5f);
+				}
+
+				if (ImGui.Button("Execute Path"))
+				{
+					ExecuteCameraPath();
+				}
+
+				// pop the disabled settings if they were pushed before
+				if (camPoints.Count == 0)
+				{
+					ImGuiEx.TooltipForPrevious("Create one or more points first");
+					ImGui.PopStyleVar();
+					ImGuiBindingsEx.igPopItemFlag();
+				}
+
+				ImGui.SameLine(0, 200);
+				if (ImGui.Button("Clear###clearCamPoints"))
+				{
+					camPoints.Clear();
+				}
+
+				ImGuiEx.TooltipForPrevious("Clears all points in the path");
+
+				DrawCameraPointsTable();
 			}
 
-			ImGui.TextUnformatted("Camera Path");
-			ImGuiEx.TooltipForPrevious("Click an entry in the list to move to that entry");
-			ImGui.SameLine();
-			if (ImGui.Button("Execute Path"))
-			{
-				ExecuteCameraPath();
-			}
-
-			DrawCameraPointsTable();
+			DebugCameraPath();
 
 			ImGui.Separator();
 
-
-			ImGui.Checkbox("Delay Events by 5 seconds", ref delayEvent);
+			if (debugClosestCell)
+			{
+				DrawDebugClosestCell();
+			}
 
 			ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
-
-			ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
-
-			ImGui.Separator();
-			ImGui.Text("Trigger Events");
-
-			ImGui.Text("Events with a");
-			ImGui.SameLine();
-			ColoredBullet(ColorUtil.GreenSuccessColor);
-			ImGui.SameLine();
-			ImGui.Text("icon have their condition currently met. Events with a");
-			ImGui.SameLine();
-			ColoredBullet(ColorUtil.RedWarningColor);
-			ImGui.SameLine();
-			ImGui.Text("do not.");
-
-			ImGui.Indent();
-
-			// initialize the entries with no filter
-			eventEntries ??= GenerateEventEntries(null);
-
-			if (ImGuiEx.InputFilter("Search###EventSearch", ref eventFilter, 100))
+			if (debugClosestCell)
 			{
-				eventEntries = GenerateEventEntries(eventFilter);
+				ImGui.Text($"Base Cell: {startCell}, Closest {closestCell}");
 			}
 
-			var dataInst = DataManager.Instance;
-			foreach (var (eventNamespace, groups) in eventEntries)
+			ImGui.Separator();
+
+			if (ImGui.CollapsingHeader("Events", ImGuiTreeNodeFlags.DefaultOpen))
 			{
-				var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
-				var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
-				var missingNamespace = headerName.IsNullOrWhiteSpace();
-				if (missingNamespace)
+				ImGui.Checkbox("Delay Events by 5 seconds", ref delayEvent);
+
+				ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
+
+				ImGui.Separator();
+
+				ImGui.Text("Events with a");
+				ImGui.SameLine();
+				ColoredBullet(ColorUtil.GreenSuccessColor);
+				ImGui.SameLine();
+				ImGui.Text("icon have their condition currently met. Events with a");
+				ImGui.SameLine();
+				ColoredBullet(ColorUtil.RedWarningColor);
+				ImGui.SameLine();
+				ImGui.Text("do not.");
+
+				// initialize the entries with no filter
+				eventEntries ??= GenerateEventEntries(null);
+
+				if (ImGuiEx.InputFilter("Search###EventSearch", ref eventFilter, 100))
 				{
-					ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
-					headerName = "MISSING NAMESPACE";
+					eventEntries = GenerateEventEntries(eventFilter);
 				}
 
-				if (ImGui.CollapsingHeader(headerName))
+				var dataInst = DataManager.Instance;
+				foreach (var (eventNamespace, groups) in eventEntries)
 				{
-					ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
-					ImGui.Indent();
-
-					var firstGroup = true;
-					foreach (var (groupName, events) in groups)
+					var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
+					var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
+					var missingNamespace = headerName.IsNullOrWhiteSpace();
+					if (missingNamespace)
 					{
-						if (firstGroup)
-						{
-							firstGroup = false;
-						}
-						else
-						{
-							ImGui.NewLine();
-						}
-
-						ImGui.Text(groupName);
-						foreach (var eventInfo in events)
-						{
-							var condColor = eventInfo.CheckCondition(dataInst.GetDataForEvent(eventInfo))
-								? ColorUtil.GreenSuccessColor
-								: ColorUtil.RedWarningColor;
-							ColoredBullet(condColor);
-							var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
-
-							ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
-							if (buttonPressed)
-							{
-								Log.Debug($"Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
-								var data = dataInst.GetDataForEvent(eventInfo);
-								GameScheduler.Instance.Schedule(
-									"dev trigger event",
-									5,
-									_ => { eventInfo.Trigger(data); }
-								);
-							}
-						}
+						ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
+						headerName = "MISSING NAMESPACE";
 					}
 
-					ImGui.Unindent();
-					ImGui.PopStyleColor();
-				}
+					if (ImGui.CollapsingHeader(headerName))
+					{
+						ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
+						ImGui.Indent();
 
-				if (missingNamespace)
-				{
-					// pop the red style if we pushed it before
-					ImGui.PopStyleColor();
+						var firstGroup = true;
+						foreach (var (groupName, events) in groups)
+						{
+							if (firstGroup)
+							{
+								firstGroup = false;
+							}
+							else
+							{
+								ImGui.NewLine();
+							}
+
+							ImGui.Text(groupName);
+							foreach (var eventInfo in events)
+							{
+								var condColor = eventInfo.CheckCondition(dataInst.GetDataForEvent(eventInfo))
+									? ColorUtil.GreenSuccessColor
+									: ColorUtil.RedWarningColor;
+								ColoredBullet(condColor);
+								var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
+
+								ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
+								if (buttonPressed)
+								{
+									Log.Debug($"Dev Tool triggering Event {eventInfo} (id {eventInfo.Id})");
+									var data = dataInst.GetDataForEvent(eventInfo);
+									GameScheduler.Instance.Schedule(
+										"dev trigger event",
+										5,
+										_ => { eventInfo.Trigger(data); }
+									);
+								}
+							}
+						}
+
+						ImGui.Unindent();
+						ImGui.PopStyleColor();
+					}
+
+					if (missingNamespace)
+					{
+						// pop the red style if we pushed it before
+						ImGui.PopStyleColor();
+					}
 				}
 			}
 		}
@@ -232,35 +249,6 @@ internal class TwitchDevTool : DevTool
 		ClearStyle();
 	}
 
-	private void DrawCameraPointsTable()
-	{
-		if (ImGui.BeginTable("twitch_camera_points", 2, ImGuiTableFlags.RowBg))
-		{
-			ImGui.TableSetupColumn("Position");
-			ImGui.TableSetupColumn("Orthographic Size");
-			ImGui.TableHeadersRow();
-
-			foreach (var camPoint in camPoints)
-			{
-				ImGui.TableNextRow();
-
-				ImGui.TableNextColumn();
-				ImGui.Text(camPoint.Position.ToString());
-				if (ImGui.IsItemClicked())
-				{
-					CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
-				}
-
-				ImGui.TableNextColumn();
-				ImGui.Text(camPoint.OrthographicSize.ToString("F1"));
-
-				// TODO: add wait time column with editing features
-			}
-
-			ImGui.EndTable();
-		}
-	}
-
 	private static void ColoredBullet(Color color)
 	{
 		ImGui.PushStyleColor(ImGuiCol.Text, color);
@@ -268,7 +256,7 @@ internal class TwitchDevTool : DevTool
 		ImGui.PopStyleColor();
 	}
 
-	private readonly List<GameObject> testingLines = new();
+	private readonly List<GameObject> debugMarkers = new();
 
 	private void AddDebugMarker(int cell, Color color)
 	{
@@ -293,10 +281,10 @@ internal class TwitchDevTool : DevTool
 		lineRenderer.positionCount = 2;
 		lineRenderer.startColor = lineRenderer.endColor = color;
 		lineRenderer.startWidth = lineRenderer.endWidth = 1f;
-		testingLines.Add(go);
+		debugMarkers.Add(go);
 	}
 
-	private void AddDebugLine(int startCell, int endCell, Color color)
+	private void AddDebugLine(int lineStartCell, int lineEndCell, Color color, float width = 0.05f)
 	{
 		var gameObject = new GameObject(TwitchModInfo.ModPrefix + "DebugLine");
 		gameObject.SetActive(true);
@@ -305,13 +293,199 @@ internal class TwitchDevTool : DevTool
 		{
 			renderQueue = RenderQueues.Liquid,
 		};
-		var startPos = Grid.CellToPosCCC(startCell, Grid.SceneLayer.FXFront2);
-		var endPos = Grid.CellToPosCCC(endCell, Grid.SceneLayer.FXFront2);
+		var startPos = Grid.CellToPosCCC(lineStartCell, Grid.SceneLayer.FXFront2);
+		var endPos = Grid.CellToPosCCC(lineEndCell, Grid.SceneLayer.FXFront2);
 		lineRenderer.SetPositions(new[] { startPos, endPos });
 		lineRenderer.positionCount = 2;
 		lineRenderer.startColor = lineRenderer.endColor = color;
-		lineRenderer.startWidth = lineRenderer.endWidth = 0.05f;
-		testingLines.Add(gameObject);
+		lineRenderer.startWidth = lineRenderer.endWidth = width;
+		debugMarkers.Add(gameObject);
+	}
+
+	private int startCell = Grid.InvalidCell;
+	private int closestCell = Grid.InvalidCell;
+
+	private void AddClosestCellMarker(int baseCell)
+	{
+		startCell = baseCell;
+		closestCell = GridUtil.NearestEmptyCell(baseCell);
+	}
+
+	private void DrawDebugClosestCell()
+	{
+		if (closestCell != -1)
+		{
+			if (closestCell != startCell)
+			{
+				AddDebugMarker(startCell, Color.yellow with { a = 0.4f });
+				AddDebugLine(startCell, closestCell, Color.green with { a = 0.4f });
+			}
+
+			AddDebugMarker(closestCell, Color.green with { a = 0.4f });
+		}
+		else
+		{
+			// Could not find a closest cell
+			AddDebugMarker(startCell, Color.red with { a = 0.8f });
+		}
+	}
+
+	[NotNull] private readonly List<CameraPathPoint> camPoints = new();
+
+	private struct CameraPathPoint
+	{
+		internal Vector2 Position;
+		internal float OrthographicSize;
+		internal float WaitTime;
+
+		public override string ToString()
+		{
+			return $"{Position} Orthographic Size: {OrthographicSize} Delay {WaitTime}s";
+		}
+	}
+
+	private void AddCameraCell(int cell)
+	{
+		// layer does not matter, the camera is at one position
+		var pos = (Vector2) Grid.CellToPosCCC(cell, Grid.SceneLayer.Front);
+		var point = new CameraPathPoint
+		{
+			Position = pos,
+			OrthographicSize = CameraController.Instance.OrthographicSize,
+			WaitTime = 2,
+		};
+		Log.Debug($"adding camera path {point}");
+		camPoints.Add(point);
+	}
+
+	private void DrawCameraPointsTable()
+	{
+		if (ImGui.BeginTable(
+				"twitch_camera_points",
+				4,
+				ImGuiTableFlags.RowBg | ImGuiTableFlags.Resizable | ImGuiTableFlags.SizingStretchProp
+			))
+		{
+			ImGui.TableSetupColumn("Position");
+			ImGui.TableSetupColumn("Orthographic Size");
+			ImGui.TableSetupColumn("Delay");
+			ImGui.TableSetupColumn("Delete");
+			ImGui.TableHeadersRow();
+
+			var pointsToRemove = new List<int>(4);
+			for (var idx = 0; idx < camPoints.Count; idx++)
+			{
+				var camPoint = camPoints[idx];
+				ImGui.TableNextRow();
+
+				ImGui.TableNextColumn();
+				ImGui.Text(camPoint.Position.ToString());
+				if (ImGui.IsItemClicked())
+				{
+					CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
+				}
+
+				ImGui.TableNextColumn();
+				var size = camPoint.OrthographicSize;
+				if (ImGui.InputFloat($"###size.{idx}", ref size, 0.1f, 1, "%.2f"))
+				{
+					camPoints[idx] = camPoint with { OrthographicSize = size };
+				}
+
+				ImGui.TableNextColumn();
+				var delay = camPoint.WaitTime;
+				if (ImGui.InputFloat($"###delay.{idx}", ref delay))
+				{
+					if (delay < 0)
+					{
+						delay = 0;
+					}
+
+					camPoints[idx] = camPoint with { WaitTime = delay };
+				}
+
+				ImGui.TableNextColumn();
+				if (ImGui.Button($"Delete###removeCamPoint.{idx}"))
+				{
+					pointsToRemove.Add(idx);
+				}
+			}
+
+			// Reverse so that indexes are in reverse order
+			pointsToRemove.Reverse();
+			foreach (var idx in pointsToRemove)
+			{
+				camPoints.RemoveAt(idx);
+			}
+
+			ImGui.EndTable();
+		}
+	}
+
+	private void DebugCameraPath()
+	{
+		// loop over pairs of points to draw lines
+		for (var idx = 0; idx < camPoints.Count - 1; idx++)
+		{
+			var startPoint = camPoints[idx];
+			var endPoint = camPoints[idx + 1];
+
+			// Evenly distribute the colors over the hue
+			var h = idx / (float) camPoints.Count;
+			var color = Color.HSVToRGB(h, 1, 1);
+
+			AddDebugLine(Grid.PosToCell(startPoint.Position), Grid.PosToCell(endPoint.Position), color, 0.15f);
+		}
+	}
+
+	// Makes the camera into cinematic mode, and then moves between the points specified in the cam points
+	private void ExecuteCameraPath()
+	{
+		Log.Debug("Executing camera path");
+
+		IEnumerator Path()
+		{
+			CameraController.Instance.SetWorldInteractive(false);
+
+			// Manually disable screenshot mode so that it can be re-enabled properly
+			DebugHandler.ScreenshotMode = false;
+			DebugHandler.ToggleScreenshotMode();
+
+			var trav = new Traverse(CameraController.Instance);
+			trav.Field<bool>("cinemaCamEnabled").Value = true;
+			ManagementMenu.Instance.CloseAll();
+
+			using (var points = camPoints.GetEnumerator())
+			{
+				if (points.MoveNext())
+				{
+					Log.Debug($"Starting camera at {points.Current}");
+					CameraController.Instance.SetPosition(points.Current.Position);
+					CameraController.Instance.SetMaxOrthographicSize(points.Current.OrthographicSize);
+					yield return new WaitForSecondsRealtime(points.Current.WaitTime);
+					while (points.MoveNext())
+					{
+						var camPoint = points.Current;
+						Log.Debug($"Moving to {camPoint}");
+						CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
+						yield return new WaitUntil(
+							() => ((Vector2) CameraController.Instance.transform.position - camPoint.Position)
+								  .magnitude <
+								  0.001
+						);
+						yield return new WaitForSecondsRealtime(camPoint.WaitTime);
+					}
+				}
+			}
+
+			Log.Debug("Camera path complete");
+
+			trav.Field<bool>("cinemaCamEnabled").Value = false;
+			DebugHandler.ToggleScreenshotMode();
+			CameraController.Instance.SetWorldInteractive(true);
+		}
+
+		CameraController.Instance.StartCoroutine(Path());
 	}
 
 	[MustUseReturnValue]
@@ -397,71 +571,5 @@ internal class TwitchDevTool : DevTool
 		}
 
 		return filtered;
-	}
-
-	private struct CameraPathPoint
-	{
-		internal Vector2 Position;
-		internal float OrthographicSize;
-		internal float WaitTime;
-	}
-
-	private void AddCameraCell(int cell)
-	{
-		// layer does not matter, the camera is at one position
-		var pos = (Vector2) Grid.CellToPosCCC(cell, Grid.SceneLayer.Front);
-		var point = new CameraPathPoint
-		{
-			Position = pos,
-			OrthographicSize = CameraController.Instance.OrthographicSize,
-			WaitTime = 2,
-		};
-		Log.Debug($"adding camera path {point}");
-		camPoints.Add(point);
-	}
-
-	// Makes the camera into cinematic mode, and then moves between the points specified in the cam points
-	private void ExecuteCameraPath()
-	{
-		Log.Debug("Executing camera path");
-
-		IEnumerator Path()
-		{
-			CameraController.Instance.SetWorldInteractive(false);
-			
-			DebugHandler.ScreenshotMode = false;
-			DebugHandler.ToggleScreenshotMode();
-			
-			var trav = new Traverse(CameraController.Instance);
-			trav.Field<bool>("cinemaCamEnabled").Value = true;
-			ManagementMenu.Instance.CloseAll();
-
-			using (var points = camPoints.GetEnumerator())
-			{
-				points.MoveNext();
-				Log.Debug($"Starting camera at {points.Current}");
-				CameraController.Instance.SetPosition(points.Current.Position);
-				yield return new WaitForSecondsRealtime(points.Current.WaitTime);
-				while (points.MoveNext())
-				{
-					var camPoint = points.Current;
-					Log.Debug($"Moving to {camPoint}");
-					CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
-					yield return new WaitUntil(
-						() => ((Vector2) CameraController.Instance.transform.position - camPoint.Position).magnitude <
-							  0.001
-					);
-					yield return new WaitForSecondsRealtime(camPoint.WaitTime);
-				}
-			}
-
-			Log.Debug("Camera path complete");
-
-			trav.Field<bool>("cinemaCamEnabled").Value = false;
-			DebugHandler.ToggleScreenshotMode();
-			CameraController.Instance.SetWorldInteractive(true);
-		}
-
-		CameraController.Instance.StartCoroutine(Path());
 	}
 }
