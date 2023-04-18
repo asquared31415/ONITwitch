@@ -22,6 +22,7 @@ internal partial class TwitchDevTool : DevTool
 
 	// Flags for options that the user can toggle
 	private bool cameraPathMode;
+	private bool showCameraPath;
 	private bool debugClosestCell;
 	private bool delayEvent;
 
@@ -53,7 +54,9 @@ internal partial class TwitchDevTool : DevTool
 		ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 4);
 
 		ImGui.PushStyleColor(ImGuiCol.WindowBg, new Vector4(0.06f, 0.06f, 0.06f, 0.75f));
-		ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0.09f, 0.00f, 0.21f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0.18f, 0.00f, 0.42f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.FrameBgActive, new Vector4(0.30f, 0.000f, 0.84f, 1.00f));
+		ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, new Vector4(0.30f, 0.00f, 0.84f, 1.00f));
 		ImGui.PushStyleColor(ImGuiCol.CheckMark, new Vector4(0.57f, 0.27f, 1.00f, 1.00f));
 		ImGui.PushStyleColor(ImGuiCol.SliderGrab, new Vector4(0.60f, 0.33f, 1.00f, 1.00f));
 		ImGui.PushStyleColor(ImGuiCol.SliderGrabActive, new Vector4(0.71f, 0.40f, 1.00f, 1.00f));
@@ -103,6 +106,15 @@ internal partial class TwitchDevTool : DevTool
 
 				ImGui.SameLine();
 
+				ImGui.Checkbox("Show Path", ref showCameraPath);
+				if (showCameraPath)
+				{
+					DebugCameraPath();
+				}
+
+				ImGuiEx.TooltipForPrevious("Show a debug overlay for the camera's path");
+				ImGui.SameLine();
+
 				// Make the Execute Path button disabled if there's no path
 				if (camPoints.Count == 0)
 				{
@@ -134,8 +146,6 @@ internal partial class TwitchDevTool : DevTool
 				DrawCameraPointsTable();
 			}
 
-			DebugCameraPath();
-
 			ImGui.Separator();
 
 			if (debugClosestCell)
@@ -143,7 +153,8 @@ internal partial class TwitchDevTool : DevTool
 				DrawDebugClosestCell();
 			}
 
-			ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
+			if (ImGui.CollapsingHeader(""))
+				ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
 			if (debugClosestCell)
 			{
 				ImGui.Text($"Base Cell: {startCell}, Closest {closestCell}");
@@ -153,11 +164,14 @@ internal partial class TwitchDevTool : DevTool
 
 			if (ImGui.CollapsingHeader("Events", ImGuiTreeNodeFlags.DefaultOpen))
 			{
+				// Indent everything in the header
+				ImGui.Indent();
+
 				ImGui.Checkbox("Delay Events by 5 seconds", ref delayEvent);
 
 				ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
 
-				ImGui.Separator();
+				ImGui.NewLine();
 
 				ImGui.Text("Events with a");
 				ImGui.SameLine();
@@ -239,6 +253,9 @@ internal partial class TwitchDevTool : DevTool
 						ImGui.PopStyleColor();
 					}
 				}
+
+				// unindent for end of events header 
+				ImGui.Unindent();
 			}
 		}
 		else
@@ -258,19 +275,16 @@ internal partial class TwitchDevTool : DevTool
 
 	private readonly List<GameObject> debugMarkers = new();
 
-	private void AddDebugMarker(int cell, Color color)
+	private void AddDebugCellMarker(int cell, Color color)
 	{
-		var go = new GameObject(TwitchModInfo.ModPrefix + "DebugLine");
+		var go = new GameObject(TwitchModInfo.ModPrefix + "DebugCellMarker");
 		go.SetActive(true);
 		var lineRenderer = go.AddComponent<LineRenderer>();
 		lineRenderer.material = new Material(Shader.Find("Klei/Biome/Unlit Transparent"))
 		{
 			renderQueue = RenderQueues.Liquid,
 		};
-		var pos = Grid.CellToPos(cell) with
-		{
-			z = Grid.GetLayerZ(Grid.SceneLayer.FXFront2),
-		};
+		var pos = Grid.CellToPos(cell) with { z = Grid.GetLayerZ(Grid.SceneLayer.SceneMAX) };
 		lineRenderer.SetPositions(
 			new[]
 			{
@@ -289,12 +303,12 @@ internal partial class TwitchDevTool : DevTool
 		var gameObject = new GameObject(TwitchModInfo.ModPrefix + "DebugLine");
 		gameObject.SetActive(true);
 		var lineRenderer = gameObject.AddComponent<LineRenderer>();
-		lineRenderer.material = new Material(Shader.Find("Klei/Biome/Unlit Transparent"))
+		lineRenderer.material = new Material(Shader.Find("Sprites/Default"))
 		{
 			renderQueue = RenderQueues.Liquid,
 		};
-		var startPos = Grid.CellToPosCCC(lineStartCell, Grid.SceneLayer.FXFront2);
-		var endPos = Grid.CellToPosCCC(lineEndCell, Grid.SceneLayer.FXFront2);
+		var startPos = Grid.CellToPosCCC(lineStartCell, Grid.SceneLayer.SceneMAX);
+		var endPos = Grid.CellToPosCCC(lineEndCell, Grid.SceneLayer.SceneMAX);
 		lineRenderer.SetPositions(new[] { startPos, endPos });
 		lineRenderer.positionCount = 2;
 		lineRenderer.startColor = lineRenderer.endColor = color;
@@ -317,16 +331,16 @@ internal partial class TwitchDevTool : DevTool
 		{
 			if (closestCell != startCell)
 			{
-				AddDebugMarker(startCell, Color.yellow with { a = 0.4f });
+				AddDebugCellMarker(startCell, Color.yellow with { a = 0.4f });
 				AddDebugLine(startCell, closestCell, Color.green with { a = 0.4f });
 			}
 
-			AddDebugMarker(closestCell, Color.green with { a = 0.4f });
+			AddDebugCellMarker(closestCell, Color.green with { a = 0.4f });
 		}
 		else
 		{
 			// Could not find a closest cell
-			AddDebugMarker(startCell, Color.red with { a = 0.8f });
+			AddDebugCellMarker(startCell, Color.red with { a = 0.8f });
 		}
 	}
 
