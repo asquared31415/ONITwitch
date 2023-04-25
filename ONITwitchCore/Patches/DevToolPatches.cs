@@ -44,42 +44,15 @@ internal static class DevToolPatches
 			___showImGui = true;
 		}
 	}
-#endif
 
 	[HarmonyPatch(typeof(DevToolUI), nameof(DevToolUI.PingHoveredObject))]
-	private static class DevToolNoPingCrashFix
+	private static class DevToolNoPing
 	{
-		private static readonly MethodInfo PrivatePingMethod = AccessTools.Method(typeof(DevToolUI), "Internal_Ping");
-
 		[UsedImplicitly]
-		private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> orig, ILGenerator generator)
+		public static bool Prefix()
 		{
-			var codes = orig.ToList();
-			var pingCallIdx = codes.FindLastIndex(ci => ci.Calls(PrivatePingMethod));
-			if (pingCallIdx == -1)
-			{
-				Log.Warn("Unable to find private_Ping call to fix dev ui ping crash");
-				return codes;
-			}
-
-			var idx = pingCallIdx - 2;
-			codes.Insert(idx++, new CodeInstruction(OpCodes.Dup));
-			codes.Insert(idx++, CodeInstruction.Call(typeof(DevToolNoPingCrashFix), "LenHelper"));
-			var normalLabel = generator.DefineLabel();
-			codes.Insert(idx++, new CodeInstruction(OpCodes.Brtrue, normalLabel));
-			codes.Insert(idx++, new CodeInstruction(OpCodes.Pop)); // pop extra list
-			// close the dev tool UI
-			codes.Insert(idx++, CodeInstruction.Call(typeof(DevTool), "ClosePanel"));
-			codes.Insert(idx++, new CodeInstruction(OpCodes.Ret));
-			codes.Insert(idx, new CodeInstruction(OpCodes.Nop).WithLabels(normalLabel));
-
-			return codes;
-		}
-
-		[UsedImplicitly]
-		private static bool LenHelper(IReadOnlyCollection<RaycastResult> results)
-		{
-			return results.Count > 0;
+			return false;
 		}
 	}
+#endif
 }

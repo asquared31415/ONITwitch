@@ -24,7 +24,8 @@ internal partial class TwitchDevTool : DevTool
 	private bool cameraPathMode;
 	private bool showCameraPath;
 	private bool debugClosestCell;
-	private bool delayEvent;
+
+	private float eventDelay;
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
@@ -167,7 +168,7 @@ internal partial class TwitchDevTool : DevTool
 				// Indent everything in the header
 				ImGui.Indent();
 
-				ImGui.Checkbox("Delay Events by 5 seconds", ref delayEvent);
+				ImGui.SliderFloat("Event Delay", ref eventDelay, 0, 60);
 
 				ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
 
@@ -236,7 +237,7 @@ internal partial class TwitchDevTool : DevTool
 									var data = dataInst.GetDataForEvent(eventInfo);
 									GameScheduler.Instance.Schedule(
 										"dev trigger event",
-										5,
+										eventDelay,
 										_ => { eventInfo.Trigger(data); }
 									);
 								}
@@ -474,8 +475,7 @@ internal partial class TwitchDevTool : DevTool
 				if (points.MoveNext())
 				{
 					Log.Debug($"Starting camera at {points.Current}");
-					CameraController.Instance.SetPosition(points.Current.Position);
-					CameraController.Instance.SetMaxOrthographicSize(points.Current.OrthographicSize);
+					CameraController.Instance.SnapTo(points.Current.Position, points.Current.OrthographicSize);
 					yield return new WaitForSecondsRealtime(points.Current.WaitTime);
 					while (points.MoveNext())
 					{
