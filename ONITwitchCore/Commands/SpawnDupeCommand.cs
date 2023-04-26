@@ -1,15 +1,24 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using HarmonyLib;
 using ONITwitch.Settings;
-using ONITwitch.Toasts;
 using ONITwitch.Voting;
+using ONITwitchLib;
 using ONITwitchLib.Logger;
+using TMPro;
 using UnityEngine;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
 internal class SpawnDupeCommand : CommandBase
 {
+	private static readonly Dictionary<string, SpecialDupeData> SpecialDupes = new()
+	{
+		{ "asquared31415", new SpecialDupeData("NAILS") },
+	};
+
 	public override bool Condition(object data)
 	{
 		var maxDupes = (double) ((IDictionary<string, object>) data)["MaxDupes"];
@@ -48,23 +57,38 @@ internal class SpawnDupeCommand : CommandBase
 		minion.name = Assets.GetPrefab(MinionConfig.ID).name;
 		Immigration.Instance.ApplyDefaultPersonalPriorities(minion);
 		minion.SetActive(true);
-		new MinionStartingStats(false).Apply(minion);
 
 		var identity = minion.GetComponent<MinionIdentity>();
 		if (name != null)
 		{
-			identity.SetName(
-				GenericModSettings.Data.UseTwitchNameColors && color.HasValue
-					? $"<color=#{color.Value.ToHexString()}>{name}</color>"
-					: name
-			);
+			if (SpecialDupes.TryGetValue(name, out var specialDupeData))
+			{
+				var personalities = Db.Get().Personalities;
+				var personality = personalities.TryGet(specialDupeData.PersonalityId) ??
+								  personalities.GetRandom(true, false);
+				new MinionStartingStats(personality).Apply(minion);
+
+				identity.SetName(
+					GenericModSettings.Data.UseTwitchNameColors && color.HasValue
+						? $"<color=#{color.Value.ToHexString()}>{name}</color>"
+						: name
+				);
+			}
+			else
+			{
+				identity.SetName(
+					GenericModSettings.Data.UseTwitchNameColors && color.HasValue
+						? $"<color=#{color.Value.ToHexString()}>{name}</color>"
+						: name
+				);
+			}
+		}
+		else
+		{
+			new MinionStartingStats(false).Apply(minion);
 		}
 
-		var resume = identity.GetComponent<MinionResume>();
-		if (resume != null)
-		{
-			resume.ForceAddSkillPoint();
-		}
+		identity.GetComponent<MinionResume>().ForceAddSkillPoint();
 
 		var pos = Components.LiveMinionIdentities.Items.GetRandom();
 		minion.transform.SetLocalPosition(pos.transform.position);
@@ -76,5 +100,15 @@ internal class SpawnDupeCommand : CommandBase
 		);
 
 		Log.Info($"Spawned duplicant {identity.name}");
+	}
+
+	internal class SpecialDupeData
+	{
+		internal string PersonalityId;
+
+		internal SpecialDupeData(string personalityId)
+		{
+			PersonalityId = personalityId;
+		}
 	}
 }

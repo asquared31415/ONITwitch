@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
 using ONITwitch.CustomElements;
-using ONITwitch.EventLib;
 using ONITwitch.Integration;
 using ONITwitch.Integration.DecorPackA;
+using ONITwitchLib;
 using ONITwitchLib.Logger;
+using TMPro;
 using UnityEngine;
+using EventGroup = ONITwitch.EventLib.EventGroup;
 using Object = UnityEngine.Object;
 
 namespace ONITwitch;
@@ -25,8 +29,6 @@ internal class OniTwitchMod : UserMod2
 		var mainThreadObject = new GameObject("MainThreadScheduler");
 		mainThreadObject.AddOrGet<MainThreadScheduler>();
 		Object.DontDestroyOnLoad(mainThreadObject);
-		
-		Log.Debug($"Element Hash: {TwitchSimHashes.OniTwitchIndestructibleElement}");
 
 		RegisterDevTools();
 	}
