@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using HarmonyLib;
 using KSerialization;
+using ONITwitch.Config;
 using ONITwitch.Settings;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
@@ -38,6 +39,8 @@ internal class VoteController : KMonoBehaviour
 
 	public readonly Dictionary<string, TwitchUserInfo> SeenUsersById = new();
 
+	internal Credentials Credentials;
+
 	private TwitchConnection connection;
 
 	protected override void OnSpawn()
@@ -49,7 +52,7 @@ internal class VoteController : KMonoBehaviour
 		connection = new TwitchConnection();
 		connection.OnReady += () => { connection.JoinRoom(GenericModSettings.Data.ChannelName); };
 		connection.OnChatMessage += OnTwitchMessage;
-		connection.Start();
+		connection.Start(Credentials);
 	}
 
 	// returns whether the vote was successfully started

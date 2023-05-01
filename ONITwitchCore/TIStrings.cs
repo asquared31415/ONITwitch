@@ -611,25 +611,25 @@ public static class STRINGS
 					public static readonly LocString TITLE = "Invalid Credentials";
 
 					public static readonly LocString INVALID_FILE =
-						"The credentials file was broken and has been reset, please follow the instructions in the README";
+						"The credentials file was broken and has been reset, please follow the instructions in the README.";
 
 					public static readonly LocString NO_LOGIN =
-						"The credentials file does not have a Twitch nickname set";
+						"The credentials file does not have a Twitch nickname set. Using anonymous connection.";
 
 					public static readonly LocString NICK_CONTAINS_SLASH =
-						"The Twitch nickname in the credentials file contained a slash.  The nickname should be <i>only</i> the name you use to log in to Twitch.";
+						"The Twitch nickname in the credentials file contained a slash. The nickname should be <i>only</i> the name you use to log in to Twitch. Using anonymous connection.";
 
 					public static readonly LocString INVALID_NICK =
-						"The Twitch nickname in the credentials file was not a valid nickname";
+						"The Twitch nickname in the credentials file was not a valid nickname. Using anonymous connection.";
 
 					public static readonly LocString MALFORMED_OAUTH =
-						"Invalid OAuth token!\nThe OAuth token should be composed of only numbers and letters.";
+						"Invalid OAuth token!\nThe OAuth token should be composed of only numbers and letters. Using anonymous connection.";
 
 					public static readonly LocString EXPIRED_OAUTH =
-						"The OAuth token is invalid or has expired.  Please generate a new token following the instructions in the README.";
+						"The OAuth token is invalid or has expired. Please generate a new token following the instructions in the README. Using anonymous connection.";
 
 					public static readonly LocString UNKNOWN_OAUTH_ERR =
-						"An unknown error occured when validating your OAuth token with Twitch.";
+						"An unknown error occured when validating your OAuth token with Twitch. Using anonymous connection.";
 
 					public static readonly LocString CONNECTION_OAUTH_ERR =
 						"An unknown error occured when validating your OAuth token with Twitch. (No response from server)";

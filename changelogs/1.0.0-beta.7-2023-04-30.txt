@@ -1,0 +1,9 @@
+**1.0.0-beta.7 (2023-04-30)**
+
+**Changes**:
+ - Move event config to a github pages site
+ - Handle invalid event config better
+ - Add new camera path dev tool
+ - Updated several strings for invalid credentials dialog
+ - Allowed anonymous login to work properly
+ - Log in using an anonymous chat reading account by default if the credentials are invalid

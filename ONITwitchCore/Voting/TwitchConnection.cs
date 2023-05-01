@@ -39,7 +39,7 @@ internal class TwitchConnection
 	public event Action<TwitchMessage> OnChatMessage;
 
 	// creates a new thread for the twitch connection
-	public void Start()
+	public void Start(Credentials credentials)
 	{
 		Task.Run(
 			async () =>
@@ -61,7 +61,7 @@ internal class TwitchConnection
 						Log.Info("Connected to Twitch");
 
 						// Request caps and log in
-						await Login(CredentialsConfig.Instance.Credentials);
+						await Login(credentials);
 
 						IsReady = true;
 
@@ -326,7 +326,13 @@ internal class TwitchConnection
 		await SendMessageImmediate(new IrcMessage(IrcCommandType.PASS, new List<string> { credentials.Oauth }));
 		await SendMessageImmediate(new IrcMessage(IrcCommandType.NICK, new List<string> { credentials.Nick }));
 
-		// wait for GLOBALUSERSTATE
+		// wait for GLOBALUSERSTATE, but only if the user is not anonymous
+		if (credentials.Nick.StartsWith("justinfan"))
+		{
+			Log.Debug($"Using anonymous login {credentials.Nick}, not waiting for authentication");
+			return;
+		}
+
 		while (true)
 		{
 			var message = await GetMessage(CancellationToken.None);
