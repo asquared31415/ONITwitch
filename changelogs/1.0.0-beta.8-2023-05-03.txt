@@ -1,0 +1,6 @@
+**1.0.0-beta.8 (2023-05-03)**
+
+**Changes:**
+ - Updated several strings
+ - Updated German translation
+ - Fix issues displaying strings on the settings UI
