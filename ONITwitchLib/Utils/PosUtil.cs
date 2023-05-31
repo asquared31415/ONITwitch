@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using ONITwitchLib.Attributes;
 using UnityEngine;
 
 namespace ONITwitchLib.Utils;
@@ -43,6 +44,11 @@ public static class PosUtil
 	}
 
 	/// <summary>
+	/// Used for the dev tools. Do not use.
+	/// </summary>
+	[NotPublicAPI] public static int? MouseRangeOverride;
+
+	/// <summary>
 	/// Gets the world position of the mouse with a range randomly applied.
 	/// </summary>
 	/// <param name="range">The radius to randomly apply to the mouse position, in world space units (1 unit = 1 cell).</param>
@@ -55,6 +61,11 @@ public static class PosUtil
 	{
 		if (Camera.main != null)
 		{
+			if (MouseRangeOverride.HasValue)
+			{
+				range = MouseRangeOverride.Value;
+			}
+
 			var worldPoint = Camera.main.ScreenToWorldPoint(ClampedMousePos());
 
 			var theta = Random.value * Mathf.PI * 2;

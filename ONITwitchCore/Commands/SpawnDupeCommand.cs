@@ -1,12 +1,8 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using HarmonyLib;
 using ONITwitch.Settings;
 using ONITwitch.Voting;
-using ONITwitchLib;
 using ONITwitchLib.Logger;
-using TMPro;
 using UnityEngine;
 using ToastManager = ONITwitch.Toasts.ToastManager;
 
@@ -76,6 +72,7 @@ internal class SpawnDupeCommand : CommandBase
 			}
 			else
 			{
+				new MinionStartingStats(false).Apply(minion);
 				identity.SetName(
 					GenericModSettings.Data.UseTwitchNameColors && color.HasValue
 						? $"<color=#{color.Value.ToHexString()}>{name}</color>"
@@ -90,8 +87,11 @@ internal class SpawnDupeCommand : CommandBase
 
 		identity.GetComponent<MinionResume>().ForceAddSkillPoint();
 
-		var pos = Components.LiveMinionIdentities.Items.GetRandom();
-		minion.transform.SetLocalPosition(pos.transform.position);
+		var pos = Components.LiveMinionIdentities.Items.GetRandom().transform.position;
+		minion.transform.SetLocalPosition(pos);
+
+		var upgradeFx = new UpgradeFX.Instance(identity, new Vector3(0.0f, 0.0f, -0.1f));
+		upgradeFx.StartSM();
 
 		ToastManager.InstantiateToastWithGoTarget(
 			STRINGS.ONITWITCH.TOASTS.SPAWN_DUPE.TITLE,

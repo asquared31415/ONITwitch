@@ -16,7 +16,7 @@ using Object = UnityEngine.Object;
 
 namespace ONITwitch;
 
-internal partial class TwitchDevTool : DevTool
+internal class TwitchDevTool : DevTool
 {
 	internal static TwitchDevTool Instance { get; private set; }
 
@@ -25,6 +25,7 @@ internal partial class TwitchDevTool : DevTool
 	private bool showCameraPath;
 	private bool debugClosestCell;
 
+	private bool useMouseRangeOverride;
 	private float eventDelay;
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
@@ -116,24 +117,27 @@ internal partial class TwitchDevTool : DevTool
 				ImGuiEx.TooltipForPrevious("Show a debug overlay for the camera's path");
 				ImGui.SameLine();
 
-				// Make the Execute Path button disabled if there's no path
-				if (camPoints.Count == 0)
+				var isButtonDisabled = camPoints.Count == 0;
+				if (isButtonDisabled)
 				{
-					ImGuiBindingsEx.igPushItemFlag(1 << 2, true);
 					ImGui.PushStyleVar(ImGuiStyleVar.Alpha, ImGui.GetStyle().Alpha * 0.5f);
 				}
 
-				if (ImGui.Button("Execute Path"))
+				if (ImGuiInternal.ButtonEx(
+						"Execute Path",
+						isButtonDisabled
+							? ImGuiInternal.ImGuiButtonFlags.Internal_Disabled
+							: ImGuiInternal.ImGuiButtonFlags.None
+					))
 				{
 					ExecuteCameraPath();
 				}
 
 				// pop the disabled settings if they were pushed before
-				if (camPoints.Count == 0)
+				if (isButtonDisabled)
 				{
-					ImGuiEx.TooltipForPrevious("Create one or more points first");
 					ImGui.PopStyleVar();
-					ImGuiBindingsEx.igPopItemFlag();
+					ImGuiEx.TooltipForPrevious("Create one or more points first");
 				}
 
 				ImGui.SameLine(0, 200);
@@ -149,16 +153,18 @@ internal partial class TwitchDevTool : DevTool
 
 			ImGui.Separator();
 
+			if (ImGui.CollapsingHeader("Debug Info"))
+			{
+				ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
+				if (debugClosestCell)
+				{
+					ImGui.Text($"Base Cell: {startCell}, Closest {closestCell}");
+				}
+			}
+
 			if (debugClosestCell)
 			{
 				DrawDebugClosestCell();
-			}
-
-			if (ImGui.CollapsingHeader(""))
-				ImGui.Checkbox("Highlight nearest empty cell", ref debugClosestCell);
-			if (debugClosestCell)
-			{
-				ImGui.Text($"Base Cell: {startCell}, Closest {closestCell}");
 			}
 
 			ImGui.Separator();
@@ -169,6 +175,18 @@ internal partial class TwitchDevTool : DevTool
 				ImGui.Indent();
 
 				ImGui.SliderFloat("Event Delay", ref eventDelay, 0, 60);
+
+				ImGui.Checkbox("Override Mouse Range", ref useMouseRangeOverride);
+				if (useMouseRangeOverride)
+				{
+					var range = PosUtil.MouseRangeOverride.HasValue ? PosUtil.MouseRangeOverride.Value : 5;
+					ImGui.SliderInt("Range Override", ref range, 0, 20);
+					PosUtil.MouseRangeOverride = range;
+				}
+				else
+				{
+					PosUtil.MouseRangeOverride = null;
+				}
 
 				ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
 
