@@ -1,5 +1,6 @@
 using System.Globalization;
 using ONITwitch.Config;
+using ONITwitch.Voting;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using TMPro;
@@ -246,6 +247,11 @@ internal class GenericModSettingsUI : KScreen
 			MinDanger = (Danger) minDangerSlider.value,
 			MaxDanger = (Danger) maxDangerSlider.value,
 		};
+
+		if (VoteController.Instance != null)
+		{
+			VoteController.Instance.JoinRoom(GenericModSettings.Data.ChannelName);
+		}
 
 		hasUnsavedChanges = false;
 		CloseMenu();

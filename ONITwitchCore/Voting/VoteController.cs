@@ -50,7 +50,14 @@ internal class VoteController : KMonoBehaviour
 		Instance = this;
 
 		connection = new TwitchConnection();
-		connection.OnReady += () => { connection.JoinRoom(GenericModSettings.Data.ChannelName); };
+		connection.OnReady += () =>
+		{
+			var configChannel = GenericModSettings.Data.ChannelName;
+			if (!string.IsNullOrEmpty(configChannel))
+			{
+				connection.JoinRoom(GenericModSettings.Data.ChannelName);
+			}
+		};
 		connection.OnChatMessage += OnTwitchMessage;
 		connection.Start(Credentials);
 	}
@@ -134,6 +141,11 @@ internal class VoteController : KMonoBehaviour
 	{
 		State = VotingState.NotStarted;
 		CurrentVote = null;
+	}
+
+	public void JoinRoom(string room)
+	{
+		connection.JoinRoom(room);
 	}
 
 	internal void SetError()

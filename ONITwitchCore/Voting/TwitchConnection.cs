@@ -173,7 +173,15 @@ internal class TwitchConnection
 	{
 		// normalize room to #lowercase
 		room = "#" + room.ToLowerInvariant().TrimStart('#');
-		outgoingMessages.Enqueue(new IrcMessage(IrcCommandType.JOIN, new List<string> { room }));
+
+		if (joinedChannels.Contains(room))
+		{
+			Log.Warn($"Trying to join already joined room {room}");
+		}
+		else
+		{
+			outgoingMessages.Enqueue(new IrcMessage(IrcCommandType.JOIN, new List<string> { room }));
+		}
 	}
 
 	public void SendTextMessage([NotNull] string channel, [NotNull] string message)
