@@ -53,6 +53,7 @@ internal class TwitchDevTool : DevTool
 
 	private static void SetStyle()
 	{
+		// Push counts should be matched with pop counts in `ClearStyle`
 		ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 4);
 
 		ImGui.PushStyleColor(ImGuiCol.WindowBg, new Vector4(0.06f, 0.06f, 0.06f, 0.75f));
@@ -73,7 +74,7 @@ internal class TwitchDevTool : DevTool
 	private static void ClearStyle()
 	{
 		// these must match the counts pushed in SetStyle
-		ImGui.PopStyleColor(11);
+		ImGui.PopStyleColor(13);
 		ImGui.PopStyleVar(1);
 	}
 

@@ -58,6 +58,7 @@ internal class OniTwitchMod : UserMod2
 	}
 }
 
+#if DEBUG
 [HarmonyPatch(typeof(HoverTextConfiguration), "DrawTitle")]
 internal static class CellNumInTitle
 {
@@ -87,3 +88,4 @@ internal static class ImGui_Patch
 		return new[] { new CodeInstruction(OpCodes.Ret) };
 	}
 }
+#endif
