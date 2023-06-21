@@ -37,6 +37,7 @@ internal class VoteController : KMonoBehaviour
 
 	public Vote CurrentVote { get; private set; }
 
+	// the seen users during this vote.  it should not persist across votes.
 	public readonly Dictionary<string, TwitchUserInfo> SeenUsersById = new();
 
 	internal Credentials Credentials;
@@ -185,6 +186,9 @@ internal class VoteController : KMonoBehaviour
 			CurrentVote = null;
 			VoteDelayRemaining = GenericModSettings.Data.VoteDelay;
 			State = VotingState.VoteDelay;
+
+			// clear the seen users, so that only users that participated in the current vote are ever in this
+			SeenUsersById.Clear();
 		}
 		catch (Exception e)
 		{
