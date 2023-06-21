@@ -10,7 +10,7 @@ internal static class PartyTimePatch
 {
 	public static bool Enabled;
 
-	public static float Intensity = 2.0f;
+	public static float Intensity = 1.6f;
 
 	private static Material hsvMaterial;
 	private static readonly int HueProperty = Shader.PropertyToID("_Hue");
