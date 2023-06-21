@@ -142,7 +142,7 @@ internal class TwitchDevTool : DevTool
 				}
 
 				ImGui.SameLine(0, 200);
-				if (ImGui.Button("Clear###clearCamPoints"))
+				if (ImGui.Button("Clear##clearCamPoints"))
 				{
 					camPoints.Clear();
 				}
@@ -206,7 +206,7 @@ internal class TwitchDevTool : DevTool
 				// initialize the entries with no filter
 				eventEntries ??= GenerateEventEntries(null);
 
-				if (ImGuiEx.InputFilter("Search###EventSearch", ref eventFilter, 100))
+				if (ImGuiEx.InputFilter("Search##EventSearch", ref eventFilter, 100))
 				{
 					eventEntries = GenerateEventEntries(eventFilter);
 				}
@@ -247,7 +247,7 @@ internal class TwitchDevTool : DevTool
 									? ColorUtil.GreenSuccessColor
 									: ColorUtil.RedWarningColor;
 								ColoredBullet(condColor);
-								var buttonPressed = ImGui.Button($"{eventInfo}###{eventInfo.Id}");
+								var buttonPressed = ImGui.Button($"{eventInfo}##{eventInfo.Id}");
 
 								ImGuiEx.TooltipForPrevious($"ID: {eventInfo.Id}");
 								if (buttonPressed)
@@ -421,14 +421,14 @@ internal class TwitchDevTool : DevTool
 
 				ImGui.TableNextColumn();
 				var size = camPoint.OrthographicSize;
-				if (ImGui.InputFloat($"###size.{idx}", ref size, 0.1f, 1, "%.2f"))
+				if (ImGui.InputFloat($"##size.{idx}", ref size, 0.1f, 1, "%.2f"))
 				{
 					camPoints[idx] = camPoint with { OrthographicSize = size };
 				}
 
 				ImGui.TableNextColumn();
 				var delay = camPoint.WaitTime;
-				if (ImGui.InputFloat($"###delay.{idx}", ref delay))
+				if (ImGui.InputFloat($"##delay.{idx}", ref delay))
 				{
 					if (delay < 0)
 					{
@@ -439,7 +439,7 @@ internal class TwitchDevTool : DevTool
 				}
 
 				ImGui.TableNextColumn();
-				if (ImGui.Button($"Delete###removeCamPoint.{idx}"))
+				if (ImGui.Button($"Delete##removeCamPoint.{idx}"))
 				{
 					pointsToRemove.Add(idx);
 				}
