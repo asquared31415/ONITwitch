@@ -8,6 +8,11 @@ namespace ONITwitch.Commands;
 
 internal class PocketDimensionCommand : CommandBase
 {
+	public override bool Condition(object data)
+	{
+		return DlcManager.FeatureClusterSpaceEnabled();
+	}
+
 	public override void Run(object data)
 	{
 		int startCell;
