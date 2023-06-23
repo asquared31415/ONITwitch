@@ -144,6 +144,13 @@ internal class TwitchDevTool : DevTool
 				ImGui.SameLine(0, 200);
 				if (ImGui.Button("Clear##clearCamPoints"))
 				{
+					if (executeCamCoroutine != null)
+					{
+						CameraController.Instance.StopCoroutine(executeCamCoroutine);
+						executeCamCoroutine = null;
+						ResetCamState();
+					}
+
 					camPoints.Clear();
 				}
 
@@ -380,6 +387,13 @@ internal class TwitchDevTool : DevTool
 
 	private void AddCameraCell(int cell)
 	{
+		if (executeCamCoroutine != null)
+		{
+			CameraController.Instance.StopCoroutine(executeCamCoroutine);
+			executeCamCoroutine = null;
+			ResetCamState();
+		}
+
 		// layer does not matter, the camera is at one position
 		var pos = (Vector2) Grid.CellToPosCCC(cell, Grid.SceneLayer.Front);
 		var point = new CameraPathPoint
@@ -472,6 +486,16 @@ internal class TwitchDevTool : DevTool
 		}
 	}
 
+	private Coroutine executeCamCoroutine;
+
+	private static void ResetCamState()
+	{
+		var trav = new Traverse(CameraController.Instance);
+		trav.Field<bool>("cinemaCamEnabled").Value = false;
+		DebugHandler.ToggleScreenshotMode();
+		CameraController.Instance.SetWorldInteractive(true);
+	}
+
 	// Makes the camera into cinematic mode, and then moves between the points specified in the cam points
 	private void ExecuteCameraPath()
 	{
@@ -489,36 +513,33 @@ internal class TwitchDevTool : DevTool
 			trav.Field<bool>("cinemaCamEnabled").Value = true;
 			ManagementMenu.Instance.CloseAll();
 
-			using (var points = camPoints.GetEnumerator())
+			if (camPoints.Count > 0)
 			{
-				if (points.MoveNext())
+				var point = camPoints[0];
+				Log.Debug($"Starting camera at {point}");
+				CameraController.Instance.SnapTo(point.Position, point.OrthographicSize);
+				yield return new WaitForSecondsRealtime(point.WaitTime);
+				// ReSharper disable once ForCanBeConvertedToForeach
+				// manual idx so that it can't cause a concurrent modification exception. now worst case it just is a little weird.
+				for (var idx = 0; idx < camPoints.Count; idx++)
 				{
-					Log.Debug($"Starting camera at {points.Current}");
-					CameraController.Instance.SnapTo(points.Current.Position, points.Current.OrthographicSize);
-					yield return new WaitForSecondsRealtime(points.Current.WaitTime);
-					while (points.MoveNext())
-					{
-						var camPoint = points.Current;
-						Log.Debug($"Moving to {camPoint}");
-						CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
-						yield return new WaitUntil(
-							() => ((Vector2) CameraController.Instance.transform.position - camPoint.Position)
-								  .magnitude <
-								  0.001
-						);
-						yield return new WaitForSecondsRealtime(camPoint.WaitTime);
-					}
+					var camPoint = camPoints[idx];
+					Log.Debug($"Moving to {camPoint}");
+					CameraController.Instance.SetTargetPos(camPoint.Position, camPoint.OrthographicSize, false);
+					yield return new WaitUntil(
+						() => ((Vector2) CameraController.Instance.transform.position - camPoint.Position)
+							  .magnitude <
+							  0.001
+					);
+					yield return new WaitForSecondsRealtime(camPoint.WaitTime);
 				}
 			}
 
 			Log.Debug("Camera path complete");
-
-			trav.Field<bool>("cinemaCamEnabled").Value = false;
-			DebugHandler.ToggleScreenshotMode();
-			CameraController.Instance.SetWorldInteractive(true);
+			ResetCamState();
 		}
 
-		CameraController.Instance.StartCoroutine(Path());
+		executeCamCoroutine = CameraController.Instance.StartCoroutine(Path());
 	}
 
 	[MustUseReturnValue]
