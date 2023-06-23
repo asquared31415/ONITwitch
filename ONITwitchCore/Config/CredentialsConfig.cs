@@ -13,7 +13,7 @@ internal static class CredentialsConfig
 {
 	private const string CredentialsFileName = "SECRET_credentials.json";
 
-	private static readonly string CredentialsPath = Path.Combine(TwitchModInfo.MainModFolder, CredentialsFileName);
+	private static readonly string CredentialsPath = Path.Combine(TwitchModInfo.ConfigFolder, CredentialsFileName);
 
 	private static readonly Regex NickRegex = new("^[A-Za-z0-9][A-Za-z0-9_]*$");
 	private static readonly Regex OauthRegex = new("^[0-9a-zA-Z]+$");
@@ -22,6 +22,7 @@ internal static class CredentialsConfig
 	{
 		try
 		{
+			Directory.CreateDirectory(TwitchModInfo.ConfigFolder);
 			var text = File.ReadAllText(CredentialsPath);
 			var credentials = JsonConvert.DeserializeObject<Credentials>(text);
 			if (!credentials.Oauth.StartsWith("oauth:"))

@@ -42,6 +42,16 @@ public static class TwitchModInfo
 	[PublicAPI] public static readonly string MainModFolder =
 		TwitchIsPresent ? Directory.GetParent(MainTwitchModType!.Assembly.Location)!.FullName : "";
 
+
+	[PublicAPI] public static readonly string ConfigFolder =
+		// mods/steam/ID/dll -> mods/config/ID
+		// 3 directories up, back down to config/id
+		Path.Combine(
+			Directory.GetParent(MainTwitchModType!.Assembly.Location)!.Parent!.Parent!.FullName,
+			"config",
+			StaticID
+		);
+
 	/// <summary>
 	/// The filename of the config file containing the main Twitch mod config.
 	/// </summary>
@@ -51,7 +61,7 @@ public static class TwitchModInfo
 	/// The path to the config file containing the main Twitch mod config.
 	/// Only valid if the Twitch mod is active.
 	/// </summary>
-	[PublicAPI] public static readonly string ConfigPath = Path.Combine(MainModFolder, ConfigName);
+	[PublicAPI] public static readonly string ConfigPath = Path.Combine(ConfigFolder, ConfigName);
 
 	private const string TwitchTypeName = "ONITwitch.OniTwitchMod, ONITwitch";
 	private static Type mainTwitchType;

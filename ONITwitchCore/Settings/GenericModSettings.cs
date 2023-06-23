@@ -64,6 +64,7 @@ internal static class GenericModSettings
 	{
 		try
 		{
+			Directory.CreateDirectory(TwitchModInfo.ConfigFolder);
 			var configText = File.ReadAllText(TwitchModInfo.ConfigPath);
 			var config = JsonConvert.DeserializeObject<SettingsData>(configText);
 			switch (config.Version)
@@ -120,7 +121,9 @@ internal static class GenericModSettings
 
 			if (config.MaxDanger < config.MinDanger)
 			{
-				Log.Info($"Invalid danger min/max: {config.MinDanger}/{config.MaxDanger} resetting min to {Danger.None}");
+				Log.Info(
+					$"Invalid danger min/max: {config.MinDanger}/{config.MaxDanger} resetting min to {Danger.None}"
+				);
 				config.MinDanger = Danger.None;
 				SaveConfig(config);
 			}
