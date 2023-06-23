@@ -21,7 +21,7 @@ internal static class GamePatches
 		}
 	}
 
-	[HarmonyPatch(typeof(Game), "OnCleanUp")]
+	[HarmonyPatch(typeof(Game), "DestroyInstances")]
 	// ReSharper disable once InconsistentNaming
 	public static class Game_OnCleanUp_Patch
 	{
