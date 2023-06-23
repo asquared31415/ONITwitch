@@ -3,6 +3,7 @@ using System.Linq;
 using ONITwitch.Settings;
 using ONITwitch.Voting;
 using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
 using UnityEngine;
 using ToastManager = ONITwitch.Toasts.ToastManager;
 
@@ -30,7 +31,13 @@ internal class SpawnDupeCommand : CommandBase
 			var users = VoteController.Instance.SeenUsersById.Values.ToList();
 			users.RemoveAll(
 				n => Components.LiveMinionIdentities.Items.Any(
-					i => i.name.ToLowerInvariant().Contains(n.DisplayName.ToLowerInvariant())
+					i =>
+					{
+						// only count colored named dupes
+						var normalizedName = i.name.ToLowerInvariant();
+						return normalizedName.Contains("</color>") &&
+							   normalizedName.Contains(n.DisplayName.ToLowerInvariant());
+					}
 				)
 			);
 
@@ -63,19 +70,20 @@ internal class SpawnDupeCommand : CommandBase
 				var personality = personalities.TryGet(specialDupeData.PersonalityId) ??
 								  personalities.GetRandom(true, false);
 				new MinionStartingStats(personality).Apply(minion);
-
+				var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
 				identity.SetName(
-					GenericModSettings.Data.UseTwitchNameColors && color.HasValue
-						? $"<color=#{color.Value.ToHexString()}>{name}</color>"
+					GenericModSettings.Data.UseTwitchNameColors
+						? $"<color=#{finalColor.ToHexString()}>{name}</color>"
 						: name
 				);
 			}
 			else
 			{
 				new MinionStartingStats(false).Apply(minion);
+				var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
 				identity.SetName(
-					GenericModSettings.Data.UseTwitchNameColors && color.HasValue
-						? $"<color=#{color.Value.ToHexString()}>{name}</color>"
+					GenericModSettings.Data.UseTwitchNameColors
+						? $"<color=#{finalColor.ToHexString()}>{name}</color>"
 						: name
 				);
 			}

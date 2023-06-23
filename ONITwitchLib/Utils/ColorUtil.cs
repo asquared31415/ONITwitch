@@ -60,4 +60,27 @@ public static class ColorUtil
 		color = Color.black;
 		return false;
 	}
+
+	// most of the default twitch colors, some of the boring ones removed
+	private static readonly Color[] Colors =
+	{
+		new(0.698f, 0.133f, 0.133f),
+		new(1.000f, 0.500f, 0.314f),
+		new(0.604f, 0.804f, 0.196f),
+		new(1.000f, 0.271f, 0.000f),
+		new(0.180f, 0.545f, 0.341f),
+		new(0.855f, 0.647f, 0.125f),
+		new(0.373f, 0.620f, 0.627f),
+		new(0.118f, 0.565f, 1.000f),
+		new(1.000f, 0.412f, 0.706f),
+		new(0.541f, 0.169f, 0.886f),
+		new(0.000f, 1.000f, 0.498f),
+	};
+
+	/// <returns>A random color that Twitch usernames can use by default.</returns>
+	[PublicAPI]
+	public static Color GetRandomTwitchColor()
+	{
+		return Colors.GetRandom();
+	}
 }

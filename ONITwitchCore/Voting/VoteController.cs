@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using HarmonyLib;
+using JetBrains.Annotations;
 using KSerialization;
 using ONITwitch.Config;
 using ONITwitch.Settings;

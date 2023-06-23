@@ -43,6 +43,10 @@ public static class TwitchModInfo
 		TwitchIsPresent ? Directory.GetParent(MainTwitchModType!.Assembly.Location)!.FullName : "";
 
 
+	/// <summary>
+	/// The folder that holds the config for the mod.
+	/// Only valid if the Twitch mod is active.
+	/// </summary>
 	[PublicAPI] public static readonly string ConfigFolder =
 		// mods/steam/ID/dll -> mods/config/ID
 		// 3 directories up, back down to config/id
