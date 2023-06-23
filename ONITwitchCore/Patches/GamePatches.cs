@@ -15,8 +15,6 @@ internal static class GamePatches
 		// ReSharper disable once InconsistentNaming
 		private static void Postfix(Game __instance)
 		{
-			__instance.gameObject.AddOrGet<VoteFile>();
-
 			__instance.gameObject.AddOrGet<OniTwitchEclipse>();
 		}
 	}

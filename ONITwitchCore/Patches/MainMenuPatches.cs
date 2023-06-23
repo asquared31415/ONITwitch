@@ -38,6 +38,7 @@ internal static class MainMenuPatches
 				// Run this even if an error was set, because the credentials were set to an anonymous login
 				var voteControllerGo = new GameObject("TwitchVoteController");
 				voteControllerGo.AddComponent<VoteController>().Credentials = credentials;
+				voteControllerGo.AddOrGet<VoteFile>();
 				Object.DontDestroyOnLoad(voteControllerGo);
 			}
 		}
