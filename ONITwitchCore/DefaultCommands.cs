@@ -56,7 +56,7 @@ internal static class DefaultCommands
 					SimHashes.Katairite.ToString(),
 				},
 				Danger.Small,
-				100,
+				50,
 				"core.spawn_element"
 			)
 		);
