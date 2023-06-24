@@ -160,7 +160,7 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 					Element.State.Solid => 2000f,
 					_ => 0f,
 				};
-				SimMessages.ReplaceAndDisplaceElement(
+				SimMessages.ReplaceElement(
 					Grid.XYToCell(xPos, yPos),
 					hashes[idx],
 					null,

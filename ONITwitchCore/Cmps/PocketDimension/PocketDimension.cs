@@ -23,6 +23,7 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	// defaults to make sure that it doesn't think it's dead on spawn
 	// ReSharper disable once InconsistentNaming
 	[Serialize] public float Lifetime = 1;
+
 	// ReSharper disable once InconsistentNaming
 	[Serialize] public float MaxLifetime = 1;
 
@@ -150,18 +151,15 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 			// unregister the world immediately to make sure that the world is inaccessible
 			ClusterManager.Instance.UnregisterWorldContainer(world);
+			WorldUtil.FreeGridSpace(world.WorldSize, world.WorldOffset);
+			var trav = Traverse.Create(world);
+			trav.Method("TransferPickupables", exitPos).GetValue();
 
+			// Wait a moment before actually destroying the GO to try and mitigate some AI and monitor issues
 			GameScheduler.Instance.Schedule(
 				"Finish Delete World",
 				4f,
-				_ =>
-				{
-					var trav = Traverse.Create(world);
-					trav.Method("TransferPickupables", exitPos).GetValue();
-					// actually deletes the world
-					Traverse.Create(ClusterManager.Instance).Method("DeleteWorldObjects", world).GetValue();
-					Destroy(world.gameObject);
-				}
+				_ => { Destroy(world); }
 			);
 
 			// disable the component, so it only destroys once

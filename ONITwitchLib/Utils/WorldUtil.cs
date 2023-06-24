@@ -62,6 +62,30 @@ public static class WorldUtil
 	}
 
 	/// <summary>
+	/// Frees grid space for a world. This is a version of Grid.FreeGridSpace that actually functions to clear some
+	/// properties of the cells, to avoid bugs where the solid property is not properly cleared.
+	/// </summary>
+	/// <param name="size">The size of the space to clear, in cells.</param>
+	/// <param name="offset">The starting offset of the space to clear, in cells.</param>
+	public static void FreeGridSpace(Vector2I size, Vector2I offset)
+	{
+		for (var y = offset.y; y < size.y + offset.y + 1; ++y)
+		{
+			for (var x = offset.x - 1; x < size.x + offset.x + 1; ++x)
+			{
+				var cell = Grid.XYToCell(x, y);
+				if (Grid.IsValidCell(cell))
+				{
+					SimMessages.ReplaceElement(cell, SimHashes.Vacuum, null, 0);
+				}
+			}
+		}
+
+		SimMessages.SimDataFreeCells(size.x, size.y, offset.x, offset.y);
+		Game.Instance.roomProber.Refresh();
+	}
+
+	/// <summary>
 	///	Refreshes the specified world index in the world selector, or refreshes the entire selector if no index is provided. 
 	/// </summary>
 	/// <param name="worldIndex">The index of the world to refresh.</param>
