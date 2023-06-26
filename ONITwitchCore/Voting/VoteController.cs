@@ -79,6 +79,9 @@ internal class VoteController : KMonoBehaviour
 			return false;
 		}
 
+		// clear the seen users, so that only users that participated in the current vote are ever in this
+		SeenUsersById.Clear();
+
 		var eventOptions = new List<EventInfo>();
 		var drawnCount = 0;
 		while (drawnCount < GenericModSettings.Data.VoteCount)
@@ -187,9 +190,6 @@ internal class VoteController : KMonoBehaviour
 			CurrentVote = null;
 			VoteDelayRemaining = GenericModSettings.Data.VoteDelay;
 			State = VotingState.VoteDelay;
-
-			// clear the seen users, so that only users that participated in the current vote are ever in this
-			SeenUsersById.Clear();
 		}
 		catch (Exception e)
 		{
