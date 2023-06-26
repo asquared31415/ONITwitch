@@ -133,12 +133,6 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 					: (Vector3) (startWorld.minimumBounds + startWorld.maximumBounds) / 2;
 			}
 
-			world.EjectAllDupes(exitPos);
-			foreach (var minionIdentity in Components.MinionIdentities.GetWorldItems(world.id))
-			{
-				minionIdentity.transform.SetPosition(exitPos);
-			}
-
 			world.CancelChores();
 			world.DestroyWorldBuildings(out _);
 
@@ -151,15 +145,25 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 			// unregister the world immediately to make sure that the world is inaccessible
 			ClusterManager.Instance.UnregisterWorldContainer(world);
-			WorldUtil.FreeGridSpace(world.WorldSize, world.WorldOffset);
-			var trav = Traverse.Create(world);
-			trav.Method("TransferPickupables", exitPos).GetValue();
 
-			// Wait a moment before actually destroying the GO to try and mitigate some AI and monitor issues
-			GameScheduler.Instance.Schedule(
+			// Wait to eject dupes until chores have been canceled so that dupes hopefully don't have the bug
+			// where they pick up the old Y position
+			GameScheduler.Instance.ScheduleNextFrame(
 				"Finish Delete World",
-				4f,
-				_ => { Destroy(world); }
+				_ =>
+				{
+					world.EjectAllDupes(exitPos);
+					foreach (var minionIdentity in Components.MinionIdentities.GetWorldItems(world.id))
+					{
+						minionIdentity.transform.SetPosition(exitPos);
+					}
+					
+					WorldUtil.FreeGridSpace(world.WorldSize, world.WorldOffset);
+					var trav = Traverse.Create(world);
+					trav.Method("TransferPickupables", exitPos).GetValue();
+					
+					Destroy(world);
+				}
 			);
 
 			// disable the component, so it only destroys once
