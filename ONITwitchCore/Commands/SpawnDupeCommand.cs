@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitch.Settings;
@@ -53,6 +54,10 @@ internal class SpawnDupeCommand : CommandBase
 		if (liveMinions.Count == 0)
 		{
 			Log.Warn("No live minions, aborting spawn");
+			ToastManager.InstantiateToast(
+				STRINGS.ONITWITCH.TOASTS.WARNINGS.EVENT_FAILURE,
+				STRINGS.ONITWITCH.TOASTS.WARNINGS.SPAWN_DUPE_FAILURE.BODY
+			);
 			return;
 		}
 
@@ -95,7 +100,19 @@ internal class SpawnDupeCommand : CommandBase
 
 		identity.GetComponent<MinionResume>().ForceAddSkillPoint();
 
-		var pos = Components.LiveMinionIdentities.Items.GetRandom().transform.position;
+		Vector3 pos;
+		// First try to find a printing pod, since that should always be in a safe location.
+		var pods = Components.Telepads.Items;
+		if (pods.Count > 0)
+		{
+			pos = pods.GetRandom().transform.position;
+		}
+		else
+		{
+			Log.Debug("Unable to find any Telepads, using a random dupe's location instead");
+			pos = liveMinions.GetRandom().transform.position;
+		}
+
 		minion.transform.SetLocalPosition(pos);
 
 		var upgradeFx = new UpgradeFX.Instance(identity, new Vector3(0.0f, 0.0f, -0.1f));

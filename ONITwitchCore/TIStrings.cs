@@ -467,6 +467,19 @@ public static class STRINGS
 				public static readonly LocString TITLE = "Tiles Uninsulated";
 				public static readonly LocString BODY = "Many tiles have been replaced with non-insulated versions";
 			}
+
+			public static class WARNINGS
+			{
+				public static readonly LocString EVENT_FAILURE = "Event Failed";
+
+				public static class SPAWN_DUPE_FAILURE
+				{
+					public static readonly LocString BODY =
+						"Unable to find a position to spawn a duplicant at. " +
+						"This normally means that no printing pods or other dupes exist. " +
+						"If you believe this is incorrect, please file a bug report.";
+				}
+			}
 		}
 
 		public static class UI
