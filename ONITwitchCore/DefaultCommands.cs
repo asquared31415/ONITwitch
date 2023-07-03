@@ -31,29 +31,19 @@ internal static class DefaultCommands
 				"ElementGroupCommon",
 				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_COMMON,
 				new SpawnElementPoolCommand(),
-				new List<string>
+				new Dictionary<string, float>
 				{
-					SimHashes.Water.ToString(),
-					SimHashes.Algae.ToString(),
-					SimHashes.OxyRock.ToString(),
-					SimHashes.SlimeMold.ToString(),
-					SimHashes.Obsidian.ToString(),
-					SimHashes.IgneousRock.ToString(),
-					SimHashes.SandStone.ToString(),
-					SimHashes.Rust.ToString(),
-					SimHashes.Sand.ToString(),
-					SimHashes.Snow.ToString(),
-					SimHashes.Ice.ToString(),
-					SimHashes.Carbon.ToString(),
-					SimHashes.DirtyWater.ToString(),
-					SimHashes.DirtyIce.ToString(),
-					SimHashes.Brine.ToString(),
-					SimHashes.BrineIce.ToString(),
-					SimHashes.Dirt.ToString(),
-					SimHashes.MaficRock.ToString(),
-					SimHashes.Salt.ToString(),
-					SimHashes.Sucrose.ToString(),
-					SimHashes.Katairite.ToString(),
+					{ SimHashes.Algae.ToString(), 1400 },
+					{ SimHashes.OxyRock.ToString(), 1400 },
+					{ SimHashes.SlimeMold.ToString(), 1400 },
+					{ SimHashes.IgneousRock.ToString(), 1400 },
+					{ SimHashes.Rust.ToString(), 1400 },
+					{ SimHashes.Sand.ToString(), 1400 },
+					{ SimHashes.Ice.ToString(), 1400 },
+					{ SimHashes.Carbon.ToString(), 1400 },
+					{ SimHashes.Dirt.ToString(), 1400 },
+					{ SimHashes.Salt.ToString(), 1400 },
+					{ SimHashes.Sucrose.ToString(), 1400 },
 				},
 				Danger.Small,
 				50,
@@ -65,18 +55,20 @@ internal static class DefaultCommands
 				"ElementGroupExotic",
 				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_EXOTIC,
 				new SpawnElementPoolCommand(),
-				new List<string>
+				new Dictionary<string, float>
 				{
-					SimHashes.Diamond.ToString(),
-					SimHashes.Ceramic.ToString(),
-					SimHashes.Fossil.ToString(),
-					SimHashes.Graphite.ToString(),
-					SimHashes.EnrichedUranium.ToString(),
-					SimHashes.Niobium.ToString(),
-					SimHashes.Tungsten.ToString(),
-					SimHashes.SuperCoolant.ToString(),
-					SimHashes.SuperInsulator.ToString(),
-					SimHashes.Resin.ToString(),
+					{ SimHashes.Diamond.ToString(), 1000 },
+					{ SimHashes.Ceramic.ToString(), 2000 },
+					{ SimHashes.Fossil.ToString(), 1400 },
+					{ SimHashes.Graphite.ToString(), 1000 },
+					{ SimHashes.EnrichedUranium.ToString(), 2000 },
+					{ SimHashes.Niobium.ToString(), 500 },
+					{ SimHashes.Tungsten.ToString(), 1200 },
+					// 20*5 = 100 = 10 tiles in a cooling loop
+					{ SimHashes.SuperCoolant.ToString(), 20 },
+					// 10 pipes worth
+					{ SimHashes.SuperInsulator.ToString(), 800 },
+					{ SimHashes.Resin.ToString(), 500 },
 				},
 				Danger.Small,
 				10,
@@ -88,15 +80,15 @@ internal static class DefaultCommands
 				"ElementGroupMetal",
 				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_METAL,
 				new SpawnElementPoolCommand(),
-				new List<string>
+				new Dictionary<string, float>
 				{
-					SimHashes.Cuprite.ToString(),
-					SimHashes.FoolsGold.ToString(),
-					SimHashes.IronOre.ToString(),
-					SimHashes.Electrum.ToString(),
-					SimHashes.Cobaltite.ToString(),
-					SimHashes.GoldAmalgam.ToString(),
-					SimHashes.AluminumOre.ToString(),
+					{ SimHashes.Cuprite.ToString(), 1500 },
+					{ SimHashes.FoolsGold.ToString(), 1500 },
+					{ SimHashes.IronOre.ToString(), 1500 },
+					{ SimHashes.Electrum.ToString(), 1500 },
+					{ SimHashes.Cobaltite.ToString(), 1500 },
+					{ SimHashes.GoldAmalgam.ToString(), 1500 },
+					{ SimHashes.AluminumOre.ToString(), 1500 },
 				},
 				Danger.Small,
 				50,
@@ -108,42 +100,15 @@ internal static class DefaultCommands
 				"ElementGroupGas",
 				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_GAS,
 				new SpawnElementPoolCommand(),
-				new List<string>
+				new Dictionary<string, float>
 				{
-					// CO2, polluted O2, and O2 excluded because they are in common
-					SimHashes.ChlorineGas.ToString(),
-					SimHashes.Hydrogen.ToString(),
-					SimHashes.Methane.ToString(),
-					SimHashes.SourGas.ToString(),
-					SimHashes.Steam.ToString(),
-					SimHashes.EthanolGas.ToString(),
-				},
-				Danger.Small,
-				50,
-				"core.spawn_element"
-			)
-		);
-		RegisterCommand(
-			new CommandInfo(
-				"ElementGroupLiquid",
-				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_LIQUID,
-				new SpawnElementPoolCommand(),
-				new List<string>
-				{
-					// Brine, salt water, water, polluted water in common instead
-					SimHashes.Chlorine.ToString(),
-					SimHashes.CrudeOil.ToString(),
-					SimHashes.LiquidCarbonDioxide.ToString(),
-					SimHashes.LiquidHydrogen.ToString(),
-					SimHashes.LiquidMethane.ToString(),
-					SimHashes.LiquidOxygen.ToString(),
-					SimHashes.LiquidPhosphorus.ToString(),
-					SimHashes.LiquidSulfur.ToString(),
-					SimHashes.MoltenGlass.ToString(),
-					SimHashes.Naphtha.ToString(),
-					SimHashes.Petroleum.ToString(),
-					SimHashes.Ethanol.ToString(),
-					SimHashes.MoltenSucrose.ToString(),
+					// CO2, polluted O2, and O2 excluded, they're too boring
+					{ SimHashes.ChlorineGas.ToString(), 10 },
+					{ SimHashes.Hydrogen.ToString(), 10 },
+					{ SimHashes.Methane.ToString(), 20 },
+					{ SimHashes.SourGas.ToString(), 10 },
+					{ SimHashes.Steam.ToString(), 10 },
+					{ SimHashes.EthanolGas.ToString(), 10 },
 				},
 				Danger.Small,
 				50,
@@ -155,17 +120,56 @@ internal static class DefaultCommands
 				"ElementGroupDeadly",
 				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_DEADLY,
 				new SpawnElementPoolCommand(),
-				new List<string>
+				new Dictionary<string, float>
 				{
-					SimHashes.Magma.ToString(),
-					SimHashes.MoltenIron.ToString(),
-					SimHashes.MoltenTungsten.ToString(),
-					SimHashes.AluminumGas.ToString(),
-					SimHashes.RockGas.ToString(),
-					SimHashes.SuperCoolantGas.ToString(),
+					// All of these are one tile surrounded by insulation
+					{ SimHashes.Magma.ToString(), 4000 },
+					{ SimHashes.MoltenIron.ToString(), 4000 },
+					// really bad SHC
+					{ SimHashes.MoltenTungsten.ToString(), 5000 },
+					// Aluminium and Rock Gas have decent SHC (~1), really hot
+					{ SimHashes.AluminumGas.ToString(), 2000 },
+					{ SimHashes.RockGas.ToString(), 2000 },
+
+					// huge SHC, but only 850K. Condenses at 710K. There's a mechanism to make sure
+					// that nothing spawns less than 300 degrees below its melting point if it's above 200C though.
+					// So the final temp will be 1010K and really high SHC.
+					{SimHashes.SuperCoolantGas.ToString(), 1000},
 				},
 				Danger.Small,
 				10,
+				"core.spawn_element"
+			)
+		);
+		RegisterCommand(
+			new CommandInfo(
+				"ElementGroupLiquid",
+				STRINGS.ONITWITCH.EVENTS.ELEMENT_GROUP_LIQUID,
+				new SpawnElementPoolCommand(),
+				new Dictionary<string, float>
+				{
+					// several waters are in common instead, they're boring
+					// 100 tiles of gas once these heat up
+					{ SimHashes.Chlorine.ToString(), 20 },
+					{ SimHashes.LiquidHydrogen.ToString(), 20 },
+					{ SimHashes.LiquidOxygen.ToString(), 20 },
+
+
+					// only one tile spawns of these
+					{ SimHashes.LiquidPhosphorus.ToString(), 1500 },
+					{ SimHashes.MoltenGlass.ToString(), 2500 },
+					{ SimHashes.MoltenSucrose.ToString(), 1500 },
+
+					// Liquid sulfur is just barely under 200 degrees, but it doesn't have a ton of heat
+					{ SimHashes.LiquidSulfur.ToString(), 500 },
+
+					{ SimHashes.Naphtha.ToString(), 500 },
+					{ SimHashes.Petroleum.ToString(), 500 },
+					{ SimHashes.Ethanol.ToString(), 500 },
+					{ SimHashes.CrudeOil.ToString(), 500 },
+				},
+				Danger.Small,
+				50,
 				"core.spawn_element"
 			)
 		);
@@ -406,10 +410,24 @@ internal static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("PartyTime", STRINGS.ONITWITCH.EVENTS.PARTY_TIME, new PartyTimeCommand(), 300.0d, Danger.None, 30)
+			new CommandInfo(
+				"PartyTime",
+				STRINGS.ONITWITCH.EVENTS.PARTY_TIME,
+				new PartyTimeCommand(),
+				300.0d,
+				Danger.None,
+				30
+			)
 		);
 		RegisterCommand(
-			new CommandInfo("PoisonDupes", STRINGS.ONITWITCH.EVENTS.POISON, new PoisonDupesCommand(), null, Danger.High, 20)
+			new CommandInfo(
+				"PoisonDupes",
+				STRINGS.ONITWITCH.EVENTS.POISON,
+				new PoisonDupesCommand(),
+				null,
+				Danger.High,
+				20
+			)
 		);
 		RegisterCommand(
 			new CommandInfo(
@@ -502,7 +520,14 @@ internal static class DefaultCommands
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("SkillPoints", STRINGS.ONITWITCH.EVENTS.SKILL_POINTS, new SkillCommand(), 0.33d, Danger.None, 20)
+			new CommandInfo(
+				"SkillPoints",
+				STRINGS.ONITWITCH.EVENTS.SKILL_POINTS,
+				new SkillCommand(),
+				0.33d,
+				Danger.None,
+				20
+			)
 		);
 		RegisterCommand(
 			new CommandInfo(
