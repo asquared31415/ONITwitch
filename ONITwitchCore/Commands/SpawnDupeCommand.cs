@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitch.Settings;
@@ -34,10 +33,8 @@ internal class SpawnDupeCommand : CommandBase
 				n => Components.LiveMinionIdentities.Items.Any(
 					i =>
 					{
-						// only count colored named dupes
 						var normalizedName = i.name.ToLowerInvariant();
-						return normalizedName.Contains("</color>") &&
-							   normalizedName.Contains(n.DisplayName.ToLowerInvariant());
+						return normalizedName.Contains(n.DisplayName.ToLowerInvariant());
 					}
 				)
 			);
