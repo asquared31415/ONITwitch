@@ -35,6 +35,10 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 	{
 		StartCoroutine(SpawnGifts());
 		started = true;
+		if ((CameraController.Instance != null) && (CameraController.Instance.followTarget == transform))
+		{
+			CameraController.Instance.ClearFollowTarget();
+		}
 	}
 
 	private static bool PrefabIsValid(KPrefabID prefab)
