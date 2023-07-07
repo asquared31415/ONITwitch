@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Application: Oxygen Not IncludedPOT Version: 2.0\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #. ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH.POCKETDIMENSIONEXTERIORPORTALCONFIG.DESC
 msgctxt ""
@@ -171,7 +171,7 @@ msgid ""
 "\n"
 "It cannot be excavated by any Duplicant mining tool."
 msgstr ""
-"(Nt) Neutrollium ist ein mysteriöses und extrem widerstandsfähiges Element.\n"
+"(Nt) Neutronium ist ein mysteriöses und extrem widerstandsfähiges Element.\n"
 "\n"
 "Es kann mit keinem Werkzeug der Duplikanten abgebaut werden."
 
@@ -187,9 +187,9 @@ msgid ""
 "\n"
 "...It's best not to think about where it came from..."
 msgstr ""
-"Ein Stück Fleisch mit einem verblassenden Glitzern,\n"
+"Ein Stück Fleisch mit einem verblassten Glitzern,\n"
 "\n"
-"...besser nicht darüber nachdenken wo es herkommt..."
+"...besser nicht darüber nachdenken wo das herkommt..."
 
 #. ONITwitch.STRINGS.ITEMS.FOOD.ONITWITCH.GLITTERMEATCONFIG.NAME
 msgctxt "ONITwitch.STRINGS.ITEMS.FOOD.ONITWITCH.GLITTERMEATCONFIG.NAME"
@@ -291,7 +291,7 @@ msgstr "Stärke hoch"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.BANSHEE_WAIL
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.BANSHEE_WAIL"
 msgid "Banshee Wail"
-msgstr "Wutanfall"
+msgstr "Schreikrampf"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.BEDROOM_SNOW
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.BEDROOM_SNOW"
@@ -451,7 +451,7 @@ msgstr "Amorbusregen"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_MORB_NORMAL
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_MORB_NORMAL"
 msgid "Morbs!!!"
-msgstr "Morbs!!!!"
+msgstr "Morbinvasion!!!!"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_PACU_NORMAL
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_PACU_NORMAL"
@@ -471,7 +471,7 @@ msgstr "Slicksterregen"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.REDUCE_OXYGEN
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.REDUCE_OXYGEN"
 msgid "Un-include Oxygen"
-msgstr "Sauerstoff nicht enthalten"
+msgstr "Dünne Luft"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.RESEARCH_TECH
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.RESEARCH_TECH"
@@ -511,7 +511,7 @@ msgstr "Erzeuge Glitzerpuft"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.SPAWN_MOO_COMET
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.SPAWN_MOO_COMET"
 msgid "Spawn Gassy Moo Comet"
-msgstr "Erzeuge Gassy-Moo-Kometen"
+msgstr "Erzeuge Gassy Moo-teorit"
 
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.SPAWN_SNAZZY_SUIT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.SPAWN_SNAZZY_SUIT"
@@ -561,17 +561,17 @@ msgstr "Der Boden ist Lava"
 #. ONITwitch.STRINGS.ONITWITCH.EVENTS.UNINSULATE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.EVENTS.UNINSULATE"
 msgid "Uninsulate Tiles"
-msgstr "Uninsoliere Ziegel"
+msgstr "Isolierungsklau"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY"
 msgid "All of your duplicants are releasing their urge to scream"
-msgstr "Alle deine Duplikanten lassen ihren angestauten Wehklagen freien Lauf"
+msgstr "Alle deine Duplikanten geben ihrem Drang zu Schreien nach"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE"
 msgid "Banshee Wail"
-msgstr "Wutanfall"
+msgstr "Schreikrampf"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.ECLIPSE.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.ECLIPSE.BODY"
@@ -663,7 +663,7 @@ msgstr "Steigende Temperaturen auf {0}"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.GLOBAL_WARMING.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.GLOBAL_WARMING.TITLE"
 msgid "Global Warming"
-msgstr "Klimaerwärmung"
+msgstr "Klimawandel"
 
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.ICE_AGE.BODY_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.ICE_AGE.BODY_FORMAT"
@@ -891,7 +891,7 @@ msgstr "Viele Ziegel sind durch nicht isolierte Versionen ersetzt worden"
 #. ONITwitch.STRINGS.ONITWITCH.TOASTS.UNINSULATE_TILES.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.TOASTS.UNINSULATE_TILES.TITLE"
 msgid "Tiles Uninsulated"
-msgstr "Uninsolierte Ziegel"
+msgstr "Isolierung geklaut"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.APPLY.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.APPLY.TEXT"
@@ -907,22 +907,24 @@ msgstr "Kanalname"
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.CHANNEL_NAME.TOOLTIP"
 msgid ""
 "The name of the Twitch channel to interact with.\n"
-"This should be your username (example: asquared31415)."
+"This should be your username. (example: asquared31415)"
 msgstr ""
 "Der Name des Twitch-Kanals, auf welchem die Interaktionen stattfinden.\n"
 "Das sollte dein Nutzername sein (Beispiel: asquared31415)."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TEXT"
-msgid "Edit Config"
-msgstr "Konfiguration anpassen"
+msgid "Edit Event Config"
+msgstr "Event-Konfiguration anpassen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TOOLTIP
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.EDIT.TOOLTIP"
-msgid "Opens a page in a browser to edit the current event config."
+msgid ""
+"Opens a page in a browser to edit the current event config. (WARNING: "
+"SPOILERS)"
 msgstr ""
-"Öffnet eine Website im Browser zur Anpassung der aktuellen "
-"Eventkonfiguration."
+"Öffnet eine Website im Browser zum Anpassen der aktuellen "
+"Eventeinstellungen. (ACHTUNG: SPOILER, ALLE Events werden hier gelistet)"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.MAX_DANGER.TEXT"
@@ -960,23 +962,24 @@ msgstr "Anzahl an Optionen, die bei einer Abstimmung angezeigt werden sollen."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TEXT"
-msgid "Show Vote Choice Toasts"
+msgid "Show Vote Choice Notifications"
 msgstr "Abstimmungsoptionen anzeigen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TOOLTIP
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_START_TOASTS.TOOLTIP"
 msgid ""
 "Whether to show notifications when a vote starts. This can be disabled if "
-"you want to not know what chat is voting on."
+"you want to not know what options chat has."
 msgstr ""
-"Wenn aktiviert, werden bei Start einer Abstimmung die Optionen in einem "
-"kleinen Benachrichtigungsfenster kurz eingeblendet. Dies kann deaktiviert "
-"werden, wenn innerhalb des Spiels nicht angezeigt werden soll, was die "
-"Optionen der Abstimmung sind."
+"Wenn aktiviert, werden bei Start einer Abstimmung die Optionen in einem.\n"
+" kleinen Benachrichtigungsfenster kurz eingeblendet.\n"
+"Dies kann deaktiviert werden, wenn innerhalb des Spiels nicht angezeigt "
+"werden soll,.\n"
+" welche Abstimmmöglichkeiten dem Chat zur Verfügung stehen."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TEXT"
-msgid "Show Toasts"
+msgid "Show Notifications"
 msgstr "Benachrichtigungsfenster anzeigen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.SHOW_TOASTS.TOOLTIP
@@ -1010,7 +1013,7 @@ msgstr "Twitch Integration Einstellungen"
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TEXT"
 msgid "Use Twitch Username Colors"
-msgstr "Nutze Twitch-Nutzer-Farbe"
+msgstr "Nutze Twitch Nutzernamen-Farbe"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TOOLTIP
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.USE_TWITCH_COLORS.TOOLTIP"
@@ -1020,10 +1023,10 @@ msgid ""
 "Note: If a user has not set their username color manually, it will be white, "
 "even though Twitch chat picks a random color."
 msgstr ""
-"Entscheidet, ob bei Erzeugung einer Duplikantenkopie eines Chatnutzers "
+"Entscheidet, ob bei Erzeugung einer Duplikantenkopie eines Chatnutzers .\n"
 "dessen Twitch-Farbe in den Namen mitübernommen wird.\n"
-"Zu beachten: Nutzer ohne manuell eingestellte Farbe werden als weiß "
-"interpretiert, auch wenn im Chat eine Zufallsfarbe angezeigt wird."
+"Zu beachten: Nutzer ohne manuell eingestellte Farbe werden.\n"
+"als weiß interpretiert, auch wenn im Chat der Name eine zufällige Farbe hat."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TEXT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.CONFIG.VOTING_TIME.TEXT"
@@ -1068,6 +1071,20 @@ msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DANGER.SMALL"
 msgid "Small"
 msgstr "Minimal"
 
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.CONNECTION_ERROR.BODY_FORMAT
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.CONNECTION_ERROR.BODY_FORMAT"
+msgid ""
+"The connection to Twitch failed {0} times. This may be caused by a bad "
+"internet connection or invalid credentials."
+msgstr ""
+"Die Netzwerkverbindung zu Twitch schlug {0} mal fehl. Das kann an einer "
+"schlechten Internetverbindung oder ungültigen Anmeldedaten liegen."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.CONNECTION_ERROR.TITLE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.CONNECTION_ERROR.TITLE"
+msgid "Connection Error"
+msgstr "Verbindungsfehler"
+
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.BODY"
 msgid ""
@@ -1078,8 +1095,9 @@ msgid ""
 msgstr ""
 "Die Gefahrenstufe \"Tödlich\" hat Events, welche "
 "<color=#FE2F2FFF><i><b>deine Duplikanten direkt töten können</b></i></color> "
-"oder extrem tödliche Dinge auslösen, oft ohne die Möglichkeit, diese zu "
-"verhindern. Häng nicht zu sehr an deinen Duplikaten."
+"oder extrem tödliche Dinge auslösen,.\n"
+" oft ohne die Möglichkeit, diese zu verhindern. Häng nicht zu sehr an deinen "
+"Duplikaten."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.CONTINUE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.CONTINUE"
@@ -1110,7 +1128,6 @@ msgid ""
 msgstr ""
 "Event {0} ist während der Ausführung abgestürzt: {1}.\n"
 "Abstimmungen gestoppt.\n"
-"\n"
 "Bitte diesen Fehler (mit Log-Datei) dem Autor des Event melden."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.TITLE
@@ -1118,19 +1135,97 @@ msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.EVENT_ERROR.TITLE"
 msgid "Event Error"
 msgstr "Eventfehler"
 
-#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.BODY
-msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.BODY"
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.CONNECTION_OAUTH_ERR
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS."
+"CONNECTION_OAUTH_ERR"
+msgid ""
+"An unknown error occured when validating your OAuth token with Twitch. (No "
+"response from server)"
+msgstr ""
+"Ein unbekannter Fehler ist bei der Validierung des OAuth-Tokes mit Twitch "
+"aufgetreten (Keine Serverantwort)"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.EXPIRED_OAUTH
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.EXPIRED_OAUTH"
+msgid ""
+"The OAuth token is invalid or has expired. Please generate a new token "
+"following the instructions in the README. Using anonymous connection."
+msgstr ""
+"Der OAuth-Token ist ungültig oder abgelaufen. Wechsle stattdessen auf "
+"anonyme Verbindung. Bitte generiere einen neuen Token anhand der Anleitung "
+"in der README-Datei."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.INVALID_FILE
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.INVALID_FILE"
 msgid ""
 "The credentials file was broken and has been reset, please follow the "
-"instructions in the README"
+"instructions in the README."
 msgstr ""
-"Die Datei mit den Anmeldedaten war defekt und wurde zurückgesetzt. Bitte "
-"folgen Sie den Anweisungen in der README"
+"Die Anmeldedatei war defekt und wurde zurückgesetzt. Bitte folge den "
+"Anweisungen in der README."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.INVALID_NICK
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.INVALID_NICK"
+msgid ""
+"The Twitch nickname in the credentials file was not a valid nickname. Using "
+"anonymous connection."
+msgstr ""
+"Der angegebene Twitch-Benutzername in der Anmeldedatei war kein valider "
+"Benutzername. Stattdessen wird nun ein anonymer Login verwendet."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.MALFORMED_OAUTH
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.MALFORMED_OAUTH"
+msgid ""
+"Invalid OAuth token!\n"
+"The OAuth token should be composed of only numbers and letters. Using "
+"anonymous connection."
+msgstr ""
+"Ungültiger OAuth-Token!\n"
+"Der OAuth-Token sollte nur aus Zahlen und Buchstaben bestehen. Stattdessen "
+"wird nun ein anonymer Login verwendet."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.NICK_CONTAINS_SLASH
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS."
+"NICK_CONTAINS_SLASH"
+msgid ""
+"The Twitch nickname in the credentials file contained a slash. The nickname "
+"should be <i>only</i> the name you use to log in to Twitch. Using anonymous "
+"connection."
+msgstr ""
+"Der Twitch-Benutzername in der Anmeldedatei enthielt ein Slash. Dies sollte "
+"<i>nur</i> der Name sein, .\n"
+"welcher bei der Anmeldung bei Twitch verwendet wird (nicht der Anzeigename). "
+"Stattdessen wird nun ein anonymer Login verwendet."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.NO_LOGIN
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.NO_LOGIN"
+msgid ""
+"The credentials file does not have a Twitch nickname set. Using anonymous "
+"connection."
+msgstr ""
+"Der Anmeldedatei fehlt ein Benutzername. Stattdessen wird nun ein anonymer "
+"Login verwendet."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.TITLE"
 msgid "Invalid Credentials"
 msgstr "Ungültige Anmeldedaten"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.UNKNOWN_OAUTH_ERR
+msgctxt ""
+"ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.UNKNOWN_OAUTH_ERR"
+msgid ""
+"An unknown error occured when validating your OAuth token with Twitch. Using "
+"anonymous connection."
+msgstr ""
+"Ein unbekannter Fehler ist bei der Validierung des OAuth-Tokens mit Twitch "
+"aufgetreten. Stattdessen wird nun ein anonymer Login verwendet."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_EVENT_CONFIG.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_EVENT_CONFIG.BODY"
@@ -1142,6 +1237,31 @@ msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.INVALID_EVENT_CONFIG.TITLE"
 msgid "Invalid Config"
 msgstr "Ungültige Konfiguration"
 
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NO_VOTES.BODY
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NO_VOTES.BODY"
+msgid "No events were able to be drawn."
+msgstr "Es konnten keine Events gewürfelt werden."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NO_VOTES.TITLE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NO_VOTES.TITLE"
+msgid "Cannot Start Vote"
+msgstr "Kann Abstimmung nicht starten"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NOT_AUTHENTICATED.BODY
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NOT_AUTHENTICATED.BODY"
+msgid ""
+"You are not authenticated with Twitch. The vote cannot be started. This may "
+"be caused by incorrect or missing credentials."
+msgstr ""
+"Es konnte keine Anmeldung mit Twitch durchgeführt werden. Die Abstimmung "
+"kann deshalb nicht gestartet werden.\n"
+"Dies ist möglicherweise durch falsche oder fehlende Anmeldedaten verursacht."
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NOT_AUTHENTICATED.TITLE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.NOT_AUTHENTICATED.TITLE"
+msgid "Not Authenticated"
+msgstr "Nicht Angemeldet"
+
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNKNOWN_SAVE.BODY
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNKNOWN_SAVE.BODY"
 msgid ""
@@ -1149,13 +1269,38 @@ msgid ""
 "config had to be reset. Your old config has been saved to config_bak.json."
 msgstr ""
 "Es wurde eine unbekannte Version der Twitch-Integration-Konfiguration "
-"gefunden und die Konfiguration musste zurückgesetzt werden. Ihre alte "
-"Konfiguration wurde in config_bak.json gespeichert."
+"gefunden und die Konfiguration musste zurückgesetzt werden. \n"
+"Die alte Konfiguration wurde als config_bak.json gespeichert."
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNKNOWN_SAVE.TITLE
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNKNOWN_SAVE.TITLE"
 msgid "Unknown Save Version"
-msgstr "Unbekannte Speicherstandversion"
+msgstr "Unbekannte Spielstandversion"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.BACK
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.BACK"
+msgid "Go Back"
+msgstr "Zurück"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.BODY
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.BODY"
+msgid "There are unsaved changes, are you sure you want to exit?"
+msgstr "Es liegen ungespeicherte Änderungen vor, wirklich verlassen?"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.DISCARD
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.DISCARD"
+msgid "Discard Changes"
+msgstr "Änderungen verwerfen"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.SAVE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.SAVE"
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#. ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.TITLE
+msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.DIALOGS.UNSAVED_CONFIG.TITLE"
+msgid "Unsaved Changes"
+msgstr "Ungespeicherte Änderungen"
 
 #. ONITwitch.STRINGS.ONITWITCH.UI.PAUSE_MENU.START_VOTES
 msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.PAUSE_MENU.START_VOTES"
@@ -1238,9 +1383,79 @@ msgstr "Abstimmungen wurden noch nicht gestartet"
 #. ONITwitch.STRINGS.ONITWITCH.VOTE_INFO_FILE.VOTE_OVER_FORMAT
 msgctxt "ONITwitch.STRINGS.ONITWITCH.VOTE_INFO_FILE.VOTE_OVER_FORMAT"
 msgid "Vote Over ({0:F0} seconds to next vote)"
-msgstr "Abstimmung vorbei ({0:F0} Sekunden bis zur nächsten Abstimmung)"
+msgstr ""
+"Abstimmung vorbei\n"
+" ({0:F0} Sekunden bis zur nächsten Abstimmung)"
 
 #. ONITwitch.STRINGS.ONITWITCH.WORLDS.POCKET_DIMENSION.NAME
 msgctxt "ONITwitch.STRINGS.ONITWITCH.WORLDS.POCKET_DIMENSION.NAME"
 msgid "Pocket Dimension"
 msgstr "Taschendimension"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH."
+#~ "POCKETDIMENSIONEXTERIORPORTALCONFIG.DESC"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.BUILDINGS.PREFABS.ONITWITCH."
+#~ "POCKETDIMENSIONINTERIORPORTALCONFIG.DESC"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_DOWN.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.ATHLETICS_UP.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_DOWN.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.CONSTRUCTION_UP.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_DOWN.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.EXCAVATION_UP.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_DOWN.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.DUPLICANTS.MODIFIERS.ONITWITCH.STRENGTH_UP.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_EXTERIOR_SIDE_SCREEN."
+#~ "TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt ""
+#~ "ONITwitch.STRINGS.ONITWITCH.UI.POCKET_DIMENSION_INTERIOR_SIDE_SCREEN."
+#~ "TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"
+
+#~ msgctxt "ONITwitch.STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP"
+#~ msgid "TODO"
+#~ msgstr "TODO"

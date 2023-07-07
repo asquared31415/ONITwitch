@@ -247,7 +247,7 @@ public static class STRINGS
 			public static readonly LocString SPAWN_CRAB = "Spawn Pokeshell";
 			public static readonly LocString SPAWN_DUPE = "Spawn Duplicant";
 			public static readonly LocString SPAWN_GLITTER_PUFT = "Spawn Glitter Puft";
-			public static readonly LocString SPAWN_MOO_COMET = "Spawn Gassy Moo Comet";
+			public static readonly LocString SPAWN_MOO_COMET = "Spawn Gassy Mooteor";
 			public static readonly LocString SPAWN_SNAZZY_SUIT = "Spawn Snazzy Suit";
 			public static readonly LocString SPAWN_VACILLATOR_CHARGE = "Spawn Vacillator Charge";
 
@@ -286,7 +286,7 @@ public static class STRINGS
 			public static class ELEMENT_GROUP
 			{
 				public static readonly LocString TITLE = "Element Created";
-				public static readonly LocString BODY_FORMAT = "A chunk of {0} has appeared";
+				public static readonly LocString BODY_FORMAT = "{0} has appeared";
 			}
 
 			public static class END_VOTE_NO_OPTIONS
@@ -570,7 +570,7 @@ public static class STRINGS
 					public static readonly LocString TEXT = "Edit Event Config";
 
 					public static readonly LocString TOOLTIP =
-						"Opens a page in a browser to edit the current event config. (WARNING: SPOILERS)";
+						"Opens a page in a browser to edit the current event config. (WARNING: SPOILERS! All events are shown.)";
 				}
 			}
 
