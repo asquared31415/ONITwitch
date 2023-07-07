@@ -35,23 +35,30 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	{
 		base.OnSpawn();
 
+		if (world == null)
+		{
+			Log.Warn("Pocket Dimension was improperly deleted!");
+			Destroy(gameObject);
+			return;
+		}
+
 		var door = ExteriorPortal.Get();
 		if (door != null)
 		{
 			// set parent to the world the door is in
 			// This has to be here on spawn, because parent worlds aren't saved
 			world.SetParentIdx(door.GetMyWorldId());
+
+			WorldUtil.AddDiagnostic(
+				world.id,
+				new DimensionClosingDiagnostic(world.id)
+			);
 		}
 		else
 		{
 			Log.Warn("no exterior door linked to pocket dimension");
 			DestroyWorld();
 		}
-
-		WorldUtil.AddDiagnostic(
-			world.id,
-			new DimensionClosingDiagnostic(world.id)
-		);
 	}
 
 	// The fraction of the lifetime remaining, clamped between 0 and 1
@@ -157,12 +164,12 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 					{
 						minionIdentity.transform.SetPosition(exitPos);
 					}
-					
+
 					WorldUtil.FreeGridSpace(world.WorldSize, world.WorldOffset);
 					var trav = Traverse.Create(world);
 					trav.Method("TransferPickupables", exitPos).GetValue();
-					
-					Destroy(world);
+
+					Destroy(world.gameObject);
 				}
 			);
 
