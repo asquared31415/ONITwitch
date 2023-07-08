@@ -3,6 +3,7 @@
 using System.Collections;
 using KSerialization;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using UnityEngine;
 
 namespace ONITwitch.Cmps;
@@ -41,7 +42,7 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 		}
 	}
 
-	private static bool PrefabIsValid(KPrefabID prefab)
+	internal static bool PrefabIsValid(KPrefabID prefab)
 	{
 		// never allow a force disabled object
 		if (prefab.HasTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled))
@@ -77,50 +78,56 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 				randPrefab = Assets.Prefabs.GetRandom();
 			} while (!PrefabIsValid(randPrefab));
 
-			var go = Util.KInstantiate(randPrefab.gameObject, transform.position);
-			go.SetActive(true);
-
-			if (go.TryGetComponent(out ElementChunk _) && go.TryGetComponent(out PrimaryElement primaryElement))
-			{
-				primaryElement.Mass = 50f;
-			}
-
-			// make it fly a little bit
-			var velocity = Random.Range(1, 3) * Random.insideUnitCircle.normalized;
-			velocity.y = Mathf.Abs(velocity.y);
-			// whether to restore the faller after 
-			var hadFaller = false;
-			if (GameComps.Fallers.Has(go))
-			{
-				hadFaller = true;
-				GameComps.Fallers.Remove(go);
-			}
-
-			GameComps.Fallers.Add(go, velocity);
-
-			GameScheduler.Instance.Schedule(
-				"TwitchRemoveSurpriseBoxFaller",
-				15f,
-				_ =>
-				{
-					if (go != null)
-					{
-						// only clear fallers for things that didnt have it before
-						if (!hadFaller && GameComps.Fallers.Has(go))
-						{
-							GameComps.Fallers.Remove(go);
-						}
-
-						// trigger cell changes
-						go.transform.SetPosition(go.transform.position);
-					}
-				}
-			);
+			SpawnPrefab(randPrefab, transform.position);
 
 			yield return new WaitForSeconds(Random.Range(0.75f, 2.0f));
 		}
 
 		Destroy(gameObject);
+	}
+
+	internal static void SpawnPrefab(KPrefabID prefabID, Vector3 position)
+	{
+		Log.Debug($"Surprise box spawning a {prefabID.name} at {position}");
+		var go = Util.KInstantiate(prefabID.gameObject, position);
+		go.SetActive(true);
+
+		if (go.TryGetComponent(out ElementChunk _) && go.TryGetComponent(out PrimaryElement primaryElement))
+		{
+			primaryElement.Mass = 50f;
+		}
+
+		// make it fly a little bit
+		var velocity = Random.Range(1, 3) * Random.insideUnitCircle.normalized;
+		velocity.y = Mathf.Abs(velocity.y);
+		// whether to restore the faller after 
+		var hadFaller = false;
+		if (GameComps.Fallers.Has(go))
+		{
+			hadFaller = true;
+			GameComps.Fallers.Remove(go);
+		}
+
+		GameComps.Fallers.Add(go, velocity);
+
+		GameScheduler.Instance.Schedule(
+			"TwitchRemoveSurpriseBoxFaller",
+			15f,
+			_ =>
+			{
+				if (go != null)
+				{
+					// only clear fallers for things that didnt have it before
+					if (!hadFaller && GameComps.Fallers.Has(go))
+					{
+						GameComps.Fallers.Remove(go);
+					}
+
+					// trigger cell changes
+					go.transform.SetPosition(go.transform.position);
+				}
+			}
+		);
 	}
 
 	public void SetButtonTextOverride(ButtonMenuTextOverride textOverride)

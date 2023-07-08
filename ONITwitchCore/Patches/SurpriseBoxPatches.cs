@@ -15,20 +15,37 @@ internal static class SurpriseBoxPatches
 		[UsedImplicitly]
 		private static IEnumerable<MethodBase> TargetMethods()
 		{
-			yield return AccessTools.Method(typeof(DustCometConfig), nameof(DustCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(FoodCometConfig), nameof(FoodCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(GoldCometConfig), nameof(GoldCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(IronCometConfig), nameof(IronCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(RockCometConfig), nameof(RockCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(CopperCometConfig), nameof(CopperCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(GassyMooCometConfig), nameof(GassyMooCometConfig.CreatePrefab));
-			yield return AccessTools.Method(typeof(FullereneCometConfig), nameof(FullereneCometConfig.CreatePrefab));
-			yield return AccessTools.Method(
-				typeof(NuclearWasteCometConfig),
-				nameof(NuclearWasteCometConfig.CreatePrefab)
-			);
-
 			// NOTE: Satellite comet explicitly not included here, it's very very very dangerous
+			var types = new[]
+			{
+				// base game comets
+				typeof(DustCometConfig),
+				typeof(GoldCometConfig),
+				typeof(IronCometConfig),
+				typeof(RockCometConfig),
+				typeof(CopperCometConfig),
+
+				// DLC comets
+				// note: The actual prefab is not created if DLC is not enabled, so it can't be chosen
+				typeof(NuclearWasteCometConfig),
+				typeof(AlgaeCometConfig),
+				typeof(BleachStoneCometConfig),
+				typeof(FullereneCometConfig),
+				typeof(OxyliteCometConfig),
+				typeof(PhosphoricCometConfig),
+				typeof(SlimeCometConfig),
+				typeof(SnowballCometConfig),
+				typeof(UraniumCometConfig),
+
+				// extra comets
+				typeof(FoodCometConfig),
+				typeof(GassyMooCometConfig),
+			};
+
+			foreach (var type in types)
+			{
+				yield return AccessTools.Method(type, "CreatePrefab");
+			}
 		}
 
 		[UsedImplicitly]
@@ -40,7 +57,7 @@ internal static class SurpriseBoxPatches
 	}
 
 	[HarmonyPatch]
-	private static class DisabledEntityPatches
+	private static class DisabledSingleEntityPatches
 	{
 		[UsedImplicitly]
 		private static IEnumerable<MethodBase> TargetMethods()
@@ -56,6 +73,28 @@ internal static class SurpriseBoxPatches
 		private static void Postfix(GameObject __result)
 		{
 			__result.AddTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled);
+		}
+	}
+
+
+	[HarmonyPatch]
+	private static class DisabledSingleMultiPatches
+	{
+		[UsedImplicitly]
+		private static IEnumerable<MethodBase> TargetMethods()
+		{
+			// artifacts are not interesting
+			yield return AccessTools.Method(typeof(ArtifactConfig), nameof(ArtifactConfig.CreatePrefabs));
+		}
+
+		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
+		private static void Postfix(List<GameObject> __result)
+		{
+			foreach (var gameObject in __result)
+			{
+				gameObject.AddTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled);
+			}
 		}
 	}
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using HarmonyLib;
 using ImGuiNET;
 using JetBrains.Annotations;
+using ONITwitch.Cmps;
 using ONITwitch.Patches;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
@@ -27,6 +28,8 @@ internal class TwitchDevTool : DevTool
 
 	private bool useMouseRangeOverride;
 	private float eventDelay;
+
+	private int selectedSurpriseBoxPrefabIdx;
 
 	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
 	private string eventFilter = "";
@@ -168,6 +171,15 @@ internal class TwitchDevTool : DevTool
 				{
 					ImGui.Text($"Base Cell: {startCell}, Closest {closestCell}");
 				}
+
+				if (ImGui.Button("Dump Valid Surprise Box Prefabs"))
+				{
+					Log.Debug("All valid prefabs for the Surprise Box:");
+					foreach (var prefabID in Assets.Prefabs.Where(SurpriseBox.PrefabIsValid))
+					{
+						Console.WriteLine(Util.StripTextFormatting(prefabID.name));
+					}
+				}
 			}
 
 			if (debugClosestCell)
@@ -197,6 +209,55 @@ internal class TwitchDevTool : DevTool
 				}
 
 				ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
+
+				var validPrefabs = Assets.Prefabs.Where(SurpriseBox.PrefabIsValid).ToList();
+				string previewName;
+				if (selectedSurpriseBoxPrefabIdx >= validPrefabs.Count)
+				{
+					selectedSurpriseBoxPrefabIdx = 0;
+					previewName = "";
+				}
+				else
+				{
+					previewName = Util.StripTextFormatting(validPrefabs[selectedSurpriseBoxPrefabIdx].name);
+				}
+
+				var spawnEnabled = selectedSurpriseBoxPrefabIdx < validPrefabs.Count;
+				if (ImGuiInternal.ButtonEx(
+						"Spawn Prefab",
+						spawnEnabled
+							? ImGuiInternal.ImGuiButtonFlags.None
+							: ImGuiInternal.ImGuiButtonFlags.Internal_Disabled
+					))
+				{
+					var prefab = validPrefabs[selectedSurpriseBoxPrefabIdx];
+					GameScheduler.Instance.ScheduleNextFrame(
+						"Spawn Surprise Box Prefab",
+						_ => { SurpriseBox.SpawnPrefab(prefab, PosUtil.ClampedMouseCellWorldPos()); }
+					);
+				}
+
+				ImGui.SameLine();
+				if (ImGui.BeginCombo("##SurprisePrefabSelector", previewName))
+				{
+					for (var idx = 0; idx < validPrefabs.Count; idx++)
+					{
+						var isSelected = idx == selectedSurpriseBoxPrefabIdx;
+						var name = Util.StripTextFormatting(validPrefabs[idx].name);
+						if (ImGui.Selectable(name, isSelected))
+						{
+							selectedSurpriseBoxPrefabIdx = idx;
+						}
+
+						// make the selected item focus when the drop down is opened
+						if (isSelected)
+						{
+							ImGui.SetItemDefaultFocus();
+						}
+					}
+
+					ImGui.EndCombo();
+				}
 
 				ImGui.NewLine();
 
