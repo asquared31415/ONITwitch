@@ -65,6 +65,10 @@ public static class PocketDimensionGenerator
 				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
 				pocketDim.MaxLifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
 
+			#if DEBUG
+				pocketDim.Lifetime = 60;
+			#endif
+
 				// generate the world
 				// natural tiles, prefabs, and possibly a nested dimension
 				settings.Generate(world);

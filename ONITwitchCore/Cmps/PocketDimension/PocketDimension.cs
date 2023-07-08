@@ -153,6 +153,15 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			// unregister the world immediately to make sure that the world is inaccessible
 			ClusterManager.Instance.UnregisterWorldContainer(world);
 
+			// destroy all critters, so they don't pop out
+			foreach (var pickupable in Components.Pickupables.GetWorldItems(world.id))
+			{
+				if (pickupable.TryGetComponent<CreatureBrain>(out _))
+				{
+					Destroy(pickupable.gameObject);
+				}
+			}
+
 			// Wait to eject dupes until chores have been canceled so that dupes hopefully don't have the bug
 			// where they pick up the old Y position
 			GameScheduler.Instance.ScheduleNextFrame(
