@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
@@ -15,7 +16,7 @@ internal class FillBedroomCommand : CommandBase
 
 	public override bool Condition(object data)
 	{
-		return ElementUtil.ElementExistsAndEnabled((string) data);
+		return (GetValidRooms().Count > 0) && ElementUtil.ElementExistsAndEnabled((string) data);
 	}
 
 	public override void Run(object data)
@@ -27,15 +28,7 @@ internal class FillBedroomCommand : CommandBase
 			return;
 		}
 
-		var db = Db.Get();
-		var bedroomType = db.RoomTypes.Bedroom;
-		var barracksType = db.RoomTypes.Barracks;
-		var privBedroomType = db.RoomTypes.PrivateBedroom;
-		foreach (var bedroom in Game.Instance.roomProber.rooms.Where(
-					 room => (room.roomType == bedroomType) ||
-							 (room.roomType == barracksType) ||
-							 (room.roomType == privBedroomType)
-				 ))
+		foreach (var bedroom in GetValidRooms())
 		{
 			foreach (var bed in bedroom.buildings.Where(building => building.GetComponent<Bed>() != null))
 			{
@@ -60,5 +53,19 @@ internal class FillBedroomCommand : CommandBase
 				Util.StripTextFormatting(element.name)
 			)
 		);
+	}
+
+	private static List<Room> GetValidRooms()
+	{
+		var db = Db.Get();
+		var bedroomType = db.RoomTypes.Bedroom;
+		var barracksType = db.RoomTypes.Barracks;
+		var privBedroomType = db.RoomTypes.PrivateBedroom;
+		return Game.Instance.roomProber.rooms.Where(
+				room => (room.roomType == bedroomType) ||
+						(room.roomType == barracksType) ||
+						(room.roomType == privBedroomType)
+			)
+			.ToList();
 	}
 }
