@@ -1,6 +1,8 @@
 using ONITwitch.Content.Entities;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
+using UnityEngine;
 
 namespace ONITwitch.Commands;
 
@@ -30,6 +32,10 @@ internal class SurpriseBoxCommand : CommandBase
 			Grid.SceneLayer.Front
 		);
 		box.SetActive(true);
+
+		// get an angle at least 30 degrees above ground
+		var velocity = 5 * RandomUtil.OnUnitCircleInRange(30, 150);
+		GameComps.Fallers.Add(box, velocity);
 
 		ToastManager.InstantiateToastWithGoTarget(
 			STRINGS.ONITWITCH.TOASTS.SURPRISE_BOX.TITLE,

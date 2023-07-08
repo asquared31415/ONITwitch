@@ -341,6 +341,7 @@ public static class PocketDimensionGenerator
 			// very wide
 			0.04f,
 			0.2f,
+			requiredSkillId: "Mining1",
 			prefabIds: new List<string>
 			{
 				CrabConfig.ID,
