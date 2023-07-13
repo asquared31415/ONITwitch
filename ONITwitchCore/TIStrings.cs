@@ -7,6 +7,7 @@
 #pragma warning disable CS1591
 
 using ONITwitchLib.Utils;
+using STRINGS;
 
 namespace ONITwitch;
 
@@ -120,7 +121,7 @@ public static class STRINGS
 	{
 		public static class ONITWITCHINDESTRUCTIBLEELEMENT
 		{
-			public static readonly LocString NAME = global::STRINGS.UI.FormatAsLink(
+			public static readonly LocString NAME = UI.FormatAsLink(
 				"Neutrollium",
 				nameof(global::STRINGS.ELEMENTS.UNOBTANIUM)
 			);
@@ -453,13 +454,13 @@ public static class STRINGS
 			public static class TILE_TEMP_UP
 			{
 				public static readonly LocString TITLE = "The Floor is Lava";
-				public static readonly LocString BODY = "All non-natural tiles are warmer";
+				public static readonly LocString BODY = "All constructed tiles are warmer";
 			}
 
 			public static class TILE_TEMP_DOWN
 			{
 				public static readonly LocString TITLE = "Icy Floors";
-				public static readonly LocString BODY = "All non-natural tiles are colder";
+				public static readonly LocString BODY = "All constructed tiles are colder";
 			}
 
 			public static class UNINSULATE_TILES
