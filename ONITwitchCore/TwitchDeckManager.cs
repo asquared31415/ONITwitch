@@ -8,23 +8,17 @@ using ONITwitchLib.Logger;
 using DataManager = ONITwitch.EventLib.DataManager;
 using EventGroup = ONITwitch.EventLib.EventGroup;
 using EventInfo = ONITwitch.EventLib.EventInfo;
+using Random = UnityEngine.Random;
 
 namespace ONITwitch;
 
 /// <summary>
-/// Provides methods to manipulate the deck of events 
+///     Provides methods to manipulate the deck of events
 /// </summary>
 [PublicAPI]
 public class TwitchDeckManager
 {
 	private static TwitchDeckManager instance;
-
-	/// <summary>
-	/// The instance of the deck manager.
-	/// </summary>
-	[PublicAPI]
-	[NotNull]
-	public static TwitchDeckManager Instance => instance ??= new TwitchDeckManager();
 
 	private readonly Dictionary<string, EventGroup> groups = new();
 
@@ -36,10 +30,18 @@ public class TwitchDeckManager
 	}
 
 	/// <summary>
-	/// Adds an <see cref="EventGroup"/> of actions to the deck
+	///     The instance of the deck manager.
+	/// </summary>
+	[PublicAPI]
+	[NotNull]
+	public static TwitchDeckManager Instance => instance ??= new TwitchDeckManager();
+
+	/// <summary>
+	///     Adds an <see cref="EventGroup" /> of actions to the deck
 	/// </summary>
 	/// <param name="group"></param>
 	[PublicAPI]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public void AddGroup([NotNull] EventGroup group)
 	{
 		if (!groups.ContainsKey(group.Name))
@@ -51,20 +53,21 @@ public class TwitchDeckManager
 	}
 
 	/// <summary>
-	/// Gets the <see cref="EventGroup"/> with the name specified by <paramref name="name"/>, if it exists in the deck.
+	///     Gets the <see cref="EventGroup" /> with the name specified by <paramref name="name" />, if it exists in the deck.
 	/// </summary>
 	/// <param name="name">The name of the group to retrieve.</param>
-	/// <returns>The group, if it exists, otherwise <see langword="null"/>.</returns>
+	/// <returns>The group, if it exists, otherwise <see langword="null" />.</returns>
 	[PublicAPI]
 	[MustUseReturnValue("This retrieves a group without modifying anything")]
 	[CanBeNull]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public EventGroup GetGroup([NotNull] string name)
 	{
 		return groups.TryGetValue(name, out var group) ? group : null;
 	}
 
 	/// <summary>
-	/// Gets all <see cref="EventGroup"/>s registered in the deck.
+	///     Gets all <see cref="EventGroup" />s registered in the deck.
 	/// </summary>
 	/// <returns>An enumerable containing the groups in the deck.</returns>
 	[PublicAPI]
@@ -76,12 +79,13 @@ public class TwitchDeckManager
 	}
 
 	/// <summary>
-	/// Draws an <see cref="EventInfo"/> from the deck, shuffling if necessary.
+	///     Draws an <see cref="EventInfo" /> from the deck, shuffling if necessary.
 	/// </summary>
 	/// <returns>The drawn event.</returns>
 	[PublicAPI]
 	[MustUseReturnValue]
 	[CanBeNull]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public EventInfo Draw()
 	{
 		const int maxDrawAttempts = 1000;
@@ -186,7 +190,7 @@ public class TwitchDeckManager
 					0f,
 					(accum, _) =>
 					{
-						var offset = UnityEngine.Random.Range(spaceMin, spaceMax);
+						var offset = Random.Range(spaceMin, spaceMax);
 						accum += offset;
 						spaced.Add(accum);
 						return accum;
@@ -194,7 +198,7 @@ public class TwitchDeckManager
 				);
 
 			// will find a random value that would not bring the final value above offset 1
-			var startOffset = UnityEngine.Random.Range(0, 1f - endOffset);
+			var startOffset = Random.Range(0, 1f - endOffset);
 
 			// offset everything by the start offset and add it to the main collection
 			collectedOffsets.AddRange(spaced.Select((t, idx) => (t + startOffset, items[idx])));
@@ -222,6 +226,7 @@ public class TwitchDeckManager
 	[PublicAPI(
 		"This is not part of the public API. It exists solely for merged library internals. However, removing this is a breaking change."
 	)]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	private IEnumerable<object> InternalGetGroups()
 	{
 		return GetGroups();

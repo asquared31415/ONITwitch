@@ -5,7 +5,7 @@ using ONITwitch.Config;
 namespace ONITwitch.EventLib;
 
 /// <summary>
-/// Provides methods to manipulate data of <see cref="EventInfo"/>s
+///     Provides methods to manipulate data of <see cref="EventInfo" />s
 /// </summary>
 [PublicAPI]
 public class DataManager
@@ -14,7 +14,7 @@ public class DataManager
 	private readonly Dictionary<EventInfo, object> storedData = new();
 
 	/// <summary>
-	/// The instance of the data manager.
+	///     The instance of the data manager.
 	/// </summary>
 	[PublicAPI]
 	[NotNull]
@@ -28,11 +28,12 @@ public class DataManager
 	}
 
 	/// <summary>
-	/// Sets the data for an event.
+	///     Sets the data for an event.
 	/// </summary>
-	/// <param name="info">The <see cref="EventInfo"/> for the event to modify.</param>
+	/// <param name="info">The <see cref="EventInfo" /> for the event to modify.</param>
 	/// <param name="data">The new data for the event.</param>
 	[PublicAPI]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public void SetDataForEvent([NotNull] EventInfo info, object data)
 	{
 		// overwrite with the user provided data if applicable
@@ -41,13 +42,14 @@ public class DataManager
 	}
 
 	/// <summary>
-	/// Gets the data for an event.
+	///     Gets the data for an event.
 	/// </summary>
-	/// <param name="info">The <see cref="EventInfo"/> for the event to get data for.</param>
-	/// <returns>The data for the event, if it exists, otherwise <see langword="null"/></returns>
+	/// <param name="info">The <see cref="EventInfo" /> for the event to get data for.</param>
+	/// <returns>The data for the event, if it exists, otherwise <see langword="null" /></returns>
 	[PublicAPI]
 	[System.Diagnostics.Contracts.Pure]
 	[CanBeNull]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public object GetDataForEvent([NotNull] EventInfo info)
 	{
 		return storedData.TryGetValue(info, out var data) ? data : null;

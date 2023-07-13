@@ -8,20 +8,53 @@ using ONITwitchLib.Utils;
 namespace ONITwitchLib.Core;
 
 /// <summary>
-/// Provides methods to manipulate the deck of events 
+///     Provides methods to manipulate the deck of events
 /// </summary>
 [PublicAPI]
 public class TwitchDeckManager
 {
+	private static Func<object> twitchDeckManagerInstanceDelegate;
+
+	private static TwitchDeckManager instance;
+	private readonly Action<object> addGroupDelegate;
+
+	private readonly Func<object> drawDelegate;
+	private readonly Func<object, object> getGroupDelegate;
+	private readonly Func<IEnumerable<object>> getGroupsDelegate;
+
+	private TwitchDeckManager(object inst)
+	{
+		drawDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
+			AccessTools.DeclaredMethod(CoreTypes.TwitchDeckManagerType, "Draw", new Type[] { }),
+			inst,
+			CoreTypes.EventInfoType
+		);
+		addGroupDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
+			AccessTools.DeclaredMethod(CoreTypes.TwitchDeckManagerType, "AddGroup", new[] { CoreTypes.EventGroupType }),
+			inst,
+			CoreTypes.EventGroupType
+		);
+		getGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
+			AccessTools.DeclaredMethod(CoreTypes.TwitchDeckManagerType, "GetGroup", new[] { typeof(string) }),
+			inst,
+			typeof(string),
+			CoreTypes.EventGroupType
+		);
+		getGroupsDelegate = DelegateUtil.CreateDelegate<Func<IEnumerable<object>>>(
+			AccessTools.DeclaredMethod(CoreTypes.TwitchDeckManagerType, "InternalGetGroups", new Type[] { }),
+			inst
+		);
+	}
+
 	/// <summary>
-	/// The instance of the deck manager.
+	///     The instance of the deck manager.
 	/// </summary>
 	[PublicAPI]
 	[NotNull]
 	public static TwitchDeckManager Instance => instance ??= GetDeckManager();
 
 	/// <summary>
-	/// Adds an <see cref="EventGroup"/> of actions to the deck
+	///     Adds an <see cref="EventGroup" /> of actions to the deck
 	/// </summary>
 	/// <param name="group"></param>
 	[PublicAPI]
@@ -31,10 +64,10 @@ public class TwitchDeckManager
 	}
 
 	/// <summary>
-	/// Gets the <see cref="EventGroup"/> with the name specified by <paramref name="name"/>, if it exists in the deck.
+	///     Gets the <see cref="EventGroup" /> with the name specified by <paramref name="name" />, if it exists in the deck.
 	/// </summary>
 	/// <param name="name">The name of the group to retrieve.</param>
-	/// <returns>The group, if it exists, otherwise <see langword="null"/>.</returns>
+	/// <returns>The group, if it exists, otherwise <see langword="null" />.</returns>
 	[PublicAPI]
 	[MustUseReturnValue("This retrieves a group without modifying anything")]
 	[CanBeNull]
@@ -45,7 +78,7 @@ public class TwitchDeckManager
 	}
 
 	/// <summary>
-	/// Gets all <see cref="EventGroup"/>s registered in the deck.
+	///     Gets all <see cref="EventGroup" />s registered in the deck.
 	/// </summary>
 	/// <returns>An enumerable containing the groups in the deck.</returns>
 	[PublicAPI]
@@ -57,7 +90,7 @@ public class TwitchDeckManager
 	}
 
 	/// <summary>
-	/// Draws an <see cref="EventInfo"/> from the deck, shuffling if necessary.
+	///     Draws an <see cref="EventInfo" /> from the deck, shuffling if necessary.
 	/// </summary>
 	/// <returns>The drawn event.</returns>
 	[PublicAPI]
@@ -68,8 +101,6 @@ public class TwitchDeckManager
 		var result = drawDelegate();
 		return new EventInfo(result);
 	}
-
-	private static Func<object> twitchDeckManagerInstanceDelegate;
 
 	[MustUseReturnValue]
 	[NotNull]
@@ -93,36 +124,5 @@ public class TwitchDeckManager
 		}
 
 		return new TwitchDeckManager(twitchDeckManagerInstanceDelegate());
-	}
-
-	private static TwitchDeckManager instance;
-
-	private readonly Func<object> drawDelegate;
-	private readonly Action<object> addGroupDelegate;
-	private readonly Func<object, object> getGroupDelegate;
-	private readonly Func<IEnumerable<object>> getGroupsDelegate;
-
-	private TwitchDeckManager(object inst)
-	{
-		drawDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.DeclaredMethod(CoreTypes.TwitchDeckManagerType, "Draw"),
-			inst,
-			CoreTypes.EventInfoType
-		);
-		addGroupDelegate = DelegateUtil.CreateRuntimeTypeActionDelegate(
-			AccessTools.Method(CoreTypes.TwitchDeckManagerType, "AddGroup"),
-			inst,
-			CoreTypes.EventGroupType
-		);
-		getGroupDelegate = DelegateUtil.CreateRuntimeTypeFuncDelegate(
-			AccessTools.Method(CoreTypes.TwitchDeckManagerType, "GetGroup"),
-			inst,
-			typeof(string),
-			CoreTypes.EventGroupType
-		);
-		getGroupsDelegate = DelegateUtil.CreateDelegate<Func<IEnumerable<object>>>(
-			AccessTools.Method(CoreTypes.TwitchDeckManagerType, "InternalGetGroups"),
-			inst
-		);
 	}
 }

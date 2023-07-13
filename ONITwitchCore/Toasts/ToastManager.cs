@@ -24,6 +24,7 @@ public static class ToastManager
 	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
 	[PublicAPI]
 	[CanBeNull]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public static GameObject InstantiateToast([CanBeNull] string title, [CanBeNull] string body)
 	{
 		var go = InstantiateToastCommon(ModAssets.Toasts.NormalToastPrefab, title, body);
@@ -45,6 +46,7 @@ public static class ToastManager
 	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
 	[PublicAPI]
 	[CanBeNull]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public static GameObject InstantiateToastWithPosTarget(
 		[CanBeNull] string title,
 		[CanBeNull] string body,
@@ -116,6 +118,7 @@ public static class ToastManager
 	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
 	[PublicAPI]
 	[CanBeNull]
+	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public static GameObject InstantiateToastWithGoTarget(
 		[CanBeNull] string title,
 		[CanBeNull] string body,
