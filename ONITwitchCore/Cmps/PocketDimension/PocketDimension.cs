@@ -18,8 +18,6 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	public static readonly Vector2I InternalOffset = new(3, 3);
 	public static readonly Vector2I InternalSize = new(30, 30);
 
-	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
-
 	// defaults to make sure that it doesn't think it's dead on spawn
 	// ReSharper disable once InconsistentNaming
 	[Serialize] public float Lifetime = 1;
@@ -27,45 +25,11 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	// ReSharper disable once InconsistentNaming
 	[Serialize] public float MaxLifetime = 1;
 
+	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
+
 #pragma warning disable 649
 	[MyCmpGet] private WorldContainer world;
 #pragma warning restore 649
-
-	protected override void OnSpawn()
-	{
-		base.OnSpawn();
-
-		if (world == null)
-		{
-			Log.Warn("Pocket Dimension was improperly deleted!");
-			Destroy(gameObject);
-			return;
-		}
-
-		var door = ExteriorPortal.Get();
-		if (door != null)
-		{
-			// set parent to the world the door is in
-			// This has to be here on spawn, because parent worlds aren't saved
-			world.SetParentIdx(door.GetMyWorldId());
-
-			WorldUtil.AddDiagnostic(
-				world.id,
-				new DimensionClosingDiagnostic(world.id)
-			);
-		}
-		else
-		{
-			Log.Warn("no exterior door linked to pocket dimension");
-			DestroyWorld();
-		}
-	}
-
-	// The fraction of the lifetime remaining, clamped between 0 and 1
-	private float GetFractionLifetimeRemaining()
-	{
-		return Mathf.Clamp01(Lifetime / MaxLifetime);
-	}
 
 	public void Sim200ms(float dt)
 	{
@@ -110,6 +74,42 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 		var clampedRatioRemaining = GetFractionLifetimeRemaining();
 		image.fillAmount = clampedRatioRemaining;
+	}
+
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+
+		if (world == null)
+		{
+			Log.Warn("Pocket Dimension was improperly deleted!");
+			Destroy(gameObject);
+			return;
+		}
+
+		var door = ExteriorPortal.Get();
+		if (door != null)
+		{
+			// set parent to the world the door is in
+			// This has to be here on spawn, because parent worlds aren't saved
+			world.SetParentIdx(door.GetMyWorldId());
+
+			WorldUtil.AddDiagnostic(
+				world.id,
+				new DimensionClosingDiagnostic(world.id)
+			);
+		}
+		else
+		{
+			Log.Warn("no exterior door linked to pocket dimension");
+			DestroyWorld();
+		}
+	}
+
+	// The fraction of the lifetime remaining, clamped between 0 and 1
+	private float GetFractionLifetimeRemaining()
+	{
+		return Mathf.Clamp01(Lifetime / MaxLifetime);
 	}
 
 	public void DestroyWorld()

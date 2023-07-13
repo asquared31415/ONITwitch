@@ -10,6 +10,7 @@ namespace ONITwitch.Cmps;
 
 internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 {
+	[Serialize] private bool started;
 	public string SidescreenButtonText => STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.NAME;
 
 	public string SidescreenButtonTooltip => STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP;
@@ -19,17 +20,9 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 		return -1;
 	}
 
-	public int ButtonSideScreenSortOrder() => 0;
-
-	[Serialize] private bool started;
-
-	protected override void OnSpawn()
+	public int ButtonSideScreenSortOrder()
 	{
-		base.OnSpawn();
-		if (started)
-		{
-			StartCoroutine(SpawnGifts());
-		}
+		return 0;
 	}
 
 	public void OnSidescreenButtonPressed()
@@ -39,6 +32,30 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 		if ((CameraController.Instance != null) && (CameraController.Instance.followTarget == transform))
 		{
 			CameraController.Instance.ClearFollowTarget();
+			CameraController.Instance.SetPosition(transform.position);
+		}
+	}
+
+	public void SetButtonTextOverride(ButtonMenuTextOverride textOverride)
+	{
+	}
+
+	public bool SidescreenButtonInteractable()
+	{
+		return !started;
+	}
+
+	public bool SidescreenEnabled()
+	{
+		return !started;
+	}
+
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		if (started)
+		{
+			StartCoroutine(SpawnGifts());
 		}
 	}
 
@@ -129,12 +146,4 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 			}
 		);
 	}
-
-	public void SetButtonTextOverride(ButtonMenuTextOverride textOverride)
-	{
-	}
-
-	public bool SidescreenButtonInteractable() => !started;
-
-	public bool SidescreenEnabled() => !started;
 }
