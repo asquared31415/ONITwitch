@@ -1,23 +1,27 @@
+using System;
 using JetBrains.Annotations;
 using ONITwitch.Cmps;
 using ONITwitch.Settings;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace ONITwitch.Toasts;
 
 /// <summary>
-/// Provides methods for creating toasts.
+///     Provides methods for creating toasts.
 /// </summary>
 [PublicAPI]
 public static class ToastManager
 {
+	private static GameObject canvas;
+
 	/// <summary>
-	/// Creates a toast with a tile and a body.
+	///     Creates a toast with a tile and a body.
 	/// </summary>
 	/// <param name="title">The title text for the toast.</param>
 	/// <param name="body">The body text for the toast.</param>
-	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
+	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
 	[PublicAPI]
 	[CanBeNull]
 	public static GameObject InstantiateToast([CanBeNull] string title, [CanBeNull] string body)
@@ -33,12 +37,12 @@ public static class ToastManager
 	}
 
 	/// <summary>
-	/// Creates a toast with a tile and a body, that targets a position when clicked.
+	///     Creates a toast with a tile and a body, that targets a position when clicked.
 	/// </summary>
 	/// <param name="title">The title text for the toast.</param>
 	/// <param name="body">The body text for the toast.</param>
-	/// <param name="pos">The position to target on click</param>
-	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
+	/// <param name="pos">The position to target on click.</param>
+	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
 	[PublicAPI]
 	[CanBeNull]
 	public static GameObject InstantiateToastWithPosTarget(
@@ -63,12 +67,53 @@ public static class ToastManager
 	}
 
 	/// <summary>
-	/// Creates a toast with a tile and a body, that selects a <see cref="GameObject"/> when clicked.
+	///     Creates a toast with a tile and a body, that targets a position when clicked.
 	/// </summary>
 	/// <param name="title">The title text for the toast.</param>
 	/// <param name="body">The body text for the toast.</param>
-	/// <param name="target">The <see cref="GameObject"/> to target on click</param>
-	/// <returns>The newly created toast's <see cref="GameObject"/>.</returns>
+	/// <param name="pos">The position to target on click.</param>
+	/// <param name="orthographicSize">
+	///     The orthographic size the camera should go to. Higher is more zoomed out. Must be
+	///     strictly greater than 0.
+	/// </param>
+	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
+	[PublicAPI]
+	[CanBeNull]
+	public static GameObject InstantiateToastWithPosTargetAndZoom(
+		[CanBeNull] string title,
+		[CanBeNull] string body,
+		Vector3 pos,
+		float orthographicSize
+	)
+	{
+		if (orthographicSize <= 0)
+		{
+			throw new ArgumentException("Orthographic size must be positive", nameof(orthographicSize));
+		}
+
+		var go = InstantiateToastCommon(ModAssets.Toasts.ClickableToastPrefab, title, body);
+		if (go == null)
+		{
+			return null;
+		}
+
+		var toastCmp = go.GetComponent<OniTwitchToast>();
+
+		toastCmp.Focus = OniTwitchToast.FocusKind.Position;
+		toastCmp.FocusPos = pos;
+		toastCmp.OrthographicSize = orthographicSize;
+
+		go.SetActive(true);
+		return go;
+	}
+
+	/// <summary>
+	///     Creates a toast with a tile and a body, that selects a <see cref="GameObject" /> when clicked.
+	/// </summary>
+	/// <param name="title">The title text for the toast.</param>
+	/// <param name="body">The body text for the toast.</param>
+	/// <param name="target">The <see cref="GameObject" /> to target on click.</param>
+	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
 	[PublicAPI]
 	[CanBeNull]
 	public static GameObject InstantiateToastWithGoTarget(
@@ -92,7 +137,46 @@ public static class ToastManager
 		return go;
 	}
 
-	private static GameObject canvas;
+	/// <summary>
+	///     Creates a toast with a tile and a body, that selects a <see cref="GameObject" /> when clicked.
+	/// </summary>
+	/// <param name="title">The title text for the toast.</param>
+	/// <param name="body">The body text for the toast.</param>
+	/// <param name="target">The <see cref="GameObject" /> to target on click.</param>
+	/// <param name="orthographicSize">
+	///     The orthographic size the camera should go to. Higher is more zoomed out. Must be
+	///     strictly greater than 0.
+	/// </param>
+	/// <returns>The newly created toast's <see cref="GameObject" />.</returns>
+	[PublicAPI]
+	[CanBeNull]
+	public static GameObject InstantiateToastWithGoTargetAndZoom(
+		[CanBeNull] string title,
+		[CanBeNull] string body,
+		GameObject target,
+		float orthographicSize
+	)
+	{
+		if (orthographicSize <= 0)
+		{
+			throw new ArgumentException("Orthographic size must be positive", nameof(orthographicSize));
+		}
+
+		var go = InstantiateToastCommon(ModAssets.Toasts.ClickableToastPrefab, title, body);
+		if (go == null)
+		{
+			return null;
+		}
+
+		var toastCmp = go.GetComponent<OniTwitchToast>();
+
+		toastCmp.Focus = OniTwitchToast.FocusKind.Object;
+		toastCmp.FocusGo = target;
+		toastCmp.OrthographicSize = orthographicSize;
+
+		go.SetActive(true);
+		return go;
+	}
 
 	[CanBeNull]
 	private static GameObject InstantiateToastCommon(

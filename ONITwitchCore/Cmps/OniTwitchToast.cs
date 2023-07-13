@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using HarmonyLib;
 using KSerialization;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
@@ -11,28 +12,28 @@ namespace ONITwitch.Cmps;
 [SerializationConfig(MemberSerialization.OptIn)]
 internal class OniTwitchToast : KMonoBehaviour
 {
-	[NonSerialized] public float HoverTime = 15f;
-
-	[NonSerialized] public FocusKind Focus;
-	[NonSerialized] public Vector3 FocusPos;
-	[NonSerialized] public GameObject FocusGo;
-
-	[NonSerialized] internal LocText Body;
-	[NonSerialized] internal LocText Title;
-
-	[NonSerialized] private bool breakEarly;
-
-	private const float AnimationTime = 0.5f;
-
-	private static readonly Vector2 StartPos = new(640, 128);
-	private static readonly Vector2 EndPos = new(640, -20);
-
 	public enum FocusKind
 	{
 		None,
 		Position,
 		Object,
 	}
+
+	private const float AnimationTime = 0.5f;
+
+	private static readonly Vector2 StartPos = new(640, 128);
+	private static readonly Vector2 EndPos = new(640, -20);
+
+	[NonSerialized] internal LocText Body;
+
+	[NonSerialized] private bool breakEarly;
+
+	[NonSerialized] public FocusKind Focus;
+	[NonSerialized] public GameObject FocusGo;
+	[NonSerialized] public Vector3 FocusPos;
+	[NonSerialized] public float HoverTime = 15f;
+	[NonSerialized] public float OrthographicSize = 8f;
+	[NonSerialized] internal LocText Title;
 
 	protected override void OnPrefabInit()
 	{
@@ -58,7 +59,7 @@ internal class OniTwitchToast : KMonoBehaviour
 				position.z = -40;
 				if (CameraController.Instance != null)
 				{
-					CameraController.Instance.SetTargetPos(position, 8f, true);
+					CameraController.Instance.SetTargetPos(position, OrthographicSize, true);
 				}
 
 				break;
@@ -70,6 +71,9 @@ internal class OniTwitchToast : KMonoBehaviour
 					if (CameraController.Instance != null)
 					{
 						CameraController.Instance.SetFollowTarget(FocusGo.transform);
+						CameraController.Instance.OrthographicSize = OrthographicSize;
+						Traverse.Create(CameraController.Instance).Field<float>("targetOrthographicSize").Value =
+							OrthographicSize;
 					}
 				}
 
