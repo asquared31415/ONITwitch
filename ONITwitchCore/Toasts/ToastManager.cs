@@ -188,7 +188,7 @@ public static class ToastManager
 		[CanBeNull] string body
 	)
 	{
-		if (!GenericModSettings.Data.ShowToasts)
+		if (!GenericModSettings.GetConfig().ShowToasts)
 		{
 			return null;
 		}

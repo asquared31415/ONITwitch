@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitch.Settings;
+using ONITwitch.Toasts;
 using ONITwitch.Voting;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -74,7 +74,7 @@ internal class SpawnDupeCommand : CommandBase
 				new MinionStartingStats(personality).Apply(minion);
 				var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
 				identity.SetName(
-					GenericModSettings.Data.UseTwitchNameColors
+					GenericModSettings.GetConfig().UseTwitchNameColors
 						? $"<color=#{finalColor.ToHexString()}>{name}</color>"
 						: name
 				);
@@ -84,7 +84,7 @@ internal class SpawnDupeCommand : CommandBase
 				new MinionStartingStats(false).Apply(minion);
 				var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
 				identity.SetName(
-					GenericModSettings.Data.UseTwitchNameColors
+					GenericModSettings.GetConfig().UseTwitchNameColors
 						? $"<color=#{finalColor.ToHexString()}>{name}</color>"
 						: name
 				);

@@ -1,6 +1,5 @@
 using System.Globalization;
 using ONITwitch.Config;
-using ONITwitch.Voting;
 using ONITwitchLib;
 using ONITwitchLib.Utils;
 using TMPro;
@@ -12,17 +11,17 @@ namespace ONITwitch.Settings;
 internal class GenericModSettingsUI : KScreen
 {
 	private TMP_InputField channelInput;
-	private TMP_InputField voteDelayInput;
-	private TMP_InputField voteTimeInput;
-	private TMP_InputField voteCountInput;
-	private Toggle useTwitchNameColorsToggle;
+	private bool confirmExitDialogActive;
+	private bool hasUnsavedChanges;
+	private Slider maxDangerSlider;
+	private Slider minDangerSlider;
+	private Toggle photosensitiveModeToggle;
 	private Toggle showToastsToggle;
 	private Toggle showVoteChoicesToggle;
-	private Slider minDangerSlider;
-	private Slider maxDangerSlider;
-
-	private bool hasUnsavedChanges;
-	private bool confirmExitDialogActive;
+	private Toggle useTwitchNameColorsToggle;
+	private TMP_InputField voteCountInput;
+	private TMP_InputField voteDelayInput;
+	private TMP_InputField voteTimeInput;
 
 	protected override void OnPrefabInit()
 	{
@@ -112,6 +111,14 @@ internal class GenericModSettingsUI : KScreen
 			}
 		);
 
+		photosensitiveModeToggle = transform.Find("Content/PhotosensitiveMode").GetComponent<Toggle>();
+		photosensitiveModeToggle.onValueChanged.AddListener(_ => hasUnsavedChanges = true);
+
+		AddToolTip(
+			"Content/PhotosensitiveMode/Label",
+			STRINGS.ONITWITCH.UI.CONFIG.PHOTOSENSITIVE_MODE.TOOLTIP
+		);
+
 		transform.Find("Content/EditConfig/EditConfigButton")
 			.GetComponent<Button>()
 			.onClick.AddListener(
@@ -149,18 +156,22 @@ internal class GenericModSettingsUI : KScreen
 
 		base.OnSpawn();
 
-		channelInput.text = GenericModSettings.Data.ChannelName;
-		voteDelayInput.text = GenericModSettings.Data.VoteDelay.ToString(CultureInfo.CurrentCulture);
-		voteTimeInput.text = GenericModSettings.Data.VoteTime.ToString(CultureInfo.CurrentCulture);
-		voteCountInput.text = GenericModSettings.Data.VoteCount.ToString();
-		useTwitchNameColorsToggle.isOn = GenericModSettings.Data.UseTwitchNameColors;
+		var config = GenericModSettings.GetConfig();
 
-		showVoteChoicesToggle.isOn = GenericModSettings.Data.ShowVoteStartToasts;
+		channelInput.text = config.ChannelName;
+		voteDelayInput.text = config.VoteDelay.ToString(CultureInfo.CurrentCulture);
+		voteTimeInput.text = config.VoteTime.ToString(CultureInfo.CurrentCulture);
+		voteCountInput.text = config.VoteCount.ToString();
+		useTwitchNameColorsToggle.isOn = config.UseTwitchNameColors;
+
+		showVoteChoicesToggle.isOn = config.ShowVoteStartToasts;
 		// set the main toggle last so that it can override the active state of the sub option(s)
-		showToastsToggle.isOn = GenericModSettings.Data.ShowToasts;
+		showToastsToggle.isOn = config.ShowToasts;
 
-		minDangerSlider.value = (float) GenericModSettings.Data.MinDanger;
-		maxDangerSlider.value = (float) GenericModSettings.Data.MaxDanger;
+		minDangerSlider.value = (float) config.MinDanger;
+		maxDangerSlider.value = (float) config.MaxDanger;
+
+		photosensitiveModeToggle.isOn = config.PhotosensitiveMode;
 
 		// writing the old values would set this to true, reset it
 		hasUnsavedChanges = false;
@@ -209,9 +220,13 @@ internal class GenericModSettingsUI : KScreen
 	private void AddToolTip(string path, string tooltipStr)
 	{
 		var toolTip = transform.Find(path).gameObject.AddOrGet<ToolTip>();
-		toolTip.tooltipPivot = new Vector2(0.5f, 0f);
-		toolTip.tooltipPositionOffset = new Vector2(toolTip.WrapWidth / 2f, 0f);
-		toolTip.parentPositionAnchor = new Vector2(0f, 0f);
+		toolTip.SizingSetting = ToolTip.ToolTipSizeSetting.MaxWidthWrapContent;
+		// the labels are this wide (except Danger)
+		// take off a 10 pixel buffer on each side of the tooltip for the border of the background.
+		toolTip.WrapWidth = 230f;
+		toolTip.tooltipPivot = new Vector2(0.5f, 1f);
+		toolTip.tooltipPositionOffset = new Vector2(0f, 0f);
+		toolTip.parentPositionAnchor = new Vector2(0.5f, 0f);
 
 		ToolTipScreen.Instance.SetToolTip(toolTip);
 		toolTip.SetSimpleTooltip(tooltipStr);
@@ -221,7 +236,8 @@ internal class GenericModSettingsUI : KScreen
 	{
 		var defaultSettings = new GenericModSettings.SettingsData();
 
-		if ((GenericModSettings.Data.MaxDanger < Danger.Deadly) && ((Danger) maxDangerSlider.value >= Danger.Deadly))
+		if ((GenericModSettings.GetConfig().MaxDanger < Danger.Deadly) &&
+			((Danger) maxDangerSlider.value >= Danger.Deadly))
 		{
 			DialogUtil.MakeDialog(
 				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.TITLE,
@@ -232,26 +248,26 @@ internal class GenericModSettingsUI : KScreen
 		}
 
 		// updates and saves the config
-		GenericModSettings.Data = new GenericModSettings.SettingsData
-		{
-			Version = GenericModSettings.CurrentConfigVersion,
-			ChannelName = channelInput.text ?? defaultSettings.ChannelName,
-			VoteDelay = float.TryParse(voteDelayInput.text, out var voteDelay) ? voteDelay : defaultSettings.VoteDelay,
-			VoteTime = float.TryParse(voteTimeInput.text, out var voteTime) ? voteTime : defaultSettings.VoteTime,
-			VoteCount = int.TryParse(voteCountInput.text, out var voteCount)
-				? Mathf.Clamp(voteCount, 1, 5)
-				: defaultSettings.VoteCount,
-			UseTwitchNameColors = useTwitchNameColorsToggle.isOn,
-			ShowToasts = showToastsToggle.isOn,
-			ShowVoteStartToasts = showVoteChoicesToggle.isOn,
-			MinDanger = (Danger) minDangerSlider.value,
-			MaxDanger = (Danger) maxDangerSlider.value,
-		};
-
-		if (VoteController.Instance != null)
-		{
-			VoteController.Instance.JoinRoom(GenericModSettings.Data.ChannelName);
-		}
+		GenericModSettings.SetConfig(
+			new GenericModSettings.SettingsData
+			{
+				Version = GenericModSettings.CurrentConfigVersion,
+				ChannelName = channelInput.text ?? defaultSettings.ChannelName,
+				VoteDelay = float.TryParse(voteDelayInput.text, out var voteDelay)
+					? voteDelay
+					: defaultSettings.VoteDelay,
+				VoteTime = float.TryParse(voteTimeInput.text, out var voteTime) ? voteTime : defaultSettings.VoteTime,
+				VoteCount = int.TryParse(voteCountInput.text, out var voteCount)
+					? Mathf.Clamp(voteCount, 1, 5)
+					: defaultSettings.VoteCount,
+				UseTwitchNameColors = useTwitchNameColorsToggle.isOn,
+				ShowToasts = showToastsToggle.isOn,
+				ShowVoteStartToasts = showVoteChoicesToggle.isOn,
+				PhotosensitiveMode = photosensitiveModeToggle.isOn,
+				MinDanger = (Danger) minDangerSlider.value,
+				MaxDanger = (Danger) maxDangerSlider.value,
+			}
+		);
 
 		hasUnsavedChanges = false;
 		CloseMenu();

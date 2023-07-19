@@ -499,7 +499,7 @@ public static class STRINGS
 					public static readonly LocString TEXT = "Channel Name";
 
 					public static readonly LocString TOOLTIP =
-						"The name of the Twitch channel to interact with.\nThis should be your username. (example: asquared31415)";
+						"The name of the Twitch channel to interact with. This should be your username. (example: asquared31415)";
 				}
 
 				public static class TIME_BETWEEN_VOTES
@@ -531,7 +531,7 @@ public static class STRINGS
 					public static readonly LocString TEXT = "Use Twitch Username Colors";
 
 					public static readonly LocString TOOLTIP =
-						"Whether to copy a chatter's username color to their duplicant's name, if they are spawned.\nNote: If a user has not set their username color manually, it will be white, even though Twitch chat picks a random color.";
+						"Whether to copy a chatter's username color to their duplicant's name, if they are spawned. Note: If a user has not set their username color manually, it will be white, even though Twitch chat picks a random color.";
 				}
 
 				public static class SHOW_TOASTS
@@ -564,6 +564,14 @@ public static class STRINGS
 
 					public static readonly LocString TOOLTIP =
 						"Events with a danger greater than this setting will not appear.";
+				}
+
+				public static class PHOTOSENSITIVE_MODE
+				{
+					public static readonly LocString TEXT = "Light Sensitivity Mode";
+
+					public static readonly LocString TOOLTIP =
+						"If this setting is enabled, events that use rapidly changing colors or lights will not occur.";
 				}
 
 				public static class EDIT

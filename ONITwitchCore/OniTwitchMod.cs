@@ -2,17 +2,17 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
+using ONITwitch.EventLib;
 using ONITwitch.Integration;
 using ONITwitch.Integration.DecorPackA;
 using UnityEngine;
-using EventGroup = ONITwitch.EventLib.EventGroup;
-using Object = UnityEngine.Object;
 
 namespace ONITwitch;
 
 [UsedImplicitly]
 internal class OniTwitchMod : UserMod2
 {
+	private const string DecorPackOneStaticID = "DecorPackA";
 	internal static ModIntegration ModIntegration;
 
 	public override void OnLoad(Harmony harmony)
@@ -25,8 +25,6 @@ internal class OniTwitchMod : UserMod2
 
 		RegisterDevTools();
 	}
-
-	private const string DecorPackOneStaticID = "DecorPackA";
 
 	public override void OnAllModsLoaded(Harmony harmony, IReadOnlyList<Mod> mods)
 	{
