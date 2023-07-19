@@ -531,7 +531,7 @@ public static class STRINGS
 					public static readonly LocString TEXT = "Use Twitch Username Colors";
 
 					public static readonly LocString TOOLTIP =
-						"Whether to copy a chatter's username color to their duplicant's name, if they are spawned. Note: If a user has not set their username color manually, it will be white, even though Twitch chat picks a random color.";
+						"Whether to copy a chatter's username color to their duplicant's name, if they are spawned. Note: If a user has not set their username color manually, the chosen color may be different than the color you see.";
 				}
 
 				public static class SHOW_TOASTS
