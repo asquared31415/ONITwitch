@@ -164,6 +164,14 @@ internal static class GenericModSettings
 		public const string VotesPath = "votes.txt";
 
 		public string ChannelName = "";
+
+		// Default with a list of well known bots
+		// ReSharper disable once FieldCanBeMadeReadOnly.Global This is assigned by deserialization
+		public List<string> DisallowedDupeNames =
+			new() { "nightbot", "streamelements", "streamlabs", "fossabot", "moobot" };
+
+		public int LastOpenedSettingsVersion;
+
 		public Danger MaxDanger = Danger.High;
 		public Danger MinDanger = Danger.None;
 
@@ -187,10 +195,11 @@ internal static class GenericModSettings
 		public override string ToString()
 		{
 			return
-				$"SettingsData {{ Version = {Version}, ChannelName = {ChannelName}, VoteDelay = {VoteDelay}, VoteTime = {VoteTime}," +
+				$"SettingsData {{ Version = {Version}, LastOpenedSettingsVersion = {LastOpenedSettingsVersion}, " +
+				$"ChannelName = {ChannelName}, VoteDelay = {VoteDelay}, VoteTime = {VoteTime}," +
 				$" VoteCount = {VoteCount}, UseTwitchNameColors={UseTwitchNameColors}, ShowToasts = {ShowToasts}," +
 				$" ShowVoteStartToasts = {ShowVoteStartToasts}, MinDanger = {MinDanger}, MaxDanger = {MaxDanger}," +
-				$" PhotosensitiveMode = {PhotosensitiveMode}}}";
+				$" PhotosensitiveMode = {PhotosensitiveMode}, DisallowedDupeNames = {DisallowedDupeNames}}}";
 		}
 	}
 
@@ -318,7 +327,10 @@ internal static class GenericModSettings
 	///     MaxDanger: int 0..=5,
 	///     PhotosensitiveMode: bool
 	///     }
-	///     Adds the LastOpenedSettingsVersion: int and PhotosensitiveMode: bool settings
+	///     Adds
+	///     LastOpenedSettingsVersion: int
+	///     PhotosensitiveMode: bool
+	///     DisallowedDupeNames: List{string}
 	/// </summary>
 	private class V1Converter : ISaveConverter
 	{
@@ -333,6 +345,7 @@ internal static class GenericModSettings
 				// an icon for V2
 				["LastOpenedSettingsVersion"] = 0,
 				["PhotosensitiveMode"] = false,
+				["DisallowedDupeNames"] = new JArray("nightbot", "streamelements", "streamlabs", "fossabot", "moobot"),
 			};
 			return output;
 		}

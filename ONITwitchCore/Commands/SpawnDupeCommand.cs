@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitch.Settings;
@@ -26,9 +27,21 @@ internal class SpawnDupeCommand : CommandBase
 	{
 		string name = null;
 		Color? color = null;
+
+		var config = GenericModSettings.GetConfig();
+
 		if (VoteController.Instance != null)
 		{
 			var users = VoteController.Instance.SeenUsersById.Values.ToList();
+			users.RemoveAll(
+				info => config.DisallowedDupeNames.Any(
+					disallowed => string.Equals(
+						info.DisplayName,
+						disallowed,
+						StringComparison.InvariantCultureIgnoreCase
+					)
+				)
+			);
 			users.RemoveAll(
 				n => Components.LiveMinionIdentities.Items.Any(
 					i =>
@@ -72,23 +85,18 @@ internal class SpawnDupeCommand : CommandBase
 				var personality = personalities.TryGet(specialDupeData.PersonalityId) ??
 								  personalities.GetRandom(true, false);
 				new MinionStartingStats(personality).Apply(minion);
-				var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
-				identity.SetName(
-					GenericModSettings.GetConfig().UseTwitchNameColors
-						? $"<color=#{finalColor.ToHexString()}>{name}</color>"
-						: name
-				);
 			}
 			else
 			{
 				new MinionStartingStats(false).Apply(minion);
-				var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
-				identity.SetName(
-					GenericModSettings.GetConfig().UseTwitchNameColors
-						? $"<color=#{finalColor.ToHexString()}>{name}</color>"
-						: name
-				);
 			}
+
+			var finalColor = color ?? ColorUtil.GetRandomTwitchColor();
+			identity.SetName(
+				config.UseTwitchNameColors
+					? $"<color=#{finalColor.ToHexString()}>{name}</color>"
+					: name
+			);
 		}
 		else
 		{
