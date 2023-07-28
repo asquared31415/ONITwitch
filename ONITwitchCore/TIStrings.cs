@@ -174,6 +174,12 @@ public static class STRINGS
 					public static LocString NAME = "Poisoned";
 					public static LocString TOOLTIP = "This duplicant is poisoned for {time}";
 				}
+
+				public static class GEYSERTEMPORARILYTUNED
+				{
+					public static LocString NAME = "Geyser Temporarily Tuned";
+					public static LocString TOOLTIP = "This geyser is being temporarily modified for {time}";
+				}
 			}
 		}
 	}

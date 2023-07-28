@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Database;
 using ONITwitch.Cmps;
 using ONITwitchLib;
@@ -5,11 +7,12 @@ using ONITwitchLib.Logger;
 
 namespace ONITwitch.Content;
 
-public class ExtraStatusItems : StatusItems
+internal class ExtraStatusItems : StatusItems
 {
-	public StatusItem PoisonedStatusItem;
+	internal readonly StatusItem GeyserTemporarilyTuned;
+	internal readonly StatusItem PoisonedStatusItem;
 
-	public ExtraStatusItems(ResourceSet parent) : base(TwitchModInfo.StaticID + nameof(ExtraStatusItems), parent)
+	internal ExtraStatusItems(ResourceSet parent) : base(TwitchModInfo.StaticID + nameof(ExtraStatusItems), parent)
 	{
 		PoisonedStatusItem = Add(
 			new StatusItem(
@@ -30,7 +33,32 @@ public class ExtraStatusItems : StatusItems
 			}
 
 			var ty = o == null ? "null" : o.GetType().ToString();
-			Log.Warn($"Data was incorrect type: {ty}");
+			Log.Warn($"Data for poison tooltip was incorrect type: {ty}");
+			return str;
+		};
+
+		GeyserTemporarilyTuned = Add(
+			new StatusItem(
+				TwitchModInfo.ModPrefix + "GeyserTemporarilyTuned",
+				nameof(STRINGS.MISC),
+				"",
+				StatusItem.IconType.Info,
+				NotificationType.Neutral,
+				false,
+				OverlayModes.None.ID
+			)
+		);
+		GeyserTemporarilyTuned.resolveTooltipCallback = (str, o) =>
+		{
+			if (o is List<TimedModification> modifications)
+			{
+				var maxTime = modifications.Select(modification => modification.TimeRemaining)
+					.Max();
+				return str.Replace("{time}", GameUtil.GetFormattedCycles(maxTime));
+			}
+
+			var ty = o == null ? "null" : o.GetType().ToString();
+			Log.Warn($"Data for geyser tune tooltip was incorrect type: {ty}");
 			return str;
 		};
 	}

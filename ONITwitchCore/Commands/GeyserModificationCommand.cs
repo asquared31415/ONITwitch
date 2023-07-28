@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using ONITwitch.Cmps;
-using ONITwitch.Toasts;
+using ONITwitchLib;
 using ONITwitchLib.Logger;
+using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -25,8 +26,21 @@ internal class GeyserModificationCommand : CommandBase
 				modification = GeoTunerConfig.CategorySettings[GeoTunerConfig.Category.DEFAULT_CATEGORY];
 			}
 
+			// set an origin ID so that it doesn't crash
+			modification.template.originID = TwitchModInfo.ModPrefix + nameof(GeyserModificationCommand);
+
 			var tuning = target.gameObject.AddOrGet<TimedGeyserTuning>();
-			tuning.AddModification(25 * Constants.SECONDS_PER_CYCLE, modification.template);
+
+			var finalModification = modification.template;
+
+			const int modificationStrengthMultiplier = 3;
+			// note: the -1 is because it's adding to the original
+			for (var i = 0; i < modificationStrengthMultiplier - 1; i++)
+			{
+				finalModification.AddValues(modification.template);
+			}
+
+			tuning.AddModification(25 * Constants.SECONDS_PER_CYCLE, finalModification);
 
 			ToastManager.InstantiateToastWithGoTarget(
 				STRINGS.ONITWITCH.TOASTS.GEYSER_MODIFICATION.TITLE,

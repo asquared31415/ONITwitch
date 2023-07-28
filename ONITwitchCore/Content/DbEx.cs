@@ -1,8 +1,8 @@
 namespace ONITwitch.Content;
 
-public class DbEx
+internal static class DbEx
 {
-	public static ExtraStatusItems ExtraStatusItems;
+	internal static ExtraStatusItems ExtraStatusItems;
 
 	internal static void Initialize(ResourceSet root)
 	{
