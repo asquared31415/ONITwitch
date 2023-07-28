@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using ONITwitch.Cmps;
-using ONITwitch.Settings;
+using ONITwitch.Settings.Components;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;

@@ -695,6 +695,11 @@ public static class STRINGS
 				}
 			}
 
+			public static class MAIN_MENU
+			{
+				public static readonly LocString NEW_SETTINGS = "New Twitch Integration Settings";
+			}
+
 			public static class PAUSE_MENU
 			{
 				public static readonly LocString START_VOTES = "Start Voting";

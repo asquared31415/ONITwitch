@@ -2,15 +2,42 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using ONITwitch.Cmps;
 using ONITwitch.Config;
+using ONITwitch.Settings.Components;
+using ONITwitch.Toasts;
 using ONITwitch.Voting;
+using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Patches;
 
 internal static class MainMenuPatches
 {
+	[HarmonyPatch(typeof(MainMenu), "OnPrefabInit")]
+	// ReSharper disable once InconsistentNaming
+	private static class MainMenu_OnPrefabInit_Patch
+	{
+		// ReSharper disable once InconsistentNaming
+		[UsedImplicitly]
+		private static void Postfix(MainMenu __instance)
+		{
+			var config = GenericModSettings.GetConfig();
+			Log.Debug(
+				$"Last opened settings v{config.LastOpenedSettingsVersion}, current v{GenericModSettings.CurrentConfigVersion}"
+			);
+			if (config.LastOpenedSettingsVersion < GenericModSettings.CurrentConfigVersion)
+			{
+				Log.Info(
+					$"Last opened settings v{config.LastOpenedSettingsVersion}, current is v{GenericModSettings.CurrentConfigVersion}: showing notification"
+				);
+				var notification = __instance.gameObject.AddComponent<ModsButtonNotification>();
+				notification.Message =
+					STRINGS.ONITWITCH.UI.MAIN_MENU.NEW_SETTINGS.text.Colored(ColorUtil.HighlightTwitchColor);
+			}
+		}
+	}
+
+
 	[HarmonyPatch(typeof(MainMenu), "OnSpawn")]
 	// ReSharper disable once InconsistentNaming
 	private static class MainMenu_OnSpawn_Patch

@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using KSerialization;
 using ONITwitch.Config;
 using ONITwitch.EventLib;
-using ONITwitch.Settings;
+using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;

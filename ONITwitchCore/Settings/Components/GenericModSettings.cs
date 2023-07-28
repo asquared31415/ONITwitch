@@ -9,7 +9,7 @@ using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using STRINGS;
 
-namespace ONITwitch.Settings;
+namespace ONITwitch.Settings.Components;
 
 internal static class GenericModSettings
 {
@@ -67,7 +67,9 @@ internal static class GenericModSettings
 				case < CurrentConfigVersion:
 				{
 					config = SaveConverters.ConvertSaveToLatest(configObject).ToObject<SettingsData>();
+					Log.Debug($"converted: {config}");
 					SaveConfig(config);
+					Log.Debug($"after save: {config}");
 					break;
 				}
 				case CurrentConfigVersion:
@@ -99,7 +101,7 @@ internal static class GenericModSettings
 						UI.CONFIRMDIALOG.OK,
 						null
 					);
-					config = new SettingsData();
+					config = SettingsData.CreateDefault();
 					break;
 				}
 			}
@@ -114,16 +116,18 @@ internal static class GenericModSettings
 				SaveConfig(config);
 			}
 
+			Log.Debug($"After save: {config}");
+
 			return config;
 		}
 		catch (IOException ie) when (ie is DirectoryNotFoundException or FileNotFoundException)
 		{
-			return new SettingsData();
+			return SettingsData.CreateDefault();
 		}
 		catch (Exception e)
 		{
 			Debug.LogException(e);
-			return new SettingsData();
+			return SettingsData.CreateDefault();
 		}
 	}
 
@@ -163,34 +167,71 @@ internal static class GenericModSettings
 		// TODO: make this configurable, but only in the file?
 		public const string VotesPath = "votes.txt";
 
-		public string ChannelName = "";
+		public string ChannelName;
 
-		// Default with a list of well known bots
 		// ReSharper disable once FieldCanBeMadeReadOnly.Global This is assigned by deserialization
-		public List<string> DisallowedDupeNames =
-			new() { "nightbot", "streamelements", "streamlabs", "fossabot", "moobot" };
+		// Note: defaults here are set in CreateDefault, to work around serialization issues.
+		public List<string> DisallowedDupeNames;
 
 		public int LastOpenedSettingsVersion;
 
-		public Danger MaxDanger = Danger.High;
-		public Danger MinDanger = Danger.None;
+		public Danger MaxDanger;
+		public Danger MinDanger;
 
 		/// <summary>
 		///     <see langword="true" /> if photosensitive mode is enabled. If photosensitive mode is enabled, visual effects should
 		///     be reduced or disabled.
 		/// </summary>
-		public bool PhotosensitiveMode = false;
+		public bool PhotosensitiveMode;
 
-		public bool ShowToasts = true;
-		public bool ShowVoteStartToasts = true;
-		public bool UseTwitchNameColors = true;
+		public bool ShowToasts;
+		public bool ShowVoteStartToasts;
+		public bool UseTwitchNameColors;
 
 		// default version for deserializing, must be overwritten
-		public int Version = 0;
+		public int Version;
 
-		public int VoteCount = 3;
-		public float VoteDelay = 600;
-		public float VoteTime = 60;
+		public int VoteCount;
+		public float VoteDelay;
+		public float VoteTime;
+
+		[Obsolete("The default constructor is useless for serialization purposes, use CreateDefault instead")]
+		internal SettingsData()
+		{
+		}
+
+		/// <summary>
+		///     Use this to create new instances of SettingsData. Works around bugs with deserializing lists with Newtonsoft.
+		/// </summary>
+		[NotNull]
+		internal static SettingsData CreateDefault()
+		{
+			// This is intentionally the only blessed usage of the constructor
+		#pragma warning disable CS0618
+			var data = new SettingsData
+		#pragma warning restore CS0618
+			{
+				Version = CurrentConfigVersion,
+				ChannelName = "",
+				// ReSharper disable StringLiteralTypo (bot names aren't normal words)
+				DisallowedDupeNames = new List<string>
+					{ "nightbot", "streamelements", "streamlabs", "fossabot", "moobot" },
+				// ReSharper restore StringLiteralTypo
+				// Default to v0 so that the "new settings" message always shows when
+				// a default config is created.
+				LastOpenedSettingsVersion = 0,
+				MaxDanger = Danger.High,
+				MinDanger = Danger.None,
+				PhotosensitiveMode = false,
+				ShowToasts = true,
+				ShowVoteStartToasts = true,
+				UseTwitchNameColors = true,
+				VoteCount = 3,
+				VoteDelay = 540,
+				VoteTime = 60,
+			};
+			return data;
+		}
 
 		public override string ToString()
 		{
@@ -199,7 +240,7 @@ internal static class GenericModSettings
 				$"ChannelName = {ChannelName}, VoteDelay = {VoteDelay}, VoteTime = {VoteTime}," +
 				$" VoteCount = {VoteCount}, UseTwitchNameColors={UseTwitchNameColors}, ShowToasts = {ShowToasts}," +
 				$" ShowVoteStartToasts = {ShowVoteStartToasts}, MinDanger = {MinDanger}, MaxDanger = {MaxDanger}," +
-				$" PhotosensitiveMode = {PhotosensitiveMode}, DisallowedDupeNames = {DisallowedDupeNames}}}";
+				$" PhotosensitiveMode = {PhotosensitiveMode}, DisallowedDupeNames = {string.Join(", ", DisallowedDupeNames)}}}";
 		}
 	}
 

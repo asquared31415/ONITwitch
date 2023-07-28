@@ -1,6 +1,8 @@
 using System.Globalization;
 using ONITwitch.Config;
+using ONITwitch.Settings.Components;
 using ONITwitchLib;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using TMPro;
 using UnityEngine;
@@ -157,6 +159,7 @@ internal class GenericModSettingsUI : KScreen
 		base.OnSpawn();
 
 		var config = GenericModSettings.GetConfig();
+		Log.Debug($"getting {config}");
 
 		channelInput.text = config.ChannelName;
 		voteDelayInput.text = config.VoteDelay.ToString(CultureInfo.CurrentCulture);
@@ -175,6 +178,15 @@ internal class GenericModSettingsUI : KScreen
 
 		// writing the old values would set this to true, reset it
 		hasUnsavedChanges = false;
+
+
+		if (config.LastOpenedSettingsVersion < GenericModSettings.CurrentConfigVersion)
+		{
+			Log.Debug($"before writing {config}");
+			config.LastOpenedSettingsVersion = GenericModSettings.CurrentConfigVersion;
+			GenericModSettings.SetConfig(config);
+			Log.Debug($"after writing {config}");
+		}
 	}
 
 	private void CloseMenu()
@@ -234,9 +246,8 @@ internal class GenericModSettingsUI : KScreen
 
 	private void ApplySettings()
 	{
-		var defaultSettings = new GenericModSettings.SettingsData();
-
-		if ((GenericModSettings.GetConfig().MaxDanger < Danger.Deadly) &&
+		var currentSettings = GenericModSettings.GetConfig();
+		if ((currentSettings.MaxDanger < Danger.Deadly) &&
 			((Danger) maxDangerSlider.value >= Danger.Deadly))
 		{
 			DialogUtil.MakeDialog(
@@ -247,27 +258,31 @@ internal class GenericModSettingsUI : KScreen
 			);
 		}
 
-		// updates and saves the config
-		GenericModSettings.SetConfig(
-			new GenericModSettings.SettingsData
-			{
-				Version = GenericModSettings.CurrentConfigVersion,
-				ChannelName = channelInput.text ?? defaultSettings.ChannelName,
-				VoteDelay = float.TryParse(voteDelayInput.text, out var voteDelay)
-					? voteDelay
-					: defaultSettings.VoteDelay,
-				VoteTime = float.TryParse(voteTimeInput.text, out var voteTime) ? voteTime : defaultSettings.VoteTime,
-				VoteCount = int.TryParse(voteCountInput.text, out var voteCount)
-					? Mathf.Clamp(voteCount, 1, 5)
-					: defaultSettings.VoteCount,
-				UseTwitchNameColors = useTwitchNameColorsToggle.isOn,
-				ShowToasts = showToastsToggle.isOn,
-				ShowVoteStartToasts = showVoteChoicesToggle.isOn,
-				PhotosensitiveMode = photosensitiveModeToggle.isOn,
-				MinDanger = (Danger) minDangerSlider.value,
-				MaxDanger = (Danger) maxDangerSlider.value,
-			}
-		);
+		var newConfig = GenericModSettings.SettingsData.CreateDefault();
+		// if we are setting the config, the user has opened the settings
+		newConfig.LastOpenedSettingsVersion = GenericModSettings.CurrentConfigVersion;
+
+		newConfig.ChannelName =
+			!string.IsNullOrEmpty(channelInput.text) ? channelInput.text : currentSettings.ChannelName;
+
+		// copy the disallowed names from the user, there's no UI for it
+		newConfig.DisallowedDupeNames = currentSettings.DisallowedDupeNames;
+
+		newConfig.MinDanger = (Danger) minDangerSlider.value;
+		newConfig.MaxDanger = (Danger) maxDangerSlider.value;
+		newConfig.PhotosensitiveMode = photosensitiveModeToggle.isOn;
+		newConfig.ShowToasts = showToastsToggle.isOn;
+		newConfig.ShowVoteStartToasts = showVoteChoicesToggle.isOn;
+		newConfig.UseTwitchNameColors = useTwitchNameColorsToggle.isOn;
+		newConfig.VoteCount = int.TryParse(voteCountInput.text, out var voteCount)
+			? Mathf.Clamp(voteCount, 1, 5)
+			: currentSettings.VoteCount;
+		newConfig.VoteDelay = float.TryParse(voteDelayInput.text, out var voteDelay)
+			? voteDelay
+			: currentSettings.VoteDelay;
+		newConfig.VoteTime = float.TryParse(voteTimeInput.text, out var voteTime) ? voteTime : currentSettings.VoteTime;
+
+		GenericModSettings.SetConfig(newConfig);
 
 		hasUnsavedChanges = false;
 		CloseMenu();

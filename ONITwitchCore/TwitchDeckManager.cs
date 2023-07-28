@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using ONITwitch.Settings;
+using ONITwitch.Settings.Components;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using DataManager = ONITwitch.EventLib.DataManager;

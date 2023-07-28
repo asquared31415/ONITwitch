@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ONITwitch.Settings;
+using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;
 using ONITwitch.Voting;
 using ONITwitchLib.Logger;

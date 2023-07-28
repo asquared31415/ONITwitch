@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using KSerialization;
-using ONITwitch.Settings;
+using ONITwitch.Settings.Components;
 using ONITwitchLib;
 using UnityEngine;
 

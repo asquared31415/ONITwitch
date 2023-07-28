@@ -1,6 +1,6 @@
 using ONITwitch.Cmps;
 using ONITwitch.Patches;
-using ONITwitch.Settings;
+using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;
 
 namespace ONITwitch.Commands;
