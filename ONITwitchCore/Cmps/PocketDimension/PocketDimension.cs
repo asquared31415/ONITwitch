@@ -18,18 +18,15 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	public static readonly Vector2I InternalOffset = new(3, 3);
 	public static readonly Vector2I InternalSize = new(30, 30);
 
-	// defaults to make sure that it doesn't think it's dead on spawn
-	// ReSharper disable once InconsistentNaming
-	[Serialize] public float Lifetime = 1;
-
-	// ReSharper disable once InconsistentNaming
-	[Serialize] public float MaxLifetime = 1;
-
 	[Serialize] public Ref<PocketDimensionExteriorPortal> ExteriorPortal;
 
 #pragma warning disable 649
 	[MyCmpGet] private WorldContainer world;
 #pragma warning restore 649
+
+	// defaults to make sure that it doesn't think it's dead on spawn
+	[Serialize] public float Lifetime { get; private set; } = 1;
+	[Serialize] public float MaxLifetime { get; private set; } = 1;
 
 	public void Sim200ms(float dt)
 	{
@@ -59,21 +56,7 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			return;
 		}
 
-		if (!WorldSelector.Instance.worldRows.TryGetValue(world.id, out var worldRow))
-		{
-			Log.Warn($"World selector did not have a row for world {world} (idx {world.id})");
-			return;
-		}
-
-		var hierarchy = worldRow.GetComponent<HierarchyReferences>();
-		var image = hierarchy.GetReference<Image>("Icon");
-		image.type = Image.Type.Filled;
-		image.fillMethod = Image.FillMethod.Radial360;
-		image.fillOrigin = (int) Image.Origin360.Top;
-		image.fillClockwise = false;
-
-		var clampedRatioRemaining = GetFractionLifetimeRemaining();
-		image.fillAmount = clampedRatioRemaining;
+		UpdateImageTimer();
 	}
 
 	protected override void OnSpawn()
@@ -98,12 +81,39 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 				world.id,
 				new DimensionClosingDiagnostic(world.id)
 			);
+			UpdateImageTimer();
 		}
 		else
 		{
 			Log.Warn("no exterior door linked to pocket dimension");
 			DestroyWorld();
 		}
+	}
+
+	public void SetLifetime(float newLifetime, float newMaxLifetime)
+	{
+		Lifetime = newLifetime;
+		MaxLifetime = newMaxLifetime;
+		UpdateImageTimer();
+	}
+
+	private void UpdateImageTimer()
+	{
+		if (!WorldSelector.Instance.worldRows.TryGetValue(world.id, out var worldRow))
+		{
+			Log.Warn($"World selector did not have a row for world {world} (idx {world.id})");
+			return;
+		}
+
+		var hierarchy = worldRow.GetComponent<HierarchyReferences>();
+		var image = hierarchy.GetReference<Image>("Icon");
+		image.type = Image.Type.Filled;
+		image.fillMethod = Image.FillMethod.Radial360;
+		image.fillOrigin = (int) Image.Origin360.Top;
+		image.fillClockwise = false;
+
+		var clampedRatioRemaining = GetFractionLifetimeRemaining();
+		image.fillAmount = clampedRatioRemaining;
 	}
 
 	// The fraction of the lifetime remaining, clamped between 0 and 1

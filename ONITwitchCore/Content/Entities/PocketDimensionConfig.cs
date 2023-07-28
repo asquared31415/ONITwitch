@@ -9,6 +9,7 @@ namespace ONITwitch.Content.Entities;
 internal class PocketDimensionConfig : IEntityConfig
 {
 	public const string Id = TwitchModInfo.ModPrefix + nameof(PocketDimensionConfig);
+	public static readonly Tag PocketDimensionEntityTag = new(Id);
 
 	public GameObject CreatePrefab()
 	{
@@ -19,6 +20,9 @@ internal class PocketDimensionConfig : IEntityConfig
 		go.AddOrGet<PocketDimensionClusterGridEntity>();
 		go.AddOrGetDef<AlertStateManager.Def>();
 		go.AddOrGet<PocketDimension>();
+
+		var component = go.AddOrGet<KPrefabID>();
+		component.AddTag(PocketDimensionEntityTag);
 
 		return go;
 	}

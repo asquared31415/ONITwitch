@@ -16,19 +16,247 @@ using UnityEngine;
 namespace ONITwitch.Content;
 
 /// <summary>
-/// Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
+///     Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
 /// </summary>
 [PublicAPI]
 public static class PocketDimensionGenerator
 {
+	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
+	private static readonly List<BasePocketDimensionGeneration> PocketDimensionSettings = new()
+	{
+		// ========================================
+		// Templates
+		// ========================================
+
+		// Trollface indestructible border
+		new TemplatePocketDimensionGeneration(
+			1f,
+			SubWorld.ZoneType.Space,
+			"TwitchIntegration/TrollFace"
+		),
+		// Meep face
+		new TemplatePocketDimensionGeneration(
+			1f,
+			SubWorld.ZoneType.CrystalCaverns,
+			PocketDimension.MeepTemplate
+		),
+		// Aquarium
+		new TemplatePocketDimensionGeneration(
+			5f,
+			SubWorld.ZoneType.Ocean,
+			"TwitchIntegration/PacuTank"
+		),
+		// Sus
+		new TemplatePocketDimensionGeneration(
+			2f,
+			SubWorld.ZoneType.Ocean,
+			"TwitchIntegration/Sus",
+			"Mining3"
+		),
+
+		// ========================================
+		// World Themes
+		// ========================================
+
+		// Sandstone, algae, dirt
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.Sandstone,
+			new List<SimHashes>
+			{
+				SimHashes.SandStone,
+				SimHashes.SandStone,
+				SimHashes.SandStone,
+				SimHashes.Algae,
+				SimHashes.Fertilizer,
+				SimHashes.Dirt,
+			},
+			0.05f,
+			0.15f
+		),
+		// icy biome
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.FrozenWastes,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Snow,
+				SimHashes.Ice,
+				SimHashes.Ice,
+				SimHashes.DirtyIce,
+				SimHashes.BrineIce,
+				SimHashes.Wolframite,
+			},
+			0.2f,
+			0.2f
+		),
+		// sulfur biome
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.Wasteland,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Sand,
+				SimHashes.IgneousRock,
+				SimHashes.Sand,
+				SimHashes.IgneousRock,
+				SimHashes.IgneousRock,
+				SimHashes.Sulfur,
+			},
+			// stretched out tall
+			0.05f,
+			0.15f
+		),
+		// slime biome
+		new NoisePocketDimensionGeneration(
+			3f,
+			SubWorld.ZoneType.BoggyMarsh,
+			new List<SimHashes>
+			{
+				SimHashes.ContaminatedOxygen,
+				SimHashes.DirtyWater,
+				SimHashes.SlimeMold,
+				SimHashes.Algae,
+				SimHashes.SlimeMold,
+				SimHashes.SedimentaryRock,
+				SimHashes.Clay,
+				SimHashes.GoldAmalgam,
+			},
+			0.1f,
+			0.1f
+		),
+		// ocean biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Ocean,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Hydrogen,
+				SimHashes.Vacuum,
+				SimHashes.SaltWater,
+				SimHashes.SaltWater,
+				SimHashes.Sand,
+				SimHashes.Sand,
+				SimHashes.Salt,
+				SimHashes.BleachStone,
+				SimHashes.Granite,
+				SimHashes.SedimentaryRock,
+				SimHashes.SedimentaryRock,
+				SimHashes.Granite,
+				SimHashes.Fossil,
+			},
+			// very wide
+			0.04f,
+			0.2f,
+			"Mining1",
+			new List<string>
+			{
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+				CrabConfig.ID,
+			}
+		),
+		// metallic biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Metallic,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.IgneousRock,
+				SimHashes.Vacuum,
+				SimHashes.Carbon,
+				SimHashes.Vacuum,
+				SimHashes.AluminumOre,
+				SimHashes.Vacuum,
+				SimHashes.Cobaltite,
+				SimHashes.Vacuum,
+				SimHashes.GoldAmalgam,
+				SimHashes.Vacuum,
+				SimHashes.IronOre,
+			},
+			// smaller blobs
+			0.3f,
+			0.3f
+		),
+		// radioactive biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Radioactive,
+			new List<SimHashes>
+			{
+				SimHashes.Chlorine,
+				SimHashes.SolidCarbonDioxide,
+				SimHashes.Vacuum,
+				SimHashes.Snow,
+				SimHashes.Ice,
+				SimHashes.Wolframite,
+				SimHashes.Vacuum,
+				SimHashes.UraniumOre,
+			},
+			// very small blobs
+			0.5f,
+			0.5f
+		),
+		// rust biome
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Rust,
+			new List<SimHashes>
+			{
+				SimHashes.CarbonDioxide,
+				SimHashes.SedimentaryRock,
+				SimHashes.MaficRock,
+				SimHashes.BleachStone,
+				SimHashes.Vacuum,
+				SimHashes.Rust,
+				SimHashes.IronOre,
+				SimHashes.Ethanol,
+			},
+			0.2f,
+			0.15f
+		),
+		// Obsidian, niobium
+		new NoisePocketDimensionGeneration(
+			4f,
+			SubWorld.ZoneType.Wasteland,
+			new List<SimHashes>
+			{
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Obsidian,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Vacuum,
+				SimHashes.Obsidian,
+				SimHashes.Niobium,
+			},
+			0.1f,
+			0.1f,
+			"Mining3"
+		),
+	};
+
 	/// <summary>
-	/// Adds the specified generation config to the pool for pocket dimensions.
+	///     Adds the specified generation config to the pool for pocket dimensions.
 	/// </summary>
 	/// <param name="config">The generation to add.</param>
-	/// <seealso cref="BasePocketDimensionGeneration"/>
-	/// <seealso cref="TemplatePocketDimensionGeneration"/>
-	/// <seealso cref="NoisePocketDimensionGeneration"/>
-	/// <seealso cref="CustomPocketDimensionGeneration"/>
+	/// <seealso cref="BasePocketDimensionGeneration" />
+	/// <seealso cref="TemplatePocketDimensionGeneration" />
+	/// <seealso cref="NoisePocketDimensionGeneration" />
+	/// <seealso cref="CustomPocketDimensionGeneration" />
 	[PublicAPI]
 	public static void AddGenerationConfig([NotNull] BasePocketDimensionGeneration config)
 	{
@@ -36,10 +264,10 @@ public static class PocketDimensionGenerator
 	}
 
 	/// <summary>
-	/// Generates a new pocket dimension, with its outside portal placed at the specified cell.
+	///     Generates a new pocket dimension, with its outside portal placed at the specified cell.
 	/// </summary>
 	/// <param name="exteriorPortalCell">The cell to generate the outside portal.</param>
-	/// <returns>The <see cref="GameObject"/> of the exterior door of the portal.</returns>
+	/// <returns>The <see cref="GameObject" /> of the exterior door of the portal.</returns>
 	[PublicAPI]
 	[NotNull]
 	public static GameObject GenerateDimension(int exteriorPortalCell)
@@ -52,8 +280,6 @@ public static class PocketDimensionGenerator
 			PocketDimension.BorderTemplate,
 			world =>
 			{
-				var pocketDim = world.GetComponent<PocketDimension>();
-
 				var settings = PocketDimensionSettings.Where(
 						setting => (setting.RequiredSkillId == null) || Components.LiveMinionIdentities.Items.Any(
 							minion => minion.TryGetComponent(out MinionResume resume) &&
@@ -62,11 +288,17 @@ public static class PocketDimensionGenerator
 					)
 					.GetRandom();
 
-				pocketDim.Lifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
-				pocketDim.MaxLifetime = settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE;
+				var pocketDim = world.GetComponent<PocketDimension>();
+				pocketDim.SetLifetime(
+					settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE,
+					settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE
+				);
 
 			#if DEBUG
-				pocketDim.Lifetime = 60;
+				pocketDim.SetLifetime(
+					60,
+					settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE
+				);
 			#endif
 
 				// generate the world
@@ -214,232 +446,4 @@ public static class PocketDimensionGenerator
 
 		return exteriorDoor;
 	}
-
-	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
-	private static readonly List<BasePocketDimensionGeneration> PocketDimensionSettings = new()
-	{
-		// ========================================
-		// Templates
-		// ========================================
-
-		// Trollface indestructible border
-		new TemplatePocketDimensionGeneration(
-			1f,
-			SubWorld.ZoneType.Space,
-			"TwitchIntegration/TrollFace"
-		),
-		// Meep face
-		new TemplatePocketDimensionGeneration(
-			1f,
-			SubWorld.ZoneType.CrystalCaverns,
-			PocketDimension.MeepTemplate
-		),
-		// Aquarium
-		new TemplatePocketDimensionGeneration(
-			5f,
-			SubWorld.ZoneType.Ocean,
-			"TwitchIntegration/PacuTank"
-		),
-		// Sus
-		new TemplatePocketDimensionGeneration(
-			2f,
-			SubWorld.ZoneType.Ocean,
-			"TwitchIntegration/Sus",
-			"Mining3"
-		),
-
-		// ========================================
-		// World Themes
-		// ========================================
-
-		// Sandstone, algae, dirt
-		new NoisePocketDimensionGeneration(
-			3f,
-			SubWorld.ZoneType.Sandstone,
-			new List<SimHashes>
-			{
-				SimHashes.SandStone,
-				SimHashes.SandStone,
-				SimHashes.SandStone,
-				SimHashes.Algae,
-				SimHashes.Fertilizer,
-				SimHashes.Dirt,
-			},
-			0.05f,
-			0.15f
-		),
-		// icy biome
-		new NoisePocketDimensionGeneration(
-			3f,
-			SubWorld.ZoneType.FrozenWastes,
-			new List<SimHashes>
-			{
-				SimHashes.Vacuum,
-				SimHashes.Snow,
-				SimHashes.Ice,
-				SimHashes.Ice,
-				SimHashes.DirtyIce,
-				SimHashes.BrineIce,
-				SimHashes.Wolframite,
-			},
-			0.2f,
-			0.2f
-		),
-		// sulfur biome
-		new NoisePocketDimensionGeneration(
-			3f,
-			SubWorld.ZoneType.Wasteland,
-			new List<SimHashes>
-			{
-				SimHashes.Vacuum,
-				SimHashes.Sand,
-				SimHashes.IgneousRock,
-				SimHashes.Sand,
-				SimHashes.IgneousRock,
-				SimHashes.IgneousRock,
-				SimHashes.Sulfur,
-			},
-			// stretched out tall
-			0.05f,
-			0.15f
-		),
-		// slime biome
-		new NoisePocketDimensionGeneration(
-			3f,
-			SubWorld.ZoneType.BoggyMarsh,
-			new List<SimHashes>
-			{
-				SimHashes.ContaminatedOxygen,
-				SimHashes.DirtyWater,
-				SimHashes.SlimeMold,
-				SimHashes.Algae,
-				SimHashes.SlimeMold,
-				SimHashes.SedimentaryRock,
-				SimHashes.Clay,
-				SimHashes.GoldAmalgam,
-			},
-			0.1f,
-			0.1f
-		),
-		// ocean biome
-		new NoisePocketDimensionGeneration(
-			4f,
-			SubWorld.ZoneType.Ocean,
-			new List<SimHashes>
-			{
-				SimHashes.Vacuum,
-				SimHashes.Hydrogen,
-				SimHashes.Vacuum,
-				SimHashes.SaltWater,
-				SimHashes.SaltWater,
-				SimHashes.Sand,
-				SimHashes.Sand,
-				SimHashes.Salt,
-				SimHashes.BleachStone,
-				SimHashes.Granite,
-				SimHashes.SedimentaryRock,
-				SimHashes.SedimentaryRock,
-				SimHashes.Granite,
-				SimHashes.Fossil,
-			},
-			// very wide
-			0.04f,
-			0.2f,
-			requiredSkillId: "Mining1",
-			prefabIds: new List<string>
-			{
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-				CrabConfig.ID,
-			}
-		),
-		// metallic biome
-		new NoisePocketDimensionGeneration(
-			4f,
-			SubWorld.ZoneType.Metallic,
-			new List<SimHashes>
-			{
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.IgneousRock,
-				SimHashes.Vacuum,
-				SimHashes.Carbon,
-				SimHashes.Vacuum,
-				SimHashes.AluminumOre,
-				SimHashes.Vacuum,
-				SimHashes.Cobaltite,
-				SimHashes.Vacuum,
-				SimHashes.GoldAmalgam,
-				SimHashes.Vacuum,
-				SimHashes.IronOre,
-			},
-			// smaller blobs
-			0.3f,
-			0.3f
-		),
-		// radioactive biome
-		new NoisePocketDimensionGeneration(
-			4f,
-			SubWorld.ZoneType.Radioactive,
-			new List<SimHashes>
-			{
-				SimHashes.Chlorine,
-				SimHashes.SolidCarbonDioxide,
-				SimHashes.Vacuum,
-				SimHashes.Snow,
-				SimHashes.Ice,
-				SimHashes.Wolframite,
-				SimHashes.Vacuum,
-				SimHashes.UraniumOre,
-			},
-			// very small blobs
-			0.5f,
-			0.5f
-		),
-		// rust biome
-		new NoisePocketDimensionGeneration(
-			4f,
-			SubWorld.ZoneType.Rust,
-			new List<SimHashes>
-			{
-				SimHashes.CarbonDioxide,
-				SimHashes.SedimentaryRock,
-				SimHashes.MaficRock,
-				SimHashes.BleachStone,
-				SimHashes.Vacuum,
-				SimHashes.Rust,
-				SimHashes.IronOre,
-				SimHashes.Ethanol,
-			},
-			0.2f,
-			0.15f
-		),
-		// Obsidian, niobium
-		new NoisePocketDimensionGeneration(
-			4f,
-			SubWorld.ZoneType.Wasteland,
-			new List<SimHashes>
-			{
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Obsidian,
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Vacuum,
-				SimHashes.Obsidian,
-				SimHashes.Niobium,
-			},
-			0.1f,
-			0.1f,
-			"Mining3"
-		),
-	};
 }
