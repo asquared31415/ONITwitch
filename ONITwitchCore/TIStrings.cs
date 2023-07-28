@@ -163,6 +163,21 @@ public static class STRINGS
 		}
 	}
 
+	public static class MISC
+	{
+		public static class STATUSITEMS
+		{
+			public static class ONITWITCH
+			{
+				public static class POISONED
+				{
+					public static LocString NAME = "Poisoned";
+					public static LocString TOOLTIP = "This duplicant is poisoned for {time}";
+				}
+			}
+		}
+	}
+
 	public static class ONITWITCH
 	{
 		public static class DIAGNOSTICS

@@ -11,11 +11,14 @@ internal static class DbPatches
 	private static class Db_Initialize_Patch
 	{
 		[UsedImplicitly]
-		private static void Postfix()
+		private static void Postfix(Db __instance)
 		{
 			ModAssets.LoadAssets();
 			DefaultCommands.SetupCommands();
 			CustomEffects.SetupEffects();
+
+			// initialize the extra db entries
+			DbEx.Initialize(__instance.Root);
 		}
 	}
 }
