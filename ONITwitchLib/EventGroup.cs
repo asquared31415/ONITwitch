@@ -28,7 +28,7 @@ public class EventGroup
 			AccessTools.Method(
 				CoreTypes.EventGroupType,
 				"InternalDefaultSingleEventGroup",
-				new[] { typeof(string), typeof(int), typeof(string), typeof((object, object)) }
+				new[] { typeof(string), typeof(int), typeof(string) }
 			),
 			null,
 			typeof(string),
