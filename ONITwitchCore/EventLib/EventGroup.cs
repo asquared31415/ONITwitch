@@ -262,7 +262,18 @@ public class EventGroup
 						var modStaticID = registeredMod.staticID;
 						foreach (var assembly in loadedData.dlls)
 						{
-							AssemblyIdMap.Add(assembly, modStaticID);
+							if (AssemblyIdMap.TryGetValue(assembly, out var other))
+							{
+								Log.Warn(
+									$"mod {modStaticID} tried to register assembly {assembly} but it was already present in the assembly map from mod {other}. " +
+									"This is likely caused by not properly merging assemblies. If this assembly tries to add Twitch Integration events, it will use " +
+									"an incorrect ID."
+								);
+							}
+							else
+							{
+								AssemblyIdMap.Add(assembly, modStaticID);
+							}
 						}
 					}
 				}
