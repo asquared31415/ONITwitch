@@ -1,6 +1,6 @@
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Content.Entities;
+using ONITwitchLib;
 
 namespace ONITwitch.Patches;
 
@@ -20,7 +20,7 @@ internal static class ClusterUtilPatches
 				var world = ClusterManager.Instance.activeWorld;
 				if (world != null)
 				{
-					if (world.gameObject.HasTag(PocketDimensionConfig.PocketDimensionEntityTag))
+					if (world.gameObject.HasTag(ExtraTags.PocketDimensionEntityTag))
 					{
 						__result = true;
 					}
@@ -43,7 +43,7 @@ internal static class ClusterUtilPatches
 				var world = ClusterManager.Instance.activeWorld;
 				if (world != null)
 				{
-					if (world.gameObject.HasTag(PocketDimensionConfig.PocketDimensionEntityTag))
+					if (world.gameObject.HasTag(ExtraTags.PocketDimensionEntityTag))
 					{
 						__result = true;
 					}
