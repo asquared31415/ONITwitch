@@ -1,13 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitchLib.Logger;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace ONITwitch.Patches;
 
@@ -34,6 +30,7 @@ internal static class DevToolPatches
 	{
 		[UsedImplicitly]
 		[SuppressMessage("ReSharper", "InconsistentNaming")]
+		// ReSharper disable once RedundantAssignment by ref, is used
 		private static void Postfix(ref bool ___showImGui)
 		{
 			if ((CameraController.Instance != null) && CameraController.Instance.FreeCameraEnabled)

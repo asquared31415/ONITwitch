@@ -10,7 +10,7 @@ internal class PartyTimeCommand : CommandBase
 	public override bool Condition(object data)
 	{
 		// If photosensitive mode is enabled, this event must not appear 
-		return !GenericModSettings.GetConfig().PhotosensitiveMode;
+		return !TwitchSettings.GetConfig().PhotosensitiveMode;
 	}
 
 	public override void Run(object data)

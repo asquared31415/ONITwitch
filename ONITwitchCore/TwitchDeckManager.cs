@@ -98,8 +98,8 @@ public class TwitchDeckManager
 			// no danger assigned or danger within the expected range is okay
 			var danger = entry.Danger;
 			if ((danger == null) ||
-				((GenericModSettings.GetConfig().MinDanger <= danger.Value) &&
-				 (danger.Value <= GenericModSettings.GetConfig().MaxDanger)))
+				((TwitchSettings.GetConfig().MinDanger <= danger.Value) &&
+				 (danger.Value <= TwitchSettings.GetConfig().MaxDanger)))
 			{
 				var data = dataInst.GetDataForEvent(entry);
 				var condition = entry.CheckCondition(data);

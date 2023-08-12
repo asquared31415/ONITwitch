@@ -158,7 +158,7 @@ internal class GenericModSettingsUI : KScreen
 
 		base.OnSpawn();
 
-		var config = GenericModSettings.GetConfig();
+		var config = TwitchSettings.GetConfig();
 		Log.Debug($"getting {config}");
 
 		channelInput.text = config.ChannelName;
@@ -180,11 +180,11 @@ internal class GenericModSettingsUI : KScreen
 		hasUnsavedChanges = false;
 
 
-		if (config.LastOpenedSettingsVersion < GenericModSettings.CurrentConfigVersion)
+		if (config.LastOpenedSettingsVersion < TwitchSettings.CurrentConfigVersion)
 		{
 			Log.Debug($"before writing {config}");
-			config.LastOpenedSettingsVersion = GenericModSettings.CurrentConfigVersion;
-			GenericModSettings.SetConfig(config);
+			config.LastOpenedSettingsVersion = TwitchSettings.CurrentConfigVersion;
+			TwitchSettings.SetConfig(config);
 			Log.Debug($"after writing {config}");
 		}
 	}
@@ -246,7 +246,7 @@ internal class GenericModSettingsUI : KScreen
 
 	private void ApplySettings()
 	{
-		var currentSettings = GenericModSettings.GetConfig();
+		var currentSettings = TwitchSettings.GetConfig();
 		if ((currentSettings.MaxDanger < Danger.Deadly) &&
 			((Danger) maxDangerSlider.value >= Danger.Deadly))
 		{
@@ -258,9 +258,9 @@ internal class GenericModSettingsUI : KScreen
 			);
 		}
 
-		var newConfig = GenericModSettings.SettingsData.CreateDefault();
+		var newConfig = TwitchSettings.SettingsData.CreateDefault();
 		// if we are setting the config, the user has opened the settings
-		newConfig.LastOpenedSettingsVersion = GenericModSettings.CurrentConfigVersion;
+		newConfig.LastOpenedSettingsVersion = TwitchSettings.CurrentConfigVersion;
 
 		newConfig.ChannelName =
 			!string.IsNullOrEmpty(channelInput.text) ? channelInput.text : currentSettings.ChannelName;
@@ -282,7 +282,7 @@ internal class GenericModSettingsUI : KScreen
 			: currentSettings.VoteDelay;
 		newConfig.VoteTime = float.TryParse(voteTimeInput.text, out var voteTime) ? voteTime : currentSettings.VoteTime;
 
-		GenericModSettings.SetConfig(newConfig);
+		TwitchSettings.SetConfig(newConfig);
 
 		hasUnsavedChanges = false;
 		CloseMenu();

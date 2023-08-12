@@ -66,7 +66,7 @@ internal class VoteFile : KMonoBehaviour
 						throw new ArgumentOutOfRangeException();
 				}
 
-				var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.SettingsData.VotesPath);
+				var filePath = Path.Combine(TwitchModInfo.MainModFolder, TwitchSettings.SettingsData.VotesPath);
 				Task.Run(
 					() => { File.WriteAllText(filePath, fileText); }
 				);
@@ -76,7 +76,7 @@ internal class VoteFile : KMonoBehaviour
 
 	protected override void OnCleanUp()
 	{
-		var filePath = Path.Combine(TwitchModInfo.MainModFolder, GenericModSettings.SettingsData.VotesPath);
+		var filePath = Path.Combine(TwitchModInfo.MainModFolder, TwitchSettings.SettingsData.VotesPath);
 		File.WriteAllText(filePath, "Voting not yet started");
 		base.OnCleanUp();
 	}

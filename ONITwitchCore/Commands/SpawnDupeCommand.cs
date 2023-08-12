@@ -28,7 +28,7 @@ internal class SpawnDupeCommand : CommandBase
 		string name = null;
 		Color? color = null;
 
-		var config = GenericModSettings.GetConfig();
+		var config = TwitchSettings.GetConfig();
 
 		if (VoteController.Instance != null)
 		{

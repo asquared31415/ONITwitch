@@ -11,7 +11,7 @@ using STRINGS;
 
 namespace ONITwitch.Settings.Components;
 
-internal static class GenericModSettings
+internal static class TwitchSettings
 {
 	public const int CurrentConfigVersion = 2;
 
@@ -67,9 +67,8 @@ internal static class GenericModSettings
 				case < CurrentConfigVersion:
 				{
 					config = SaveConverters.ConvertSaveToLatest(configObject).ToObject<SettingsData>();
-					Log.Debug($"converted: {config}");
+					Log.Debug($"Converted config: {config}");
 					SaveConfig(config);
-					Log.Debug($"after save: {config}");
 					break;
 				}
 				case CurrentConfigVersion:
@@ -116,7 +115,7 @@ internal static class GenericModSettings
 				SaveConfig(config);
 			}
 
-			Log.Debug($"After save: {config}");
+			Log.Debug($"Final config: {config}");
 
 			return config;
 		}
@@ -390,5 +389,20 @@ internal static class GenericModSettings
 			};
 			return output;
 		}
+	}
+
+	[Obsolete("Internal for the merge lib", true)]
+	[UsedImplicitly]
+	[NotNull]
+	// Entries may be added or removed to this dictionary freely. Users are advised that keys
+	// may or may not exist in the future and to handle that appropriately.
+	private static IReadOnlyDictionary<string, object> GetSettingsData()
+	{
+		var data = GetConfig();
+		var d = JsonConvert.DeserializeObject<Dictionary<string, object>>(
+			JsonConvert.SerializeObject(data)
+		);
+
+		return d;
 	}
 }

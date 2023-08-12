@@ -99,16 +99,16 @@ internal class VoteController : KMonoBehaviour
 		connection = new TwitchConnection();
 		connection.OnReady += () =>
 		{
-			var configChannel = GenericModSettings.GetConfig().ChannelName;
+			var configChannel = TwitchSettings.GetConfig().ChannelName;
 			if (!string.IsNullOrEmpty(configChannel))
 			{
-				connection.JoinRoom(GenericModSettings.GetConfig().ChannelName);
+				connection.JoinRoom(TwitchSettings.GetConfig().ChannelName);
 			}
 		};
 		connection.OnChatMessage += OnTwitchMessage;
 		connection.Start(Credentials);
 
-		GenericModSettings.OnSettingsChanged += OnConfigChanged;
+		TwitchSettings.OnSettingsChanged += OnConfigChanged;
 	}
 
 	// returns whether the vote was successfully started
@@ -131,7 +131,7 @@ internal class VoteController : KMonoBehaviour
 
 		var eventOptions = new List<EventInfo>();
 		var drawnCount = 0;
-		while (drawnCount < GenericModSettings.GetConfig().VoteCount)
+		while (drawnCount < TwitchSettings.GetConfig().VoteCount)
 		{
 			var attempt = TwitchDeckManager.Instance.Draw();
 			// if we fail to draw, exit early
@@ -168,11 +168,11 @@ internal class VoteController : KMonoBehaviour
 		}
 
 		Log.Info($"{voteMsg}");
-		connection.SendTextMessage(GenericModSettings.GetConfig().ChannelName, voteMsg.ToString());
+		connection.SendTextMessage(TwitchSettings.GetConfig().ChannelName, voteMsg.ToString());
 
 		CurrentVote = new Vote(eventOptions);
 
-		if (GenericModSettings.GetConfig().ShowVoteStartToasts)
+		if (TwitchSettings.GetConfig().ShowVoteStartToasts)
 		{
 			var toastMsg = new StringBuilder();
 			for (var idx = 0; idx < eventOptions.Count; idx++)
@@ -183,7 +183,7 @@ internal class VoteController : KMonoBehaviour
 			ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.STARTING_VOTE.TITLE, toastMsg.ToString());
 		}
 
-		VoteTimeRemaining = GenericModSettings.GetConfig().VoteTime;
+		VoteTimeRemaining = TwitchSettings.GetConfig().VoteTime;
 		State = VotingState.VoteInProgress;
 
 		return true;
@@ -195,7 +195,7 @@ internal class VoteController : KMonoBehaviour
 		CurrentVote = null;
 	}
 
-	private void OnConfigChanged([NotNull] GenericModSettings.SettingsData config)
+	private void OnConfigChanged([NotNull] TwitchSettings.SettingsData config)
 	{
 		// TODO: leave old room
 		connection.JoinRoom(config.ChannelName);
@@ -233,10 +233,10 @@ internal class VoteController : KMonoBehaviour
 				responseText = STRINGS.ONITWITCH.VOTE_CONTROLLER.NO_VOTES;
 			}
 
-			connection.SendTextMessage(GenericModSettings.GetConfig().ChannelName, responseText);
+			connection.SendTextMessage(TwitchSettings.GetConfig().ChannelName, responseText);
 
 			CurrentVote = null;
-			VoteDelayRemaining = GenericModSettings.GetConfig().VoteDelay;
+			VoteDelayRemaining = TwitchSettings.GetConfig().VoteDelay;
 			State = VotingState.VoteDelay;
 		}
 		catch (Exception e)

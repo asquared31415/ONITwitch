@@ -21,14 +21,14 @@ internal static class MainMenuPatches
 		[UsedImplicitly]
 		private static void Postfix(MainMenu __instance)
 		{
-			var config = GenericModSettings.GetConfig();
+			var config = TwitchSettings.GetConfig();
 			Log.Debug(
-				$"Last opened settings v{config.LastOpenedSettingsVersion}, current v{GenericModSettings.CurrentConfigVersion}"
+				$"Last opened settings v{config.LastOpenedSettingsVersion}, current v{TwitchSettings.CurrentConfigVersion}"
 			);
-			if (config.LastOpenedSettingsVersion < GenericModSettings.CurrentConfigVersion)
+			if (config.LastOpenedSettingsVersion < TwitchSettings.CurrentConfigVersion)
 			{
 				Log.Info(
-					$"Last opened settings v{config.LastOpenedSettingsVersion}, current is v{GenericModSettings.CurrentConfigVersion}: showing notification"
+					$"Last opened settings v{config.LastOpenedSettingsVersion}, current is v{TwitchSettings.CurrentConfigVersion}: showing notification"
 				);
 				var notification = __instance.gameObject.AddComponent<ModsButtonNotification>();
 				notification.Message =

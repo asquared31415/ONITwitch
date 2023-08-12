@@ -4,67 +4,83 @@ using JetBrains.Annotations;
 namespace ONITwitchLib.Core;
 
 /// <summary>
-/// Contains <see cref="Type"/>s of many types in the main Twitch Integration mod.
+///     Contains <see cref="Type" />s of many types in the main Twitch Integration mod.
 /// </summary>
 /// <remarks>
-/// These types are only present if the Twitch Integration mod is active. 
+///     These types are only present if the Twitch Integration mod is active.
 /// </remarks>
 [PublicAPI]
 public static class CoreTypes
 {
 	/// <summary>
-	/// The type of the <see cref="EventManager"/> from the core Twitch Integration mod.
-	/// </summary>
-	[CanBeNull]
-	public static Type EventManagerType => (eventManagerType ??= Type.GetType(EventManagerTypeName))!;
-
-	/// <summary>
-	/// The type of <see cref="EventInfo"/> from the core Twitch Integration mod.
+	///     The type of the <see cref="EventManager" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type EventInfoType => (eventInfoType ??= Type.GetType(EventInfoTypeName))!;
+	public static Type EventManagerType => eventManagerType ??= Type.GetType(EventManagerTypeName)!;
 
 	/// <summary>
-	/// The type of the <see cref="DataManager"/> from the core Twitch Integration mod.
+	///     The type of <see cref="EventInfo" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type DataManagerType => (dataManagerType ??= Type.GetType(DataManagerTypeName))!;
+	public static Type EventInfoType => eventInfoType ??= Type.GetType(EventInfoTypeName)!;
 
 	/// <summary>
-	/// The type of the <see cref="TwitchDeckManager"/> from the core Twitch Integration mod.
+	///     The type of the <see cref="DataManager" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type TwitchDeckManagerType => (twitchDeckManagerType ??= Type.GetType(TwitchDeckManagerTypeName))!;
+	public static Type DataManagerType => dataManagerType ??= Type.GetType(DataManagerTypeName)!;
 
 	/// <summary>
-	/// The type of <see cref="EventGroup"/> from the core Twitch Integration mod.
+	///     The type of the <see cref="TwitchDeckManager" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type EventGroupType => (eventGroupType ??= Type.GetType(EventGroupTypeName))!;
+	public static Type TwitchDeckManagerType => twitchDeckManagerType ??= Type.GetType(TwitchDeckManagerTypeName)!;
 
 	/// <summary>
-	/// The type of <see cref="Danger"/> from the core Twitch Integration mod.
+	///     The type of <see cref="EventGroup" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type DangerType => (dangerType ??= Type.GetType(DangerTypeName))!;
+	public static Type EventGroupType => eventGroupType ??= Type.GetType(EventGroupTypeName)!;
 
 	/// <summary>
-	/// The type of <see cref="CommandBase"/> from the core Twitch Integration mod.
+	///     The type of <see cref="Danger" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type CommandType => (commandType ??= Type.GetType(CommandBaseTypeName))!;
+	public static Type DangerType => dangerType ??= Type.GetType(DangerTypeName)!;
 
 	/// <summary>
-	/// The type of CommandBaseExt from the core Twitch Integration mod.
+	///     The type of <see cref="CommandBase" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type CommandExtType => (commandExtType ??= Type.GetType(CommandBaseExtTypeName))!;
+	public static Type CommandType => commandType ??= Type.GetType(CommandBaseTypeName)!;
 
 	/// <summary>
-	/// The type of the <see cref="ToastManager"/> from the core Twitch Integration mod.
+	///     The type of CommandBaseExt from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
 	/// </summary>
 	[NotNull]
-	public static Type ToastManagerType => (toastManagerType ??= Type.GetType(ToastManagerTypeName))!;
+	public static Type CommandExtType => commandExtType ??= Type.GetType(CommandBaseExtTypeName)!;
+
+	/// <summary>
+	///     The type of the <see cref="ToastManager" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
+	/// </summary>
+	[NotNull]
+	public static Type ToastManagerType => toastManagerType ??= Type.GetType(ToastManagerTypeName)!;
+
+	/// <summary>
+	///     The type of <see cref="TwitchSettings" /> from the core Twitch Integration mod.
+	///     Only present if the Twitch Integration mod is active.
+	/// </summary>
+	[NotNull]
+	public static Type TwitchSettingsType => twitchSettingsType ??= Type.GetType(TwitchSettingsTypeName)!;
 
 #region type_internals
 
@@ -126,6 +142,9 @@ public static class CoreTypes
 
 	private const string EventGroupTypeName = "ONITwitch.EventLib.EventGroup, ONITwitch";
 	private static Type eventGroupType;
+
+	private const string TwitchSettingsTypeName = "ONITwitch.Settings.Components.TwitchSettings, ONITwitch";
+	private static Type twitchSettingsType;
 
 #endregion
 }

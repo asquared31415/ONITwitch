@@ -188,7 +188,7 @@ public static class ToastManager
 		[CanBeNull] string body
 	)
 	{
-		if (!GenericModSettings.GetConfig().ShowToasts)
+		if (!TwitchSettings.GetConfig().ShowToasts)
 		{
 			return null;
 		}

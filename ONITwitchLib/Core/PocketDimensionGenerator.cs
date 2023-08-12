@@ -1,12 +1,11 @@
 using System;
-using System.Diagnostics;
 using ONITwitchLib.Attributes;
 
 namespace ONITwitchLib.Core;
 
 #if DEBUG // don't compile this into release builds
 /// <summary>
-/// Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
+///     Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
 /// </summary>
 [NotPublicAPI] // make this public API once it's implemented
 [Obsolete(

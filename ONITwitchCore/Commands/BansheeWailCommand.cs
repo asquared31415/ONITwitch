@@ -1,5 +1,4 @@
 using ONITwitch.Toasts;
-using ONITwitchLib.Logger;
 using STRINGS;
 
 namespace ONITwitch.Commands;
@@ -29,6 +28,9 @@ internal class BansheeWailCommand : CommandBase
 			provider.AddChore(chore);
 		}
 
-		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE, STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY);
+		ToastManager.InstantiateToast(
+			STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.TITLE,
+			STRINGS.ONITWITCH.TOASTS.BANSHEE_WAIL.BODY
+		);
 	}
 }

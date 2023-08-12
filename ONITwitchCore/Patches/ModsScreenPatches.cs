@@ -3,7 +3,6 @@ using System.Collections;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Settings;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -15,14 +14,6 @@ internal static class ModsScreenPatches
 	// ReSharper disable once InconsistentNaming
 	private static class ModsScreen_BuildDisplay_Patch
 	{
-		[UsedImplicitly]
-		// object because its a List<private struct>
-		// ReSharper disable once InconsistentNaming
-		private static void Postfix(object ___displayedMods)
-		{
-			AddSettingsButton((IEnumerable) ___displayedMods);
-		}
-
 		private static readonly FieldInfo ModIdxField = AccessTools.Field(
 			Type.GetType("ModsScreen+DisplayedMod, Assembly-CSharp"),
 			"mod_index"
@@ -32,6 +23,14 @@ internal static class ModsScreenPatches
 			Type.GetType("ModsScreen+DisplayedMod, Assembly-CSharp"),
 			"rect_transform"
 		);
+
+		[UsedImplicitly]
+		// object because its a List<private struct>
+		// ReSharper disable once InconsistentNaming
+		private static void Postfix(object ___displayedMods)
+		{
+			AddSettingsButton((IEnumerable) ___displayedMods);
+		}
 
 		private static void AddSettingsButton(IEnumerable displayedMods)
 		{
