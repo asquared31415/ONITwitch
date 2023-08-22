@@ -28,6 +28,12 @@ public static class WorldUtil
 	/// <param name="template">The template to place in the world.</param>
 	/// <param name="callback">If present, the callback to call after placing the template.</param>
 	/// <returns>The <see cref="WorldContainer" /> for the newly created world.</returns>
+	/// <remarks>
+	///     Important notes for modder usage:<br />
+	///     The <c>WorldContainer</c> does not have an <c>overworldCell</c> set. You should set that field
+	///     and add the cell to <c>SaveLoader.Instance.clusterDetailSave.overworldCells</c>.<br />
+	///     None of the <c>Grid</c> is revealed. Use <c>GridVisibility.Reveal</c> or <c>Grid.Reveal</c> to reveal the grid.
+	/// </remarks>
 	[PublicAPI]
 	[CanBeNull]
 	public static WorldContainer CreateWorldWithTemplate(
@@ -57,7 +63,13 @@ public static class WorldUtil
 				}
 			}
 
-			worldContainer.PlaceInteriorTemplate(template, () => { callback?.Invoke(worldContainer); });
+			var pos = new Vector2(size.x / 2 + offset.x, size.y / 2 + offset.y);
+			TemplateLoader.Stamp(
+				TemplateCache.GetTemplate(template),
+				pos,
+				() => { callback?.Invoke(worldContainer); }
+			);
+
 			ClusterManager.Instance.Trigger((int) GameHashes.WorldAdded, worldContainer.id);
 
 			return worldContainer;
@@ -83,8 +95,8 @@ public static class WorldUtil
 				if (Grid.IsValidCell(cell))
 				{
 					SimMessages.ReplaceElement(cell, SimHashes.Vacuum, null, 0);
-					Grid.Visible[cell] = 255;
 					Grid.PreventFogOfWarReveal[cell] = false;
+					SimMessages.ModifyCellWorldZone(cell, byte.MaxValue);
 				}
 			}
 		}

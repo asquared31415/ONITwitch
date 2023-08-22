@@ -8,6 +8,7 @@ using Klei;
 using ONITwitch.Cmps.PocketDimension;
 using ONITwitch.Content.Buildings;
 using ONITwitch.Content.Entities;
+using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ProcGen;
 using TUNING;
@@ -306,7 +307,7 @@ public static class PocketDimensionGenerator
 				settings.Generate(world);
 
 				// remove the old polygons and re-add the one we want.
-				var overworldCell = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
+				var cellTrav = Traverse.Create(world).Field<WorldDetailSave.OverworldCell>("overworldCell");
 
 				var internalStart = world.WorldOffset + PocketDimension.InternalOffset -
 									Vector2I.one;
@@ -314,15 +315,42 @@ public static class PocketDimensionGenerator
 								  PocketDimension.InternalOffset +
 								  PocketDimension.InternalSize +
 								  Vector2I.one;
-				var verts = new List<Vector2>
+				var overworldCell = new WorldDetailSave.OverworldCell
 				{
-					internalStart,
-					internalStart with { y = internalEnd.y },
-					internalEnd,
-					internalStart with { x = internalEnd.x },
+					zoneType = settings.ZoneType,
+					poly = new Polygon(
+						new List<Vector2>
+						{
+							internalStart,
+							internalStart with { y = internalEnd.y },
+							internalEnd,
+							internalStart with { x = internalEnd.x },
+						}
+					),
 				};
-				overworldCell.Value.poly = new Polygon(verts);
-				overworldCell.Value.zoneType = settings.ZoneType;
+				foreach (var vertex in overworldCell.poly.Vertices)
+				{
+					Log.Debug($"vertex: {vertex}");
+				}
+
+				cellTrav.Value = overworldCell;
+				SaveLoader.Instance.clusterDetailSave.overworldCells.Add(overworldCell);
+
+				// Force reveal the whole world and send zone types to the sim and update the type used for space exposure tooltip. 
+				foreach (var cell in GridUtil.IterateCellRegion(
+							 world.WorldOffset,
+							 world.WorldOffset + PocketDimension.DimensionSize
+						 ))
+				{
+					Log.Debug($"Setting zone type of {cell} to {settings.ZoneType}");
+					SimMessages.ModifyCellWorldZone(
+						cell,
+						settings.ZoneType == SubWorld.ZoneType.Space ? byte.MaxValue : (byte) settings.ZoneType
+					);
+					World.Instance.zoneRenderData.worldZoneTypes[cell] = settings.ZoneType;
+					Log.Debug($"Revealing cell {cell}");
+					Grid.Reveal(cell, byte.MaxValue, true);
+				}
 
 				// fill area around the world with void
 
