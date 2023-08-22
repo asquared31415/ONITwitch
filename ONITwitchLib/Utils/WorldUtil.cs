@@ -9,19 +9,25 @@ using UnityEngine.UI;
 namespace ONITwitchLib.Utils;
 
 /// <summary>
-/// Utilities for working with worlds.
+///     Utilities for working with worlds.
 /// </summary>
 [PublicAPI]
 public static class WorldUtil
 {
+	[CanBeNull] private static RefreshTogglesDelegate refreshToggles;
+
+	[CanBeNull] private static AccessTools.FieldRef<ColonyDiagnosticUtility, Dictionary<int, List<ColonyDiagnostic>>>
+		diagnosticDict;
+
 	/// <summary>
-	/// Allocates <see cref="Grid"/> space for a world and creates the world with a template, calling the callback once the template is placed.
+	///     Allocates <see cref="Grid" /> space for a world and creates the world with a template, calling the callback once
+	///     the template is placed.
 	/// </summary>
-	/// <param name="worldGo">The object that is an instance of a <see cref="ClusterGridEntity"/> to set up as the world.</param>
+	/// <param name="worldGo">The object that is an instance of a <see cref="ClusterGridEntity" /> to set up as the world.</param>
 	/// <param name="size">The size of the world to create, in cells.</param>
 	/// <param name="template">The template to place in the world.</param>
 	/// <param name="callback">If present, the callback to call after placing the template.</param>
-	/// <returns>The <see cref="WorldContainer"/> for the newly created world.</returns>
+	/// <returns>The <see cref="WorldContainer" /> for the newly created world.</returns>
 	[PublicAPI]
 	[CanBeNull]
 	public static WorldContainer CreateWorldWithTemplate(
@@ -62,8 +68,8 @@ public static class WorldUtil
 	}
 
 	/// <summary>
-	/// Frees grid space for a world. This is a version of Grid.FreeGridSpace that actually functions to clear some
-	/// properties of the cells, to avoid bugs where the solid property is not properly cleared.
+	///     Frees grid space for a world. This is a version of Grid.FreeGridSpace that actually functions to clear some
+	///     properties of the cells, to avoid bugs where the solid property is not properly cleared.
 	/// </summary>
 	/// <param name="size">The size of the space to clear, in cells.</param>
 	/// <param name="offset">The starting offset of the space to clear, in cells.</param>
@@ -77,6 +83,8 @@ public static class WorldUtil
 				if (Grid.IsValidCell(cell))
 				{
 					SimMessages.ReplaceElement(cell, SimHashes.Vacuum, null, 0);
+					Grid.Visible[cell] = 255;
+					Grid.PreventFogOfWarReveal[cell] = false;
 				}
 			}
 		}
@@ -86,7 +94,8 @@ public static class WorldUtil
 	}
 
 	/// <summary>
-	///	Refreshes the specified world index in the world selector, or refreshes the entire selector if no index is provided. 
+	///     Refreshes the specified world index in the world selector, or refreshes the entire selector if no index is
+	///     provided.
 	/// </summary>
 	/// <param name="worldIndex">The index of the world to refresh.</param>
 	[PublicAPI]
@@ -138,7 +147,7 @@ public static class WorldUtil
 	}
 
 	/// <summary>
-	/// Adds a diagnostic to a world.
+	///     Adds a diagnostic to a world.
 	/// </summary>
 	/// <param name="worldIdx">The index of the world to add to.</param>
 	/// <param name="diagnostic">The diagnostic to add.</param>
@@ -179,9 +188,4 @@ public static class WorldUtil
 	}
 
 	private delegate void RefreshTogglesDelegate(WorldSelector instance);
-
-	[CanBeNull] private static RefreshTogglesDelegate refreshToggles;
-
-	[CanBeNull] private static AccessTools.FieldRef<ColonyDiagnosticUtility, Dictionary<int, List<ColonyDiagnostic>>>
-		diagnosticDict;
 }

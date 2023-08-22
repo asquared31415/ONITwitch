@@ -124,6 +124,7 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 	public void DestroyWorld()
 	{
+		Log.Debug("Destroying Pocket Dimension");
 		var door = ExteriorPortal.Get();
 		if (door == null)
 		{
@@ -132,25 +133,28 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 		if (world != null)
 		{
-			ClusterManager.Instance.SetActiveWorld(
-				door != null ? door.GetMyWorldId() : ClusterManager.Instance.GetStartWorld().id
-			);
+			var targetWorldId = door != null ? door.GetMyWorldId() : ClusterManager.Instance.GetStartWorld().id;
+			ClusterManager.Instance.SetActiveWorld(targetWorldId);
 
 			Vector3 exitPos;
 			if (door != null)
 			{
-				exitPos = Grid.CellToPos(Grid.CellAbove(Grid.PosToCell(door.transform.position)));
+				exitPos = Grid.CellToPosCCC(
+					Grid.CellAbove(Grid.PosToCell(door.transform.position)),
+					Grid.SceneLayer.Move
+				);
 			}
 			else
 			{
 				var startWorld = ClusterManager.Instance.GetStartWorld();
 				var telepad = Components.Telepads.GetWorldItems(startWorld.id).FirstOrDefault();
 				exitPos = telepad != null
-					? Grid.CellToPos(Grid.CellAbove(Grid.PosToCell(telepad)))
+					? Grid.CellToPosCCC(Grid.PosToCell(telepad), Grid.SceneLayer.Move)
 					: (Vector3) (startWorld.minimumBounds + startWorld.maximumBounds) / 2;
 			}
 
 			world.CancelChores();
+			// Also clears zones
 			world.DestroyWorldBuildings(out _);
 
 			if (door != null)
@@ -160,10 +164,8 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 			ExteriorPortal.Set(null);
 
-			// unregister the world immediately to make sure that the world is inaccessible
-			ClusterManager.Instance.UnregisterWorldContainer(world);
-
 			// destroy all critters, so they don't pop out
+			// TODO: some creatures shouldn't be destroyed. Need to add a way for other code to hook destruction on their prefabs.
 			foreach (var pickupable in Components.Pickupables.GetWorldItems(world.id))
 			{
 				if (pickupable.TryGetComponent<CreatureBrain>(out _))
@@ -172,23 +174,70 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 				}
 			}
 
-			// Wait to eject dupes until chores have been canceled so that dupes hopefully don't have the bug
-			// where they pick up the old Y position
+			// Workaround for dupes sometimes being teleported to the wrong position, interrupt them with a emote chore
+			// and then teleport them next frame. Wait at least 33ms after teleporting to destroy the world, since the
+			// FallMonitor only updates every 33ms.
+			// It's unclear if this actually helps, because reproducing is a pain.
+			var db = Db.Get();
+			foreach (var minionIdentity in Components.LiveMinionIdentities.GetWorldItems(world.id))
+			{
+				_ = new EmoteChore(
+					minionIdentity.GetComponent<ChoreProvider>(),
+					db.ChoreTypes.EmoteHighPriority,
+					db.Emotes.Minion.Cheer
+				);
+
+				if (minionIdentity.TryGetComponent(out ChoreDriver driver))
+				{
+					driver.StopChore();
+				}
+			}
+
 			GameScheduler.Instance.ScheduleNextFrame(
-				"Finish Delete World",
+				"TwitchIntegration.EjectDupes",
 				_ =>
 				{
+					Log.Debug("Ejecting dupes from pocket dimension");
 					world.EjectAllDupes(exitPos);
-					foreach (var minionIdentity in Components.MinionIdentities.GetWorldItems(world.id))
-					{
-						minionIdentity.transform.SetPosition(exitPos);
-					}
 
-					WorldUtil.FreeGridSpace(world.WorldSize, world.WorldOffset);
-					var trav = Traverse.Create(world);
-					trav.Method("TransferPickupables", exitPos).GetValue();
+					GameScheduler.Instance.Schedule(
+						"TwitchIntegration.FinishDestroyWorld",
+						// at least 33ms to let fallers run
+						0.066f,
+						_ =>
+						{
+							Log.Debug("Destroying Pocket Dimension grid space");
+							WorldUtil.FreeGridSpace(world.WorldSize, world.WorldOffset);
 
-					Destroy(world.gameObject);
+							Log.Debug("Unregistering Pocket Dimension");
+							ClusterManager.Instance.UnregisterWorldContainer(world);
+							var trav = Traverse.Create(world);
+							trav.Method("TransferPickupables", exitPos).GetValue();
+
+							Log.Debug("Deleting Pocket Dimension object");
+							Destroy(world.gameObject);
+
+							// Update all the dupe name displays again because the game doesn't update this when a dupe changes worlds.
+							if (NameDisplayScreen.Instance != null)
+							{
+								Traverse.Create(NameDisplayScreen.Instance)
+									.Method("OnActiveWorldChanged", new[] { typeof(object) })
+									// Note: Klei Tuple not System Tuple.
+									// This is not used by the method, but it's probably less likely to break if we pass it?
+									.GetValue(new Tuple<int, int>(targetWorldId, targetWorldId));
+							}
+
+							GameScheduler.Instance.ScheduleNextFrame(
+								"TwitchIntegration.PocketDimDirtyNav",
+								_ =>
+								{
+									// Stop dupes from falling forever
+									Log.Debug("dirty nav grid");
+									Pathfinding.Instance.AddDirtyNavGridCell(Grid.PosToCell(exitPos));
+								}
+							);
+						}
+					);
 				}
 			);
 
