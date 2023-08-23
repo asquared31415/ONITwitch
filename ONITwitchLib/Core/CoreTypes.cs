@@ -94,37 +94,6 @@ public static class CoreTypes
 	private const string CommandBaseExtTypeName = "ONITwitch.Commands.CommandBaseExt, ONITwitch";
 	private static Type commandExtType;
 
-#pragma warning disable CS0169
-	private const string PocketDimensionGeneratorTypeName =
-		"ONITwitch.Content.PocketDimensionGenerator, ONITwitch";
-
-	private static Type pocketDimensionGeneratorType;
-
-	// Base pocket dimension generation config
-	private const string BasePocketDimensionGenerationTypeName =
-		"ONITwitch.Content.BasePocketDimensionGeneration, ONITwitch";
-
-	private static Type basePocketDimensionGenerationType;
-
-	// Template-based pocket dimension generation config
-	private const string TemplatePocketDimensionGenerationTypeName =
-		"ONITwitch.Content.TemplatePocketDimensionGeneration, ONITwitch";
-
-	private static Type templatePocketDimensionGenerationType;
-
-	// Noise-based pocket dimension generation config
-	private const string NoisePocketDimensionGenerationTypeName =
-		"ONITwitch.Content.NoisePocketDimensionGeneration, ONITwitch";
-
-	private static Type noisePocketDimensionGenerationType;
-
-	// Custom function pocket dimension generation config
-	private const string CustomPocketDimensionGenerationTypeName =
-		"ONITwitch.Content.CustomPocketDimensionGeneration, ONITwitch";
-
-	private static Type customPocketDimensionGenerationType;
-#pragma warning restore CS0169
-
 	private const string ToastManagerTypeName = "ONITwitch.Toasts.ToastManager, ONITwitch";
 	private static Type toastManagerType;
 

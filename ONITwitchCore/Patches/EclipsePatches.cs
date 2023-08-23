@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using UnityEngine;
 
 namespace ONITwitch.Patches;
@@ -45,7 +45,8 @@ internal static class EclipsePatches
 		private static bool Prefix(TimeOfDay __instance, ref float ___scale)
 		{
 			// if in an eclipse, redo the math to lerp to 0 scale and force the sunlight intensity to 0
-			if (Game.Instance.TryGetComponent(out OniTwitchEclipse eclipse) && (eclipse.State == OniTwitchEclipse.EclipseState.Eclipse))
+			if (Game.Instance.TryGetComponent(out OniTwitchEclipse eclipse) &&
+				(eclipse.State == OniTwitchEclipse.EclipseState.Eclipse))
 			{
 				// scale of 1 is max normal effect
 				___scale = Mathf.Lerp(___scale, 1.5f, Time.deltaTime * 0.05f);

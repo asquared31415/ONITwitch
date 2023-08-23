@@ -1,4 +1,4 @@
-using ONITwitch.Content.Entities;
+using ONITwitch.Content.EntityConfigs;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;

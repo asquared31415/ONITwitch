@@ -1,7 +1,8 @@
 using System;
 using HarmonyLib;
 using KSerialization;
-using ONITwitch.Toasts;
+using ONITwitch.Content;
+using ONITwitch.Content.Cmps;
 using ONITwitchLib.Logger;
 using STRINGS;
 using TMPro;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using UnityEngine;
 
 namespace ONITwitch.Patches;

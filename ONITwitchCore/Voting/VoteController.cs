@@ -6,6 +6,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using KSerialization;
 using ONITwitch.Config;
+using ONITwitch.Content.Cmps;
 using ONITwitch.EventLib;
 using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;

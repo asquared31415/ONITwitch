@@ -1,7 +1,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Cmps;
 using ONITwitch.Config;
+using ONITwitch.Content.Cmps;
 using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;
 using ONITwitch.Voting;

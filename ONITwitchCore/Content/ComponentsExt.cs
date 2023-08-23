@@ -1,5 +1,5 @@
 using System.Linq;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 
 namespace ONITwitch.Content;
 

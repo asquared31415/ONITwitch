@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Database;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 

@@ -1,4 +1,4 @@
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 
@@ -13,7 +13,10 @@ internal class EclipseCommand : CommandBase
 			var time = (float) (double) data;
 			eclipse.StartEclipse(time);
 
-			ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.ECLIPSE.TITLE, STRINGS.ONITWITCH.TOASTS.ECLIPSE.BODY);
+			ToastManager.InstantiateToast(
+				STRINGS.ONITWITCH.TOASTS.ECLIPSE.TITLE,
+				STRINGS.ONITWITCH.TOASTS.ECLIPSE.BODY
+			);
 		}
 		else
 		{

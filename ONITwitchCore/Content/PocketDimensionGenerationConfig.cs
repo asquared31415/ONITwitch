@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using ONITwitch.Cmps.PocketDimension;
+using ONITwitch.Content.Cmps.PocketDimension;
 using ONITwitchLib;
 using ProcGen;
 using UnityEngine;
@@ -13,13 +13,15 @@ using UnityEngine;
 namespace ONITwitch.Content;
 
 /// <summary>
-/// The base class for pocket dimension generation configs.
+///     The base class for pocket dimension generation configs.
 /// </summary>
 [PublicAPI]
 public abstract class BasePocketDimensionGeneration
 {
+	[CanBeNull] private readonly List<string> prefabIds;
+
 	/// <summary>
-	/// Instantiates a new generation config with no tile generation data.
+	///     Instantiates a new generation config with no tile generation data.
 	/// </summary>
 	/// <param name="cyclesLifetime">The number of cycles for the dimension to stay open.</param>
 	/// <param name="zoneType">The zone type of the dimension.</param>
@@ -38,6 +40,12 @@ public abstract class BasePocketDimensionGeneration
 		RequiredSkillId = requiredSkillId;
 		this.prefabIds = prefabIds;
 	}
+
+	internal float CyclesLifetime { get; }
+
+	internal SubWorld.ZoneType ZoneType { get; }
+
+	[CanBeNull] internal string RequiredSkillId { get; }
 
 	protected abstract void GenerateTiles(WorldContainer world);
 
@@ -63,14 +71,6 @@ public abstract class BasePocketDimensionGeneration
 		GenerateTiles(world);
 		GeneratePrefabs(world);
 	}
-
-	internal float CyclesLifetime { get; }
-
-	internal SubWorld.ZoneType ZoneType { get; }
-
-	[CanBeNull] internal string RequiredSkillId { get; }
-
-	[CanBeNull] private readonly List<string> prefabIds;
 
 	private static Vector2I GetRandomInteriorOffset()
 	{
@@ -177,6 +177,10 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 [UsedImplicitly]
 public class CustomPocketDimensionGeneration : BasePocketDimensionGeneration
 {
+	[CanBeNull] private readonly Action<WorldContainer> generatePrefabsAction;
+
+	[NotNull] private readonly Action<WorldContainer> generateTilesAction;
+
 	public CustomPocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
@@ -206,7 +210,4 @@ public class CustomPocketDimensionGeneration : BasePocketDimensionGeneration
 			base.GeneratePrefabs(world);
 		}
 	}
-
-	[NotNull] private readonly Action<WorldContainer> generateTilesAction;
-	[CanBeNull] private readonly Action<WorldContainer> generatePrefabsAction;
 }

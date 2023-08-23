@@ -1,7 +1,7 @@
 using System;
 using HarmonyLib;
 using KSerialization;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using UnityEngine;
 
 namespace ONITwitch.Integration.DecorPackA;

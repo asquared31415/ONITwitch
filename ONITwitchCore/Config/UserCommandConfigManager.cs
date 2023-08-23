@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
 using DataManager = ONITwitch.EventLib.DataManager;
 using EventGroup = ONITwitch.EventLib.EventGroup;
 using EventManager = ONITwitch.EventLib.EventManager;
@@ -17,6 +18,30 @@ namespace ONITwitch.Config;
 
 internal class UserCommandConfigManager
 {
+	private const string CommandConfigName = "command_config.json";
+
+	private static UserCommandConfigManager instance;
+	internal static readonly string CommandConfigPath = Path.Combine(TwitchModInfo.MainModFolder, CommandConfigName);
+
+	[NotNull] private readonly FileSystemWatcher configWatcher = new()
+	{
+		Path = TwitchModInfo.MainModFolder, NotifyFilter = NotifyFilters.LastWrite, Filter = CommandConfigName,
+	};
+
+	private readonly object loadLock = new();
+
+	private System.DateTime lastLoadTime = System.DateTime.MinValue;
+
+	private Dictionary<string, Dictionary<string, CommandConfig>> userConfig = new();
+
+	private UserCommandConfigManager()
+	{
+		Reload();
+
+		configWatcher.Changed += (_, _) => Reload();
+		configWatcher.EnableRaisingEvents = true;
+	}
+
 	public static UserCommandConfigManager Instance => instance ??= new UserCommandConfigManager();
 
 	[CanBeNull]
@@ -82,29 +107,6 @@ internal class UserCommandConfigManager
 		var encoded = Convert.ToBase64String(outputStream.ToArray()).TrimEnd('=').Replace('+', '-').Replace('/', '_');
 		return encoded;
 	}
-
-	private static UserCommandConfigManager instance;
-
-	private System.DateTime lastLoadTime = System.DateTime.MinValue;
-	private readonly object loadLock = new();
-
-	private const string CommandConfigName = "command_config.json";
-	internal static readonly string CommandConfigPath = Path.Combine(TwitchModInfo.MainModFolder, CommandConfigName);
-
-	[NotNull] private readonly FileSystemWatcher configWatcher = new()
-	{
-		Path = TwitchModInfo.MainModFolder, NotifyFilter = NotifyFilters.LastWrite, Filter = CommandConfigName,
-	};
-
-	private UserCommandConfigManager()
-	{
-		Reload();
-
-		configWatcher.Changed += (_, _) => Reload();
-		configWatcher.EnableRaisingEvents = true;
-	}
-
-	private Dictionary<string, Dictionary<string, CommandConfig>> userConfig = new();
 
 	private void Reload()
 	{

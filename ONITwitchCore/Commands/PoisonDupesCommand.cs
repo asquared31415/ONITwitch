@@ -1,19 +1,19 @@
 using System.Linq;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitch.Toasts;
 
 namespace ONITwitch.Commands;
 
 internal class PoisonDupesCommand : CommandBase
 {
+	// ticks 8 times over half a cycle
+	private const float DamageTime = Constants.SECONDS_PER_CYCLE / 2;
+	private const int NumTicks = 8;
+
 	public override bool Condition(object data)
 	{
 		return Components.LiveMinionIdentities.Count > 0;
 	}
-
-	// ticks 8 times over half a cycle
-	private const float DamageTime = Constants.SECONDS_PER_CYCLE / 2;
-	private const int NumTicks = 8;
 
 	public override void Run(object data)
 	{

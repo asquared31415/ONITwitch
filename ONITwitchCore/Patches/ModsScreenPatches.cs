@@ -3,6 +3,7 @@ using System.Collections;
 using System.Reflection;
 using HarmonyLib;
 using JetBrains.Annotations;
+using ONITwitch.Content;
 using ONITwitchLib;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ToastManager = ONITwitch.Toasts.ToastManager;

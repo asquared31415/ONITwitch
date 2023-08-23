@@ -1,4 +1,4 @@
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitch.Patches;
 using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;

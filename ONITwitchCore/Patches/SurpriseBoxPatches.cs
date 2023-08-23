@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
@@ -94,6 +95,19 @@ internal static class SurpriseBoxPatches
 			foreach (var gameObject in __result)
 			{
 				gameObject.AddTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled);
+			}
+		}
+	}
+
+	[HarmonyPatch(typeof(GeneratedOre), nameof(GeneratedOre.LoadGeneratedOre), typeof(List<Type>))]
+	private static class DisabledElementPatch
+	{
+		[UsedImplicitly]
+		public static void Postfix()
+		{
+			foreach (var go in Assets.GetPrefabsWithComponent<ElementChunk>())
+			{
+				go.AddTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled);
 			}
 		}
 	}

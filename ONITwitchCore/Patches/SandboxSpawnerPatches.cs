@@ -1,7 +1,7 @@
 using System.Linq;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Content.Entities;
+using ONITwitch.Content.EntityConfigs;
 
 namespace ONITwitch.Patches;
 

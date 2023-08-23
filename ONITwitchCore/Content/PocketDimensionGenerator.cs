@@ -5,9 +5,9 @@ using Delaunay.Geo;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Klei;
-using ONITwitch.Cmps.PocketDimension;
-using ONITwitch.Content.Buildings;
-using ONITwitch.Content.Entities;
+using ONITwitch.Content.BuildingConfigs;
+using ONITwitch.Content.Cmps.PocketDimension;
+using ONITwitch.Content.EntityConfigs;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ProcGen;
@@ -19,8 +19,8 @@ namespace ONITwitch.Content;
 /// <summary>
 ///     Provides methods for adding new pocket dimensions to the generation pool and to generate pocket dimensions.
 /// </summary>
-[PublicAPI]
-public static class PocketDimensionGenerator
+// TODO: make this a public API
+internal static class PocketDimensionGenerator
 {
 	// WARNING: this must have at least one entry with no required skill ID, to avoid crashes 
 	private static readonly List<BasePocketDimensionGeneration> PocketDimensionSettings = new()

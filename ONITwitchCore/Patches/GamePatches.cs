@@ -1,6 +1,6 @@
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitch.Voting;
 
 namespace ONITwitch.Patches;

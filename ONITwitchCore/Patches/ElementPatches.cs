@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.CustomElements;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -46,7 +45,8 @@ internal static class ElementPatches
 		private static void Postfix()
 		{
 			var unbreakable = ElementLoader.FindElementByHash(TwitchSimHashes.OniTwitchIndestructibleElement);
-			SubstanceNameTag(unbreakable.substance) = TagManager.Create(nameof(TwitchSimHashes.OniTwitchIndestructibleElement));
+			SubstanceNameTag(unbreakable.substance) =
+				TagManager.Create(nameof(TwitchSimHashes.OniTwitchIndestructibleElement));
 		}
 	}
 }

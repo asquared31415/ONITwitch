@@ -1,5 +1,6 @@
 using System.Globalization;
 using ONITwitch.Config;
+using ONITwitch.Content;
 using ONITwitch.Settings.Components;
 using ONITwitchLib;
 using ONITwitchLib.Logger;

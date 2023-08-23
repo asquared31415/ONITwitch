@@ -2,6 +2,8 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using KMod;
+using ONITwitch.Content.Cmps;
+using ONITwitch.DevTools;
 using ONITwitch.EventLib;
 using ONITwitch.Integration;
 using ONITwitch.Integration.DecorPackA;

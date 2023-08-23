@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using UnityEngine;
 
 namespace ONITwitch.Patches;

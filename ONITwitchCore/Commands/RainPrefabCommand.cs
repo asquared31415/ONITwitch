@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using ONITwitch.Cmps;
+using ONITwitch.Content.Cmps;
 using ONITwitch.Patches;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;

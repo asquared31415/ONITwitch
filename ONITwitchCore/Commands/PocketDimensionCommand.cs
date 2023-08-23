@@ -1,5 +1,5 @@
 using ONITwitch.Content;
-using ONITwitch.Content.Buildings;
+using ONITwitch.Content.BuildingConfigs;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using ONITwitch.Config;
+using ONITwitch.Content.Cmps;
 using ONITwitchLib.IRC;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
@@ -18,23 +19,34 @@ namespace ONITwitch.Voting;
 
 internal class TwitchConnection
 {
+	private static readonly Uri TwitchChatUri = new("wss://irc-ws.chat.twitch.tv:443");
+
+	[NotNull] private readonly Queue<IrcMessage> incomingMessages = new();
+
+	[NotNull] private readonly HashSet<string> joinedChannels = new();
+
+	[NotNull] private readonly ConcurrentQueue<IrcMessage> outgoingMessages = new();
+
+	private long lastPingUtcTicks;
+
+	[NotNull] private ClientWebSocket socket = new();
 	public bool IsReady { get; private set; }
 
 	/// <summary>
-	/// This event is called when the connection is ready and properly authenticated.
-	/// This may not be called on the main thread!
+	///     This event is called when the connection is ready and properly authenticated.
+	///     This may not be called on the main thread!
 	/// </summary>
 	public event System.Action OnReady;
 
 	/// <summary>
-	/// This event is called when the connection receives any non-system message.
-	/// This may not be called on the main thread!
+	///     This event is called when the connection receives any non-system message.
+	///     This may not be called on the main thread!
 	/// </summary>
 	public event Action<IrcMessage> OnMessage;
 
 	/// <summary>
-	/// This event is called when a twitch chat message is encountered.
-	/// This may not be called on the main thread!
+	///     This event is called when a twitch chat message is encountered.
+	///     This may not be called on the main thread!
 	/// </summary>
 	public event Action<TwitchMessage> OnChatMessage;
 
@@ -195,19 +207,6 @@ internal class TwitchConnection
 	{
 		outgoingMessages.Enqueue(message);
 	}
-
-
-	private static readonly Uri TwitchChatUri = new("wss://irc-ws.chat.twitch.tv:443");
-
-	[NotNull] private ClientWebSocket socket = new();
-
-	[NotNull] private readonly ConcurrentQueue<IrcMessage> outgoingMessages = new();
-
-	[NotNull] private readonly Queue<IrcMessage> incomingMessages = new();
-
-	[NotNull] private readonly HashSet<string> joinedChannels = new();
-
-	private long lastPingUtcTicks;
 
 	// Returns whether to pass the message on to listeners
 	private bool HandleSystemMessage(IrcMessage message)

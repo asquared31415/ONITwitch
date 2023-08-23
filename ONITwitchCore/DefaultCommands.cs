@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using ONITwitch.Commands;
 using ONITwitch.Content;
-using ONITwitch.Content.Entities;
+using ONITwitch.Content.EntityConfigs;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
 using DataManager = ONITwitch.EventLib.DataManager;
@@ -134,7 +134,7 @@ internal static class DefaultCommands
 					// huge SHC, but only 850K. Condenses at 710K. There's a mechanism to make sure
 					// that nothing spawns less than 300 degrees below its melting point if it's above 200C though.
 					// So the final temp will be 1010K and really high SHC.
-					{SimHashes.SuperCoolantGas.ToString(), 1000},
+					{ SimHashes.SuperCoolantGas.ToString(), 1000 },
 				},
 				Danger.Small,
 				10,
@@ -734,16 +734,6 @@ internal static class DefaultCommands
 		);
 	}
 
-	private record struct CommandInfo(
-		[NotNull] string Id,
-		[NotNull] string Name,
-		[NotNull] CommandBase Command,
-		[CanBeNull] object Data,
-		[CanBeNull] Danger? Danger,
-		int Weight,
-		[CanBeNull] string Group = null
-	);
-
 	private static void RegisterCommand(CommandInfo info)
 	{
 		var deckInst = TwitchDeckManager.Instance;
@@ -770,4 +760,14 @@ internal static class DefaultCommands
 		eventInfo.AddCondition(info.Command.Condition);
 		eventInfo.Danger = info.Danger;
 	}
+
+	private record struct CommandInfo(
+		[NotNull] string Id,
+		[NotNull] string Name,
+		[NotNull] CommandBase Command,
+		[CanBeNull] object Data,
+		[CanBeNull] Danger? Danger,
+		int Weight,
+		[CanBeNull] string Group = null
+	);
 }
