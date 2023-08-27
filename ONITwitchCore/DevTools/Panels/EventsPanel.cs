@@ -286,7 +286,7 @@ internal class EventsPanel : IDevToolPanel
 		{
 			return string.IsNullOrWhiteSpace(filter) ||
 				   (info.FriendlyName?.ToLowerInvariant().Contains(filter.ToLowerInvariant()) == true) ||
-				   info.Id.ToLowerInvariant().Contains(filter.ToLowerInvariant());
+				   info.EventId.ToLowerInvariant().Contains(filter.ToLowerInvariant());
 		}
 
 		var namespacedGroupedEvents = new Dictionary<string, Dictionary<string, List<EventInfo>>>();
