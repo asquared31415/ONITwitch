@@ -16,22 +16,6 @@ namespace ONITwitch.DevTools.Panels;
 
 internal class EventsPanel : IDevToolPanel
 {
-	// The delay in seconds before an event should be triggered.
-	private float eventDelay;
-
-	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries;
-
-	// The filter that the user input to search for events.
-	private string eventFilter = "";
-
-	// TODO: fix this, the list probably isn't stable.
-	// probably needs to be a string ID?
-	private int selectedSurpriseBoxPrefabIdx;
-
-	// Whether to override the random range around the mouse.
-	// The value used is in `PosUtil.MouseRangeOverride`
-	private bool useMouseRangeOverride;
-
 	public void DrawPanel()
 	{
 		// Indent everything in the header
@@ -39,8 +23,52 @@ internal class EventsPanel : IDevToolPanel
 
 		DrawEventDelay();
 
-		ImGui.Checkbox("Override Mouse Range", ref useMouseRangeOverride);
-		if (useMouseRangeOverride)
+		DrawMouseRange();
+
+		DrawPartyTime();
+
+		DrawSurpriseBox();
+
+		ImGui.NewLine();
+
+		DrawEventTrigger();
+
+		// unindent for end of events header
+		ImGui.Unindent();
+	}
+
+#region event_delay
+
+	// The delay in seconds before an event should be triggered.
+	private float eventDelay;
+
+	// Whether to add delay to events triggered with the dev tools.
+	private bool overrideEventDelay;
+
+	private void DrawEventDelay()
+	{
+		ImGui.Checkbox("Override Event Delay", ref overrideEventDelay);
+		if (overrideEventDelay)
+		{
+			ImGui.SliderFloat("Event Delay", ref eventDelay, 0, 60);
+		}
+		else
+		{
+			eventDelay = 0;
+		}
+	}
+
+#endregion
+
+#region mouse_range
+
+	// Whether to override the random range around the mouse.
+	private bool overrideMouseRange;
+
+	private void DrawMouseRange()
+	{
+		ImGui.Checkbox("Override Mouse Range", ref overrideMouseRange);
+		if (overrideMouseRange)
 		{
 			var range = PosUtil.MouseRangeOverride.HasValue ? PosUtil.MouseRangeOverride.Value : 5;
 			ImGui.SliderInt("Range Override", ref range, 0, 20);
@@ -50,10 +78,57 @@ internal class EventsPanel : IDevToolPanel
 		{
 			PosUtil.MouseRangeOverride = null;
 		}
+	}
 
-		ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
+#endregion
+
+#region party_time
+
+	// Whether to override the intensity of the party time effect.
+	private bool overridePartyTimeIntensity;
+
+	private void DrawPartyTime()
+	{
+		ImGui.Checkbox("Override Party Time Intensity", ref overridePartyTimeIntensity);
+		if (overridePartyTimeIntensity)
+		{
+			ImGui.SliderFloat("Party Time Intensity", ref PartyTimePatch.Intensity, 0, 10);
+		}
+		else
+		{
+			PartyTimePatch.Intensity = PartyTimePatch.DefaultIntensity;
+		}
+	}
+
+#endregion
+
+#region surprise_box
+
+	// TODO: the list is not stable because things can become valid/invalid at any time, use Tag instead
+	private int selectedSurpriseBoxPrefabIdx;
+
+	private void DrawSurpriseBox()
+	{
+		int CompareTagsByName(KPrefabID a, KPrefabID b)
+		{
+			var aTag = a.PrefabID();
+			var bTag = b.PrefabID();
+			return (string.IsNullOrEmpty(aTag.Name), string.IsNullOrEmpty(bTag.Name)) switch
+			{
+				// Both missing names, compare hashes.
+				(true, true) => aTag.GetHash().CompareTo(bTag.GetHash()),
+				// Only a is missing name, order it last.
+				(true, false) => 1,
+				// Only b is missing name, order it last.
+				(false, true) => -1,
+				// Both have names, compare the names.
+				(false, false) => string.Compare(aTag.Name, bTag.Name, StringComparison.OrdinalIgnoreCase),
+			};
+		}
 
 		var validPrefabs = Assets.Prefabs.Where(SurpriseBox.PrefabIsValid).ToList();
+		validPrefabs.Sort(CompareTagsByName);
+
 		string previewName;
 		if (selectedSurpriseBoxPrefabIdx >= validPrefabs.Count)
 		{
@@ -101,9 +176,21 @@ internal class EventsPanel : IDevToolPanel
 
 			ImGui.EndCombo();
 		}
+	}
 
-		ImGui.NewLine();
+#endregion
 
+#region trigger_events
+
+	// initialize the entries with no filter
+	private List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)> eventEntries =
+		GenerateEventEntries(null);
+
+	// The filter that the user input to search for events.
+	private string eventFilter = "";
+
+	private void DrawEventTrigger()
+	{
 		ImGui.Text("Events with a");
 		ImGui.SameLine();
 		TwitchImGui.ColoredBullet(ColorUtil.GreenSuccessColor);
@@ -114,31 +201,40 @@ internal class EventsPanel : IDevToolPanel
 		ImGui.SameLine();
 		ImGui.Text("do not.");
 
-		// initialize the entries with no filter
-		eventEntries ??= GenerateEventEntries(null);
-
 		// When the filter changes, re-create the entries.
 		if (ImGuiEx.InputFilter("Search##EventSearch", ref eventFilter, 100))
 		{
 			eventEntries = GenerateEventEntries(eventFilter);
 		}
 
+		// If there is a filter set, force open everything shown.
+		var forceOpen = !string.IsNullOrWhiteSpace(eventFilter);
+
 		var dataInst = DataManager.Instance;
 		foreach (var (eventNamespace, groups) in eventEntries)
 		{
-			var mod = Global.Instance.modManager.mods.Find(mod => mod.staticID == eventNamespace);
+			var mod = Global.Instance.modManager.mods.Find(mod => mod?.staticID == eventNamespace);
 			var headerName = Util.StripTextFormatting(mod != null ? mod.title : eventNamespace);
 
-			var missingNamespace = headerName.IsNullOrWhiteSpace();
-			if (missingNamespace)
+			if (forceOpen)
 			{
-				ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
-				headerName = "MISSING NAMESPACE";
+				ImGui.SetNextItemOpen(true);
 			}
 
-			if (ImGui.CollapsingHeader(headerName))
+			bool headerOpen;
+			if (headerName.IsNullOrWhiteSpace())
 			{
-				ImGui.PushStyleColor(ImGuiCol.Text, Color.white);
+				ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
+				headerOpen = ImGui.CollapsingHeader("MISSING NAMESPACE");
+				ImGui.PopStyleColor();
+			}
+			else
+			{
+				headerOpen = ImGui.CollapsingHeader(headerName);
+			}
+
+			if (headerOpen)
+			{
 				ImGui.Indent();
 
 				var firstGroup = true;
@@ -177,23 +273,8 @@ internal class EventsPanel : IDevToolPanel
 				}
 
 				ImGui.Unindent();
-				ImGui.PopStyleColor();
-			}
-
-			if (missingNamespace)
-			{
-				// pop the red style if we pushed it before
-				ImGui.PopStyleColor();
 			}
 		}
-
-		// unindent for end of events header 
-		ImGui.Unindent();
-	}
-
-	private void DrawEventDelay()
-	{
-		ImGui.SliderFloat("Event Delay", ref eventDelay, 0, 60);
 	}
 
 	[MustUseReturnValue]
@@ -280,4 +361,6 @@ internal class EventsPanel : IDevToolPanel
 
 		return filtered;
 	}
+
+#endregion
 }

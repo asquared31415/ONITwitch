@@ -8,9 +8,13 @@ namespace ONITwitch.Patches;
 [HarmonyPatch(typeof(LightBufferCompositor), "OnRenderImage")]
 internal static class PartyTimePatch
 {
+	// The default intensity for the party time effect.
+	public const float DefaultIntensity = 1.6f;
+
 	public static bool Enabled;
 
-	public static float Intensity = 1.6f;
+	// The intensity used for the party time effect, possibly overridden by the dev tools.
+	public static float Intensity = DefaultIntensity;
 
 	private static Material hsvMaterial;
 	private static readonly int HueProperty = Shader.PropertyToID("_Hue");
