@@ -67,6 +67,8 @@ internal static class SurpriseBoxPatches
 			yield return AccessTools.Method(typeof(MinionConfig), nameof(MinionConfig.CreatePrefab));
 			// unimplemented and crashy
 			yield return AccessTools.Method(typeof(ShockwormConfig), nameof(ShockwormConfig.CreatePrefab));
+			// Does nothing, has no contents, and cannot be emptied to remove it.
+			yield return AccessTools.Method(typeof(DebrisPayloadConfig), nameof(DebrisPayloadConfig.CreatePrefab));
 		}
 
 		[UsedImplicitly]
@@ -79,7 +81,7 @@ internal static class SurpriseBoxPatches
 
 
 	[HarmonyPatch]
-	private static class DisabledSingleMultiPatches
+	private static class DisabledMultiEntityPatches
 	{
 		[UsedImplicitly]
 		private static IEnumerable<MethodBase> TargetMethods()
