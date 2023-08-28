@@ -99,15 +99,24 @@ internal static class SurpriseBoxPatches
 		}
 	}
 
+	// Don't allow disabled elements to spawn in the surprise box (they can crash when pinned, and are useless).
+	// Also don't let Neutrollium spawn, it's similarly useless and can't even be stored.
 	[HarmonyPatch(typeof(GeneratedOre), nameof(GeneratedOre.LoadGeneratedOre), typeof(List<Type>))]
 	private static class DisabledElementPatch
 	{
 		[UsedImplicitly]
 		public static void Postfix()
 		{
-			foreach (var go in Assets.GetPrefabsWithComponent<ElementChunk>())
+			foreach (var go in Assets.Prefabs)
 			{
-				go.AddTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled);
+				if (go.TryGetComponent(out PrimaryElement primaryElement))
+				{
+					if (primaryElement.Element.disabled ||
+						(primaryElement.ElementID == TwitchSimHashes.OniTwitchIndestructibleElement))
+					{
+						go.AddTag(ExtraTags.OniTwitchSurpriseBoxForceDisabled);
+					}
+				}
 			}
 		}
 	}

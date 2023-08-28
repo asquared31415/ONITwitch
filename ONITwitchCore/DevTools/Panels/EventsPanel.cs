@@ -161,8 +161,10 @@ internal class EventsPanel : IDevToolPanel
 			for (var idx = 0; idx < validPrefabs.Count; idx++)
 			{
 				var isSelected = idx == selectedSurpriseBoxPrefabIdx;
-				var name = Util.StripTextFormatting(validPrefabs[idx].name);
-				if (ImGui.Selectable(name, isSelected))
+				var name = Util.StripTextFormatting(validPrefabs[idx].GetProperName());
+				var tag = validPrefabs[idx].PrefabTag.ToString();
+				// name is not unique, but tag should be.
+				if (ImGui.Selectable($"{name} ({tag})", isSelected))
 				{
 					selectedSurpriseBoxPrefabIdx = idx;
 				}

@@ -1,12 +1,8 @@
-using System.Linq;
-using HarmonyLib;
-using JetBrains.Annotations;
-using ONITwitch.Content.EntityConfigs;
-
 namespace ONITwitch.Patches;
 
 internal static class SandboxSpawnerPatches
 {
+	/*
 	[HarmonyPatch(typeof(SandboxToolParameterMenu), "ConfigureEntitySelector")]
 	// ReSharper disable once InconsistentNaming
 	private static class SandboxToolParameterMenu_ConfigureEntitySelector_Patch
@@ -42,4 +38,5 @@ internal static class SandboxSpawnerPatches
 			__instance.entitySelector.filters = searchFiltersList.ToArray();
 		}
 	}
+	*/
 }

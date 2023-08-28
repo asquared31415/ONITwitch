@@ -4,6 +4,7 @@ using System.Collections;
 using KSerialization;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
+using ONITwitchLib.Utils;
 using UnityEngine;
 
 namespace ONITwitch.Content.Cmps;
@@ -114,9 +115,8 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 			primaryElement.Mass = 50f;
 		}
 
-		// make it fly a little bit
-		var velocity = Random.Range(1, 3) * Random.insideUnitCircle.normalized;
-		velocity.y = Mathf.Abs(velocity.y);
+		// get an angle at least 30 degrees above ground
+		var velocity = 5 * RandomUtil.OnUnitCircleInRange(30, 150);
 		// whether to restore the faller after 
 		var hadFaller = false;
 		if (GameComps.Fallers.Has(go))
