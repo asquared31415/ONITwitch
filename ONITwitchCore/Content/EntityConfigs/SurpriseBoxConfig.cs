@@ -21,7 +21,7 @@ internal class SurpriseBoxConfig : IEntityConfig
 			true,
 			Assets.GetAnim(Anim),
 			"closed",
-			// want it to be below ore
+			// Want it to be below ore, but in front of the pod or nearby buildings.
 			Grid.SceneLayer.BuildingFront,
 			EntityTemplates.CollisionShape.RECTANGLE,
 			1f,

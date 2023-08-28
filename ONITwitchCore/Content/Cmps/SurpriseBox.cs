@@ -96,7 +96,7 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 				randPrefab = Assets.Prefabs.GetRandom();
 			} while (!PrefabIsValid(randPrefab));
 
-			SpawnPrefab(randPrefab, transform.position);
+			SpawnPrefab(randPrefab, transform.position with { z = Grid.GetLayerZ(Grid.SceneLayer.Move) });
 
 			yield return new WaitForSeconds(Random.Range(0.75f, 2.0f));
 		}
@@ -106,13 +106,17 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 
 	internal static void SpawnPrefab(KPrefabID prefabID, Vector3 position)
 	{
-		Log.Debug($"Surprise box spawning a {prefabID.name} at {position}");
+		Log.Debug($"Surprise box spawning a {prefabID.PrefabID()} at {position}");
 		var go = Util.KInstantiate(prefabID.gameObject, position);
 		go.SetActive(true);
 
+		// ElementChunk is only on chunks of elements, but the properties we want are on PrimaryElement,
+		// but PrimaryElement is on *everything*, hence the extra check.
 		if (go.TryGetComponent(out ElementChunk _) && go.TryGetComponent(out PrimaryElement primaryElement))
 		{
-			primaryElement.Mass = 50f;
+			var element = primaryElement.Element;
+			primaryElement.Mass = element.defaultValues.mass;
+			primaryElement.Temperature = element.defaultValues.temperature;
 		}
 
 		// get an angle at least 30 degrees above ground

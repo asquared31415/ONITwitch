@@ -25,10 +25,11 @@ internal class SurpriseBoxCommand : CommandBase
 		}
 
 		var boxPrefab = Assets.GetPrefab(SurpriseBoxConfig.Id);
+		// Want it to be below ore, but in front of the pod or nearby buildings.
 		var box = GameUtil.KInstantiate(
 			boxPrefab,
-			Grid.CellToPosCBC(spawnCell, Grid.SceneLayer.Front),
-			Grid.SceneLayer.Front
+			Grid.CellToPosCBC(spawnCell, Grid.SceneLayer.BuildingFront),
+			Grid.SceneLayer.BuildingFront
 		);
 		box.SetActive(true);
 

@@ -49,28 +49,21 @@ internal class OniTwitchRainPrefab : KMonoBehaviour
 					continue;
 				}
 
-				var go = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Creatures);
-
-				var sceneLayer = Grid.SceneLayer.Front;
-				if (go.TryGetComponent<KBatchedAnimController>(out var kbac))
-				{
-					sceneLayer = kbac.sceneLayer;
-				}
-
-				var pos = Grid.CellToPosCCC(cellWithClearance, sceneLayer);
+				var go = GameUtil.KInstantiate(prefab, Grid.SceneLayer.Move);
 				var kPrefabID = go.GetComponent<KPrefabID>();
 
 				if ((go.GetComponent<ElementChunk>() != null) && go.TryGetComponent<PrimaryElement>(out var element))
 				{
 					element.Mass = 10;
-					var gridTemp = Grid.Temperature[Grid.PosToCell(pos)];
+					var gridTemp = Grid.Temperature[cellWithClearance];
 					element.Temperature = gridTemp > 0 ? gridTemp : element.Element.defaultValues.temperature;
 				}
 
 				kPrefabID.InitializeTags();
 
-
-				go.transform.SetPosition(pos);
+				// Put prefab in the center of a cell, on the front-most layer.
+				// It will move backwards on the next layer update.
+				go.transform.SetPosition(Grid.CellToPosCCC(cellWithClearance, Grid.SceneLayer.Move));
 
 				// Prefab specific post-initialization
 				switch (kPrefabID.tag)

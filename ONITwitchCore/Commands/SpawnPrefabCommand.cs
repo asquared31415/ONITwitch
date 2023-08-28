@@ -1,6 +1,6 @@
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -16,17 +16,11 @@ internal class SpawnPrefabCommand : CommandBase
 	{
 		var prefabId = (string) data;
 		var prefab = Assets.GetPrefab(prefabId);
-		var position = GridUtil.NearestEmptyCell(PosUtil.RandomCellNearMouse());
-		var sceneLayer = Grid.SceneLayer.Front;
-		if (prefab.TryGetComponent<KBatchedAnimController>(out var kbac))
-		{
-			sceneLayer = kbac.sceneLayer;
-		}
-
+		var cell = GridUtil.NearestEmptyCell(PosUtil.RandomCellNearMouse());
 		var go = GameUtil.KInstantiate(
 			prefab,
-			Grid.CellToPosCBC(position, sceneLayer),
-			sceneLayer
+			Grid.CellToPosCBC(cell, Grid.SceneLayer.Move),
+			Grid.SceneLayer.Move
 		);
 		if (go != null)
 		{

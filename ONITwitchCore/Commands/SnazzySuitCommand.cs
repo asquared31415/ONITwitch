@@ -1,6 +1,6 @@
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -9,17 +9,11 @@ internal class SnazzySuitCommand : CommandBase
 	public override void Run(object data)
 	{
 		var prefab = Assets.GetPrefab(CustomClothingConfig.ID);
-		var position = GridUtil.NearestEmptyCell(PosUtil.RandomCellNearMouse());
-		var sceneLayer = Grid.SceneLayer.Front;
-		if (prefab.TryGetComponent<KBatchedAnimController>(out var kbac))
-		{
-			sceneLayer = kbac.sceneLayer;
-		}
-
+		var cell = GridUtil.NearestEmptyCell(PosUtil.RandomCellNearMouse());
 		var go = GameUtil.KInstantiate(
 			prefab,
-			Grid.CellToPos(position, 0.01f, 0.01f, Grid.GetLayerZ(sceneLayer)),
-			sceneLayer
+			Grid.CellToPosCCC(cell, Grid.SceneLayer.Move),
+			Grid.SceneLayer.Move
 		);
 		if (go != null)
 		{

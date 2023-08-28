@@ -31,7 +31,7 @@ internal class SparkleFollower : KMonoBehaviour, ISim200ms
 				GameUtil.KInstantiate(
 					EffectPrefabs.Instance.SparkleStreakFX,
 					transform.position,
-					Grid.SceneLayer.Front
+					Grid.SceneLayer.FXFront
 				)
 			);
 		}
