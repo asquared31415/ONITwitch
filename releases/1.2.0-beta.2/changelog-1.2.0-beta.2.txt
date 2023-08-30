@@ -1,4 +1,4 @@
-## Fixes:
+##Fixes:
 - Several useless objects removed from Surprise Box.
 - Unimplemented elements removed from the Surprise Box due to crashes when the resource is pinned.
   - These elements generally weren't useful either besides their thermal properties in rare cases.
@@ -7,11 +7,11 @@
 - Pocket Dimensions no longer show "Space Exposure" when they are not exposed to space.
 - Pocket Dimensions that show "Space Exposure" are now actually exposed to space.
 - Extremely warm and over-pressurized elements no longer break out of their protective cage. 
-## Changes:
+##Changes:
 - Surprise Box now spawns elements at their default mass and temperature (as if you had selected them in sandbox tools).
   - This should resolve issues where elements were instantly turning to a solid or gas tile, they should now slowly exchange temperature as debris first. 
 - Several messages changed for clarity.
-## Mod Support:
+##Mod Support:
 - Unimplemented Pocket Dimension generation API removed (it was never able to be used anyway).
 - Twitch Integration dev tools slightly tweaked, notably searching for an event now only searches the *non-namespaced* ID.
     - Surprise Box dev tools show the proper name and tag of an entry and are sorted by tag.

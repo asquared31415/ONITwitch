@@ -1,0 +1,17 @@
+CREDITS
+The following people have contributed to the mod in various ways:
+
+Aki:
+ - Designing several formations for Pocket Dimensions
+ - Pocket Dimension portal animation
+ - Helped creating the informational toast popup
+ - Testing beta versions for mod integration
+ - Miscellaneous code
+ - Surprise Box animation
+
+pether.pg:
+ - Testing beta versions for mod integration
+
+SGT_Imalas:
+ - Testing beta versions for mod integration
+ - German translation
