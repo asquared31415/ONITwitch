@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using ImGuiNET;
 using JetBrains.Annotations;
 using ONITwitch.DevTools.Panels;
-using ONITwitch.EventLib;
 using UnityEngine;
 
 namespace ONITwitch.DevTools;
@@ -29,7 +27,7 @@ internal class TwitchDevTool : DevTool
 		Instance = this;
 
 		debugMarkers = new DebugMarkers();
-		cameraPath = new CameraPath(debugMarkers);
+		cameraPath = new CameraPath();
 		cameraPathPanel = new CameraPathPanel(debugMarkers, cameraPath);
 		debugInfoPanel = new DebugInfoPanel(debugMarkers);
 		eventsPanel = new EventsPanel();

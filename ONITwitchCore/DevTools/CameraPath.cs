@@ -23,15 +23,8 @@ internal class CameraPath
 {
 	[NotNull] private readonly List<CameraPathPoint> camPoints = new();
 
-	private readonly DebugMarkers debugMarkers;
-
 	// The coroutine that is run to execute the camera path. Stored so that it can be canceled if needed.
 	private Coroutine executeCamCoroutine;
-
-	public CameraPath(DebugMarkers debugMarkers)
-	{
-		this.debugMarkers = debugMarkers;
-	}
 
 	public IReadOnlyList<CameraPathPoint> CamPoints => new List<CameraPathPoint>(camPoints);
 
