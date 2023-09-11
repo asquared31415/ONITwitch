@@ -1,0 +1,67 @@
+### YamlMime:ManagedReference
+items:
+- uid: ONITwitchLib.Core
+  commentId: N:ONITwitchLib.Core
+  id: ONITwitchLib.Core
+  children:
+  - ONITwitchLib.Core.CommandBase
+  - ONITwitchLib.Core.CoreTypes
+  - ONITwitchLib.Core.TwitchDeckManager
+  - ONITwitchLib.Core.TwitchSettings
+  langs:
+  - csharp
+  - vb
+  name: ONITwitchLib.Core
+  nameWithType: ONITwitchLib.Core
+  fullName: ONITwitchLib.Core
+  type: Namespace
+  assemblies:
+  - ONITwitchLib
+references:
+- uid: ONITwitchLib.Core.CommandBase
+  commentId: T:ONITwitchLib.Core.CommandBase
+  href: ONITwitchLib.Core.CommandBase.html
+  name: CommandBase
+  nameWithType: CommandBase
+  fullName: ONITwitchLib.Core.CommandBase
+- uid: ONITwitchLib.Core.CoreTypes
+  commentId: T:ONITwitchLib.Core.CoreTypes
+  href: ONITwitchLib.Core.CoreTypes.html
+  name: CoreTypes
+  nameWithType: CoreTypes
+  fullName: ONITwitchLib.Core.CoreTypes
+- uid: ONITwitchLib.Core.TwitchDeckManager
+  commentId: T:ONITwitchLib.Core.TwitchDeckManager
+  parent: ONITwitchLib.Core
+  href: ONITwitchLib.Core.TwitchDeckManager.html
+  name: TwitchDeckManager
+  nameWithType: TwitchDeckManager
+  fullName: ONITwitchLib.Core.TwitchDeckManager
+- uid: ONITwitchLib.Core.TwitchSettings
+  commentId: T:ONITwitchLib.Core.TwitchSettings
+  href: ONITwitchLib.Core.TwitchSettings.html
+  name: TwitchSettings
+  nameWithType: TwitchSettings
+  fullName: ONITwitchLib.Core.TwitchSettings
+- uid: ONITwitchLib.Core
+  commentId: N:ONITwitchLib.Core
+  href: ONITwitchLib.html
+  name: ONITwitchLib.Core
+  nameWithType: ONITwitchLib.Core
+  fullName: ONITwitchLib.Core
+  spec.csharp:
+  - uid: ONITwitchLib
+    name: ONITwitchLib
+    href: ONITwitchLib.html
+  - name: .
+  - uid: ONITwitchLib.Core
+    name: Core
+    href: ONITwitchLib.Core.html
+  spec.vb:
+  - uid: ONITwitchLib
+    name: ONITwitchLib
+    href: ONITwitchLib.html
+  - name: .
+  - uid: ONITwitchLib.Core
+    name: Core
+    href: ONITwitchLib.Core.html

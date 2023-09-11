@@ -1,0 +1,713 @@
+### YamlMime:ManagedReference
+items:
+- uid: ONITwitchLib.ToastManager
+  commentId: T:ONITwitchLib.ToastManager
+  id: ToastManager
+  parent: ONITwitchLib
+  children:
+  - ONITwitchLib.ToastManager.InstantiateToast(System.String,System.String)
+  - ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject)
+  - ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject,System.Single)
+  - ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3)
+  - ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3,System.Single)
+  langs:
+  - csharp
+  - vb
+  name: ToastManager
+  nameWithType: ToastManager
+  fullName: ONITwitchLib.ToastManager
+  type: Class
+  source:
+    remote:
+      path: ONITwitchLib/ToastManager.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: ToastManager
+    path: ../ONITwitchLib/ToastManager.cs
+    startLine: 12
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Provides methods for creating toasts.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static class ToastManager
+    content.vb: >-
+      <PublicAPI>
+
+      Public Module ToastManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.ToastManager.InstantiateToast(System.String,System.String)
+  commentId: M:ONITwitchLib.ToastManager.InstantiateToast(System.String,System.String)
+  id: InstantiateToast(System.String,System.String)
+  parent: ONITwitchLib.ToastManager
+  langs:
+  - csharp
+  - vb
+  name: InstantiateToast(string, string)
+  nameWithType: ToastManager.InstantiateToast(string, string)
+  fullName: ONITwitchLib.ToastManager.InstantiateToast(string, string)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/ToastManager.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: InstantiateToast
+    path: ../ONITwitchLib/ToastManager.cs
+    startLine: 72
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Creates a toast with a tile and a body.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [CanBeNull]
+
+      public static GameObject InstantiateToast(string title, string body)
+    parameters:
+    - id: title
+      type: System.String
+      description: The title text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: body
+      type: System.String
+      description: The body text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    return:
+      type: UnityEngine.GameObject
+      description: The newly created toast's <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref>.
+    content.vb: >-
+      <PublicAPI>
+
+      <CanBeNull>
+
+      Public Shared Function InstantiateToast(title As String, body As String) As GameObject
+  overload: ONITwitchLib.ToastManager.InstantiateToast*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: JetBrains.Annotations.CanBeNullAttribute
+    ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+    arguments: []
+  nameWithType.vb: ToastManager.InstantiateToast(String, String)
+  fullName.vb: ONITwitchLib.ToastManager.InstantiateToast(String, String)
+  name.vb: InstantiateToast(String, String)
+- uid: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3)
+  commentId: M:ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3)
+  id: InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3)
+  parent: ONITwitchLib.ToastManager
+  langs:
+  - csharp
+  - vb
+  name: InstantiateToastWithPosTarget(string, string, Vector3)
+  nameWithType: ToastManager.InstantiateToastWithPosTarget(string, string, Vector3)
+  fullName: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(string, string, UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/ToastManager.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: InstantiateToastWithPosTarget
+    path: ../ONITwitchLib/ToastManager.cs
+    startLine: 86
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Creates a toast with a tile and a body, that targets a position when clicked.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [CanBeNull]
+
+      public static GameObject InstantiateToastWithPosTarget(string title, string body, Vector3 pos)
+    parameters:
+    - id: title
+      type: System.String
+      description: The title text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: body
+      type: System.String
+      description: The body text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: pos
+      type: UnityEngine.Vector3
+      description: The position to target on click.
+    return:
+      type: UnityEngine.GameObject
+      description: The newly created toast's <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref>.
+    content.vb: >-
+      <PublicAPI>
+
+      <CanBeNull>
+
+      Public Shared Function InstantiateToastWithPosTarget(title As String, body As String, pos As Vector3) As GameObject
+  overload: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: JetBrains.Annotations.CanBeNullAttribute
+    ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+    arguments: []
+  nameWithType.vb: ToastManager.InstantiateToastWithPosTarget(String, String, Vector3)
+  fullName.vb: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(String, String, UnityEngine.Vector3)
+  name.vb: InstantiateToastWithPosTarget(String, String, Vector3)
+- uid: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3,System.Single)
+  commentId: M:ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3,System.Single)
+  id: InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3,System.Single)
+  parent: ONITwitchLib.ToastManager
+  langs:
+  - csharp
+  - vb
+  name: InstantiateToastWithPosTarget(string, string, Vector3, float)
+  nameWithType: ToastManager.InstantiateToastWithPosTarget(string, string, Vector3, float)
+  fullName: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(string, string, UnityEngine.Vector3, float)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/ToastManager.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: InstantiateToastWithPosTarget
+    path: ../ONITwitchLib/ToastManager.cs
+    startLine: 108
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Creates a toast with a tile and a body, that targets a position when clicked.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [CanBeNull]
+
+      public static GameObject InstantiateToastWithPosTarget(string title, string body, Vector3 pos, float orthographicSize)
+    parameters:
+    - id: title
+      type: System.String
+      description: The title text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: body
+      type: System.String
+      description: The body text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: pos
+      type: UnityEngine.Vector3
+      description: The position to target on click.
+    - id: orthographicSize
+      type: System.Single
+      description: >-
+        The orthographic size the camera should go to. Higher is more zoomed out. Must be
+
+        strictly greater than 0.
+    return:
+      type: UnityEngine.GameObject
+      description: The newly created toast's <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref>.
+    content.vb: >-
+      <PublicAPI>
+
+      <CanBeNull>
+
+      Public Shared Function InstantiateToastWithPosTarget(title As String, body As String, pos As Vector3, orthographicSize As Single) As GameObject
+  overload: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: JetBrains.Annotations.CanBeNullAttribute
+    ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+    arguments: []
+  nameWithType.vb: ToastManager.InstantiateToastWithPosTarget(String, String, Vector3, Single)
+  fullName.vb: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(String, String, UnityEngine.Vector3, Single)
+  name.vb: InstantiateToastWithPosTarget(String, String, Vector3, Single)
+- uid: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject)
+  commentId: M:ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject)
+  id: InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject)
+  parent: ONITwitchLib.ToastManager
+  langs:
+  - csharp
+  - vb
+  name: InstantiateToastWithGoTarget(string, string, GameObject)
+  nameWithType: ToastManager.InstantiateToastWithGoTarget(string, string, GameObject)
+  fullName: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(string, string, UnityEngine.GameObject)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/ToastManager.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: InstantiateToastWithGoTarget
+    path: ../ONITwitchLib/ToastManager.cs
+    startLine: 127
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Creates a toast with a tile and a body, that selects a <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref> when clicked.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [CanBeNull]
+
+      public static GameObject InstantiateToastWithGoTarget(string title, string body, GameObject target)
+    parameters:
+    - id: title
+      type: System.String
+      description: The title text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: body
+      type: System.String
+      description: The body text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: target
+      type: UnityEngine.GameObject
+      description: The <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref> to target on click.
+    return:
+      type: UnityEngine.GameObject
+      description: The newly created toast's <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref>.
+    content.vb: >-
+      <PublicAPI>
+
+      <CanBeNull>
+
+      Public Shared Function InstantiateToastWithGoTarget(title As String, body As String, target As GameObject) As GameObject
+  overload: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: JetBrains.Annotations.CanBeNullAttribute
+    ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+    arguments: []
+  nameWithType.vb: ToastManager.InstantiateToastWithGoTarget(String, String, GameObject)
+  fullName.vb: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(String, String, UnityEngine.GameObject)
+  name.vb: InstantiateToastWithGoTarget(String, String, GameObject)
+- uid: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject,System.Single)
+  commentId: M:ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject,System.Single)
+  id: InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject,System.Single)
+  parent: ONITwitchLib.ToastManager
+  langs:
+  - csharp
+  - vb
+  name: InstantiateToastWithGoTarget(string, string, GameObject, float)
+  nameWithType: ToastManager.InstantiateToastWithGoTarget(string, string, GameObject, float)
+  fullName: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(string, string, UnityEngine.GameObject, float)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/ToastManager.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: InstantiateToastWithGoTarget
+    path: ../ONITwitchLib/ToastManager.cs
+    startLine: 149
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Creates a toast with a tile and a body, that selects a <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref> when clicked.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      [CanBeNull]
+
+      public static GameObject InstantiateToastWithGoTarget(string title, string body, GameObject target, float orthographicSize)
+    parameters:
+    - id: title
+      type: System.String
+      description: The title text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: body
+      type: System.String
+      description: The body text for the toast.
+      attributes:
+      - type: JetBrains.Annotations.CanBeNullAttribute
+        ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+        arguments: []
+    - id: target
+      type: UnityEngine.GameObject
+      description: The <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref> to target on click.
+    - id: orthographicSize
+      type: System.Single
+      description: >-
+        The orthographic size the camera should go to. Higher is more zoomed out. Must be
+
+        strictly greater than 0.
+    return:
+      type: UnityEngine.GameObject
+      description: The newly created toast's <xref href="UnityEngine.GameObject" data-throw-if-not-resolved="false"></xref>.
+    content.vb: >-
+      <PublicAPI>
+
+      <CanBeNull>
+
+      Public Shared Function InstantiateToastWithGoTarget(title As String, body As String, target As GameObject, orthographicSize As Single) As GameObject
+  overload: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  - type: JetBrains.Annotations.CanBeNullAttribute
+    ctor: JetBrains.Annotations.CanBeNullAttribute.#ctor
+    arguments: []
+  nameWithType.vb: ToastManager.InstantiateToastWithGoTarget(String, String, GameObject, Single)
+  fullName.vb: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(String, String, UnityEngine.GameObject, Single)
+  name.vb: InstantiateToastWithGoTarget(String, String, GameObject, Single)
+references:
+- uid: ONITwitchLib
+  commentId: N:ONITwitchLib
+  href: ONITwitchLib.html
+  name: ONITwitchLib
+  nameWithType: ONITwitchLib
+  fullName: ONITwitchLib
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine.GameObject
+  commentId: T:UnityEngine.GameObject
+  parent: UnityEngine
+  isExternal: true
+  name: GameObject
+  nameWithType: GameObject
+  fullName: UnityEngine.GameObject
+- uid: ONITwitchLib.ToastManager.InstantiateToast*
+  commentId: Overload:ONITwitchLib.ToastManager.InstantiateToast
+  href: ONITwitchLib.ToastManager.html#ONITwitchLib.ToastManager.InstantiateToast(System.String,System.String)
+  name: InstantiateToast
+  nameWithType: ToastManager.InstantiateToast
+  fullName: ONITwitchLib.ToastManager.InstantiateToast
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget*
+  commentId: Overload:ONITwitchLib.ToastManager.InstantiateToastWithPosTarget
+  href: ONITwitchLib.ToastManager.html#ONITwitchLib.ToastManager.InstantiateToastWithPosTarget(System.String,System.String,UnityEngine.Vector3)
+  name: InstantiateToastWithPosTarget
+  nameWithType: ToastManager.InstantiateToastWithPosTarget
+  fullName: ONITwitchLib.ToastManager.InstantiateToastWithPosTarget
+- uid: UnityEngine.Vector3
+  commentId: T:UnityEngine.Vector3
+  parent: UnityEngine
+  isExternal: true
+  name: Vector3
+  nameWithType: Vector3
+  fullName: UnityEngine.Vector3
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget*
+  commentId: Overload:ONITwitchLib.ToastManager.InstantiateToastWithGoTarget
+  href: ONITwitchLib.ToastManager.html#ONITwitchLib.ToastManager.InstantiateToastWithGoTarget(System.String,System.String,UnityEngine.GameObject)
+  name: InstantiateToastWithGoTarget
+  nameWithType: ToastManager.InstantiateToastWithGoTarget
+  fullName: ONITwitchLib.ToastManager.InstantiateToastWithGoTarget

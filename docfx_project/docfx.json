@@ -22,7 +22,9 @@
       "disableGitFeatures": false,
       "disableDefaultFilter": false,
       "noRestore": false,
-      "namespaceLayout": "flattened"
+      "namespaceLayout": "flattened",
+      "memberLayout": "samePage",
+      "allowCompilationErrors": false
     }
   ],
   "build": {
@@ -48,9 +50,8 @@
     "dest": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
-    "template": ["default"],
+    "template": ["default", "modern"],
     "postProcessors": [],
-    "noLangKeyword": false,
     "keepFileLink": false,
     "disableGitFeatures": false
   }

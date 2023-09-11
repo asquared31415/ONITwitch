@@ -1,0 +1,861 @@
+### YamlMime:ManagedReference
+items:
+- uid: ONITwitchLib.Utils.PosUtil
+  commentId: T:ONITwitchLib.Utils.PosUtil
+  id: PosUtil
+  parent: ONITwitchLib.Utils
+  children:
+  - ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos
+  - ONITwitchLib.Utils.PosUtil.CameraMinWorldPos
+  - ONITwitchLib.Utils.PosUtil.ClampedMouseCell
+  - ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange(System.Int32)
+  - ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos
+  - ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange(System.Int32)
+  - ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos
+  - ONITwitchLib.Utils.PosUtil.EaseOutBack(System.Single)
+  - ONITwitchLib.Utils.PosUtil.EaseOutLerp(UnityEngine.Vector3,UnityEngine.Vector3,System.Single)
+  - ONITwitchLib.Utils.PosUtil.RandomCellNearMouse
+  langs:
+  - csharp
+  - vb
+  name: PosUtil
+  nameWithType: PosUtil
+  fullName: ONITwitchLib.Utils.PosUtil
+  type: Class
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: PosUtil
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 9
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Utilities for getting relevant positions for events to use.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static class PosUtil
+    content.vb: >-
+      <PublicAPI>
+
+      Public Module PosUtil
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos
+  commentId: M:ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos
+  id: ClampedMouseWorldPos
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: ClampedMouseWorldPos()
+  nameWithType: PosUtil.ClampedMouseWorldPos()
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos()
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: ClampedMouseWorldPos
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 16
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the world position of the mouse within the bounds of a world and the screen.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static Vector3 ClampedMouseWorldPos()
+    return:
+      type: UnityEngine.Vector3
+      description: The world position of the mouse, within the current active world and clamped to the screen boundaries.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function ClampedMouseWorldPos() As Vector3
+  overload: ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseCell
+  commentId: M:ONITwitchLib.Utils.PosUtil.ClampedMouseCell
+  id: ClampedMouseCell
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: ClampedMouseCell()
+  nameWithType: PosUtil.ClampedMouseCell()
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseCell()
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: ClampedMouseCell
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 39
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the <xref href="Grid" data-throw-if-not-resolved="false"></xref> cell that the mouse is on, within the current world and the screen.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static int ClampedMouseCell()
+    return:
+      type: System.Int32
+      description: The cell position of the mouse, within the current active world and clamped to the screen boundaries.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function ClampedMouseCell() As Integer
+  overload: ONITwitchLib.Utils.PosUtil.ClampedMouseCell*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange(System.Int32)
+  commentId: M:ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange(System.Int32)
+  id: ClampedMousePosWithRange(System.Int32)
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: ClampedMousePosWithRange(int)
+  nameWithType: PosUtil.ClampedMousePosWithRange(int)
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange(int)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: ClampedMousePosWithRange
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 58
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the world position of the mouse with a range randomly applied.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static Vector3 ClampedMousePosWithRange(int range)
+    parameters:
+    - id: range
+      type: System.Int32
+      description: The radius to randomly apply to the mouse position, in world space units (1 unit = 1 cell).
+    return:
+      type: UnityEngine.Vector3
+      description: >-
+        A random position within <code class="paramref">range</code> units of the world position of the mouse,
+
+        within the current active world and clamped to the screen boundaries.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function ClampedMousePosWithRange(range As Integer) As Vector3
+  overload: ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  nameWithType.vb: PosUtil.ClampedMousePosWithRange(Integer)
+  fullName.vb: ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange(Integer)
+  name.vb: ClampedMousePosWithRange(Integer)
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange(System.Int32)
+  commentId: M:ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange(System.Int32)
+  id: ClampedMouseCellWithRange(System.Int32)
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: ClampedMouseCellWithRange(int)
+  nameWithType: PosUtil.ClampedMouseCellWithRange(int)
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange(int)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: ClampedMouseCellWithRange
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 96
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the <xref href="Grid" data-throw-if-not-resolved="false"></xref> cell of the mouse with a range randomly applied.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static int ClampedMouseCellWithRange(int range)
+    parameters:
+    - id: range
+      type: System.Int32
+      description: The radius to randomly apply to the mouse position, in world space units (1 unit = 1 cell).
+    return:
+      type: System.Int32
+      description: >-
+        A random <xref href="Grid" data-throw-if-not-resolved="false"></xref> cell within <code class="paramref">range</code> units of the world position of the mouse,
+
+        within the current active world and clamped to the screen boundaries.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function ClampedMouseCellWithRange(range As Integer) As Integer
+  overload: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  nameWithType.vb: PosUtil.ClampedMouseCellWithRange(Integer)
+  fullName.vb: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange(Integer)
+  name.vb: ClampedMouseCellWithRange(Integer)
+- uid: ONITwitchLib.Utils.PosUtil.RandomCellNearMouse
+  commentId: M:ONITwitchLib.Utils.PosUtil.RandomCellNearMouse
+  id: RandomCellNearMouse
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: RandomCellNearMouse()
+  nameWithType: PosUtil.RandomCellNearMouse()
+  fullName: ONITwitchLib.Utils.PosUtil.RandomCellNearMouse()
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: RandomCellNearMouse
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 107
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets a random <xref href="Grid" data-throw-if-not-resolved="false"></xref> cell near the current mouse position.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static int RandomCellNearMouse()
+    return:
+      type: System.Int32
+      description: A random <xref href="Grid" data-throw-if-not-resolved="false"></xref> cell in the current world that is near the mouse.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function RandomCellNearMouse() As Integer
+  overload: ONITwitchLib.Utils.PosUtil.RandomCellNearMouse*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos
+  commentId: M:ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos
+  id: ClampedMouseCellWorldPos
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: ClampedMouseCellWorldPos()
+  nameWithType: PosUtil.ClampedMouseCellWorldPos()
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos()
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: ClampedMouseCellWorldPos
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 117
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the world position of the <xref href="Grid" data-throw-if-not-resolved="false"></xref> cell that the mouse is on, within the current world and the screen.
+  example: []
+  syntax:
+    content: public static Vector3 ClampedMouseCellWorldPos()
+    return:
+      type: UnityEngine.Vector3
+      description: The world position of the cell that the mouse is in, within the current active world and clamped to the screen boundaries.
+    content.vb: Public Shared Function ClampedMouseCellWorldPos() As Vector3
+  overload: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos*
+- uid: ONITwitchLib.Utils.PosUtil.CameraMinWorldPos
+  commentId: M:ONITwitchLib.Utils.PosUtil.CameraMinWorldPos
+  id: CameraMinWorldPos
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: CameraMinWorldPos()
+  nameWithType: PosUtil.CameraMinWorldPos()
+  fullName: ONITwitchLib.Utils.PosUtil.CameraMinWorldPos()
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: CameraMinWorldPos
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 126
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the world position of the bottom left of the area shown by the camera.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static Vector3 CameraMinWorldPos()
+    return:
+      type: UnityEngine.Vector3
+      description: The world position of the bottom left of the area shown by the camera.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function CameraMinWorldPos() As Vector3
+  overload: ONITwitchLib.Utils.PosUtil.CameraMinWorldPos*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos
+  commentId: M:ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos
+  id: CameraMaxWorldPos
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: CameraMaxWorldPos()
+  nameWithType: PosUtil.CameraMaxWorldPos()
+  fullName: ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos()
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: CameraMaxWorldPos
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 149
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Gets the world position of the top right of the area shown by the camera.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static Vector3 CameraMaxWorldPos()
+    return:
+      type: UnityEngine.Vector3
+      description: The world position of the top right of the area shown by the camera.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function CameraMaxWorldPos() As Vector3
+  overload: ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Utils.PosUtil.EaseOutLerp(UnityEngine.Vector3,UnityEngine.Vector3,System.Single)
+  commentId: M:ONITwitchLib.Utils.PosUtil.EaseOutLerp(UnityEngine.Vector3,UnityEngine.Vector3,System.Single)
+  id: EaseOutLerp(UnityEngine.Vector3,UnityEngine.Vector3,System.Single)
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: EaseOutLerp(Vector3, Vector3, float)
+  nameWithType: PosUtil.EaseOutLerp(Vector3, Vector3, float)
+  fullName: ONITwitchLib.Utils.PosUtil.EaseOutLerp(UnityEngine.Vector3, UnityEngine.Vector3, float)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: EaseOutLerp
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 175
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: Interpolates between two vectors with a function that slows down as it approaches 1, but overshoots slightly and bounces back.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static Vector3 EaseOutLerp(Vector3 a, Vector3 b, float x)
+    parameters:
+    - id: a
+      type: UnityEngine.Vector3
+      description: The first vector.
+    - id: b
+      type: UnityEngine.Vector3
+      description: The second vector.
+    - id: x
+      type: System.Single
+      description: The fraction of the transition to apply.
+    return:
+      type: UnityEngine.Vector3
+      description: A vector that is interpolated following the bounce back function.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function EaseOutLerp(a As Vector3, b As Vector3, x As Single) As Vector3
+  overload: ONITwitchLib.Utils.PosUtil.EaseOutLerp*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  nameWithType.vb: PosUtil.EaseOutLerp(Vector3, Vector3, Single)
+  fullName.vb: ONITwitchLib.Utils.PosUtil.EaseOutLerp(UnityEngine.Vector3, UnityEngine.Vector3, Single)
+  name.vb: EaseOutLerp(Vector3, Vector3, Single)
+- uid: ONITwitchLib.Utils.PosUtil.EaseOutBack(System.Single)
+  commentId: M:ONITwitchLib.Utils.PosUtil.EaseOutBack(System.Single)
+  id: EaseOutBack(System.Single)
+  parent: ONITwitchLib.Utils.PosUtil
+  langs:
+  - csharp
+  - vb
+  name: EaseOutBack(float)
+  nameWithType: PosUtil.EaseOutBack(float)
+  fullName: ONITwitchLib.Utils.PosUtil.EaseOutBack(float)
+  type: Method
+  source:
+    remote:
+      path: ONITwitchLib/Utils/PosUtil.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: EaseOutBack
+    path: ../ONITwitchLib/Utils/PosUtil.cs
+    startLine: 186
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib.Utils
+  summary: A function that on the range [0,1], moves quickly towards 1, starts to slow down, but overshoots, and then comes back to 1.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public static float EaseOutBack(float x)
+    parameters:
+    - id: x
+      type: System.Single
+      description: The input value to the function.
+    return:
+      type: System.Single
+      description: The output of the function.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Shared Function EaseOutBack(x As Single) As Single
+  overload: ONITwitchLib.Utils.PosUtil.EaseOutBack*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  nameWithType.vb: PosUtil.EaseOutBack(Single)
+  fullName.vb: ONITwitchLib.Utils.PosUtil.EaseOutBack(Single)
+  name.vb: EaseOutBack(Single)
+references:
+- uid: ONITwitchLib.Utils
+  commentId: N:ONITwitchLib.Utils
+  href: ONITwitchLib.html
+  name: ONITwitchLib.Utils
+  nameWithType: ONITwitchLib.Utils
+  fullName: ONITwitchLib.Utils
+  spec.csharp:
+  - uid: ONITwitchLib
+    name: ONITwitchLib
+    href: ONITwitchLib.html
+  - name: .
+  - uid: ONITwitchLib.Utils
+    name: Utils
+    href: ONITwitchLib.Utils.html
+  spec.vb:
+  - uid: ONITwitchLib
+    name: ONITwitchLib
+    href: ONITwitchLib.html
+  - name: .
+  - uid: ONITwitchLib.Utils
+    name: Utils
+    href: ONITwitchLib.Utils.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos
+  name: ClampedMouseWorldPos
+  nameWithType: PosUtil.ClampedMouseWorldPos
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseWorldPos
+- uid: UnityEngine.Vector3
+  commentId: T:UnityEngine.Vector3
+  parent: UnityEngine
+  isExternal: true
+  name: Vector3
+  nameWithType: Vector3
+  fullName: UnityEngine.Vector3
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Grid
+  commentId: T:Grid
+  isExternal: true
+  name: Grid
+  nameWithType: Grid
+  fullName: Grid
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseCell*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.ClampedMouseCell
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.ClampedMouseCell
+  name: ClampedMouseCell
+  nameWithType: PosUtil.ClampedMouseCell
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseCell
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange(System.Int32)
+  name: ClampedMousePosWithRange
+  nameWithType: PosUtil.ClampedMousePosWithRange
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMousePosWithRange
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange(System.Int32)
+  name: ClampedMouseCellWithRange
+  nameWithType: PosUtil.ClampedMouseCellWithRange
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWithRange
+- uid: ONITwitchLib.Utils.PosUtil.RandomCellNearMouse*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.RandomCellNearMouse
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.RandomCellNearMouse
+  name: RandomCellNearMouse
+  nameWithType: PosUtil.RandomCellNearMouse
+  fullName: ONITwitchLib.Utils.PosUtil.RandomCellNearMouse
+- uid: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos
+  name: ClampedMouseCellWorldPos
+  nameWithType: PosUtil.ClampedMouseCellWorldPos
+  fullName: ONITwitchLib.Utils.PosUtil.ClampedMouseCellWorldPos
+- uid: ONITwitchLib.Utils.PosUtil.CameraMinWorldPos*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.CameraMinWorldPos
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.CameraMinWorldPos
+  name: CameraMinWorldPos
+  nameWithType: PosUtil.CameraMinWorldPos
+  fullName: ONITwitchLib.Utils.PosUtil.CameraMinWorldPos
+- uid: ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos
+  name: CameraMaxWorldPos
+  nameWithType: PosUtil.CameraMaxWorldPos
+  fullName: ONITwitchLib.Utils.PosUtil.CameraMaxWorldPos
+- uid: ONITwitchLib.Utils.PosUtil.EaseOutLerp*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.EaseOutLerp
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.EaseOutLerp(UnityEngine.Vector3,UnityEngine.Vector3,System.Single)
+  name: EaseOutLerp
+  nameWithType: PosUtil.EaseOutLerp
+  fullName: ONITwitchLib.Utils.PosUtil.EaseOutLerp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: ONITwitchLib.Utils.PosUtil.EaseOutBack*
+  commentId: Overload:ONITwitchLib.Utils.PosUtil.EaseOutBack
+  href: ONITwitchLib.Utils.PosUtil.html#ONITwitchLib.Utils.PosUtil.EaseOutBack(System.Single)
+  name: EaseOutBack
+  nameWithType: PosUtil.EaseOutBack
+  fullName: ONITwitchLib.Utils.PosUtil.EaseOutBack

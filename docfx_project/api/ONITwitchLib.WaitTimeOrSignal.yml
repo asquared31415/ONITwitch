@@ -1,0 +1,588 @@
+### YamlMime:ManagedReference
+items:
+- uid: ONITwitchLib.WaitTimeOrSignal
+  commentId: T:ONITwitchLib.WaitTimeOrSignal
+  id: WaitTimeOrSignal
+  parent: ONITwitchLib
+  children:
+  - ONITwitchLib.WaitTimeOrSignal.#ctor(System.Single,System.Func{System.Boolean})
+  - ONITwitchLib.WaitTimeOrSignal.keepWaiting
+  langs:
+  - csharp
+  - vb
+  name: WaitTimeOrSignal
+  nameWithType: WaitTimeOrSignal
+  fullName: ONITwitchLib.WaitTimeOrSignal
+  type: Class
+  source:
+    remote:
+      path: ONITwitchLib/WaitTimeOrSignal.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: WaitTimeOrSignal
+    path: ../ONITwitchLib/WaitTimeOrSignal.cs
+    startLine: 10
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: >-
+    A class for use in Unity coroutines that continues execution after a duration has elapsed, or a function signals
+
+    to continue, whichever comes first.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public class WaitTimeOrSignal : CustomYieldInstruction, IEnumerator
+    content.vb: >-
+      <PublicAPI>
+
+      Public Class WaitTimeOrSignal Inherits CustomYieldInstruction Implements IEnumerator
+  inheritance:
+  - System.Object
+  - UnityEngine.CustomYieldInstruction
+  implements:
+  - System.Collections.IEnumerator
+  inheritedMembers:
+  - UnityEngine.CustomYieldInstruction.MoveNext
+  - UnityEngine.CustomYieldInstruction.Reset
+  - UnityEngine.CustomYieldInstruction.Current
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.WaitTimeOrSignal.#ctor(System.Single,System.Func{System.Boolean})
+  commentId: M:ONITwitchLib.WaitTimeOrSignal.#ctor(System.Single,System.Func{System.Boolean})
+  id: '#ctor(System.Single,System.Func{System.Boolean})'
+  parent: ONITwitchLib.WaitTimeOrSignal
+  langs:
+  - csharp
+  - vb
+  name: WaitTimeOrSignal(float, Func<bool>)
+  nameWithType: WaitTimeOrSignal.WaitTimeOrSignal(float, Func<bool>)
+  fullName: ONITwitchLib.WaitTimeOrSignal.WaitTimeOrSignal(float, System.Func<bool>)
+  type: Constructor
+  source:
+    remote:
+      path: ONITwitchLib/WaitTimeOrSignal.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: .ctor
+    path: ../ONITwitchLib/WaitTimeOrSignal.cs
+    startLine: 21
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Initializes the time and signal.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public WaitTimeOrSignal(float time, Func<bool> signal)
+    parameters:
+    - id: time
+      type: System.Single
+      description: The amount of time, in unscaled real-time seconds to wait.
+    - id: signal
+      type: System.Func{System.Boolean}
+      description: >-
+        A function that returns <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if the wait should end early,
+
+        or <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a> otherwise.
+    content.vb: >-
+      <PublicAPI>
+
+      Public Sub New(time As Single, signal As Func(Of Boolean))
+  overload: ONITwitchLib.WaitTimeOrSignal.#ctor*
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+  nameWithType.vb: WaitTimeOrSignal.New(Single, Func(Of Boolean))
+  fullName.vb: ONITwitchLib.WaitTimeOrSignal.New(Single, System.Func(Of Boolean))
+  name.vb: New(Single, Func(Of Boolean))
+- uid: ONITwitchLib.WaitTimeOrSignal.keepWaiting
+  commentId: P:ONITwitchLib.WaitTimeOrSignal.keepWaiting
+  id: keepWaiting
+  parent: ONITwitchLib.WaitTimeOrSignal
+  langs:
+  - csharp
+  - vb
+  name: keepWaiting
+  nameWithType: WaitTimeOrSignal.keepWaiting
+  fullName: ONITwitchLib.WaitTimeOrSignal.keepWaiting
+  type: Property
+  source:
+    remote:
+      path: ONITwitchLib/WaitTimeOrSignal.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: keepWaiting
+    path: ../ONITwitchLib/WaitTimeOrSignal.cs
+    startLine: 32
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: Whether this delay should continue to wait.
+  example: []
+  syntax:
+    content: public override bool keepWaiting { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides ReadOnly Property keepWaiting As Boolean
+  overridden: UnityEngine.CustomYieldInstruction.keepWaiting
+  overload: ONITwitchLib.WaitTimeOrSignal.keepWaiting*
+references:
+- uid: ONITwitchLib
+  commentId: N:ONITwitchLib
+  href: ONITwitchLib.html
+  name: ONITwitchLib
+  nameWithType: ONITwitchLib
+  fullName: ONITwitchLib
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.CustomYieldInstruction
+  commentId: T:UnityEngine.CustomYieldInstruction
+  parent: UnityEngine
+  isExternal: true
+  name: CustomYieldInstruction
+  nameWithType: CustomYieldInstruction
+  fullName: UnityEngine.CustomYieldInstruction
+- uid: System.Collections.IEnumerator
+  commentId: T:System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.ienumerator
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: UnityEngine.CustomYieldInstruction.MoveNext
+  commentId: M:UnityEngine.CustomYieldInstruction.MoveNext
+  parent: UnityEngine.CustomYieldInstruction
+  isExternal: true
+  name: MoveNext()
+  nameWithType: CustomYieldInstruction.MoveNext()
+  fullName: UnityEngine.CustomYieldInstruction.MoveNext()
+  spec.csharp:
+  - uid: UnityEngine.CustomYieldInstruction.MoveNext
+    name: MoveNext
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: UnityEngine.CustomYieldInstruction.MoveNext
+    name: MoveNext
+    isExternal: true
+  - name: (
+  - name: )
+- uid: UnityEngine.CustomYieldInstruction.Reset
+  commentId: M:UnityEngine.CustomYieldInstruction.Reset
+  parent: UnityEngine.CustomYieldInstruction
+  isExternal: true
+  name: Reset()
+  nameWithType: CustomYieldInstruction.Reset()
+  fullName: UnityEngine.CustomYieldInstruction.Reset()
+  spec.csharp:
+  - uid: UnityEngine.CustomYieldInstruction.Reset
+    name: Reset
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: UnityEngine.CustomYieldInstruction.Reset
+    name: Reset
+    isExternal: true
+  - name: (
+  - name: )
+- uid: UnityEngine.CustomYieldInstruction.Current
+  commentId: P:UnityEngine.CustomYieldInstruction.Current
+  parent: UnityEngine.CustomYieldInstruction
+  isExternal: true
+  name: Current
+  nameWithType: CustomYieldInstruction.Current
+  fullName: UnityEngine.CustomYieldInstruction.Current
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+- uid: ONITwitchLib.WaitTimeOrSignal.#ctor*
+  commentId: Overload:ONITwitchLib.WaitTimeOrSignal.#ctor
+  href: ONITwitchLib.WaitTimeOrSignal.html#ONITwitchLib.WaitTimeOrSignal.#ctor(System.Single,System.Func{System.Boolean})
+  name: WaitTimeOrSignal
+  nameWithType: WaitTimeOrSignal.WaitTimeOrSignal
+  fullName: ONITwitchLib.WaitTimeOrSignal.WaitTimeOrSignal
+  nameWithType.vb: WaitTimeOrSignal.New
+  fullName.vb: ONITwitchLib.WaitTimeOrSignal.New
+  name.vb: New
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Func{System.Boolean}
+  commentId: T:System.Func{System.Boolean}
+  parent: System
+  definition: System.Func`1
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<bool>
+  nameWithType: Func<bool>
+  fullName: System.Func<bool>
+  nameWithType.vb: Func(Of Boolean)
+  fullName.vb: System.Func(Of Boolean)
+  name.vb: Func(Of Boolean)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.func-1
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: UnityEngine.CustomYieldInstruction.keepWaiting
+  commentId: P:UnityEngine.CustomYieldInstruction.keepWaiting
+  parent: UnityEngine.CustomYieldInstruction
+  isExternal: true
+  name: keepWaiting
+  nameWithType: CustomYieldInstruction.keepWaiting
+  fullName: UnityEngine.CustomYieldInstruction.keepWaiting
+- uid: ONITwitchLib.WaitTimeOrSignal.keepWaiting*
+  commentId: Overload:ONITwitchLib.WaitTimeOrSignal.keepWaiting
+  href: ONITwitchLib.WaitTimeOrSignal.html#ONITwitchLib.WaitTimeOrSignal.keepWaiting
+  name: keepWaiting
+  nameWithType: WaitTimeOrSignal.keepWaiting
+  fullName: ONITwitchLib.WaitTimeOrSignal.keepWaiting
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

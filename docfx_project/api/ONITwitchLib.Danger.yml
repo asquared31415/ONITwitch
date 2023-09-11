@@ -1,0 +1,248 @@
+### YamlMime:ManagedReference
+items:
+- uid: ONITwitchLib.Danger
+  commentId: T:ONITwitchLib.Danger
+  id: Danger
+  parent: ONITwitchLib
+  children:
+  - ONITwitchLib.Danger.Deadly
+  - ONITwitchLib.Danger.Extreme
+  - ONITwitchLib.Danger.High
+  - ONITwitchLib.Danger.Medium
+  - ONITwitchLib.Danger.None
+  - ONITwitchLib.Danger.Small
+  langs:
+  - csharp
+  - vb
+  name: Danger
+  nameWithType: Danger
+  fullName: ONITwitchLib.Danger
+  type: Enum
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: Danger
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 8
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: >-
+    Represents how much harm an <xref href="ONITwitchLib.EventInfo" data-throw-if-not-resolved="false"></xref> can do.
+
+    This estimate should be a reasonable maximum and should take into account both short-term and long-term consequences.
+  example: []
+  syntax:
+    content: >-
+      [PublicAPI]
+
+      public enum Danger
+    content.vb: >-
+      <PublicAPI>
+
+      Public Enum Danger
+  attributes:
+  - type: JetBrains.Annotations.PublicAPIAttribute
+    ctor: JetBrains.Annotations.PublicAPIAttribute.#ctor
+    arguments: []
+- uid: ONITwitchLib.Danger.None
+  commentId: F:ONITwitchLib.Danger.None
+  id: None
+  parent: ONITwitchLib.Danger
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: Danger.None
+  fullName: ONITwitchLib.Danger.None
+  type: Field
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: None
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 14
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: The event does not cause any damage.
+  example: []
+  syntax:
+    content: None = 0
+    return:
+      type: ONITwitchLib.Danger
+- uid: ONITwitchLib.Danger.Small
+  commentId: F:ONITwitchLib.Danger.Small
+  id: Small
+  parent: ONITwitchLib.Danger
+  langs:
+  - csharp
+  - vb
+  name: Small
+  nameWithType: Danger.Small
+  fullName: ONITwitchLib.Danger.Small
+  type: Field
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: Small
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 19
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: The event causes only minor damage that can be easily resolved.
+  example: []
+  syntax:
+    content: Small = 1
+    return:
+      type: ONITwitchLib.Danger
+- uid: ONITwitchLib.Danger.Medium
+  commentId: F:ONITwitchLib.Danger.Medium
+  id: Medium
+  parent: ONITwitchLib.Danger
+  langs:
+  - csharp
+  - vb
+  name: Medium
+  nameWithType: Danger.Medium
+  fullName: ONITwitchLib.Danger.Medium
+  type: Field
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: Medium
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 24
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: The event causes moderate damage, with possible long-term effects, but does not pose a significant threat to survival.
+  example: []
+  syntax:
+    content: Medium = 2
+    return:
+      type: ONITwitchLib.Danger
+- uid: ONITwitchLib.Danger.High
+  commentId: F:ONITwitchLib.Danger.High
+  id: High
+  parent: ONITwitchLib.Danger
+  langs:
+  - csharp
+  - vb
+  name: High
+  nameWithType: Danger.High
+  fullName: ONITwitchLib.Danger.High
+  type: Field
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: High
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 29
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: The event causes significant damage, often with significant long-term effects. Recovery is possible, but requires planning and knowledge.
+  example: []
+  syntax:
+    content: High = 3
+    return:
+      type: ONITwitchLib.Danger
+- uid: ONITwitchLib.Danger.Extreme
+  commentId: F:ONITwitchLib.Danger.Extreme
+  id: Extreme
+  parent: ONITwitchLib.Danger
+  langs:
+  - csharp
+  - vb
+  name: Extreme
+  nameWithType: Danger.Extreme
+  fullName: ONITwitchLib.Danger.Extreme
+  type: Field
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: Extreme
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 34
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: The event is extremely dangerous. In some cases dupes may directly die. Long-term effects can alter the course of the colony.
+  example: []
+  syntax:
+    content: Extreme = 4
+    return:
+      type: ONITwitchLib.Danger
+- uid: ONITwitchLib.Danger.Deadly
+  commentId: F:ONITwitchLib.Danger.Deadly
+  id: Deadly
+  parent: ONITwitchLib.Danger
+  langs:
+  - csharp
+  - vb
+  name: Deadly
+  nameWithType: Danger.Deadly
+  fullName: ONITwitchLib.Danger.Deadly
+  type: Field
+  source:
+    remote:
+      path: ONITwitchLib/Danger.cs
+      branch: 1.2.0-beta
+      repo: git@github.com:asquared31415/ONITwitch.git
+    id: Deadly
+    path: ../ONITwitchLib/Danger.cs
+    startLine: 43
+  assemblies:
+  - ONITwitchLib
+  namespace: ONITwitchLib
+  summary: This event will cause deaths and have significant long-term effects. Preventing or repairing damage done may not be possible.
+  remarks: >-
+    Examples of <xref href="ONITwitchLib.Danger.Deadly" data-throw-if-not-resolved="false"></xref> events are directly killing a duplicant or spawning large quantities of magma.
+
+    This danger level is not enabled by default and players are warned that it is exceptionally dangerous before selecting it.
+  example: []
+  syntax:
+    content: Deadly = 5
+    return:
+      type: ONITwitchLib.Danger
+references:
+- uid: ONITwitchLib.EventInfo
+  commentId: T:ONITwitchLib.EventInfo
+  parent: ONITwitchLib
+  href: ONITwitchLib.EventInfo.html
+  name: EventInfo
+  nameWithType: EventInfo
+  fullName: ONITwitchLib.EventInfo
+- uid: ONITwitchLib
+  commentId: N:ONITwitchLib
+  href: ONITwitchLib.html
+  name: ONITwitchLib
+  nameWithType: ONITwitchLib
+  fullName: ONITwitchLib
+- uid: ONITwitchLib.Danger
+  commentId: T:ONITwitchLib.Danger
+  parent: ONITwitchLib
+  href: ONITwitchLib.Danger.html
+  name: Danger
+  nameWithType: Danger
+  fullName: ONITwitchLib.Danger
+- uid: ONITwitchLib.Danger.Deadly
+  commentId: F:ONITwitchLib.Danger.Deadly
+  href: ONITwitchLib.Danger.html#ONITwitchLib.Danger.Deadly
+  name: Deadly
+  nameWithType: Danger.Deadly
+  fullName: ONITwitchLib.Danger.Deadly
