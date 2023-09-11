@@ -15,6 +15,7 @@ namespace ONITwitchLib.Utils;
 [PublicAPI]
 public class NestedDictionaryReader : JsonConverter
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	public override bool CanWrite => false;
 
 	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -116,4 +117,5 @@ public class NestedDictionaryReader : JsonConverter
 	{
 		return typeof(IDictionary<string, object>).IsAssignableFrom(objectType);
 	}
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

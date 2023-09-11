@@ -128,6 +128,14 @@ public static class STRINGS
 
 			public static readonly LocString DESC = global::STRINGS.ELEMENTS.UNOBTANIUM.DESC;
 		}
+
+		public static class ONITWITCHSUPERINSULATOR
+		{
+			public static readonly LocString NAME = "Insulation";
+
+			public static readonly LocString DESC =
+				"Some insulation that prevents its contents from immediately destroying your base. Don't worry, you don't get any resources out of this.";
+		}
 	}
 
 	public static class ITEMS

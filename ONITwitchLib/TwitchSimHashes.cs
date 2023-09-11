@@ -14,4 +14,11 @@ public static class TwitchSimHashes
 	/// </summary>
 	[PublicAPI] public static readonly SimHashes OniTwitchIndestructibleElement =
 		(SimHashes) Hash.SDBMLower(nameof(OniTwitchIndestructibleElement));
+
+	/// <summary>
+	///     The hash for the perfect insulation element that Twitch Integration uses to withstand high pressure and very hot
+	///     liquids.
+	/// </summary>
+	[PublicAPI] public static readonly SimHashes OniTwitchSuperInsulator =
+		(SimHashes) Hash.SDBMLower(nameof(OniTwitchSuperInsulator));
 }

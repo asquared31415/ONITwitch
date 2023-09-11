@@ -63,7 +63,9 @@ public static class WorldUtil
 				}
 			}
 
+			// ReSharper disable PossibleLossOfFraction
 			var pos = new Vector2(size.x / 2 + offset.x, size.y / 2 + offset.y);
+			// ReSharper restore PossibleLossOfFraction
 			TemplateLoader.Stamp(
 				TemplateCache.GetTemplate(template),
 				pos,

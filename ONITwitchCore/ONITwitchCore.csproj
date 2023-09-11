@@ -10,7 +10,7 @@
         <DocumentationFile>bin\$(Configuration)\net471\ONITwitch.xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj" />
+        <ProjectReference Include="..\ONITwitchLib\ONITwitchLib.csproj"/>
     </ItemGroup>
     <ItemGroup>
         <Reference Include="UnityEngine.InputLegacyModule">
@@ -21,11 +21,11 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="Resources\toast" />
-        <EmbeddedResource Include="Resources\twitch_options" />
+        <EmbeddedResource Include="Resources\toast"/>
+        <EmbeddedResource Include="Resources\twitch_options"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Remove="mod.yaml" />
-        <Content Remove="mod_info.yaml" />
+        <Content Remove="mod.yaml"/>
+        <Content Remove="mod_info.yaml"/>
     </ItemGroup>
 </Project>
