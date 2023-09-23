@@ -34,9 +34,6 @@ internal class VoteController : KMonoBehaviour
 	// forgive any leading whitespace, then match at least 1 number
 	private static readonly Regex StartsWithNumber = new(@"^\s*(?<num>\d+)");
 
-	// the seen users during this vote.  it should not persist across votes.
-	public readonly Dictionary<string, TwitchUserInfo> SeenUsersById = new();
-
 	private TwitchConnection connection;
 
 	internal Credentials Credentials;
@@ -46,7 +43,7 @@ internal class VoteController : KMonoBehaviour
 	public float VoteTimeRemaining { get; private set; }
 	public float VoteDelayRemaining { get; private set; }
 
-	public Vote CurrentVote { get; private set; }
+	[CanBeNull] public Vote CurrentVote { get; private set; }
 
 	private void Update()
 	{
@@ -126,9 +123,6 @@ internal class VoteController : KMonoBehaviour
 			);
 			return false;
 		}
-
-		// clear the seen users, so that only users that participated in the current vote are ever in this
-		SeenUsersById.Clear();
 
 		var eventOptions = new List<EventInfo>();
 		var drawnCount = 0;
@@ -211,7 +205,7 @@ internal class VoteController : KMonoBehaviour
 	{
 		try
 		{
-			var choice = CurrentVote.GetBestVote();
+			var choice = CurrentVote!.GetBestVote();
 			string responseText;
 			if (choice != null)
 			{
@@ -254,17 +248,15 @@ internal class VoteController : KMonoBehaviour
 		MainThreadScheduler.Schedule(
 			() =>
 			{
-				SeenUsersById[message.UserInfo.UserId] = message.UserInfo;
 				if ((State == VotingState.VoteInProgress) && (CurrentVote != null))
 				{
-					var userId = message.UserInfo.UserId;
 					var match = StartsWithNumber.Match(message.Message);
 					if (match.Success)
 					{
 						var numStr = match.Groups["num"].Value;
 						if (int.TryParse(numStr, out var num))
 						{
-							CurrentVote.AddVote(userId, num);
+							CurrentVote.AddVote(message.UserInfo, num);
 						}
 					}
 				}

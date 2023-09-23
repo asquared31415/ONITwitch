@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,8 @@ internal class VoteFile : KMonoBehaviour
 					case VoteController.VotingState.VoteInProgress:
 					{
 						var sb = new StringBuilder();
-						var votes = voteController.CurrentVote.Votes;
+						// In case something gets desynchronized and the vote is null, just don't display anything
+						var votes = voteController.CurrentVote?.Votes ?? new List<Vote.VoteCount>().AsReadOnly();
 						for (var idx = 0; idx < votes.Count; idx++)
 						{
 							sb.Append($"{idx + 1}: {votes[idx].EventInfo} ({votes[idx].Count})\n");

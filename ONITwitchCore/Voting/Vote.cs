@@ -4,16 +4,16 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using JetBrains.Annotations;
 using ONITwitchLib;
+using ONITwitchLib.IRC;
 using EventInfo = ONITwitch.EventLib.EventInfo;
 
 namespace ONITwitch.Voting;
 
 internal class Vote
 {
-	// map from user ID to index they voted for
-	private readonly Dictionary<string, int> userVotes = new();
+	// map from user to index they voted for
+	private readonly Dictionary<TwitchUserInfo, int> userVotes = new();
 	private readonly List<VoteCount> votes = new();
-	internal ReadOnlyCollection<VoteCount> Votes => votes.AsReadOnly();
 
 	public Vote(List<EventInfo> choices)
 	{
@@ -21,14 +21,16 @@ internal class Vote
 		{
 			throw new ArgumentException("there must be at least one vote choice", nameof(choices));
 		}
-		
+
 		foreach (var choice in choices)
 		{
 			votes.Add(new VoteCount(choice, 0));
 		}
 	}
 
-	public void AddVote(string userId, int voteNum)
+	internal ReadOnlyCollection<VoteCount> Votes => votes.AsReadOnly();
+
+	public void AddVote(TwitchUserInfo user, int voteNum)
 	{
 		if ((voteNum <= 0) || (voteNum > votes.Count))
 		{
@@ -37,9 +39,9 @@ internal class Vote
 
 		// users are 1-based unfortunately
 		var voteIdx = voteNum - 1;
-		
+
 		// move the user's vote if they voted already
-		if (userVotes.TryGetValue(userId, out var oldIdx))
+		if (userVotes.TryGetValue(user, out var oldIdx))
 		{
 			votes[oldIdx].Count -= 1;
 			votes[voteIdx].Count += 1;
@@ -49,7 +51,7 @@ internal class Vote
 			votes[voteIdx].Count += 1;
 		}
 
-		userVotes[userId] = voteIdx;
+		userVotes[user] = voteIdx;
 	}
 
 	[CanBeNull]
@@ -67,15 +69,27 @@ internal class Vote
 		return tiedMaxVotes[randIdx];
 	}
 
+	[NotNull]
+	public IReadOnlyDictionary<TwitchUserInfo, int> GetUserVotes()
+	{
+		return new ReadOnlyDictionary<TwitchUserInfo, int>(userVotes);
+	}
+
+	[NotNull]
+	public List<TwitchUserInfo> GetAllVoters()
+	{
+		return userVotes.Keys.ToList();
+	}
+
 	internal class VoteCount
 	{
-		public EventInfo EventInfo { get; }
-		public int Count { get; internal set; }
-
 		public VoteCount(EventInfo eventInfo, int count)
 		{
 			EventInfo = eventInfo;
 			Count = count;
 		}
+
+		public EventInfo EventInfo { get; }
+		public int Count { get; internal set; }
 	}
 }

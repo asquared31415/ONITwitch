@@ -30,31 +30,43 @@ internal class SpawnDupeCommand : CommandBase
 
 		var config = TwitchSettings.GetConfig();
 
-		if (VoteController.Instance != null)
+		if ((VoteController.Instance != null) && (VoteController.Instance.CurrentVote != null))
 		{
-			var users = VoteController.Instance.SeenUsersById.Values.ToList();
-			users.RemoveAll(
-				info => config.DisallowedDupeNames.Any(
-					disallowed => string.Equals(
-						info.DisplayName,
-						disallowed,
-						StringComparison.InvariantCultureIgnoreCase
-					)
-				)
-			);
-			users.RemoveAll(
-				n => Components.LiveMinionIdentities.Items.Any(
-					i =>
+			var votes = VoteController.Instance.CurrentVote.GetUserVotes().ToList();
+			// Only get users that are not disallowed and are not spawned yet.
+			var allowedVotes = votes.Where(
+					pair =>
 					{
-						var normalizedName = i.name.ToLowerInvariant();
-						return normalizedName.Contains(n.DisplayName.ToLowerInvariant());
+						if (config.DisallowedDupeNames.Any(
+								disallowed => string.Equals(
+									pair.Key.DisplayName,
+									disallowed,
+									StringComparison.InvariantCultureIgnoreCase
+								)
+							))
+						{
+							return false;
+						}
+
+						if (Components.LiveMinionIdentities.Items.Any(
+								i =>
+								{
+									var normalizedName = i.name.ToLowerInvariant();
+									return normalizedName.Contains(pair.Key.DisplayName.ToLowerInvariant());
+								}
+							))
+						{
+							return false;
+						}
+
+						return true;
 					}
 				)
-			);
+				.ToList();
 
-			if (users.Count > 0)
+			if (allowedVotes.Count > 0)
 			{
-				var user = users.GetRandom();
+				var (user, _) = allowedVotes.GetRandom();
 				name = user.DisplayName;
 				color = user.NameColor;
 			}
