@@ -50,7 +50,7 @@ internal class SpawnDupeCommand : CommandBase
 						}
 
 						return !Components.LiveMinionIdentities.Items.Any(
-							i =>
+							([NotNull] i) =>
 							{
 								var normalizedName = i.name.ToLowerInvariant();
 								return normalizedName.Contains(pair.Key.DisplayName.ToLowerInvariant());

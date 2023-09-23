@@ -1,5 +1,6 @@
 using System.Linq;
 using HarmonyLib;
+using JetBrains.Annotations;
 using KSerialization;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
@@ -166,7 +167,7 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			// destroy all critters, so they don't pop out
 			// TODO: some creatures shouldn't be destroyed. Need to add a way for other code to hook destruction on their prefabs.
 			foreach (var pickupable in Components.Pickupables.GetWorldItems(world.id)
-						 .Where(pickupable => pickupable.TryGetComponent<CreatureBrain>(out _)))
+						 .Where(([NotNull] pickupable) => pickupable.TryGetComponent<CreatureBrain>(out _)))
 			{
 				Destroy(pickupable.gameObject);
 			}

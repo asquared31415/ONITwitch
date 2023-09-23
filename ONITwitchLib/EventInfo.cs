@@ -26,7 +26,7 @@ public class EventInfo
 	private readonly Action<int?> setDangerDelegate;
 	private readonly Action<object> triggerDelegate;
 
-	internal EventInfo(object instance)
+	internal EventInfo([NotNull] object instance)
 	{
 		EventInfoInstance = instance;
 

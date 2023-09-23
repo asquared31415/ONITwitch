@@ -159,7 +159,7 @@ public static class GridUtil
 	public static int FindCellWithCavityClearance(int baseCell)
 	{
 		var emptyCell = GameUtil.FloodFillFind<object>(
-			(cell, _) =>
+			static (cell, _) =>
 			{
 				var cellEmpty = IsCellEmpty(cell);
 				var neighborsValid = GetNeighborsInBounds(cell).All(IsCellEmpty);
@@ -199,7 +199,7 @@ public static class GridUtil
 	public static int FindCellWithFoundationClearance(int baseCell)
 	{
 		var emptyCell = GameUtil.FloodFillFind<object>(
-			(cell, _) =>
+			static (cell, _) =>
 			{
 				var cellEmpty = IsCellFoundationEmpty(cell);
 				var neighborsValid = GetNeighborsInBounds(cell).All(IsCellFoundationEmpty);
@@ -279,7 +279,7 @@ public static class GridUtil
 	/// <returns>An enumerable containing every cell within the region.</returns>
 	[PublicAPI]
 	[NotNull]
-	public static IEnumerable<int> IterateCellRegion(Game.SimActiveRegion region)
+	public static IEnumerable<int> IterateCellRegion([NotNull] Game.SimActiveRegion region)
 	{
 		return IterateCellRegion(region.region.first, region.region.second);
 	}
@@ -344,7 +344,7 @@ public static class GridUtil
 							Rotatable.GetRotatedCellOffset(buildingPlacementOffset, orientation)
 						)
 					)
-					.Any(buildingCell => !IsCellEmpty(buildingCell)))
+					.Any(static buildingCell => !IsCellEmpty(buildingCell)))
 				{
 					return false;
 				}

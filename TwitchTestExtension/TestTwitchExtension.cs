@@ -94,7 +94,7 @@ public static class Db_Initialize_Patch
 		return;
 
 		// Group manipulation and on change event
-		void GroupChanged(EventGroup group)
+		static void GroupChanged([NotNull] EventGroup group)
 		{
 			Log.Info($"Group changed, total weight: {group.TotalWeight}");
 		}

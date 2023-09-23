@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
@@ -31,7 +32,9 @@ internal class FillBedroomCommand : CommandBase
 		// ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
 		foreach (var bedroom in GetValidRooms())
 		{
-			foreach (var bed in bedroom.buildings.Where(building => building.GetComponent<Bed>() != null))
+			foreach (var bed in bedroom.buildings.Where(
+						 static ([NotNull] building) => building.GetComponent<Bed>() != null
+					 ))
 			{
 				var cell = Grid.PosToCell(bed);
 				if (Grid.IsValidCell(cell))
@@ -56,6 +59,8 @@ internal class FillBedroomCommand : CommandBase
 		);
 	}
 
+	[NotNull]
+	[ItemNotNull]
 	private static List<Room> GetValidRooms()
 	{
 		var db = Db.Get();
@@ -63,9 +68,9 @@ internal class FillBedroomCommand : CommandBase
 		var barracksType = db.RoomTypes.Barracks;
 		var privBedroomType = db.RoomTypes.PrivateBedroom;
 		return Game.Instance.roomProber.rooms.Where(
-				room => (room.roomType == bedroomType) ||
-						(room.roomType == barracksType) ||
-						(room.roomType == privBedroomType)
+				([NotNull] room) => (room.roomType == bedroomType) ||
+									(room.roomType == barracksType) ||
+									(room.roomType == privBedroomType)
 			)
 			.ToList();
 	}

@@ -44,12 +44,14 @@ public class TwitchDeckManager
 	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public void AddGroup([NotNull] EventGroup group)
 	{
-		if (!groups.ContainsKey(group.Name))
+		if (groups.ContainsKey(group.Name))
 		{
-			group.OnGroupChanged += Shuffle;
-			groups.Add(group.Name, group);
-			Shuffle(group);
+			return;
 		}
+
+		group.OnGroupChanged += Shuffle;
+		groups.Add(group.Name, group);
+		Shuffle(group);
 	}
 
 	/// <summary>
@@ -97,16 +99,12 @@ public class TwitchDeckManager
 			var entry = DrawEntry();
 			// no danger assigned or danger within the expected range is okay
 			var danger = entry.Danger;
-			if ((danger == null) ||
-				((TwitchSettings.GetConfig().MinDanger <= danger.Value) &&
-				 (danger.Value <= TwitchSettings.GetConfig().MaxDanger)))
+			if (((danger == null) ||
+				 ((TwitchSettings.GetConfig().MinDanger <= danger.Value) &&
+				  (danger.Value <= TwitchSettings.GetConfig().MaxDanger))) &&
+				entry.CheckCondition(dataInst.GetDataForEvent(entry)))
 			{
-				var data = dataInst.GetDataForEvent(entry);
-				var condition = entry.CheckCondition(data);
-				if (condition)
-				{
-					return entry;
-				}
+				return entry;
 			}
 		}
 
@@ -207,7 +205,7 @@ public class TwitchDeckManager
 
 		// sort by the offsets in ascending order
 		collectedOffsets.Sort(
-			(itemA, itemB) =>
+			static (itemA, itemB) =>
 			{
 				var (offsetA, _) = itemA;
 				var (offsetB, _) = itemB;
@@ -217,7 +215,7 @@ public class TwitchDeckManager
 		);
 
 		// return the items from the sorted list
-		var ret = collectedOffsets.Select(itemOffset => itemOffset.Item2).ToList();
+		var ret = collectedOffsets.Select(static itemOffset => itemOffset.Item2).ToList();
 		return ret;
 	}
 

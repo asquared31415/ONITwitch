@@ -73,7 +73,7 @@ public class EventGroup
 	///     An event that fires when the group is changed, called with the group that changed.
 	/// </summary>
 	[PublicAPI]
-	public event Action<EventGroup> OnGroupChanged = _ => { };
+	public event Action<EventGroup> OnGroupChanged = static _ => { };
 
 	/// <summary>
 	///     Gets an existing <see cref="EventGroup" /> with a specified name, or creates it if it does not exist.
@@ -154,9 +154,10 @@ public class EventGroup
 	public IReadOnlyDictionary<EventInfo, int> GetWeights()
 	{
 		var res = (IDictionary) getWeightsDelegate();
-		var keys = res.Keys.Cast<object>().Select(o => new EventInfo(o));
+		var keys = res.Keys.Cast<object>().Select(static ([NotNull] o) => new EventInfo(o));
 		var values = res.Values.Cast<int>();
-		var dict = keys.Zip(values, (info, weight) => new { info, weight }).ToDictionary(e => e.info, e => e.weight);
+		var dict = keys.Zip(values, static (info, weight) => new { info, weight })
+			.ToDictionary(static ([NotNull] e) => e.info, static ([NotNull] e) => e.weight);
 		return dict;
 	}
 

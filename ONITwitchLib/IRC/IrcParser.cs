@@ -26,7 +26,7 @@ public static class IrcParser
 		var parsed = new IrcMessage();
 
 		// parse tags if they exist
-		if (parseMessage.StartsWith("@"))
+		if (parseMessage.StartsWith("@", StringComparison.Ordinal))
 		{
 			var endTagIdx = parseMessage.IndexOf(' ');
 			// don't include the @
@@ -37,7 +37,7 @@ public static class IrcParser
 		}
 
 		// parse prefix if it exists
-		if (parseMessage.StartsWith(":"))
+		if (parseMessage.StartsWith(":", StringComparison.Ordinal))
 		{
 			// prefix continues from : to the next space
 			var endPrefixIdx = parseMessage.IndexOf(' ');
@@ -173,7 +173,7 @@ public static class IrcParser
 		{
 			// parse last argument which may contain any characters except CRLF
 			// but CRLF has already been stripped in processing
-			if (argsCopy.StartsWith(":"))
+			if (argsCopy.StartsWith(":", StringComparison.Ordinal))
 			{
 				argsList.Add(argsCopy.Substring(1));
 				break;

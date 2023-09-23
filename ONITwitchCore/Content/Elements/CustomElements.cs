@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using JetBrains.Annotations;
 using ONITwitchLib;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace ONITwitch.Content.Elements;
 
 internal static class CustomElements
 {
-	private static readonly List<ElementInfo> Elements = new()
+	[NotNull] [ItemNotNull] private static readonly List<ElementInfo> Elements = new()
 	{
 		new ElementInfo(
 			nameof(TwitchSimHashes.OniTwitchIndestructibleElement),
@@ -28,9 +29,9 @@ internal static class CustomElements
 	private static readonly AccessTools.FieldRef<object, Tag> SubstanceNameTagRef =
 		AccessTools.FieldRefAccess<Tag>(typeof(Substance), "nameTag");
 
-	public static void RegisterSubstances(List<Substance> substances)
+	public static void RegisterSubstances([NotNull] List<Substance> substances)
 	{
-		substances.AddRange(Elements.Select(elementInfo => elementInfo.CreateSubstance()));
+		substances.AddRange(Elements.Select(static ([NotNull] elementInfo) => elementInfo.CreateSubstance()));
 	}
 
 	// TODO: (2023-09-10) Klei marked this bug as fixed in next update, check when that happens.

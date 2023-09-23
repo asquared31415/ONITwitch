@@ -285,7 +285,7 @@ internal class TwitchConnection
 
 		// maximum number of attempts to make to connect to Twitch, backing off exponentially each time
 		// this total time before final failure is about 45 seconds if the connection is failing instantly
-		// or closer to 50 seconds if the final connection times out 
+		// or closer to 50 seconds if the final connection times out
 		const int maxConnectAttempts = 8;
 		for (var attempt = 0; attempt < maxConnectAttempts; attempt++)
 		{
@@ -423,7 +423,7 @@ internal class TwitchConnection
 				var userInfo = new TwitchUserInfo(userId, displayName, color, isModerator, isSubscriber, isVip);
 				var twitchMessage = new TwitchMessage(userInfo, msg);
 
-				// make value copy so that it doesn't race with the null check	
+				// make value copy so that it doesn't race with the null check
 				var onMsg = OnChatMessage;
 				onMsg?.Invoke(twitchMessage);
 			}

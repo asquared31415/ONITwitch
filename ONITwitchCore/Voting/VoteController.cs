@@ -136,11 +136,13 @@ internal class VoteController : KMonoBehaviour
 			}
 
 			// Don't add duplicates
-			if (!eventOptions.Contains(attempt))
+			if (eventOptions.Contains(attempt))
 			{
-				eventOptions.Add(attempt);
-				drawnCount += 1;
+				continue;
 			}
+
+			eventOptions.Add(attempt);
+			drawnCount += 1;
 		}
 
 		if (eventOptions.Count == 0)
