@@ -81,15 +81,9 @@ internal class Vote
 		return userVotes.Keys.ToList();
 	}
 
-	internal class VoteCount
+	internal class VoteCount(EventInfo eventInfo, int count)
 	{
-		public VoteCount(EventInfo eventInfo, int count)
-		{
-			EventInfo = eventInfo;
-			Count = count;
-		}
-
-		public EventInfo EventInfo { get; }
-		public int Count { get; internal set; }
+		public EventInfo EventInfo { get; } = eventInfo;
+		public int Count { get; internal set; } = count;
 	}
 }

@@ -9,17 +9,10 @@ using UnityEngine;
 
 namespace ONITwitch.DevTools.Panels;
 
-internal class DebugInfoPanel : IDevToolPanel
+internal class DebugInfoPanel([NotNull] DebugMarkers debugMarkers) : IDevToolPanel
 {
-	[NotNull] private readonly DebugMarkers debugMarkers;
-
 	// Whether to draw the closest cell to the selected cell.
 	private bool debugClosestCell;
-
-	public DebugInfoPanel([NotNull] DebugMarkers debugMarkers)
-	{
-		this.debugMarkers = debugMarkers;
-	}
 
 	public void DrawPanel()
 	{

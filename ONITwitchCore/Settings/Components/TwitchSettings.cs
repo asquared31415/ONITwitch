@@ -284,16 +284,10 @@ internal static class TwitchSettings
 		}
 	}
 
-	private class VersionedSave
+	private class VersionedSave(int version, JObject saveData)
 	{
-		internal readonly JObject SaveData;
-		internal readonly int Version;
-
-		public VersionedSave(int version, JObject saveData)
-		{
-			Version = version;
-			SaveData = saveData;
-		}
+		internal readonly JObject SaveData = saveData;
+		internal readonly int Version = version;
 	}
 
 	private interface ISaveConverter

@@ -68,16 +68,10 @@ internal class TimedGeyserTuning : KMonoBehaviour, ISim200ms
 }
 
 [SerializationConfig(MemberSerialization.OptIn)]
-internal class TimedModification
+internal class TimedModification(float timeRemaining, Geyser.GeyserModification modification)
 {
-	[Serialize] public Geyser.GeyserModification Modification;
-	[Serialize] public float TimeRemaining;
-
-	public TimedModification(float timeRemaining, Geyser.GeyserModification modification)
-	{
-		TimeRemaining = timeRemaining;
-		Modification = modification;
-	}
+	[Serialize] public Geyser.GeyserModification Modification = modification;
+	[Serialize] public float TimeRemaining = timeRemaining;
 
 	public override string ToString()
 	{

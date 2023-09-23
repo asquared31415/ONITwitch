@@ -269,23 +269,13 @@ public class EventInfo
 		Danger = danger.HasValue ? (Danger) danger.Value : null;
 	}
 
-	private class ActionRef
+	private class ActionRef([NotNull] Action<object> action)
 	{
-		[NotNull] public Action<object> Action;
-
-		public ActionRef([NotNull] Action<object> action)
-		{
-			Action = action;
-		}
+		[NotNull] public Action<object> Action = action;
 	}
 
-	private class ConditionRef
+	private class ConditionRef([NotNull] Func<object, bool> condition)
 	{
-		[NotNull] public Func<object, bool> Condition;
-
-		public ConditionRef([NotNull] Func<object, bool> condition)
-		{
-			Condition = condition;
-		}
+		[NotNull] public Func<object, bool> Condition = condition;
 	}
 }

@@ -89,21 +89,15 @@ public abstract class BasePocketDimensionGeneration
 	}
 }
 
-public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
-{
-	private readonly string template;
-
-	public TemplatePocketDimensionGeneration(
+public class TemplatePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		string template,
 		[CanBeNull] string requiredSkillId = null,
 		[CanBeNull] List<string> prefabIds = null
-	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
-	{
-		this.template = template;
-	}
-
+	)
+	: BasePocketDimensionGeneration(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
+{
 	protected override void GenerateTiles(WorldContainer world)
 	{
 		var templateContainer = TemplateCache.GetTemplate(template);
@@ -112,14 +106,7 @@ public class TemplatePocketDimensionGeneration : BasePocketDimensionGeneration
 	}
 }
 
-public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
-{
-	[NotNull] private readonly List<SimHashes> hashes;
-
-	private readonly float xFrequency;
-	private readonly float yFrequency;
-
-	public NoisePocketDimensionGeneration(
+public class NoisePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		[NotNull] List<SimHashes> hashes,
@@ -127,13 +114,9 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 		float yFrequency,
 		[CanBeNull] string requiredSkillId = null,
 		[CanBeNull] List<string> prefabIds = null
-	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
-	{
-		this.hashes = hashes;
-		this.xFrequency = xFrequency;
-		this.yFrequency = yFrequency;
-	}
-
+	)
+	: BasePocketDimensionGeneration(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
+{
 	protected override void GenerateTiles(WorldContainer world)
 	{
 		var seed = Time.realtimeSinceStartup;
@@ -175,25 +158,16 @@ public class NoisePocketDimensionGeneration : BasePocketDimensionGeneration
 // Delegates the call to GenerateTiles to an action passed
 // Used for mod compatibility via reflection
 [UsedImplicitly]
-public class CustomPocketDimensionGeneration : BasePocketDimensionGeneration
-{
-	[CanBeNull] private readonly Action<WorldContainer> generatePrefabsAction;
-
-	[NotNull] private readonly Action<WorldContainer> generateTilesAction;
-
-	public CustomPocketDimensionGeneration(
+public class CustomPocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
 		[NotNull] Action<WorldContainer> generateTilesAction,
 		[CanBeNull] Action<WorldContainer> generatePrefabsAction,
 		[CanBeNull] string requiredSkillId = null,
 		[CanBeNull] List<string> prefabIds = null
-	) : base(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
-	{
-		this.generateTilesAction = generateTilesAction;
-		this.generatePrefabsAction = generatePrefabsAction;
-	}
-
+	)
+	: BasePocketDimensionGeneration(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
+{
 	protected override void GenerateTiles(WorldContainer world)
 	{
 		generateTilesAction(world);

@@ -1,24 +1,13 @@
 using System.Collections.Generic;
 using ImGuiNET;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace ONITwitch.DevTools.Panels;
 
-internal class CameraPathPanel : IDevToolPanel
+internal class CameraPathPanel(DebugMarkers debugMarkers, CameraPath cameraPath) : IDevToolPanel
 {
-	[NotNull] private readonly CameraPath cameraPath;
-	[NotNull] private readonly DebugMarkers debugMarkers;
-
 	// true if the path of the camera should be shown with debug markers.
 	private bool showCameraPath;
-
-	public CameraPathPanel(DebugMarkers debugMarkers, CameraPath cameraPath)
-
-	{
-		this.debugMarkers = debugMarkers;
-		this.cameraPath = cameraPath;
-	}
 
 	public void DrawPanel()
 	{

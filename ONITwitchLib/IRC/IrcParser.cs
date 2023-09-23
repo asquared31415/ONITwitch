@@ -422,35 +422,23 @@ public enum IrcCommandType
 #pragma warning restore CS1591
 #pragma warning disable CS1591
 [NotPublicAPI]
-public struct IrcTag
+public struct IrcTag(bool isClientTag, string vendor, [NotNull] string tagName, string value)
 {
-	public bool IsClientTag { get; }
-	[NotNull] public string TagName { get; }
-	[CanBeNull] public string Vendor { get; }
-	[CanBeNull] public string Value { get; }
+	public bool IsClientTag { get; } = isClientTag;
+	[NotNull] public string TagName { get; } = tagName;
+	[CanBeNull] public string Vendor { get; } = vendor;
+	[CanBeNull] public string Value { get; } = value;
 
-	public IrcTag()
+	public IrcTag() : this(false, null, "INVALID", null)
 	{
-		TagName = "INVALID";
 	}
 
-	public IrcTag([NotNull] string tagName)
+	public IrcTag([NotNull] string tagName) : this(false, null, tagName, null)
 	{
-		TagName = tagName;
 	}
 
-	public IrcTag([NotNull] string tagName, string value)
+	public IrcTag([NotNull] string tagName, string value) : this(false, null, tagName, value)
 	{
-		TagName = tagName;
-		Value = value;
-	}
-
-	public IrcTag(bool isClientTag, string vendor, [NotNull] string tagName, string value)
-	{
-		IsClientTag = isClientTag;
-		Vendor = vendor;
-		TagName = tagName;
-		Value = value;
 	}
 
 	[NotNull]
