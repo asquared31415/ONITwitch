@@ -10,9 +10,7 @@ using ONITwitchLib.Logger;
 namespace TwitchTestExtension;
 
 [UsedImplicitly]
-public class TestTwitchExtension : UserMod2
-{
-}
+public class TestTwitchExtension : UserMod2;
 
 [HarmonyPatch(typeof(Db), "Initialize")]
 [HarmonyAfter(TwitchModInfo.StaticID)]
