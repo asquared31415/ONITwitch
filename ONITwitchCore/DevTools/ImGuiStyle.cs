@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using ImGuiNET;
 using UnityEngine;
 
+// ReSharper disable UnusedMethodReturnValue.Global builder pattern
+// ReSharper disable UnusedMember.Global
+
 namespace ONITwitch.DevTools;
 
 internal class ImGuiStyle

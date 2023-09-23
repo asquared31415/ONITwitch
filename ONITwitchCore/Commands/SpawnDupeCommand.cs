@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using ONITwitch.Settings.Components;
 using ONITwitch.Toasts;
 using ONITwitch.Voting;
@@ -144,13 +145,5 @@ internal class SpawnDupeCommand : CommandBase
 		Log.Info($"Spawned duplicant {identity.name}");
 	}
 
-	internal class SpecialDupeData
-	{
-		internal string PersonalityId;
-
-		internal SpecialDupeData(string personalityId)
-		{
-			PersonalityId = personalityId;
-		}
-	}
+	private record struct SpecialDupeData([NotNull] string PersonalityId);
 }

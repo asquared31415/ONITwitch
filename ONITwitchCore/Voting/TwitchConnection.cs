@@ -42,6 +42,7 @@ internal class TwitchConnection
 	///     This event is called when the connection receives any non-system message.
 	///     This may not be called on the main thread!
 	/// </summary>
+	// ReSharper disable once EventNeverSubscribedTo.Global
 	public event Action<IrcMessage> OnMessage;
 
 	/// <summary>

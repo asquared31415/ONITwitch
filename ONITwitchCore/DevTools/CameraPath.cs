@@ -7,12 +7,8 @@ using UnityEngine;
 
 namespace ONITwitch.DevTools;
 
-internal struct CameraPathPoint
+internal readonly record struct CameraPathPoint(float OrthographicSize, Vector2 Position, float WaitTime)
 {
-	internal Vector2 Position;
-	internal float OrthographicSize;
-	internal float WaitTime;
-
 	public override string ToString()
 	{
 		return $"{Position} Orthographic Size: {OrthographicSize} Delay {WaitTime}s";

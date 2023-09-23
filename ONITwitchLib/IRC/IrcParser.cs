@@ -121,7 +121,7 @@ public static class IrcParser
 	[CanBeNull]
 	private static IrcCommand? ParseCommand([NotNull] string command)
 	{
-		if (Regex.IsMatch(command, @"^[a-zA-z]+$"))
+		if (Regex.IsMatch(command, "^[a-zA-z]+$"))
 		{
 			return command switch
 			{
@@ -149,7 +149,7 @@ public static class IrcParser
 			};
 		}
 
-		if (Regex.IsMatch(command, @"^[0-9]{3}$"))
+		if (Regex.IsMatch(command, "^[0-9]{3}$"))
 		{
 			var id = int.Parse(command);
 			return new IrcCommand(id);
@@ -299,7 +299,7 @@ public struct IrcMessage
 		return sb.ToString();
 	}
 
-	public override string ToString()
+	public readonly override string ToString()
 	{
 		var sb = new StringBuilder();
 		if (Tags.Count > 0)
@@ -333,7 +333,7 @@ public struct IrcMessage
 #pragma warning restore CS1591
 #pragma warning disable CS1591
 [NotPublicAPI]
-public struct IrcCommand
+public readonly struct IrcCommand
 {
 	public bool IsNumeric { get; }
 
@@ -364,7 +364,7 @@ public struct IrcCommand
 		return IsNumeric ? NumericId.ToString() : Command.ToString();
 	}
 
-	public bool Equals(IrcCommand other)
+	private bool Equals(IrcCommand other)
 	{
 		return IsNumeric ? NumericId == other.NumericId : Command == other.Command;
 	}
@@ -422,25 +422,13 @@ public enum IrcCommandType
 #pragma warning restore CS1591
 #pragma warning disable CS1591
 [NotPublicAPI]
-public struct IrcTag(bool isClientTag, string vendor, [NotNull] string tagName, string value)
+public readonly record struct IrcTag(
+	bool IsClientTag,
+	[CanBeNull] string Vendor,
+	[NotNull] string TagName,
+	[CanBeNull] string Value
+)
 {
-	public bool IsClientTag { get; } = isClientTag;
-	[NotNull] public string TagName { get; } = tagName;
-	[CanBeNull] public string Vendor { get; } = vendor;
-	[CanBeNull] public string Value { get; } = value;
-
-	public IrcTag() : this(false, null, "INVALID", null)
-	{
-	}
-
-	public IrcTag([NotNull] string tagName) : this(false, null, tagName, null)
-	{
-	}
-
-	public IrcTag([NotNull] string tagName, string value) : this(false, null, tagName, value)
-	{
-	}
-
 	[NotNull]
 	public string GetVendorNamespacedId()
 	{

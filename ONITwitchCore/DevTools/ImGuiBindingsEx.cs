@@ -2,6 +2,8 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+// ReSharper disable UnusedMember.Global bindings
+
 namespace ONITwitch.DevTools;
 
 [Obsolete("Not to be used directly, add a nice wrapper to ImGuiInternal")]

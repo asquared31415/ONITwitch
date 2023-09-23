@@ -75,12 +75,6 @@ internal class Vote
 		return new ReadOnlyDictionary<TwitchUserInfo, int>(userVotes);
 	}
 
-	[NotNull]
-	public List<TwitchUserInfo> GetAllVoters()
-	{
-		return userVotes.Keys.ToList();
-	}
-
 	internal class VoteCount(EventInfo eventInfo, int count)
 	{
 		public EventInfo EventInfo { get; } = eventInfo;

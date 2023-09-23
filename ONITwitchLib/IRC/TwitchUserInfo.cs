@@ -15,7 +15,7 @@ namespace ONITwitchLib.IRC;
 /// <param name="IsVip">Whether this user is a VIP.</param>
 [NotPublicAPI]
 [SuppressMessage("ReSharper", "NotAccessedPositionalProperty.Global")]
-public record struct TwitchUserInfo(
+public readonly record struct TwitchUserInfo(
 	string UserId,
 	string DisplayName,
 	Color32? NameColor,
@@ -29,7 +29,7 @@ public record struct TwitchUserInfo(
 	/// </summary>
 	/// <param name="other">The other <see cref="TwitchUserInfo" /> to compare.</param>
 	/// <returns>Whether the <see cref="UserId" /> of two <see cref="TwitchUserInfo" /> are equal.</returns>
-	public readonly bool Equals(TwitchUserInfo other)
+	public bool Equals(TwitchUserInfo other)
 	{
 		return UserId == other.UserId;
 	}
@@ -38,7 +38,7 @@ public record struct TwitchUserInfo(
 	///     Gets a hash code for this <see cref="TwitchUserInfo" /> by its <see cref="UserId" />.
 	/// </summary>
 	/// <returns>A hash code for the object.</returns>
-	public readonly override int GetHashCode()
+	public override int GetHashCode()
 	{
 		return UserId != null ? UserId.GetHashCode() : 0;
 	}

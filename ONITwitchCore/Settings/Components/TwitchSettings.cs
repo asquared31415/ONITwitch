@@ -130,37 +130,6 @@ internal static class TwitchSettings
 		}
 	}
 
-	public static void SaveConverterTests()
-	{
-		var configText = @"{
-			""Version"": 1,
-			""ChannelName"": ""asquared31415"",
-			""VoteDelay"": 50.0,
-			""VoteTime"": 20.0,
-			""VoteCount"": 3,
-			""UseTwitchNameColors"": true,
-			""ShowToasts"": true,
-			""ShowVoteStartToasts"": true,
-			""MinDanger"": 0,
-			""MaxDanger"": 5
-		}";
-
-		var o = JsonConvert.DeserializeObject<JObject>(configText);
-		SaveConverters.ConvertSaveToLatest(o);
-
-		configText = @"{
-			""Channel"": ""asquared31415"",
-			""VoteDelay"": 50.0,
-			""VoteTime"": 20.0,
-			""VoteCountAAA"": 3,
-			""ShowToasts"": true,
-			""MinDanger"": 100,
-			""MaxDanger"": 3
-		}";
-		o = JsonConvert.DeserializeObject<JObject>(configText);
-		SaveConverters.ConvertSaveToLatest(o);
-	}
-
 	internal class SettingsData
 	{
 		// TODO: make this configurable, but only in the file?
