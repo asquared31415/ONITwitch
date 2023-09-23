@@ -178,6 +178,7 @@ public class EventInfo
 	{
 		if (conditionRef != null)
 		{
+			// ReSharper disable once LoopCanBeConvertedToQuery
 			foreach (var cond in conditionRef.Condition.GetInvocationList())
 			{
 				var result = (bool) cond.DynamicInvoke(data);

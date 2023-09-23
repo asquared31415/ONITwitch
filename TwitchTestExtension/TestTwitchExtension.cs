@@ -60,12 +60,6 @@ public static class Db_Initialize_Patch
 		deckInst.AddGroup(extGroup);
 
 
-		// Group manipulation and on change event
-		void GroupChanged(EventGroup group)
-		{
-			Log.Info($"Group changed, total weight: {group.TotalWeight}");
-		}
-
 		Log.Info("Adding group changed listener");
 		extGroup.OnGroupChanged += GroupChanged;
 		extGroup.SetWeight(manualGroupEvent, 10);
@@ -97,5 +91,12 @@ public static class Db_Initialize_Patch
 		// In this case the group does not exist, so nothing will happen
 		var group = TwitchDeckManager.Instance.GetGroup("TestExtGroupDOES_NOT_EXIST");
 		group?.AddEvent("TestExtEvent", 0);
+		return;
+
+		// Group manipulation and on change event
+		void GroupChanged(EventGroup group)
+		{
+			Log.Info($"Group changed, total weight: {group.TotalWeight}");
+		}
 	}
 }

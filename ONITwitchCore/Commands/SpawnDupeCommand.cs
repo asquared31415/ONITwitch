@@ -49,18 +49,13 @@ internal class SpawnDupeCommand : CommandBase
 							return false;
 						}
 
-						if (Components.LiveMinionIdentities.Items.Any(
-								i =>
-								{
-									var normalizedName = i.name.ToLowerInvariant();
-									return normalizedName.Contains(pair.Key.DisplayName.ToLowerInvariant());
-								}
-							))
-						{
-							return false;
-						}
-
-						return true;
+						return !Components.LiveMinionIdentities.Items.Any(
+							i =>
+							{
+								var normalizedName = i.name.ToLowerInvariant();
+								return normalizedName.Contains(pair.Key.DisplayName.ToLowerInvariant());
+							}
+						);
 					}
 				)
 				.ToList();

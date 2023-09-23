@@ -38,6 +38,7 @@ public class NestedDictionaryReader : JsonConverter
 			}
 		}
 
+		// ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
 		switch (reader.TokenType)
 		{
 			case JsonToken.StartObject:
@@ -66,6 +67,7 @@ public class NestedDictionaryReader : JsonConverter
 
 		while (reader.Read())
 		{
+			// ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
 			switch (reader.TokenType)
 			{
 				case JsonToken.Comment:
@@ -89,6 +91,7 @@ public class NestedDictionaryReader : JsonConverter
 
 		while (reader.Read())
 		{
+			// ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
 			switch (reader.TokenType)
 			{
 				case JsonToken.PropertyName:

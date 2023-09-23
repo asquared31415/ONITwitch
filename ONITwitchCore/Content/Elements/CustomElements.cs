@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using ONITwitchLib;
 using UnityEngine;
@@ -29,10 +30,7 @@ internal static class CustomElements
 
 	public static void RegisterSubstances(List<Substance> substances)
 	{
-		foreach (var elementInfo in Elements)
-		{
-			substances.Add(elementInfo.CreateSubstance());
-		}
+		substances.AddRange(Elements.Select(elementInfo => elementInfo.CreateSubstance()));
 	}
 
 	// TODO: (2023-09-10) Klei marked this bug as fixed in next update, check when that happens.

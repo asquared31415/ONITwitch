@@ -74,6 +74,9 @@ internal class CameraPath
 	{
 		Log.Debug("Executing camera path");
 
+		executeCamCoroutine = CameraController.Instance.StartCoroutine(Path());
+		return;
+
 		IEnumerator Path()
 		{
 			CameraController.Instance.SetWorldInteractive(false);
@@ -111,8 +114,6 @@ internal class CameraPath
 			Log.Debug("Camera path complete");
 			ResetCamState();
 		}
-
-		executeCamCoroutine = CameraController.Instance.StartCoroutine(Path());
 	}
 
 	private void Stop()

@@ -109,23 +109,6 @@ internal class EventsPanel : IDevToolPanel
 
 	private void DrawSurpriseBox()
 	{
-		int CompareTagsByName(KPrefabID a, KPrefabID b)
-		{
-			var aTag = a.PrefabID();
-			var bTag = b.PrefabID();
-			return (string.IsNullOrEmpty(aTag.Name), string.IsNullOrEmpty(bTag.Name)) switch
-			{
-				// Both missing names, compare hashes.
-				(true, true) => aTag.GetHash().CompareTo(bTag.GetHash()),
-				// Only a is missing name, order it last.
-				(true, false) => 1,
-				// Only b is missing name, order it last.
-				(false, true) => -1,
-				// Both have names, compare the names.
-				(false, false) => string.Compare(aTag.Name, bTag.Name, StringComparison.OrdinalIgnoreCase),
-			};
-		}
-
 		var validPrefabs = Assets.Prefabs.Where(SurpriseBox.PrefabIsValid).ToList();
 		validPrefabs.Sort(CompareTagsByName);
 
@@ -177,6 +160,25 @@ internal class EventsPanel : IDevToolPanel
 			}
 
 			ImGui.EndCombo();
+		}
+
+		return;
+
+		int CompareTagsByName(KPrefabID a, KPrefabID b)
+		{
+			var aTag = a.PrefabID();
+			var bTag = b.PrefabID();
+			return (string.IsNullOrEmpty(aTag.Name), string.IsNullOrEmpty(bTag.Name)) switch
+			{
+				// Both missing names, compare hashes.
+				(true, true) => aTag.GetHash().CompareTo(bTag.GetHash()),
+				// Only a is missing name, order it last.
+				(true, false) => 1,
+				// Only b is missing name, order it last.
+				(false, true) => -1,
+				// Both have names, compare the names.
+				(false, false) => string.Compare(aTag.Name, bTag.Name, StringComparison.OrdinalIgnoreCase),
+			};
 		}
 	}
 
@@ -284,13 +286,6 @@ internal class EventsPanel : IDevToolPanel
 	private static List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)>
 		GenerateEventEntries([CanBeNull] string filter)
 	{
-		bool MatchesFilter([NotNull] EventInfo info)
-		{
-			return string.IsNullOrWhiteSpace(filter) ||
-				   (info.FriendlyName?.ToLowerInvariant().Contains(filter.ToLowerInvariant()) == true) ||
-				   info.EventId.ToLowerInvariant().Contains(filter.ToLowerInvariant());
-		}
-
 		var namespacedGroupedEvents = new Dictionary<string, Dictionary<string, List<EventInfo>>>();
 		foreach (var eventGroup in TwitchDeckManager.Instance.GetGroups())
 		{
@@ -313,6 +308,29 @@ internal class EventsPanel : IDevToolPanel
 					namespacedGroupedEvents[eventNamespace][groupName].Add(info);
 				}
 			}
+		}
+
+		var filtered = new List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)>();
+
+		// put the base mod events in first, then the rest, sorted by namespace
+		if (namespacedGroupedEvents.TryGetValue(TwitchModInfo.StaticID, out var baseGroups))
+		{
+			namespacedGroupedEvents.Remove(TwitchModInfo.StaticID);
+			filtered.Add((TwitchModInfo.StaticID, SortGroupsForNamespace(baseGroups)));
+		}
+
+		foreach (var (modNamespace, groups) in namespacedGroupedEvents)
+		{
+			filtered.Add((modNamespace, SortGroupsForNamespace(groups)));
+		}
+
+		return filtered;
+
+		bool MatchesFilter([NotNull] EventInfo info)
+		{
+			return string.IsNullOrWhiteSpace(filter) ||
+				   (info.FriendlyName?.ToLowerInvariant().Contains(filter.ToLowerInvariant()) == true) ||
+				   info.EventId.ToLowerInvariant().Contains(filter.ToLowerInvariant());
 		}
 
 		// sort events by name and then ID
@@ -346,22 +364,6 @@ internal class EventsPanel : IDevToolPanel
 
 			return sorted;
 		}
-
-		var filtered = new List<(string Namespace, List<(string GroupName, List<EventInfo> Events)> GroupedEvents)>();
-
-		// put the base mod events in first, then the rest, sorted by namespace
-		if (namespacedGroupedEvents.TryGetValue(TwitchModInfo.StaticID, out var baseGroups))
-		{
-			namespacedGroupedEvents.Remove(TwitchModInfo.StaticID);
-			filtered.Add((TwitchModInfo.StaticID, SortGroupsForNamespace(baseGroups)));
-		}
-
-		foreach (var (modNamespace, groups) in namespacedGroupedEvents)
-		{
-			filtered.Add((modNamespace, SortGroupsForNamespace(groups)));
-		}
-
-		return filtered;
 	}
 
 #endregion

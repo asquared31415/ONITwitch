@@ -267,7 +267,7 @@ public struct IrcMessage
 	/// <summary>
 	///     BE CAREFUL EXPOSING THIS TO ANYTHING!!! IT MAY CONTAIN SECRETS!!!
 	/// </summary>
-	public string GetIrcString()
+	public readonly string GetIrcString()
 	{
 		// TODO: tags
 		var sb = new StringBuilder();
@@ -279,6 +279,7 @@ public struct IrcMessage
 		sb.Append(Command.ToString());
 		sb.Append(" ");
 
+		// ReSharper disable once ConvertIfStatementToSwitchStatement
 		if (Args?.Count > 1)
 		{
 			for (var idx = 0; idx < Args.Count - 1; idx++)

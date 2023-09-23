@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -28,6 +28,7 @@ internal class FillBedroomCommand : CommandBase
 			return;
 		}
 
+		// ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
 		foreach (var bedroom in GetValidRooms())
 		{
 			foreach (var bed in bedroom.buildings.Where(building => building.GetComponent<Bed>() != null))

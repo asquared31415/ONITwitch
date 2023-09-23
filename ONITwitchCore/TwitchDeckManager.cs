@@ -151,6 +151,7 @@ public class TwitchDeckManager
 
 		foreach (var (_, group) in groups)
 		{
+			// ReSharper disable once ConvertIfStatementToSwitchStatement
 			if (group.TotalWeight < 0)
 			{
 				Log.Warn($"Group {group.Name} had invalid weight {group.TotalWeight}");

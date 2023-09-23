@@ -53,6 +53,7 @@ public abstract class BasePocketDimensionGeneration
 	{
 		if (prefabIds != null)
 		{
+			// ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
 			foreach (var prefabId in prefabIds)
 			{
 				var prefab = Assets.GetPrefab(prefabId);
@@ -94,6 +95,7 @@ public class TemplatePocketDimensionGeneration(
 		SubWorld.ZoneType zoneType,
 		string template,
 		[CanBeNull] string requiredSkillId = null,
+		// ReSharper disable once ParameterTypeCanBeEnumerable.Local it can't
 		[CanBeNull] List<string> prefabIds = null
 	)
 	: BasePocketDimensionGeneration(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
@@ -109,10 +111,11 @@ public class TemplatePocketDimensionGeneration(
 public class NoisePocketDimensionGeneration(
 		float cyclesLifetime,
 		SubWorld.ZoneType zoneType,
-		[NotNull] List<SimHashes> hashes,
+		[NotNull] IReadOnlyList<SimHashes> hashes,
 		float xFrequency,
 		float yFrequency,
 		[CanBeNull] string requiredSkillId = null,
+		// ReSharper disable once ParameterTypeCanBeEnumerable.Local it can't
 		[CanBeNull] List<string> prefabIds = null
 	)
 	: BasePocketDimensionGeneration(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
