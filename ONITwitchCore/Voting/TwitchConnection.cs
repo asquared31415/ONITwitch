@@ -213,6 +213,7 @@ internal class TwitchConnection
 	{
 		switch (message.Command.NumericId)
 		{
+			// ReSharper disable once CommentTypo
 			//ERR_UNKNOWNCOMMAND
 			case 421:
 			{

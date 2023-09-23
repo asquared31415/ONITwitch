@@ -75,6 +75,7 @@ internal static class ImGuiInternal
 		// Button() will return true multiple times based on io.KeyRepeatDelay and io.KeyRepeatRate settings.
 		ButtonRepeat = 1 << 1,
 
+		// ReSharper disable once CommentTypo
 		// Disable interactions but doesn't affect visuals. See BeginDisabled()/EndDisabled(). See github.com/ocornut/imgui/issues/211
 		Disabled = 1 << 2,
 

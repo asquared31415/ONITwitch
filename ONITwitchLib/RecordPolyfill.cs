@@ -4,6 +4,7 @@ using ONITwitchLib.Attributes;
 // ReSharper disable once CheckNamespace needs to be in this namespace to be the correct class for the compiler to find
 namespace System.Runtime.CompilerServices;
 
+// ReSharper disable once CommentTypo
 /// <summary>
 ///     Allows using records in .NET Framework.
 ///     https://developercommunity.visualstudio.com/t/error-cs0518-predefined-type-systemruntimecompiler/1244809#TPIN-N1249582

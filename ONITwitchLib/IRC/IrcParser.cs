@@ -11,6 +11,11 @@ namespace ONITwitchLib.IRC;
 [NotPublicAPI]
 public static class IrcParser
 {
+	// NOTE: the regex for the vendor isn't quite right, but it's good enough
+	private static readonly Regex TagRegex = new(
+		@"^(?<client>\+)?((?<vendor>([a-zA-Z0-9-]*\.)*[a-zA-Z0-9-])\/)?(?<key_name>[a-zA-Z\d-]+)(=(?<value>[^\0\r\n;\ ]*))?$"
+	);
+
 	// message must be a single message, it must not contain any CRLF
 	// Returns the parsed message if it is valid
 	public static IrcMessage? ParseMessage([NotNull] string message)
@@ -71,11 +76,6 @@ public static class IrcParser
 		return parsed;
 	}
 
-	// NOTE: the regex for the vendor isn't quite right, but it's good enough
-	private static readonly Regex TagRegex = new(
-		@"^(?<client>\+)?((?<vendor>([a-zA-Z0-9-]*\.)*[a-zA-Z0-9-])\/)?(?<key_name>[a-zA-Z\d-]+)(=(?<value>[^\0\r\n;\ ]*))?$"
-	);
-
 	[NotNull]
 	private static Dictionary<string, IrcTag> ParseTags([NotNull] string tags)
 	{
@@ -125,6 +125,7 @@ public static class IrcParser
 		{
 			return command switch
 			{
+				// ReSharper disable StringLiteralTypo
 				"JOIN" => new IrcCommand(IrcCommandType.JOIN),
 				"NICK" => new IrcCommand(IrcCommandType.NICK),
 				"NOTICE" => new IrcCommand(IrcCommandType.NOTICE),
@@ -143,6 +144,7 @@ public static class IrcParser
 				"USERNOTICE" => new IrcCommand(IrcCommandType.USERNOTICE),
 				"USERSTATE" => new IrcCommand(IrcCommandType.USERSTATE),
 				"WHISPER" => new IrcCommand(IrcCommandType.WHISPER),
+				// ReSharper restore StringLiteralTypo
 				_ => null,
 			};
 		}
@@ -263,7 +265,7 @@ public struct IrcMessage
 	}
 
 	/// <summary>
-	/// BE CAREFUL EXPOSING THIS TO ANYTHING!!! IT MAY CONTAIN SECRETS!!!
+	///     BE CAREFUL EXPOSING THIS TO ANYTHING!!! IT MAY CONTAIN SECRETS!!!
 	/// </summary>
 	public string GetIrcString()
 	{
@@ -313,6 +315,7 @@ public struct IrcMessage
 		// IT IS CRUCIAL THAT THIS NEVER GETS REMOVED
 		if (Command.Command == IrcCommandType.PASS)
 		{
+			// ReSharper disable once StringLiteralTypo
 			sb.Append("XXXXXXXXXX");
 		}
 		else

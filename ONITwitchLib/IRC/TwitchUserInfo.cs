@@ -1,10 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using ONITwitchLib.Attributes;
 using UnityEngine;
 
 namespace ONITwitchLib.IRC;
 
 /// <summary>
-/// Information about a user, from their most recent chat message.  Primary key is the <paramref name="UserId"/>.
+///     Information about a user, from their most recent chat message.  Primary key is the <paramref name="UserId" />.
 /// </summary>
 /// <param name="UserId">The Twitch-assigned stable ID for this user.</param>
 /// <param name="DisplayName">The current display name.</param>
@@ -13,6 +14,7 @@ namespace ONITwitchLib.IRC;
 /// <param name="IsSubscriber">Whether this user is a subscriber.</param>
 /// <param name="IsVip">Whether this user is a VIP.</param>
 [NotPublicAPI]
+[SuppressMessage("ReSharper", "NotAccessedPositionalProperty.Global")]
 public record struct TwitchUserInfo(
 	string UserId,
 	string DisplayName,
@@ -23,17 +25,17 @@ public record struct TwitchUserInfo(
 )
 {
 	/// <summary>
-	/// Compares this <see cref="TwitchUserInfo"/> with another by their underlying <see cref="UserId"/>.
+	///     Compares this <see cref="TwitchUserInfo" /> with another by their underlying <see cref="UserId" />.
 	/// </summary>
-	/// <param name="other">The other <see cref="TwitchUserInfo"/> to compare.</param>
-	/// <returns>Whether the <see cref="UserId"/> of two <see cref="TwitchUserInfo"/> are equal.</returns>
+	/// <param name="other">The other <see cref="TwitchUserInfo" /> to compare.</param>
+	/// <returns>Whether the <see cref="UserId" /> of two <see cref="TwitchUserInfo" /> are equal.</returns>
 	public readonly bool Equals(TwitchUserInfo other)
 	{
 		return UserId == other.UserId;
 	}
 
 	/// <summary>
-	/// Gets a hash code for this <see cref="TwitchUserInfo"/> by its <see cref="UserId"/>.
+	///     Gets a hash code for this <see cref="TwitchUserInfo" /> by its <see cref="UserId" />.
 	/// </summary>
 	/// <returns>A hash code for the object.</returns>
 	public readonly override int GetHashCode()

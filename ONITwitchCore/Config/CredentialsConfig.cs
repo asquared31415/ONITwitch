@@ -136,6 +136,7 @@ internal record struct Credentials([NotNull] string Nick, [NotNull] string Oauth
 
 	public static Credentials CreateAnonymousCredentials()
 	{
+		// ReSharper disable once StringLiteralTypo
 		return new Credentials($"justinfan{ThreadRandom.Next(100000)}", "oauth:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	}
 }

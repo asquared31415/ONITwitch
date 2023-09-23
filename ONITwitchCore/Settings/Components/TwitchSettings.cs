@@ -385,7 +385,9 @@ internal static class TwitchSettings
 				// an icon for V2
 				["LastOpenedSettingsVersion"] = 0,
 				["PhotosensitiveMode"] = false,
+				// ReSharper disable StringLiteralTypo
 				["DisallowedDupeNames"] = new JArray("nightbot", "streamelements", "streamlabs", "fossabot", "moobot"),
+				// ReSharper restore StringLiteralTypo
 			};
 			return output;
 		}

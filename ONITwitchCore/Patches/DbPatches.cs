@@ -11,6 +11,7 @@ internal static class DbPatches
 	private static class Db_Initialize_Patch
 	{
 		[UsedImplicitly]
+		// ReSharper disable once InconsistentNaming
 		private static void Postfix(Db __instance)
 		{
 			ModAssets.LoadAssets();

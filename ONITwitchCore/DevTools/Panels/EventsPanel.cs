@@ -33,7 +33,7 @@ internal class EventsPanel : IDevToolPanel
 
 		DrawEventTrigger();
 
-		// unindent for end of events header
+		// unindented for end of events header
 		ImGui.Unindent();
 	}
 
