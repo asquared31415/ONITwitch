@@ -30,7 +30,7 @@ internal class StressCommand : CommandBase
 
 		var stress = Db.Get().Amounts.Stress;
 		foreach (var s in Components.LiveMinionIdentities.Items.Select(i => stress.Lookup(i.gameObject))
-					 .Where(s => s != null))
+					 .Where(static s => s != null))
 		{
 			s.ApplyDelta((float) stressPercent * 100);
 		}

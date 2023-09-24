@@ -250,16 +250,18 @@ internal class VoteController : KMonoBehaviour
 		MainThreadScheduler.Schedule(
 			() =>
 			{
-				if ((State == VotingState.VoteInProgress) && (CurrentVote != null))
+				if ((State != VotingState.VoteInProgress) || (CurrentVote == null))
 				{
-					var match = StartsWithNumber.Match(message.Message);
-					if (match.Success)
+					return;
+				}
+
+				var match = StartsWithNumber.Match(message.Message);
+				if (match.Success)
+				{
+					var numStr = match.Groups["num"].Value;
+					if (int.TryParse(numStr, out var num))
 					{
-						var numStr = match.Groups["num"].Value;
-						if (int.TryParse(numStr, out var num))
-						{
-							CurrentVote.AddVote(message.UserInfo, num);
-						}
+						CurrentVote.AddVote(message.UserInfo, num);
 					}
 				}
 			}

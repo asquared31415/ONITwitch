@@ -25,7 +25,7 @@ internal class ExtraStatusItems : StatusItems
 				OverlayModes.None.ID
 			)
 		);
-		PoisonedStatusItem.resolveTooltipCallback = (str, o) =>
+		PoisonedStatusItem.resolveTooltipCallback = static (str, o) =>
 		{
 			if (o is OniTwitchDamageOverTime dot)
 			{
@@ -48,11 +48,11 @@ internal class ExtraStatusItems : StatusItems
 				OverlayModes.None.ID
 			)
 		);
-		GeyserTemporarilyTuned.resolveTooltipCallback = (str, o) =>
+		GeyserTemporarilyTuned.resolveTooltipCallback = static (str, o) =>
 		{
 			if (o is List<TimedModification> modifications)
 			{
-				var maxTime = modifications.Select(modification => modification.TimeRemaining)
+				var maxTime = modifications.Select(static modification => modification.TimeRemaining)
 					.Max();
 				return str.Replace("{time}", GameUtil.GetFormattedCycles(maxTime));
 			}

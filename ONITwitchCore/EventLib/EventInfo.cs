@@ -176,20 +176,21 @@ public class EventInfo
 	// METHOD NAME MUST NOT BE AMBIGUOUS
 	public bool CheckCondition(object data)
 	{
-		if (conditionRef != null)
+		if (conditionRef == null)
 		{
-			// ReSharper disable once LoopCanBeConvertedToQuery
-			foreach (var cond in conditionRef.Condition.GetInvocationList())
+			return true;
+		}
+
+		// ReSharper disable once LoopCanBeConvertedToQuery
+		foreach (var cond in conditionRef.Condition.GetInvocationList())
+		{
+			var result = (bool) cond.DynamicInvoke(data);
+			if (!result)
 			{
-				var result = (bool) cond.DynamicInvoke(data);
-				if (!result)
-				{
-					return false;
-				}
+				return false;
 			}
 		}
 
-		// Either no condition or the conditions all passed
 		return true;
 	}
 

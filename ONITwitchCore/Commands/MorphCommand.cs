@@ -9,12 +9,12 @@ internal class MorphCommand : CommandBase
 {
 	public override bool Condition(object data)
 	{
-		return Components.Brains.Items.Any(brain => brain is CreatureBrain);
+		return Components.Brains.Items.Any(static brain => brain is CreatureBrain);
 	}
 
 	public override void Run(object data)
 	{
-		foreach (var brain in Components.Brains.Items.Where(brain => (brain != null) && brain is CreatureBrain))
+		foreach (var brain in Components.Brains.Items.Where(static brain => (brain != null) && brain is CreatureBrain))
 		{
 			DoMorph(brain.gameObject);
 		}

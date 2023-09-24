@@ -19,7 +19,7 @@ internal class BansheeWailCommand : CommandBase
 			var notification = new Notification(
 				DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NOTIFICATION_NAME,
 				NotificationType.Bad,
-				(notificationList, _) =>
+				static (notificationList, _) =>
 					DUPLICANTS.MODIFIERS.BANSHEE_WAILING.NOTIFICATION_TOOLTIP +
 					notificationList.ReduceMessages(false)
 			);

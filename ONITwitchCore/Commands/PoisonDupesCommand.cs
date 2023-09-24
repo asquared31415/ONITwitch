@@ -18,7 +18,7 @@ internal class PoisonDupesCommand : CommandBase
 	public override void Run(object data)
 	{
 		foreach (var dot in Components.LiveMinionIdentities.Items.Select(
-					 identity => identity.gameObject.AddOrGet<OniTwitchDamageOverTime>()
+					 static identity => identity.gameObject.AddOrGet<OniTwitchDamageOverTime>()
 				 ))
 		{
 			dot.StartPoison(DamageTime, NumTicks);

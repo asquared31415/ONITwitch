@@ -5,13 +5,14 @@
 // ReSharper disable IdentifierTypo
 
 #pragma warning disable CS1591
+#pragma warning disable CS0414
 
 using ONITwitchLib.Utils;
 using STRINGS;
 
 namespace ONITwitch;
 
-public static class STRINGS
+internal static class STRINGS
 {
 	public static class BUILDINGS
 	{

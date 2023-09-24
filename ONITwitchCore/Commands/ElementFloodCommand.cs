@@ -1,6 +1,6 @@
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -25,7 +25,7 @@ internal class ElementFloodCommand : CommandBase
 		const int maxFloodSize = 41; // A diamond with 4 cells from the middle filled in
 		var cells = GridUtil.FloodCollectCells(
 			nearestCell,
-			c => (int) (Grid.BuildMasks[c] & (Grid.BuildFlags.Solid | Grid.BuildFlags.Foundation)) == 0,
+			static c => (int) (Grid.BuildMasks[c] & (Grid.BuildFlags.Solid | Grid.BuildFlags.Foundation)) == 0,
 			maxFloodSize
 		);
 

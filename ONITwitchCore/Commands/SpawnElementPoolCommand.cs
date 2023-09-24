@@ -22,15 +22,15 @@ internal class SpawnElementPoolCommand : CommandBase
 	public override bool Condition(object data)
 	{
 		var pool = (Dictionary<string, float>) data;
-		return pool.Any(entry => ElementUtil.ElementExistsAndEnabled(entry.Key));
+		return pool.Any(static entry => ElementUtil.ElementExistsAndEnabled(entry.Key));
 	}
 
 	public override void Run(object data)
 	{
 		var pool = (Dictionary<string, float>) data;
 		List<(Element Element, float Mass)> enabledElements = pool
-			.Select(entry => (ElementUtil.FindElementByNameFast(entry.Key), entry.Value))
-			.Where(entry => ElementUtil.ElementExistsAndEnabled(entry.Item1))
+			.Select(static entry => (ElementUtil.FindElementByNameFast(entry.Key), entry.Value))
+			.Where(static entry => ElementUtil.ElementExistsAndEnabled(entry.Item1))
 			.ToList();
 		var selected = enabledElements.GetRandom();
 		var insulationElement = ElementLoader.FindElementByHash(TwitchSimHashes.OniTwitchSuperInsulator);

@@ -58,13 +58,13 @@ internal class RainPrefabCommand : CommandBase
 	)
 	{
 		var options = breedingChances.Select(
-				chance => EntityTemplatesPatches.TryGetAdultFromEgg(chance.egg, out var adultTag)
+				static chance => EntityTemplatesPatches.TryGetAdultFromEgg(chance.egg, out var adultTag)
 					? (adultTag, chance.weight)
 					: (Tag.Invalid, 0)
 			)
-			.Where(pair => pair.adultTag.IsValid && (Assets.TryGetPrefab(pair.adultTag) != null))
+			.Where(static pair => pair.adultTag.IsValid && (Assets.TryGetPrefab(pair.adultTag) != null))
 			.ToList();
-		var totalWeight = options.Sum(pair => pair.weight);
+		var totalWeight = options.Sum(static pair => pair.weight);
 		for (var idx = 0; idx < options.Count; idx++)
 		{
 			var old = options[idx];

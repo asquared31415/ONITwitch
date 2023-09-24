@@ -139,16 +139,17 @@ internal class GenericModSettingsUI : KScreen
 
 		transform.Find("Buttons/Version/VersionText").GetComponent<LocText>().text = "v" + Global.Instance.modManager
 			.mods
-			.Find(mod => mod.staticID == TwitchModInfo.StaticID)
+			.Find(static mod => mod.staticID == TwitchModInfo.StaticID)
 			.packagedModInfo
 			.version;
 		transform.Find("Buttons/Github")
 			.GetComponent<Button>()
-			.onClick.AddListener(() => Application.OpenURL("https://github.com/asquared31415/ONI-mods"));
+			.onClick.AddListener(static () => Application.OpenURL("https://github.com/asquared31415/ONI-mods"));
 		transform.Find("Buttons/Steam")
 			.GetComponent<Button>()
 			.onClick.AddListener(
-				() => Application.OpenURL("https://steamcommunity.com/id/asquared31415/myworkshopfiles/?appid=457140")
+				static () =>
+					Application.OpenURL("https://steamcommunity.com/id/asquared31415/myworkshopfiles/?appid=457140")
 			);
 		transform.Find("Buttons/OKButton").GetComponent<Button>().onClick.AddListener(ApplySettings);
 	}
@@ -255,7 +256,7 @@ internal class GenericModSettingsUI : KScreen
 				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.TITLE,
 				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.BODY,
 				STRINGS.ONITWITCH.UI.DIALOGS.DEADLY_CONFIG.CONTINUE,
-				() => { }
+				static () => { }
 			);
 		}
 

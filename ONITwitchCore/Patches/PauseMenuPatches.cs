@@ -17,6 +17,11 @@ internal static class PauseMenuPatches
 
 	private static ColorStyleSetting twitchButtonStyle;
 
+	private static readonly Color DisabledColor = new Color32(0x6A, 0x69, 0x66, 0xFF);
+	private static readonly Color InactiveTwitchColor = new Color32(0x91, 0x46, 0xFF, 0xFF);
+	private static readonly Color HoverTwitchColor = new Color32(0xA2, 0x56, 0xFF, 0xFF);
+	private static readonly Color PressedTwitchColor = new Color32(0xB5, 0x67, 0xFF, 0xFF);
+
 	private static void OnTwitchButtonPressed()
 	{
 		TwitchButtonInfo.isEnabled = false;
@@ -24,7 +29,7 @@ internal static class PauseMenuPatches
 
 		GameScheduler.Instance.ScheduleNextFrame(
 			"TwitchStartVotes",
-			_ =>
+			static _ =>
 			{
 				var started = VoteController.Instance.StartVote();
 				TwitchButtonInfo.isEnabled = !started;
@@ -49,11 +54,6 @@ internal static class PauseMenuPatches
 			___buttons = buttons;
 		}
 	}
-
-	private static readonly Color DisabledColor = new Color32(0x6A, 0x69, 0x66, 0xFF);
-	private static readonly Color InactiveTwitchColor = new Color32(0x91, 0x46, 0xFF, 0xFF);
-	private static readonly Color HoverTwitchColor = new Color32(0xA2, 0x56, 0xFF, 0xFF);
-	private static readonly Color PressedTwitchColor = new Color32(0xB5, 0x67, 0xFF, 0xFF);
 
 	[HarmonyPatch(typeof(KButtonMenu), nameof(KButtonMenu.RefreshButtons))]
 	// ReSharper disable once InconsistentNaming

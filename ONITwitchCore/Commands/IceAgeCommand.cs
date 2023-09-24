@@ -1,8 +1,8 @@
 using System.Linq;
+using ONITwitch.Toasts;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using UnityEngine;
-using ToastManager = ONITwitch.Toasts.ToastManager;
 
 namespace ONITwitch.Commands;
 
@@ -16,8 +16,8 @@ internal class IceAgeCommand : CommandBase
 	{
 		// select a random world that is a root world
 		var worlds = ClusterManager.Instance.WorldContainers.Where(
-				world => world.IsDupeVisited && ((world.ParentWorldId == world.id) ||
-												 (world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX))
+				static world => world.IsDupeVisited && ((world.ParentWorldId == world.id) ||
+														(world.ParentWorldId == ClusterManager.INVALID_WORLD_IDX))
 			)
 			.ToList();
 		if (worlds.Count == 0)

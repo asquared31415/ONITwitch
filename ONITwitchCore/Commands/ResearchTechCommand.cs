@@ -8,6 +8,8 @@ namespace ONITwitch.Commands;
 
 internal class ResearchTechCommand : CommandBase
 {
+	private static readonly string[] AllowedResearchKinds = { "basic", "advanced", "nuclear" };
+
 	public override bool Condition(object data)
 	{
 		return GetAllowedTechs().Count > 0;
@@ -23,7 +25,7 @@ internal class ResearchTechCommand : CommandBase
 		}
 
 		// only research a research that is of the minimum tier that has not been complete
-		var minTier = possibleTechs.Min(tech => tech.tier);
+		var minTier = possibleTechs.Min(static tech => tech.tier);
 
 		var minTechList = possibleTechs.Where(tech => tech.tier == minTier).ToList();
 
@@ -51,8 +53,6 @@ internal class ResearchTechCommand : CommandBase
 		}
 	}
 
-	private static readonly string[] AllowedResearchKinds = { "basic", "advanced", "nuclear" };
-
 	[NotNull]
 	private static List<Tech> GetAllowedTechs()
 	{
@@ -60,7 +60,7 @@ internal class ResearchTechCommand : CommandBase
 		// only add techs that have 0 (or missing) costs for space science (or any modded kinds) 
 		// and that have their prereqs satisfied and that are not complete
 		return techs.resources.Where(
-				tech => tech.costsByResearchTypeID.Keys.All(
+				static tech => tech.costsByResearchTypeID.Keys.All(
 					researchKind =>
 						AllowedResearchKinds.Contains(researchKind) || (tech.costsByResearchTypeID[researchKind] == 0)
 				) && tech.ArePrerequisitesComplete() && !tech.IsComplete()

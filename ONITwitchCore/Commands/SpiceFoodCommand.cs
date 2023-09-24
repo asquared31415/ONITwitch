@@ -25,21 +25,24 @@ internal class SpiceFoodCommand : CommandBase
 		// add all spices to this food (unless they already exist) 
 		foreach (var item in Components.Edibles.Items)
 		{
-			var existingSpices = SpicesAccessor(item).Select(spice => spice.Id.Name);
+			var existingSpices = SpicesAccessor(item).Select(static spice => spice.Id.Name);
 			foreach (var add in validSpices.Except(existingSpices))
 			{
 				item.SpiceEdible(new SpiceInstance { Id = add }, status);
 			}
 		}
 
-		ToastManager.InstantiateToast(STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.TITLE, STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.BODY);
+		ToastManager.InstantiateToast(
+			STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.TITLE,
+			STRINGS.ONITWITCH.TOASTS.SPICE_FOOD.BODY
+		);
 	}
 
 	private static List<string> GetValidSpiceIds()
 	{
 		return Db.Get()
-			.Spices.resources.Where(spice => DlcManager.IsDlcListValidForCurrentContent(spice.DlcIds))
-			.Select(spice => spice.Id)
+			.Spices.resources.Where(static spice => DlcManager.IsDlcListValidForCurrentContent(spice.DlcIds))
+			.Select(static spice => spice.Id)
 			.ToList();
 	}
 }

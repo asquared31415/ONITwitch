@@ -37,7 +37,7 @@ internal static class TwitchSettings
 	}
 
 	// Default init with an empty function so that it can't NRE
-	[NotNull] public static event Action<SettingsData> OnSettingsChanged = _ => { };
+	[NotNull] public static event Action<SettingsData> OnSettingsChanged = static _ => { };
 
 	private static void SaveConfig(SettingsData toSave)
 	{
