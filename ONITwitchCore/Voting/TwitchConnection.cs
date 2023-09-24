@@ -336,7 +336,7 @@ internal class TwitchConnection
 		await SendMessageImmediate(new IrcMessage(IrcCommandType.NICK, new List<string> { credentials.Nick }));
 
 		// wait for GLOBALUSERSTATE, but only if the user is not anonymous
-		if (credentials.Nick.StartsWith("justinfan"))
+		if (credentials.Nick.StartsWith("justinfan", StringComparison.Ordinal))
 		{
 			Log.Debug($"Using anonymous login {credentials.Nick}, not waiting for authentication");
 			return;
@@ -387,16 +387,13 @@ internal class TwitchConnection
 
 				// use the display-name tag if it exists, otherwise use the message nick
 				var displayName = message.Args[0].TrimStart('#');
-				if (tags.TryGetValue("display-name", out var displayTag))
+				if (tags.TryGetValue("display-name", out var displayTag) && !string.IsNullOrEmpty(displayTag.Value))
 				{
-					if (!displayTag.Value.IsNullOrWhiteSpace())
-					{
-						displayName = displayTag.Value;
-					}
+					displayName = displayTag.Value;
 				}
 
 				Color32? color = null;
-				if (tags.TryGetValue("color", out var colorTag) && !colorTag.Value.IsNullOrWhiteSpace())
+				if (tags.TryGetValue("color", out var colorTag) && !string.IsNullOrEmpty(colorTag.Value))
 				{
 					var colorStr = colorTag.Value!;
 					if (ColorUtil.TryParseHexString(colorStr, out var parsed))
@@ -449,7 +446,7 @@ internal class TwitchConnection
 		Log.Debug($"Sending message {message}");
 		var str = message.GetIrcString();
 		// BUG: a message that *contains* a \r\n is not well formed and not handled here
-		if (!str.EndsWith("\r\n"))
+		if (!str.EndsWith("\r\n", StringComparison.Ordinal))
 		{
 			// remove all counts of either \r or \n and then re-add to normalize it
 			str = str.TrimEnd('\r', '\n') + "\r\n";

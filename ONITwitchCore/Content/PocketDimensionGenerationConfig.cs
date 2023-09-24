@@ -100,7 +100,7 @@ public class TemplatePocketDimensionGeneration(
 	)
 	: BasePocketDimensionGeneration(cyclesLifetime, zoneType, requiredSkillId, prefabIds)
 {
-	protected override void GenerateTiles(WorldContainer world)
+	protected override void GenerateTiles([NotNull] WorldContainer world)
 	{
 		var templateContainer = TemplateCache.GetTemplate(template);
 		var pos = world.WorldOffset + PocketDimension.InternalOffset + PocketDimension.InternalSize / 2 - Vector2I.one;

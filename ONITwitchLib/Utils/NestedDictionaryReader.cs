@@ -23,12 +23,17 @@ public class NestedDictionaryReader : JsonConverter
 		throw new NotImplementedException();
 	}
 
-	public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+	public override object ReadJson(
+		[NotNull] JsonReader reader,
+		Type objectType,
+		object existingValue,
+		JsonSerializer serializer
+	)
 	{
 		return ReadValue(reader);
 	}
 
-	private object ReadValue(JsonReader reader)
+	private object ReadValue([NotNull] JsonReader reader)
 	{
 		while (reader.TokenType == JsonToken.Comment)
 		{
@@ -61,7 +66,8 @@ public class NestedDictionaryReader : JsonConverter
 		}
 	}
 
-	private object ReadArray(JsonReader reader)
+	[NotNull]
+	private object ReadArray([NotNull] JsonReader reader)
 	{
 		IList<object> list = new List<object>();
 
@@ -85,7 +91,8 @@ public class NestedDictionaryReader : JsonConverter
 		throw new JsonSerializationException("Unexpected end when reading IDictionary<string, object>");
 	}
 
-	private object ReadObject(JsonReader reader)
+	[NotNull]
+	private object ReadObject([NotNull] JsonReader reader)
 	{
 		var obj = new Dictionary<string, object>();
 

@@ -35,7 +35,7 @@ public static class Db_Initialize_Patch
 			data => { Log.Info($"Triggered ext event with data {data}"); }
 		);
 		// add condition so the event only runs when its data is true
-		extEvent.AddCondition(data => (bool) data);
+		extEvent.AddCondition(([NotNull] data) => (bool) data);
 		dataInst.SetDataForEvent(extEvent, true);
 		// This event causes no danger
 		extEvent.Danger = Danger.None;

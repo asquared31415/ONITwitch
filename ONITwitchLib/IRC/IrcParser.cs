@@ -112,6 +112,7 @@ public static class IrcParser
 		return tagDict;
 	}
 
+	[NotNull]
 	private static string ParsePrefix([NotNull] string prefixString)
 	{
 		return prefixString;
@@ -158,6 +159,8 @@ public static class IrcParser
 		return null;
 	}
 
+	[NotNull]
+	[ItemNotNull]
 	private static List<string> ParseArgs([NotNull] string args)
 	{
 		// some messages have no args
@@ -224,7 +227,7 @@ public struct IrcMessage
 		Args = new List<string>();
 	}
 
-	public IrcMessage(IrcCommand command, List<string> args)
+	public IrcMessage(IrcCommand command, [NotNull] List<string> args)
 	{
 		Tags = new Dictionary<string, IrcTag>();
 		Prefix = null;
@@ -232,7 +235,7 @@ public struct IrcMessage
 		Args = args;
 	}
 
-	public IrcMessage(string prefix, IrcCommand command, List<string> args)
+	public IrcMessage(string prefix, IrcCommand command, [NotNull] List<string> args)
 	{
 		Tags = new Dictionary<string, IrcTag>();
 		Prefix = prefix;
@@ -248,7 +251,7 @@ public struct IrcMessage
 		Args = new List<string>();
 	}
 
-	public IrcMessage(IrcCommandType command, List<string> args)
+	public IrcMessage(IrcCommandType command, [NotNull] List<string> args)
 	{
 		Tags = new Dictionary<string, IrcTag>();
 		Prefix = null;
@@ -256,7 +259,7 @@ public struct IrcMessage
 		Args = args;
 	}
 
-	public IrcMessage(string prefix, IrcCommandType command, List<string> args)
+	public IrcMessage(string prefix, IrcCommandType command, [NotNull] List<string> args)
 	{
 		Tags = new Dictionary<string, IrcTag>();
 		Prefix = prefix;
@@ -267,6 +270,7 @@ public struct IrcMessage
 	/// <summary>
 	///     BE CAREFUL EXPOSING THIS TO ANYTHING!!! IT MAY CONTAIN SECRETS!!!
 	/// </summary>
+	[NotNull]
 	public readonly string GetIrcString()
 	{
 		// TODO: tags

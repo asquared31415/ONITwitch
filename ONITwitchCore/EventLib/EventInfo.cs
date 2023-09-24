@@ -193,7 +193,7 @@ public class EventInfo
 		return true;
 	}
 
-	private bool Equals(EventInfo other)
+	private bool Equals([NotNull] EventInfo other)
 	{
 		return (EventNamespace == other.EventNamespace) && (EventId == other.EventId);
 	}
@@ -246,7 +246,7 @@ public class EventInfo
 	/// <summary>
 	///     this is dangerous to use, and not what you need
 	/// </summary>
-	internal void MoveToGroup(EventGroup newGroup, int weight)
+	internal void MoveToGroup([NotNull] EventGroup newGroup, int weight)
 	{
 		Group.RemoveEvent(this);
 		newGroup.AddEventInfoInternal(this, weight);
