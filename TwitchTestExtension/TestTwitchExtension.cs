@@ -32,10 +32,10 @@ public static class Db_Initialize_Patch
 		// Add a completely custom event
 		var (extEvent, extEventGroup) = EventGroup.DefaultSingleEventGroup("LogEvent", 4, "Extra Event");
 		extEvent.AddListener(
-			data => { Log.Info($"Triggered ext event with data {data}"); }
+			static data => { Log.Info($"Triggered ext event with data {data}"); }
 		);
 		// add condition so the event only runs when its data is true
-		extEvent.AddCondition(([NotNull] data) => (bool) data);
+		extEvent.AddCondition(static ([NotNull] data) => (bool) data);
 		dataInst.SetDataForEvent(extEvent, true);
 		// This event causes no danger
 		extEvent.Danger = Danger.None;
@@ -45,7 +45,7 @@ public static class Db_Initialize_Patch
 
 		// Add an event that crashes to demonstrate the event crash handler
 		var (crash, crashGroup) = EventGroup.DefaultSingleEventGroup("Crash", 0, "[DO NOT USE] CRASH EVENT");
-		crash.AddListener(_ => throw new Exception("Explicit crash from a test event"));
+		crash.AddListener(static _ => throw new Exception("Explicit crash from a test event"));
 		deckInst.AddGroup(crashGroup);
 
 
@@ -53,9 +53,9 @@ public static class Db_Initialize_Patch
 		var extGroup = EventGroup.GetOrCreateGroup("TwitchExtGroup");
 		var manualGroupEvent = extGroup.AddEvent("ManuallyAddedEvent", 1, "Manual Group Event");
 		manualGroupEvent.Danger = Danger.None;
-		manualGroupEvent.AddCondition(_ => false);
+		manualGroupEvent.AddCondition(static _ => false);
 		manualGroupEvent.AddListener(
-			_ => { ToastManager.InstantiateToast("Toast", "This toast was manually triggered by the dev tools!"); }
+			static _ => { ToastManager.InstantiateToast("Toast", "This toast was manually triggered by the dev tools!"); }
 		);
 		deckInst.AddGroup(extGroup);
 

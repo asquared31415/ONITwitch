@@ -167,7 +167,7 @@ internal class TwitchConnection
 				} while (attempts < maxAttempts);
 
 				MainThreadScheduler.Schedule(
-					() =>
+					static () =>
 					{
 						Log.Warn("An error occurred");
 						DialogUtil.MakeDialog(

@@ -104,7 +104,7 @@ public class TemplatePocketDimensionGeneration(
 	{
 		var templateContainer = TemplateCache.GetTemplate(template);
 		var pos = world.WorldOffset + PocketDimension.InternalOffset + PocketDimension.InternalSize / 2 - Vector2I.one;
-		TemplateLoader.Stamp(templateContainer, pos, () => { });
+		TemplateLoader.Stamp(templateContainer, pos, static () => { });
 	}
 }
 

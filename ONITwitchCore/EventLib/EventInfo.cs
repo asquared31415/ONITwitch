@@ -15,7 +15,7 @@ namespace ONITwitch.EventLib;
 [PublicAPI]
 public class EventInfo
 {
-	[NotNull] private readonly ActionRef actionRef = new(_ => { });
+	[NotNull] private readonly ActionRef actionRef = new(static _ => { });
 	[CanBeNull] private ConditionRef conditionRef;
 
 	/// <summary>
