@@ -64,9 +64,9 @@ internal static class DefaultCommands
 					{ SimHashes.EnrichedUranium.ToString(), 2000 },
 					{ SimHashes.Niobium.ToString(), 500 },
 					{ SimHashes.Tungsten.ToString(), 1200 },
-					// 20*5 = 100 = 10 tiles in a cooling loop
+					// (20/2)*5 = 50 = 5 tiles in a cooling loop
 					{ SimHashes.SuperCoolant.ToString(), 20 },
-					// 10 pipes worth
+					// 5 pipes worth
 					{ SimHashes.SuperInsulator.ToString(), 800 },
 					{ SimHashes.Resin.ToString(), 500 },
 				},
