@@ -130,10 +130,6 @@ internal static class CredentialsConfig
 
 internal record struct Credentials([NotNull] string Nick, [NotNull] string Oauth)
 {
-	public Credentials() : this("", "")
-	{
-	}
-
 	public static Credentials CreateAnonymousCredentials()
 	{
 		// ReSharper disable once StringLiteralTypo
