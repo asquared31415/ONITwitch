@@ -357,6 +357,46 @@ internal class TwitchConnection
 		}
 	}
 
+	private static TwitchUserInfo GetUserInfo(IrcMessage message)
+	{
+		var tags = message.Tags;
+
+		var userId = tags["user-id"].Value;
+
+		// use the display-name tag if it exists, otherwise use the message nick
+		var displayName = message.Args[0].TrimStart('#');
+		if (tags.TryGetValue("display-name", out var displayTag) && !string.IsNullOrEmpty(displayTag.Value))
+		{
+			displayName = displayTag.Value;
+		}
+
+		Color32? color = null;
+		if (tags.TryGetValue("color", out var colorTag) && !string.IsNullOrEmpty(colorTag.Value))
+		{
+			var colorStr = colorTag.Value!;
+			if (ColorUtil.TryParseHexString(colorStr, out var parsed))
+			{
+				color = parsed;
+			}
+		}
+
+		var isModerator = false;
+		if (tags.TryGetValue("mod", out var isMod))
+		{
+			isModerator = isMod.Value == "1";
+		}
+
+		var isSubscriber = false;
+		if (tags.TryGetValue("subscriber", out var isSub))
+		{
+			isSubscriber = isSub.Value == "1";
+		}
+
+		// VIP is weird, the *presence* of the key is the true/false value
+		var isVip = tags.ContainsKey("vip");
+		return new TwitchUserInfo(userId, displayName, color, isModerator, isSubscriber, isVip);
+	}
+
 	private async Task Reader(CancellationToken cancellationToken)
 	{
 		while (true)
@@ -380,45 +420,9 @@ internal class TwitchConnection
 					return;
 				}
 
-				var msg = message.Args[1];
-				var tags = message.Tags;
-
-				var userId = tags["user-id"].Value;
-
-				// use the display-name tag if it exists, otherwise use the message nick
-				var displayName = message.Args[0].TrimStart('#');
-				if (tags.TryGetValue("display-name", out var displayTag) && !string.IsNullOrEmpty(displayTag.Value))
-				{
-					displayName = displayTag.Value;
-				}
-
-				Color32? color = null;
-				if (tags.TryGetValue("color", out var colorTag) && !string.IsNullOrEmpty(colorTag.Value))
-				{
-					var colorStr = colorTag.Value!;
-					if (ColorUtil.TryParseHexString(colorStr, out var parsed))
-					{
-						color = parsed;
-					}
-				}
-
-				var isModerator = false;
-				if (tags.TryGetValue("mod", out var isMod))
-				{
-					isModerator = isMod.Value == "1";
-				}
-
-				var isSubscriber = false;
-				if (tags.TryGetValue("subscriber", out var isSub))
-				{
-					isSubscriber = isSub.Value == "1";
-				}
-
-				// VIP is weird, the *presence* of the key is the true/false value
-				var isVip = tags.ContainsKey("vip");
-
-				var userInfo = new TwitchUserInfo(userId, displayName, color, isModerator, isSubscriber, isVip);
-				var twitchMessage = new TwitchMessage(userInfo, msg);
+				var userInfo = GetUserInfo(message);
+				var msgStr = message.Args[1];
+				var twitchMessage = new TwitchMessage(userInfo, msgStr);
 
 				// make value copy so that it doesn't race with the null check
 				var onMsg = OnChatMessage;
