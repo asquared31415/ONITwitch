@@ -12,10 +12,11 @@ namespace ONITwitch.Voting;
 internal class Vote
 {
 	// map from user to index they voted for
-	private readonly Dictionary<TwitchUserInfo, int> userVotes = new();
-	private readonly List<VoteCount> votes = new();
+	[NotNull] private readonly Dictionary<TwitchUserInfo, int> userVotes = new();
 
-	public Vote(List<EventInfo> choices)
+	[NotNull] [ItemNotNull] private readonly List<VoteCount> votes = new();
+
+	public Vote([NotNull] [ItemNotNull] List<EventInfo> choices)
 	{
 		if (choices.Count == 0)
 		{
@@ -28,7 +29,7 @@ internal class Vote
 		}
 	}
 
-	internal ReadOnlyCollection<VoteCount> Votes => votes.AsReadOnly();
+	[NotNull] [ItemNotNull] internal ReadOnlyCollection<VoteCount> Votes => votes.AsReadOnly();
 
 	public void AddVote(TwitchUserInfo user, int voteNum)
 	{
