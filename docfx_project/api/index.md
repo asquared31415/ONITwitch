@@ -6,8 +6,7 @@ uid: api_index
 
 #### Check that the Twitch Integration Mod is enabled!!!
 
-[TwitchModInfo.TwitchIsPresent](xref:ONITwitchLib.TwitchModInfo.TwitchIsPresent)
-Most other methods will crash if called when the Twitch Integration mod is not present. Check the status of this bool to be sure that the Twitch Integration mod is present and enabled.
+[TwitchModInfo.TwitchIsPresent](xref:ONITwitchLib.TwitchModInfo.TwitchIsPresent) should be used before calling any of the API functions that may interface with the Twitch Integration mod. Most other methods will crash if called when the Twitch Integration mod is not present. Check the status of this bool to be sure that the Twitch Integration mod is present and enabled.
 
 Most methods should be called **after** the Twitch Integration mod has run its initialization. This typically means running all of your event setup in a patch:
 
@@ -19,7 +18,7 @@ public static class Db_Initialize_Patch {
 
 The `HarmonyAfter` attribute takes the StaticID of the mod that you want to run after, and in this case is used to run after the Twitch Integration mod.
 
-Complete examples can be found on [GitHub](https://github.com/asquared31415/ONITwitch/blob/main/TwitchTestExtension/TestTwitchExtension.cs#L21).
+Complete examples can be found on [GitHub](https://github.com/asquared31415/ONITwitch/blob/main/TwitchTestExtension/TestTwitchExtension.cs#L17).
 
 #### Creating an Event
 

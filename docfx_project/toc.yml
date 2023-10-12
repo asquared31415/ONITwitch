@@ -1,4 +1,5 @@
 - name: Overview
   href: index.md
-- name: Api Documentation
-  href: api/
+- name: API Reference
+  href: obj/api/ONITwitchLib/
+  homepage: api/index.md
