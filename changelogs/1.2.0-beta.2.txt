@@ -6,6 +6,7 @@
 - Attempt to fix bug causing duplicants leaving a pocket dimension to sometimes teleport to the bottom of the world.
 - Pocket Dimensions no longer show "Space Exposure" when they are not exposed to space.
 - Pocket Dimensions that show "Space Exposure" are now actually exposed to space.
+- Pocket Dimensions should no longer leave "unknown" tiles at incorrect locations.
 - Extremely warm and over-pressurized elements no longer break out of their protective cage. 
 ## Changes:
 - Surprise Box now spawns elements at their default mass and temperature (as if you had selected them in sandbox tools).
