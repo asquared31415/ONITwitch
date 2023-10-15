@@ -13,8 +13,6 @@ items:
         href: betas/1.2.0-beta.2.md
       - name: 1.2.0-beta.1
         href: betas/1.2.0-beta.1.md
-      - name: aaaaaaa
-        items:
   - name: pre-1.0
     items:
       - name: 1.0.0-beta.9
