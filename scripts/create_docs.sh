@@ -8,6 +8,7 @@ echo "Committing"
 cd live_docs
 git add .
 git commit -m "Twitch Integration docs update" --quiet
-cd ..
 COMMIT=$(git log --pretty=format:'%h' -n 1)
 echo "Committed $COMMIT"
+git push
+cd ..
