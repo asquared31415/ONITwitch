@@ -4,17 +4,17 @@
       "src": [
         {
           "files": ["**/*.csproj"],
-          "cwd": "../ONITwitchLib/"
+          "cwd": "ONITwitchLib/"
         }
       ],
       "references": [
         {
           "files": ["**.dll"],
-          "cwd": "../lib/"
+          "cwd": "lib/"
         }
       ],
       "dest": "obj/api/ONITwitchLib",
-      "filter": "exclude.yml",
+      "filter": "doc_exclude.yml",
       "properties": {
         "TargetFramework": "net47"
       },
@@ -28,17 +28,18 @@
     "template": ["default", "modern"],
     "content": [
       {
-        "files": ["**/*.yml"],
-        "cwd": "obj/api/ONITwitchLib",
-        "dest": "api"
+        "files": ["toc.yml", "*.md"],
+        "cwd": "doc"
       },
       {
         "files": ["**.md", "toc.yml"],
-        "cwd": "api",
+        "cwd": "doc/api",
         "dest": "api"
       },
       {
-        "files": ["toc.yml", "*.md"]
+        "files": ["**/*.yml"],
+        "cwd": "obj/api/ONITwitchLib",
+        "dest": "api"
       }
     ],
     "resource": [
@@ -46,6 +47,6 @@
         "files": ["images/**"]
       }
     ],
-    "dest": "_site"
+    "dest": "live_docs/twitchintegration/dev_docs"
   }
 }

@@ -14,5 +14,18 @@ animsrc/
 
 weight_tests/
 
+# Releases that should be uploaded to github using the releases feature
+/releases/
+
 # rust target folder
 target/
+
+# docfx
+/**/DROP/
+/**/TEMP/
+/**/packages/
+/**/bin/
+/**/obj/
+
+# actual generated docs site
+/live_docs/

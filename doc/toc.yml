@@ -1,5 +1,5 @@
 - name: Overview
   href: index.md
 - name: API Reference
-  href: obj/api/ONITwitchLib/
+  href: ../obj/api/ONITwitchLib/
   homepage: api/index.md
