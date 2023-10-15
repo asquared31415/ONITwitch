@@ -1,8 +1,0 @@
-**0.9.0**
-***Breaking Changes:***
- - `new EventGroup` -> `EventGroup.GetOrCreateGroup`
-
-Changes:
- - User config is now applied more reliably
- - Dev tool now sorts events by group
- - Dev tool now shows the status of each event's condition in red or green

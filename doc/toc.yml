@@ -3,3 +3,6 @@
 - name: API Reference
   href: ../obj/api/ONITwitchLib/
   homepage: api/index.md
+- name: Changelogs
+  href: ../changelogs/
+  homepage: ../changelogs/index.md

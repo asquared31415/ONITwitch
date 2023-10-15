@@ -1,4 +1,0 @@
-**0.18.14**
-Fixes:
- - Make pocket dimension spawn on floors only
- - Remove world selector changes

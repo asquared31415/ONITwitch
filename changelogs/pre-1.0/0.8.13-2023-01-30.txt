@@ -1,7 +1,0 @@
-**0.8.13**
-Changes:
- - Make start votes work after quitting to menu 
- - Adjusted some event weights
- - Added fart event
- - Added spice food event
- - Removed some debug logging

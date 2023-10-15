@@ -40,6 +40,11 @@
         "files": ["**/*.yml"],
         "cwd": "obj/api/ONITwitchLib",
         "dest": "api"
+      },
+      {
+        "files": ["**/*.md", "toc.yml"],
+        "cwd": "changelogs",
+        "dest": "changelogs"
       }
     ],
     "resource": [
