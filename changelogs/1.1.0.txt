@@ -1,0 +1,10 @@
+# 1.1.0 (2023-06-26)
+
+## Changes
+- Mod settings are now stored in `mods/config/asquared31415.TwitchIntegration/`.
+ - This will reset all mod configuration, but makes it more resiliant to updates.
+
+## Fixes
+- Fixed an issue where Twitch name colors weren't properly being used for spawned dupes.
+- Fixed an issue that could cause tiles in a pocket dimension to be un-diggable, un-buildable, or pretend to be solid when they were not.
+- An attempted fix for a bug where dupes could be teleported to the bottom of the world when a pocket dimension closes. I have not been able to reproduce the issue, so it may or may not work. If you encounter this issue, a stream clip that shows the pocket dimension closing (preferably the inside) would be helpful.

@@ -1,17 +1,20 @@
+# Binary and IDE stuff
 bin/
 obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
-
 /lib/
 /.idea/
 
+# User settings
 Directory.Build.props.user
 ONITwitch.sln.DotSettings.user
 
+# source files for anims, very much a mess
 animsrc/
 
+# should probably be deleted it's not even right
 weight_tests/
 
 # Releases that should be uploaded to github using the releases feature

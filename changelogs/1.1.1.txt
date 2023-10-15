@@ -1,0 +1,16 @@
+# 1.1.1 (2023-07-08)
+
+## Fixes
+- Spawn Duplicant now properly only takes from users who voted in the most recent vote.
+- Spawn Duplicant now attempts to spawn on a printing pod, which should greatly increase the chances of survival.
+- Stress Down event no longer appears when your dupes are not stressed.
+- Several events that spawned elements had their masses tweaked.
+- Pocket dimensions could cause a save to be permanently broken on load.
+- A certain pocket dimension was able to spawn even when you didn't have the digging skill it needed.
+- Pocket dimensions no longer eject critters, make sure you rescue any critters you want before it closes!
+- Surprise Box no longer tries to move the camera when it's opened.
+- The items in a Surprise Box should be more interesting (and less artifacts).
+- Snowy Bedrooms and Slimy Bedrooms events can no longer appear if you have no bedrooms.
+
+## Changes
+- Several messages were changed for clarity.

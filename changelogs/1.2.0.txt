@@ -1,0 +1,39 @@
+# 1.2.0 (2023-TODO-TODO)
+
+## Additions
+- Add a list of names that will not be used to name a dupe. By default this includes several commonly used Twitch bots.
+  - note: For the time being, this can only be configured in the config file.
+- A new "Light Sensitivity Mode" has been added that removes some effects that may cause eye strain.
+- New settings are now shown on a message on the Mods button.
+- Poisoned duplicants now have a status item that shows how much longer the poison lasts. 
+- Geysers tuned by chat now have a status item that shows that they have been tuned.
+
+## Fixes
+- Fixed a crash that could happen on load when using two different mods with the same assembly.
+- Fix a crash that happened when a geotuner was added to a geyser that was tuned by the mod.
+- Surprise Box no longer moves the camera when it is opened immediately after clicking its toast.
+- Several useless objects removed from Surprise Box.
+- Unimplemented elements removed from the Surprise Box due to crashes when the resource is pinned.
+  - These elements generally weren't useful either besides their thermal properties in rare cases.
+- Mini-Pods and rocket platforms can no longer be placed in a pocket dimension.
+- Duplicants that leave a pocket dimension no longer play their falling animation for longer than they should.
+- Attempt to fix bug causing duplicants leaving a pocket dimension to sometimes teleport to the bottom of the world.
+- Pocket Dimensions no longer show "Space Exposure" when they are not exposed to space.
+- Pocket Dimensions that show "Space Exposure" are now actually exposed to space.
+- Pocket Dimensions should no longer leave "unknown" tiles at incorrect locations.
+- Extremely warm and over-pressurized elements no longer break out of their protective cage.
+
+## Changes
+- Temporary geyser tuning now applies a much more extreme effect. (3x as strong)
+- Surprise Box now spawns elements at their default mass and temperature (as if you had selected them in sandbox tools).
+  - This should resolve issues where elements were instantly turning to a solid or gas tile, they should now slowly exchange temperature as debris first. 
+- Several messages changed for clarity.
+
+## Mod Support
+- Pop-up toasts can now specify a camera zoom level to use when they are clicked.
+- Pocket Dimension entities have a tag that can be used to identify them from a `WorldContainer`
+- Unimplemented Pocket Dimension generation API removed (it was never able to be used anyway).
+- Twitch Integration dev tools slightly tweaked, notably searching for an event now only searches the *non-namespaced* ID.
+    - Surprise Box dev tools show the proper name and tag of an entry and are sorted by tag.
+- Settings from the Twitch Integration mod are now available to other mods.
+  - There is a `bool PhotosensitiveMode` setting which, if `true`, should disable any events that may cause eye strain or use intense or rapidly changing lights or colors
