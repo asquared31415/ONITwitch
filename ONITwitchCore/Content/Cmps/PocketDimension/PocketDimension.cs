@@ -24,9 +24,10 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	[MyCmpGet] private WorldContainer world;
 #pragma warning restore 649
 
-	// defaults to make sure that it doesn't think it's dead on spawn
-	[Serialize] public float Lifetime { get; private set; } = 1;
-	[Serialize] public float MaxLifetime { get; private set; } = 1;
+	// Backing fields must be serialized
+	[field: Serialize] public float Lifetime { get; private set; }
+
+	[field: Serialize] public float MaxLifetime { get; private set; }
 
 	public void Sim200ms(float dt)
 	{
@@ -63,6 +64,8 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	{
 		base.OnSpawn();
 
+		Log.Debug($"pocket dim spawned: {Lifetime}/{MaxLifetime} world: {world}");
+
 		if (world == null)
 		{
 			Log.Warn("Pocket Dimension was improperly deleted!");
@@ -94,12 +97,12 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 	{
 		Lifetime = newLifetime;
 		MaxLifetime = newMaxLifetime;
-		UpdateImageTimer();
 	}
 
 	private void UpdateImageTimer()
 	{
-		if (!WorldSelector.Instance.worldRows.TryGetValue(world.id, out var worldRow))
+		if ((WorldSelector.Instance == null) || (WorldSelector.Instance.worldRows == null) ||
+			!WorldSelector.Instance.worldRows.TryGetValue(world.id, out var worldRow))
 		{
 			Log.Warn($"World selector did not have a row for world {world} (idx {world.id})");
 			return;

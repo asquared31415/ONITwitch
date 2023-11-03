@@ -273,35 +273,43 @@ internal static class PocketDimensionGenerator
 	[NotNull]
 	public static GameObject GenerateDimension(int exteriorPortalCell)
 	{
-		var dimension = Util.KInstantiate(Assets.GetPrefab(PocketDimensionConfig.Id));
+		var prefab = Assets.GetPrefab(PocketDimensionConfig.Id);
+		// NOTE: this is not activated until just before the grid space is created, to allow for configuration.
+		var dimension = Util.KInstantiate(prefab);
+
+		// Configure the dimension
+		var settings = PocketDimensionSettings.Where(
+				static ([NotNull] setting) => (setting.RequiredSkillId == null) ||
+											  Components.LiveMinionIdentities.Items.Any(
+												  ([NotNull] minion) =>
+													  minion.TryGetComponent(out MinionResume resume) &&
+													  resume.HasMasteredSkill(setting.RequiredSkillId)
+											  )
+			)
+			.GetRandom();
+
+		var pocketDim = dimension.GetComponent<PocketDimension>();
+
+
+		pocketDim.SetLifetime(
+		#if DEBUG
+			60,
+			settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE
+		#else
+			settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE,
+			settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE
+		#endif
+		);
+
+		// Actually create the world, activating the grid space and placing the template.
+		// This requires the GO to be active! Put all initialization before this.
 		dimension.SetActive(true);
 		var world = WorldUtil.CreateWorldWithTemplate(
 			dimension,
 			PocketDimension.DimensionSize,
 			PocketDimension.BorderTemplate,
-			world =>
+			([NotNull] world) =>
 			{
-				var settings = PocketDimensionSettings.Where(
-						setting => (setting.RequiredSkillId == null) || Components.LiveMinionIdentities.Items.Any(
-							minion => minion.TryGetComponent(out MinionResume resume) &&
-									  resume.HasMasteredSkill(setting.RequiredSkillId)
-						)
-					)
-					.GetRandom();
-
-				var pocketDim = world.GetComponent<PocketDimension>();
-				pocketDim.SetLifetime(
-					settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE,
-					settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE
-				);
-
-			#if DEBUG
-				pocketDim.SetLifetime(
-					60,
-					settings.CyclesLifetime * Constants.SECONDS_PER_CYCLE
-				);
-			#endif
-
 				// generate the world
 				// natural tiles, prefabs, and possibly a nested dimension
 				settings.Generate(world);
@@ -336,7 +344,7 @@ internal static class PocketDimensionGenerator
 				cellTrav.Value = overworldCell;
 				SaveLoader.Instance.clusterDetailSave.overworldCells.Add(overworldCell);
 
-				// Force reveal the whole world and send zone types to the sim and update the type used for space exposure tooltip. 
+				// Force reveal the whole world and send zone types to the sim and update the type used for space exposure tooltip.
 				foreach (var cell in GridUtil.IterateCellRegion(
 							 world.WorldOffset,
 							 world.WorldOffset + PocketDimension.DimensionSize
