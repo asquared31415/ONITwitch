@@ -25,6 +25,8 @@ internal class PocketDimensionClusterGridEntity : ClusterGridEntity
 				new()
 				{
 					animFile = Assets.GetAnim(PocketDimensionExteriorPortalConfig.Anim),
+					initialAnim = "starmap",
+					playMode = KAnim.PlayMode.Loop,
 				},
 			};
 
@@ -33,5 +35,8 @@ internal class PocketDimensionClusterGridEntity : ClusterGridEntity
 	}
 
 	public override bool IsVisible => false;
-	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Hidden;
+
+	// Only show if it has been revealed.
+	// Overridden by IsVisible false, just set this up so that that can be changed to true eventually.
+	public override ClusterRevealLevel IsVisibleInFOW => ClusterRevealLevel.Peeked;
 }
