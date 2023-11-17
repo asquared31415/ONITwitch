@@ -222,16 +222,6 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 						Log.Debug("Deleting Pocket Dimension object");
 						Destroy(world.gameObject);
 
-						// Update all the dupe name displays again because the game doesn't update this when a dupe changes worlds.
-						if (NameDisplayScreen.Instance != null)
-						{
-							Traverse.Create(NameDisplayScreen.Instance)
-								.Method("OnActiveWorldChanged", new[] { typeof(object) })
-								// Note: Klei Tuple not System Tuple.
-								// This is not used by the method, but it's probably less likely to break if we pass it?
-								.GetValue(new Tuple<int, int>(targetWorldId, targetWorldId));
-						}
-
 						GameScheduler.Instance.ScheduleNextFrame(
 							"TwitchIntegration.PocketDimDirtyNav",
 							_ =>
