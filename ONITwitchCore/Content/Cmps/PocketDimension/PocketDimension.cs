@@ -127,7 +127,7 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 
 	public void DestroyWorld()
 	{
-		Log.Debug("Destroying Pocket Dimension");
+		Log.Info("Destroying Pocket Dimension");
 		var door = ExteriorPortal.Get();
 		if (door == null)
 		{
@@ -140,8 +140,19 @@ internal class PocketDimension : KMonoBehaviour, ISim200ms, ISim4000ms
 			return;
 		}
 
-		var targetWorldId = door != null ? door.GetMyWorldId() : ClusterManager.Instance.GetStartWorld().id;
-		ClusterManager.Instance.SetActiveWorld(targetWorldId);
+		// Make the player's camera exit if they are already on that world
+		if (ClusterManager.Instance.activeWorldId == world.id)
+		{
+			var targetWorldId = door != null ? door.GetMyWorldId() : ClusterManager.Instance.GetStartWorld().id;
+			if (ClusterManager.Instance.activeWorldId == targetWorldId)
+			{
+				Log.Warn(
+					$"Player on pocket dimension with id {ClusterManager.Instance.activeWorldId} and the target world to return to was the same"
+				);
+			}
+
+			ClusterManager.Instance.SetActiveWorld(targetWorldId);
+		}
 
 		Vector3 exitPos;
 		if (door != null)

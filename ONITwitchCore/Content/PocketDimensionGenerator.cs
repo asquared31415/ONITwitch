@@ -8,6 +8,7 @@ using Klei;
 using ONITwitch.Content.BuildingConfigs;
 using ONITwitch.Content.Cmps.PocketDimension;
 using ONITwitch.Content.EntityConfigs;
+using ONITwitchLib;
 using ONITwitchLib.Logger;
 using ONITwitchLib.Utils;
 using ProcGen;
@@ -335,6 +336,10 @@ internal static class PocketDimensionGenerator
 							internalStart with { x = internalEnd.x },
 						}
 					),
+					tags = new TagSet
+					{
+						ExtraTags.PocketDimensionEntityTag,
+					},
 				};
 				foreach (var vertex in overworldCell.poly.Vertices)
 				{
