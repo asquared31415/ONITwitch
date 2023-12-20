@@ -1,4 +1,6 @@
 items:
+  - name: 1.2.3
+    href: 1.2.3.md
   - name: 1.2.2
     href: 1.2.2.md
   - name: 1.2.1
