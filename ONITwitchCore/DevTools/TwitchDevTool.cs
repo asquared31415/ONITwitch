@@ -18,6 +18,7 @@ internal class TwitchDevTool : DevTool
 
 	// The primary style used by the dev tools.
 	[NotNull] private readonly ImGuiStyle mainStyle;
+	[NotNull] private readonly WeightsPanel weightsPanel;
 
 	// true if the camera path is currently being edited.
 	internal bool EditingCamPath;
@@ -31,6 +32,7 @@ internal class TwitchDevTool : DevTool
 		cameraPathPanel = new CameraPathPanel(debugMarkers, cameraPath);
 		debugInfoPanel = new DebugInfoPanel(debugMarkers);
 		eventsPanel = new EventsPanel();
+		weightsPanel = new WeightsPanel();
 
 		mainStyle = new ImGuiStyle();
 		mainStyle.AddStyle(ImGuiStyleVar.FrameRounding, 4);
@@ -71,21 +73,28 @@ internal class TwitchDevTool : DevTool
 		// Clear the markers at the start of each frame.
 		debugMarkers.Clear();
 
-		// Early out if the game isn't active, we can't do most things.
-		if (Game.Instance == null)
-		{
-			TwitchImGui.WithStyle(mainStyle, () => { ImGui.TextColored(Color.red, "Game not yet active"); });
-			return;
-		}
-
-		// ==========================================================
-		// Game is active at this point
-		// ==========================================================
-
 		TwitchImGui.WithStyle(
 			mainStyle,
 			() =>
 			{
+				if (ImGui.CollapsingHeader("Event Weights"))
+				{
+					weightsPanel.DrawPanel();
+				}
+
+				ImGui.Separator();
+
+				// Early out if the game isn't active, we can't do most things.
+				if (Game.Instance == null)
+				{
+					ImGui.TextColored(Color.red, "Game not yet active");
+					return;
+				}
+
+				// ==========================================================
+				// Game is active at this point
+				// ==========================================================
+
 				if (ImGui.CollapsingHeader("Debug Info", ImGuiTreeNodeFlags.DefaultOpen))
 				{
 					debugInfoPanel.DrawPanel();

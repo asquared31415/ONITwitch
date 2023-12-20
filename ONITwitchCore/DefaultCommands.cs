@@ -8,6 +8,7 @@ using ONITwitchLib.Logger;
 using DataManager = ONITwitch.EventLib.DataManager;
 using EventGroup = ONITwitch.EventLib.EventGroup;
 using EventInfo = ONITwitch.EventLib.EventInfo;
+using static ONITwitchLib.Consts;
 
 namespace ONITwitch;
 
@@ -23,7 +24,7 @@ internal static class DefaultCommands
 				new SpawnDupeCommand(),
 				new Dictionary<string, object> { { "MaxDupes", 30.0d } },
 				Danger.Small,
-				50
+				EventWeight.Frequent
 			)
 		);
 		RegisterCommand(
@@ -46,7 +47,7 @@ internal static class DefaultCommands
 					{ SimHashes.Sucrose.ToString(), 1400 },
 				},
 				Danger.Small,
-				50,
+				EventWeight.Frequent,
 				"core.spawn_element"
 			)
 		);
@@ -71,7 +72,7 @@ internal static class DefaultCommands
 					{ SimHashes.Resin.ToString(), 500 },
 				},
 				Danger.Small,
-				10,
+				EventWeight.Uncommon,
 				"core.spawn_element"
 			)
 		);
@@ -91,7 +92,7 @@ internal static class DefaultCommands
 					{ SimHashes.AluminumOre.ToString(), 1500 },
 				},
 				Danger.Small,
-				50,
+				EventWeight.Frequent,
 				"core.spawn_element"
 			)
 		);
@@ -111,7 +112,7 @@ internal static class DefaultCommands
 					{ SimHashes.EthanolGas.ToString(), 10 },
 				},
 				Danger.Small,
-				50,
+				EventWeight.Frequent,
 				"core.spawn_element"
 			)
 		);
@@ -137,7 +138,7 @@ internal static class DefaultCommands
 					{ SimHashes.SuperCoolantGas.ToString(), 1000 },
 				},
 				Danger.Small,
-				10,
+				EventWeight.Uncommon,
 				"core.spawn_element"
 			)
 		);
@@ -169,7 +170,7 @@ internal static class DefaultCommands
 					{ SimHashes.CrudeOil.ToString(), 500 },
 				},
 				Danger.Small,
-				50,
+				EventWeight.Frequent,
 				"core.spawn_element"
 			)
 		);
@@ -180,7 +181,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.AthleticsUpEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -191,7 +192,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.AthleticsDownEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -202,7 +203,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ConstructionUpEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -213,7 +214,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ConstructionDownEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -224,7 +225,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ExcavationUpEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -235,7 +236,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.ExcavationDownEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -246,7 +247,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.StrengthUpEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -257,7 +258,7 @@ internal static class DefaultCommands
 				new EffectCommand(),
 				CustomEffects.StrengthDownEffect.Id,
 				Danger.None,
-				20,
+				EventWeight.Uncommon,
 				"core.attribute_mod"
 			)
 		);
@@ -268,7 +269,7 @@ internal static class DefaultCommands
 				new BansheeWailCommand(),
 				null,
 				Danger.Small,
-				10
+				EventWeight.Uncommon
 			)
 		);
 		RegisterCommand(
@@ -278,7 +279,7 @@ internal static class DefaultCommands
 				new FillBedroomCommand(),
 				SimHashes.Snow.ToString(),
 				Danger.Small,
-				20,
+				EventWeight.Common,
 				"core.bedroom_element"
 			)
 		);
@@ -289,7 +290,7 @@ internal static class DefaultCommands
 				new FillBedroomCommand(),
 				SimHashes.SlimeMold.ToString(),
 				Danger.Small,
-				20,
+				EventWeight.Common,
 				"core.bedroom_element"
 			)
 		);
@@ -300,7 +301,7 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Water.ToString(),
 				Danger.Medium,
-				30,
+				EventWeight.Common,
 				"core.flood"
 			)
 		);
@@ -311,7 +312,7 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.DirtyWater.ToString(),
 				Danger.Medium,
-				30,
+				EventWeight.Common,
 				"core.flood"
 			)
 		);
@@ -322,7 +323,7 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Ethanol.ToString(),
 				Danger.Medium,
-				10,
+				EventWeight.Uncommon,
 				"core.flood"
 			)
 		);
@@ -333,7 +334,7 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.CrudeOil.ToString(),
 				Danger.Medium,
-				10,
+				EventWeight.Uncommon,
 				"core.flood"
 			)
 		);
@@ -344,7 +345,7 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.Magma.ToString(),
 				Danger.Deadly,
-				2,
+				EventWeight.VeryRare,
 				"core.flood"
 			)
 		);
@@ -355,7 +356,7 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.MoltenGold.ToString(),
 				Danger.Deadly,
-				2,
+				EventWeight.VeryRare,
 				"core.flood"
 			)
 		);
@@ -366,12 +367,19 @@ internal static class DefaultCommands
 				new ElementFloodCommand(),
 				SimHashes.NuclearWaste.ToString(),
 				Danger.High,
-				2,
+				EventWeight.VeryRare,
 				"core.flood"
 			)
 		);
 		RegisterCommand(
-			new CommandInfo("IceAge", STRINGS.ONITWITCH.EVENTS.ICE_AGE, new IceAgeCommand(), null, Danger.Extreme, 1)
+			new CommandInfo(
+				"IceAge",
+				STRINGS.ONITWITCH.EVENTS.ICE_AGE,
+				new IceAgeCommand(),
+				null,
+				Danger.Extreme,
+				EventWeight.AlmostNever
+			)
 		);
 		RegisterCommand(
 			new CommandInfo(
@@ -380,12 +388,28 @@ internal static class DefaultCommands
 				new GlobalWarmingCommand(),
 				null,
 				Danger.High,
-				1
+				EventWeight.AlmostNever
 			)
 		);
-		RegisterCommand(new CommandInfo("Pee", STRINGS.ONITWITCH.EVENTS.PEE, new PeeCommand(), null, Danger.Small, 30));
 		RegisterCommand(
-			new CommandInfo("Kill", STRINGS.ONITWITCH.EVENTS.KILL_DUPE, new KillDupeCommand(), null, Danger.Deadly, 1)
+			new CommandInfo(
+				"Pee",
+				STRINGS.ONITWITCH.EVENTS.PEE,
+				new PeeCommand(),
+				null,
+				Danger.Small,
+				EventWeight.Frequent
+			)
+		);
+		RegisterCommand(
+			new CommandInfo(
+				"Kill",
+				STRINGS.ONITWITCH.EVENTS.KILL_DUPE,
+				new KillDupeCommand(),
+				null,
+				Danger.Deadly,
+				EventWeight.AlmostNever
+			)
 		);
 		RegisterCommand(
 			new CommandInfo(
@@ -394,7 +418,7 @@ internal static class DefaultCommands
 				new TileTempCommand(),
 				-40.0d,
 				Danger.Medium,
-				10,
+				EventWeight.Uncommon,
 				"core.tile_temp"
 			)
 		);
@@ -405,7 +429,7 @@ internal static class DefaultCommands
 				new TileTempCommand(),
 				+40.0d,
 				Danger.Medium,
-				10,
+				EventWeight.Uncommon,
 				"core.tile_temp"
 			)
 		);
@@ -416,7 +440,7 @@ internal static class DefaultCommands
 				new PartyTimeCommand(),
 				300.0d,
 				Danger.None,
-				30
+				EventWeight.Common
 			)
 		);
 		RegisterCommand(
@@ -426,7 +450,7 @@ internal static class DefaultCommands
 				new PoisonDupesCommand(),
 				null,
 				Danger.High,
-				20
+				EventWeight.Uncommon
 			)
 		);
 		RegisterCommand(
@@ -436,7 +460,7 @@ internal static class DefaultCommands
 				new PoopsplosionCommand(),
 				null,
 				Danger.Small,
-				50
+				EventWeight.Frequent
 			)
 		);
 		RegisterCommand(
@@ -446,7 +470,7 @@ internal static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", SimHashes.Gold.ToString() }, { "Count", 50.0d } },
 				Danger.None,
-				30,
+				EventWeight.Common,
 				"core.rain_prefab"
 			)
 		);
@@ -459,7 +483,7 @@ internal static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", GlomConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				30,
+				EventWeight.Common,
 				"core.rain_prefab"
 			)
 		);
@@ -468,9 +492,9 @@ internal static class DefaultCommands
 				"RainPrefabDiamond",
 				STRINGS.ONITWITCH.EVENTS.RAIN_PREFAB_DIAMOND,
 				new RainPrefabCommand(),
-				new Dictionary<string, object> { { "PrefabId", SimHashes.Diamond.ToString() }, { "Count", 25.0d } },
+				new Dictionary<string, object> { { "PrefabId", SimHashes.Diamond.ToString() }, { "Count", 100.0d } },
 				Danger.None,
-				10,
+				EventWeight.Rare,
 				"core.rain_prefab"
 			)
 		);
@@ -481,7 +505,7 @@ internal static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", OilFloaterConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				20,
+				EventWeight.Uncommon,
 				"core.rain_prefab"
 			)
 		);
@@ -494,7 +518,7 @@ internal static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", PacuConfig.ID }, { "Count", 10.0d } },
 				Danger.Small,
-				20,
+				EventWeight.Uncommon,
 				"core.rain_prefab"
 			)
 		);
@@ -505,7 +529,7 @@ internal static class DefaultCommands
 				new RainPrefabCommand(),
 				new Dictionary<string, object> { { "PrefabId", BeeConfig.ID }, { "Count", 10.0d } },
 				Danger.Medium,
-				10,
+				EventWeight.Uncommon,
 				"core.rain_prefab"
 			)
 		);
@@ -516,7 +540,7 @@ internal static class DefaultCommands
 				new ReduceOxygenCommand(),
 				0.20d,
 				Danger.High,
-				10
+				EventWeight.Uncommon
 			)
 		);
 		RegisterCommand(
@@ -526,7 +550,7 @@ internal static class DefaultCommands
 				new SkillCommand(),
 				0.33d,
 				Danger.None,
-				20
+				EventWeight.Common
 			)
 		);
 		RegisterCommand(
@@ -536,7 +560,7 @@ internal static class DefaultCommands
 				new SleepyDupesCommand(),
 				null,
 				Danger.Medium,
-				20
+				EventWeight.Common
 			)
 		);
 		RegisterCommand(
@@ -546,7 +570,7 @@ internal static class DefaultCommands
 				new SnazzySuitCommand(),
 				null,
 				Danger.None,
-				20
+				EventWeight.Uncommon
 			)
 		);
 		RegisterCommand(
@@ -556,7 +580,7 @@ internal static class DefaultCommands
 				new SpawnPrefabCommand(),
 				GlitterPuftConfig.Id,
 				Danger.None,
-				20
+				EventWeight.Common
 			)
 		);
 		RegisterCommand(
@@ -566,7 +590,7 @@ internal static class DefaultCommands
 				new SpawnPrefabCommand(),
 				GeneShufflerRechargeConfig.ID,
 				Danger.None,
-				5
+				EventWeight.Rare
 			)
 		);
 		RegisterCommand(
@@ -576,7 +600,7 @@ internal static class DefaultCommands
 				new SpawnPrefabCommand(),
 				AtmoSuitConfig.ID,
 				Danger.None,
-				5
+				EventWeight.Rare
 			)
 		);
 		RegisterCommand(
@@ -586,7 +610,7 @@ internal static class DefaultCommands
 				new SpawnPrefabCommand(),
 				CrabConfig.ID,
 				Danger.None,
-				10
+				EventWeight.Uncommon
 			)
 		);
 		RegisterCommand(
@@ -596,7 +620,7 @@ internal static class DefaultCommands
 				new SpawnPrefabCommand(),
 				GassyMooCometConfig.ID,
 				Danger.None,
-				10
+				EventWeight.Rare
 			)
 		);
 		RegisterCommand(
@@ -606,7 +630,7 @@ internal static class DefaultCommands
 				new StressCommand(),
 				+0.75d,
 				Danger.Medium,
-				10,
+				EventWeight.Common,
 				"core.stress"
 			)
 		);
@@ -617,7 +641,7 @@ internal static class DefaultCommands
 				new StressCommand(),
 				-0.75d,
 				Danger.None,
-				20,
+				EventWeight.Common,
 				"core.stress"
 			)
 		);
@@ -630,6 +654,7 @@ internal static class DefaultCommands
 				// will only choose a command that is within the expected danger range
 				// but this command should ignore danger settings
 				null,
+				// This is an exception to the normal weights, it's twice as frequent as "frequent" because it's special.
 				80,
 				"core.surprise"
 			)
@@ -641,7 +666,7 @@ internal static class DefaultCommands
 				new UninsulateCommand(),
 				null,
 				Danger.Extreme,
-				5
+				EventWeight.Rare
 			)
 		);
 		RegisterCommand(
@@ -651,7 +676,7 @@ internal static class DefaultCommands
 				new ResearchTechCommand(),
 				null,
 				Danger.None,
-				10
+				EventWeight.Common
 			)
 		);
 
@@ -662,7 +687,7 @@ internal static class DefaultCommands
 				new EclipseCommand(),
 				(double) (3 * Constants.SECONDS_PER_CYCLE),
 				Danger.Small,
-				10
+				EventWeight.Uncommon
 			)
 		);
 
@@ -673,7 +698,7 @@ internal static class DefaultCommands
 				new PocketDimensionCommand(),
 				null,
 				Danger.None,
-				10
+				EventWeight.Rare
 			)
 		);
 
@@ -684,7 +709,7 @@ internal static class DefaultCommands
 				new SurpriseBoxCommand(),
 				null,
 				Danger.None,
-				20,
+				EventWeight.Common,
 				"core.surprise"
 			)
 		);
@@ -696,7 +721,7 @@ internal static class DefaultCommands
 				new GeyserModificationCommand(),
 				null,
 				Danger.Medium,
-				10
+				EventWeight.Uncommon
 			)
 		);
 
@@ -707,7 +732,7 @@ internal static class DefaultCommands
 				new MorphCommand(),
 				null,
 				Danger.Small,
-				5
+				EventWeight.Rare
 			)
 		);
 
@@ -718,7 +743,7 @@ internal static class DefaultCommands
 				new FartCommand(),
 				25.0d,
 				Danger.Small,
-				30
+				EventWeight.Common
 			)
 		);
 
@@ -729,7 +754,7 @@ internal static class DefaultCommands
 				new SpiceFoodCommand(),
 				null,
 				Danger.None,
-				30
+				EventWeight.Uncommon
 			)
 		);
 	}

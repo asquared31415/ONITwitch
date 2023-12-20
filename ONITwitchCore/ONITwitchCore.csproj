@@ -4,6 +4,7 @@
         <RootNamespace>ONITwitch</RootNamespace>
         <PackageId>ONITwitch</PackageId>
         <AssemblyName>ONITwitch</AssemblyName>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup>
         <MainMod>true</MainMod>
