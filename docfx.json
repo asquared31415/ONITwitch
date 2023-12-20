@@ -21,6 +21,7 @@
       "includePrivateMembers": false,
       "namespaceLayout": "flattened",
       "memberLayout": "samePage",
+      "enumSortOrder": "declaringOrder",
       "allowCompilationErrors": false
     }
   ],
