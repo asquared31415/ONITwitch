@@ -17,11 +17,5 @@ internal static class ElementLoaderPatches
 			var defaultSubstances = substanceTablesByDlc[DlcManager.VANILLA_ID].GetList();
 			CustomElements.RegisterSubstances(defaultSubstances);
 		}
-
-		[UsedImplicitly]
-		private static void Postfix()
-		{
-			CustomElements.FixTags();
-		}
 	}
 }

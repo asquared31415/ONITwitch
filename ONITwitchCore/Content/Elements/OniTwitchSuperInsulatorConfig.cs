@@ -9,24 +9,12 @@ internal class OniTwitchSuperInsulatorConfig : IOreConfig
 {
 	public SimHashes ElementID => TwitchSimHashes.OniTwitchSuperInsulator;
 
+	// Prefab that destroys itself on spawn.
 	public GameObject CreatePrefab()
 	{
-		var element = ElementLoader.FindElementByHash(ElementID);
-		// create a dummy object so that when the game goes to spawn this prefab, nothing spawns
-		var go = new GameObject(element.name);
-		Object.DontDestroyOnLoad(go);
+		var go = EntityTemplates.CreateSolidOreEntity(ElementID);
 		// Don't be active or the destroy component will destroy the prefab.
 		go.SetActive(false);
-
-		var prefabID = go.AddOrGet<KPrefabID>();
-		prefabID.PrefabTag = element.tag;
-		prefabID.InitializeTags();
-
-		// Needed to spawn the resource, even though it will be removed
-		var primaryElement = go.AddOrGet<PrimaryElement>();
-		primaryElement.SetElement(ElementID);
-		primaryElement.Mass = 1f;
-		primaryElement.Temperature = element.defaultValues.temperature;
 
 		go.AddOrGet<DeleteOnSpawn>();
 
