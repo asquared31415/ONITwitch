@@ -30,7 +30,7 @@ public static class ElementUtil
 	public static bool ElementExistsAndEnabled(string name)
 	{
 		var element = FindElementByNameFast(name);
-		return (element != null) && DlcManager.IsContentActive(element.dlcId) && !element.disabled;
+		return element != null && SaveLoader.Instance.IsDLCActiveForCurrentSave(element.dlcId) && !element.disabled;
 	}
 
 	/// <summary>
@@ -42,7 +42,7 @@ public static class ElementUtil
 	public static bool ElementExistsAndEnabled(SimHashes hash)
 	{
 		var element = ElementLoader.FindElementByHash(hash);
-		return (element != null) && DlcManager.IsContentActive(element.dlcId) && !element.disabled;
+		return element != null && SaveLoader.Instance.IsDLCActiveForCurrentSave(element.dlcId) && !element.disabled;
 	}
 
 	/// <summary>
@@ -54,7 +54,7 @@ public static class ElementUtil
 	[ContractAnnotation("element:null => false")]
 	public static bool ElementExistsAndEnabled([CanBeNull] Element element)
 	{
-		return (element != null) && DlcManager.IsContentActive(element.dlcId) && !element.disabled;
+		return element != null && SaveLoader.Instance.IsDLCActiveForCurrentSave(element.dlcId) && !element.disabled;
 	}
 }
 

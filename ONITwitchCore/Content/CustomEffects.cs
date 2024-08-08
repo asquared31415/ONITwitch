@@ -124,7 +124,8 @@ public static class CustomEffects
 		0.5f * Constants.SECONDS_PER_CYCLE,
 		true,
 		true,
-		true
+		true,
+		custom_icon: "status_item_exhausted"
 	);
 
 	internal static void SetupEffects()

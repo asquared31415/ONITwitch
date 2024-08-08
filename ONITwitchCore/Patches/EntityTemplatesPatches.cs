@@ -10,6 +10,9 @@ namespace ONITwitch.Patches;
 
 public static class EntityTemplatesPatches
 {
+	private static readonly Dictionary<Tag, Tag> EggToBabyMap = new();
+	private static readonly Dictionary<Tag, Tag> BabyToAdultMap = new();
+
 	[MustUseReturnValue]
 	public static bool TryGetAdultFromEgg(Tag eggTag, out Tag adultTag)
 	{
@@ -22,10 +25,25 @@ public static class EntityTemplatesPatches
 		return false;
 	}
 
-	private static readonly Dictionary<Tag, Tag> EggToBabyMap = new();
-	private static readonly Dictionary<Tag, Tag> BabyToAdultMap = new();
-
-	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToFertileCreature))]
+	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToFertileCreature), [
+		typeof(GameObject),
+		typeof(string),
+		typeof(string),
+		typeof(string),
+		typeof(string),
+		typeof(float),
+		typeof(string),
+		typeof(float),
+		typeof(float),
+		typeof(List<FertilityMonitor.BreedingChance>),
+		typeof(string[]),
+		typeof(int),
+		typeof(bool),
+		typeof(bool),
+		typeof(bool),
+		typeof(float),
+		typeof(bool),
+	])]
 	// ReSharper disable once InconsistentNaming
 	public static class ExtendEntityToFertileCreature_Patch
 	{
@@ -37,7 +55,13 @@ public static class EntityTemplatesPatches
 		}
 	}
 
-	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToBeingABaby))]
+	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToBeingABaby), [
+		typeof(GameObject),
+		typeof(Tag),
+		typeof(string),
+		typeof(bool),
+		typeof(float),
+	])]
 	// ReSharper disable once InconsistentNaming
 	public static class ExtendEntityToBeingABaby_Patch
 	{
