@@ -59,6 +59,9 @@ internal class GlitterPuftConfig : IEntityConfig
 			lethalLowTemperature: lowTemp,
 			lethalHighTemperature: highTemp
 		);
+		// set the spawn temperature to 24C instead of 5000 kelvin (default between min and max temp)
+		go.GetComponent<PrimaryElement>().Temperature =
+			GameUtil.GetTemperatureConvertedToKelvin(24, GameUtil.TemperatureUnit.Celsius);
 		go.AddOrGet<FactionAlignment>().canBePlayerTargeted = false;
 		Object.Destroy(go.GetComponent<RangedAttackable>());
 
