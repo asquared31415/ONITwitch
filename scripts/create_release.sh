@@ -19,4 +19,9 @@ mkdir -p $TARGET_DIR
 cp -r obj/ONITwitch/ $TARGET_DIR
 cp -r obj/ONITwitchLib/* $TARGET_DIR
 
+pushd $TARGET_DIR
+7z a ONITwitch.zip ./ONITwitch/
+7z a ONITwitchLib.zip ./ONITwitchLib.dll ./ONITwitchLib.xml
+popd
+
 echo "Release $VERSION prepared"
