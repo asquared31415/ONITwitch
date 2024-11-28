@@ -70,8 +70,7 @@ internal class PocketDimensionExteriorPortalConfig : IBuildingConfig
 		go.AddOrGet<PocketDimensionExteriorPortalSideScreen>();
 	}
 
-	public override string[] GetDlcIds()
-	{
+	public override string[] GetRequiredDlcIds() {
 		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 }

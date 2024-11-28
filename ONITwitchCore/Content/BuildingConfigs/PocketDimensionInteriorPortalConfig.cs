@@ -69,9 +69,7 @@ internal class PocketDimensionInteriorPortalConfig : IBuildingConfig
 		go.AddOrGet<PocketDimensionInteriorDoorSideScreen>();
 	}
 
-
-	public override string[] GetDlcIds()
-	{
+	public override string[] GetRequiredDlcIds() {
 		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
 	}
 }
