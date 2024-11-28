@@ -4,13 +4,13 @@
       "src": [
         {
           "files": ["**/*.csproj"],
-          "cwd": "ONITwitchLib/"
+          "src": "ONITwitchLib/"
         }
       ],
       "references": [
         {
           "files": ["**.dll"],
-          "cwd": "lib/"
+          "src": "lib/"
         }
       ],
       "dest": "obj/api/ONITwitchLib",
@@ -30,21 +30,21 @@
     "content": [
       {
         "files": ["toc.yml", "*.md"],
-        "cwd": "doc"
+        "src": "doc"
       },
       {
         "files": ["**.md", "toc.yml"],
-        "cwd": "doc/api",
+        "src": "doc/api",
         "dest": "api"
       },
       {
         "files": ["**/*.yml"],
-        "cwd": "obj/api/ONITwitchLib",
+        "src": "obj/api/ONITwitchLib",
         "dest": "api"
       },
       {
         "files": ["**/*.md", "toc.yml"],
-        "cwd": "changelogs",
+        "src": "changelogs",
         "dest": "changelogs"
       }
     ],
