@@ -38,7 +38,7 @@ internal static class PauseMenuPatches
 		);
 	}
 
-	[HarmonyPatch(typeof(PauseScreen), "OnPrefabInit")]
+	[HarmonyPatch(typeof(PauseScreen), "ConfigureButtonInfos")]
 	// ReSharper disable once InconsistentNaming
 	private static class PauseScreen_OnPrefabInit_Patch
 	{
@@ -46,12 +46,12 @@ internal static class PauseMenuPatches
 		// ReSharper disable once InconsistentNaming
 		// buttons is an array cast to IList in the PauseScreen
 		// need to copy to a List and resize and reassign
-		private static void Postfix(ref IList<KButtonMenu.ButtonInfo> ___buttons)
+		private static void Postfix(PauseScreen __instance, ref IList<KButtonMenu.ButtonInfo> ___buttons)
 		{
 			var buttons = ___buttons.ToList();
 			TwitchButtonInfo.isEnabled = true;
 			buttons.Insert(4, TwitchButtonInfo);
-			___buttons = buttons;
+			__instance.SetButtons(buttons);
 		}
 	}
 
