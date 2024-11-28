@@ -16,7 +16,7 @@
       "dest": "obj/api/ONITwitchLib",
       "filter": "doc_exclude.yml",
       "properties": {
-        "TargetFramework": "net47"
+          "ProduceReferenceAssembly": "true"
       },
       "includePrivateMembers": false,
       "namespaceLayout": "flattened",

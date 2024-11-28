@@ -8,6 +8,10 @@ echo "Clearing old docs..."
 rm -rf live_docs/twitchintegration/dev_docs/*
 echo "Running docfx"
 docfx
+if [ $? -ne 0 ]; then
+   echo "docfx errored!"
+   exit 1
+fi
 echo "Committing"
 cd live_docs
 git add .
