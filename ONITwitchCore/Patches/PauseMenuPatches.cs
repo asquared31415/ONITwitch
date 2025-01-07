@@ -43,8 +43,8 @@ internal static class PauseMenuPatches {
         // buttons is an array cast to IList in the PauseScreen
         // need to copy to a List and resize and reassign
         private static void Postfix(PauseScreen __instance, ref IList<KButtonMenu.ButtonInfo> ___buttons) {
+            // this method gets called whenever the pause menu is re-created, so don't mutate TwitchButtonInfo here
             var buttons = ___buttons.ToList();
-            TwitchButtonInfo.isEnabled = true;
             buttons.Insert(4, TwitchButtonInfo);
             __instance.SetButtons(buttons);
         }
@@ -56,9 +56,9 @@ internal static class PauseMenuPatches {
         [UsedImplicitly]
         // ReSharper disable once InconsistentNaming
         private static void Postfix(KButtonMenu __instance) {
-            if (__instance is PauseScreen && (TwitchButtonInfo.uibutton != null)) {
-                if ((twitchButtonStyle == null) || (TwitchButtonInfo.uibutton.bgImage.colorStyleSetting == null) ||
-                    (TwitchButtonInfo.uibutton.bgImage.colorStyleSetting != twitchButtonStyle)) {
+            if (__instance is PauseScreen && TwitchButtonInfo.uibutton != null) {
+                if (twitchButtonStyle == null || TwitchButtonInfo.uibutton.bgImage.colorStyleSetting == null ||
+                    TwitchButtonInfo.uibutton.bgImage.colorStyleSetting != twitchButtonStyle) {
                     twitchButtonStyle = ScriptableObject.CreateInstance<ColorStyleSetting>();
                     twitchButtonStyle.disabledColor = DisabledColor;
                     twitchButtonStyle.inactiveColor = InactiveTwitchColor;
