@@ -41,7 +41,7 @@ internal class SpiceFoodCommand : CommandBase
 	private static List<string> GetValidSpiceIds()
 	{
 		return Db.Get()
-			.Spices.resources.Where(static spice => DlcManager.IsDlcListValidForCurrentContent(spice.DlcIds))
+			.Spices.resources.Where(static spice => DlcManager.IsCorrectDlcSubscribed(spice.GetRequiredDlcIds(),spice.GetForbiddenDlcIds()))
 			.Select(static spice => spice.Id)
 			.ToList();
 	}

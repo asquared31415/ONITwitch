@@ -115,7 +115,7 @@ internal class GlitterPuftConfig : IEntityConfig
 
 	public string[] GetDlcIds()
 	{
-		return DlcManager.AVAILABLE_ALL_VERSIONS;
+		return null;
 	}
 
 	private static void CreateBaseTrait()
