@@ -28,7 +28,7 @@ internal class GlitterMeatConfig : IEntityConfig
 		);
 		EntityTemplates.ExtendEntityToFood(
 			go,
-			new EdiblesManager.FoodInfo(Id, "", 1600000f, 1, 255.15f, 277.15f, 4800f, true)
+			new EdiblesManager.FoodInfo(Id, 1600000f, 1, 255.15f, 277.15f, 4800f, true)
 		);
 
 		var sparkles = go.AddOrGet<SparkleFollower>();
@@ -45,9 +45,8 @@ internal class GlitterMeatConfig : IEntityConfig
 	public void OnSpawn(GameObject inst)
 	{
 	}
-
 	public string[] GetDlcIds()
 	{
-		return DlcManager.AVAILABLE_ALL_VERSIONS;
+		return null;
 	}
 }

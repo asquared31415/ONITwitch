@@ -52,8 +52,5 @@ internal class DimensionClosingDiagnostic : ColonyDiagnostic
 		return pocketDimension.Lifetime <= 0.5 * Constants.SECONDS_PER_CYCLE ? LowTimeDiagnostic : NormalDiagnostic;
 	}
 
-	public override string[] GetDlcIds()
-	{
-		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
-	}
+	public override string[] GetRequiredDlcIds() => [DlcManager.EXPANSION1_ID];
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ONITwitch.Content.EntityConfigs;
 
 [UsedImplicitly]
-internal class PocketDimensionConfig : IEntityConfig
+internal class PocketDimensionConfig : IEntityConfig, IHasDlcRestrictions
 {
 	public static readonly string Id = ExtraTags.PocketDimensionEntityTag.Name;
 
@@ -34,8 +34,10 @@ internal class PocketDimensionConfig : IEntityConfig
 	{
 	}
 
+	public string[] GetRequiredDlcIds() => [DlcManager.EXPANSION1_ID];
+	public string[] GetForbiddenDlcIds() => null;
 	public string[] GetDlcIds()
 	{
-		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
+		return null;
 	}
 }

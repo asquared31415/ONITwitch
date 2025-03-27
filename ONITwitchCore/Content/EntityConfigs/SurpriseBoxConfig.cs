@@ -44,6 +44,6 @@ internal class SurpriseBoxConfig : IEntityConfig
 
 	public string[] GetDlcIds()
 	{
-		return DlcManager.AVAILABLE_ALL_VERSIONS;
+		return null;
 	}
 }

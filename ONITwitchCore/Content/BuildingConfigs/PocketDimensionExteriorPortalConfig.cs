@@ -7,7 +7,7 @@ using UnityEngine;
 namespace ONITwitch.Content.BuildingConfigs;
 
 [UsedImplicitly]
-internal class PocketDimensionExteriorPortalConfig : IBuildingConfig
+internal class PocketDimensionExteriorPortalConfig : IBuildingConfig, IHasDlcRestrictions
 {
 	public const string Id = TwitchModInfo.ModPrefix + nameof(PocketDimensionExteriorPortalConfig);
 	public const string Anim = "TI_PocketDim_kanim";
@@ -70,7 +70,6 @@ internal class PocketDimensionExteriorPortalConfig : IBuildingConfig
 		go.AddOrGet<PocketDimensionExteriorPortalSideScreen>();
 	}
 
-	public override string[] GetRequiredDlcIds() {
-		return DlcManager.AVAILABLE_EXPANSION1_ONLY;
-	}
+	public override string[] GetRequiredDlcIds() => [DlcManager.EXPANSION1_ID];
+	public override string[] GetForbiddenDlcIds() => null;
 }
