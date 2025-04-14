@@ -6,7 +6,7 @@
             <_LocalRefs Include="$(TargetDir)/*.dll" Exclude="$(TargetPath)" />
         </ItemGroup>
         <Exec
-            Command="wine64 $(NuGetPackageRoot)/ilrepack/$(ILRepackVersion)/tools/ILRepack.exe /out:$(TargetPath) /lib:$(SolutionDir)/lib $(TargetPath) @(_LocalRefs -> '%(Identity)', ' ') > /dev/null 2>&amp;1" />
+            Command="wine $(NuGetPackageRoot)/ilrepack/$(ILRepackVersion)/tools/ILRepack.exe /out:$(TargetPath) /lib:$(SolutionDir)/lib $(TargetPath) @(_LocalRefs -> '%(Identity)', ' ') > /dev/null 2>&amp;1" />
         <Delete Files="@(_LocalRefs)" />
     </Target>
 
