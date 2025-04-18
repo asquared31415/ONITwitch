@@ -1,0 +1,3 @@
+# 1.2.8 (2025-04-18)
+
+Hotfix: remove accidental debug tools built in to the mod
