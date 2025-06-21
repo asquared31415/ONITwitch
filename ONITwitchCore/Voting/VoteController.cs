@@ -39,6 +39,8 @@ internal class VoteController : KMonoBehaviour
 	internal Credentials Credentials;
 
 	public VotingState State { get; private set; } = VotingState.NotStarted;
+	
+	public bool IsVoteActive => State != VotingState.NotStarted && State != VotingState.Error;
 
 	public float VoteTimeRemaining { get; private set; }
 	public float VoteDelayRemaining { get; private set; }

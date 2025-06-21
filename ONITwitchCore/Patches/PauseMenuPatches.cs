@@ -55,9 +55,16 @@ internal static class PauseMenuPatches {
     private static class PauseScreen_RefreshButtons_Patch {
         [UsedImplicitly]
         // ReSharper disable once InconsistentNaming
-        private static void Postfix(KButtonMenu __instance) {
+        private static void Prefix(KButtonMenu __instance) {
             if (__instance is PauseScreen && TwitchButtonInfo.uibutton != null) {
-                if (twitchButtonStyle == null || TwitchButtonInfo.uibutton.bgImage.colorStyleSetting == null ||
+                // update the pause button
+                if (VoteController.Instance != null) {
+                    TwitchButtonInfo.isEnabled = !VoteController.Instance.IsVoteActive;
+                }
+
+                // create the style if needed
+                if (twitchButtonStyle == null ||
+                    TwitchButtonInfo.uibutton.bgImage.colorStyleSetting == null ||
                     TwitchButtonInfo.uibutton.bgImage.colorStyleSetting != twitchButtonStyle) {
                     twitchButtonStyle = ScriptableObject.CreateInstance<ColorStyleSetting>();
                     twitchButtonStyle.disabledColor = DisabledColor;
