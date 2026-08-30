@@ -1,11 +1,16 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using ONITwitchLib;
 using ONITwitchLib.Logger;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ONITwitch.Config;
 
@@ -69,28 +74,22 @@ internal static class CredentialsConfig
 
 			// validate the token using the twitch endpoint
 			const string twitchTokenValidateUri = "https://id.twitch.tv/oauth2/validate";
-
-			var request = WebRequest.CreateHttp(twitchTokenValidateUri);
-			var headers = new WebHeaderCollection { { "Authorization", $"Bearer {oauth}" } };
-			request.Headers = headers;
+			var client = new HttpClient();
+			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", oauth);
 			try
 			{
-				// if this succeeds, the error message will not be set
-				request.GetResponse();
-			}
-			catch (WebException we)
-			{
-				using var r = we.Response;
-				if (r != null)
+				var msg = client.GetAsync(twitchTokenValidateUri).GetAwaiter().GetResult();
+				if (!msg.IsSuccessStatusCode)
 				{
-					var httpResponse = (HttpWebResponse) r;
-					Log.Warn($"Error validating oauth token with twitch.  Status: {httpResponse.StatusCode}");
+					Log.Warn($"Error validating oauth token with twitch.  Status: {msg.StatusCode}");
 					return (Credentials.CreateAnonymousCredentials(),
-						httpResponse.StatusCode == HttpStatusCode.Unauthorized
+						msg.StatusCode == HttpStatusCode.Unauthorized
 							? STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.EXPIRED_OAUTH
-							: STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.UNKNOWN_OAUTH_ERR);
+							: STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.UNKNOWN_OAUTH_ERR);	
 				}
-
+			}
+			catch (Exception e) when (e is HttpRequestException or OperationCanceledException)
+			{
 				Log.Warn("Error validating oauth token with twitch.  No response.");
 				return (Credentials.CreateAnonymousCredentials(),
 					STRINGS.ONITWITCH.UI.DIALOGS.INVALID_CREDENTIALS.CONNECTION_OAUTH_ERR);
