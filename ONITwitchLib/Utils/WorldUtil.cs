@@ -72,7 +72,7 @@ public static class WorldUtil
 				() => { callback?.Invoke(worldContainer); }
 			);
 
-			ClusterManager.Instance.Trigger((int) GameHashes.WorldAdded, worldContainer.id);
+			ClusterManager.Instance.BoxingTrigger((int) GameHashes.WorldAdded, worldContainer.id);
 
 			return worldContainer;
 		}
