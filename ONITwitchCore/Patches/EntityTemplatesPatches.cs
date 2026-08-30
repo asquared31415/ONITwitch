@@ -27,18 +27,21 @@ public static class EntityTemplatesPatches
 
 	[HarmonyPatch(typeof(EntityTemplates), nameof(EntityTemplates.ExtendEntityToFertileCreature), [
 		typeof(GameObject),
+		typeof(IHasDlcRestrictions),
 		typeof(string),
 		typeof(string),
 		typeof(string),
 		typeof(string),
+		typeof(float),
 		typeof(float),
 		typeof(string),
 		typeof(float),
 		typeof(float),
 		typeof(List<FertilityMonitor.BreedingChance>),
-		typeof(string[]),
 		typeof(int),
 		typeof(bool),
+		typeof(bool),
+		typeof(float),
 		typeof(bool),
 		typeof(bool),
 		typeof(float),
@@ -49,9 +52,9 @@ public static class EntityTemplatesPatches
 	{
 		[UsedImplicitly]
 		// ReSharper disable once InconsistentNaming
-		public static void Prefix(string eggId, string baby_id)
+		public static void Prefix(string eggId, string babyId)
 		{
-			EggToBabyMap[eggId] = baby_id;
+			EggToBabyMap[eggId] = babyId;
 		}
 	}
 
