@@ -7,6 +7,6 @@
     </PropertyGroup>
     <PropertyGroup>
         <IsLib>true</IsLib>
-      <DocumentationFile>bin\$(Configuration)\net471\ONITwitchLib.xml</DocumentationFile>
+        <DocumentationFile>bin/$(Configuration)/netstandard2.1/ONITwitchLib.xml</DocumentationFile>
     </PropertyGroup>
 </Project>

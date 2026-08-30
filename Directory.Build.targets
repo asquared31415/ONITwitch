@@ -35,6 +35,7 @@
         <!-- DLL and mod info must always exist -->
         <Copy SourceFiles="@(_ModDLL)" DestinationFolder="$(OutputModPath)" />
         <Copy SourceFiles="@(_ModInfo)" DestinationFolder="$(OutputModPath)" />
+        <Copy SourceFiles="$(TargetDir)/$(TargetName).xml" DestinationFolder="$(OutputModPath)" />
 
         <!-- The other files and folders should only be copied if they exist -->
         <Copy SourceFiles="@(_Anim)" DestinationFolder="$(OutputModPath)/anim/%(RecursiveDir)"

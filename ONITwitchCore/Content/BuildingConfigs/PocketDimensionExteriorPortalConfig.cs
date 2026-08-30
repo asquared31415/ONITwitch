@@ -7,7 +7,7 @@ using UnityEngine;
 namespace ONITwitch.Content.BuildingConfigs;
 
 [UsedImplicitly]
-internal class PocketDimensionExteriorPortalConfig : IBuildingConfig, IHasDlcRestrictions
+internal class PocketDimensionExteriorPortalConfig : IBuildingConfig
 {
 	public const string Id = TwitchModInfo.ModPrefix + nameof(PocketDimensionExteriorPortalConfig);
 	public const string Anim = "TI_PocketDim_kanim";

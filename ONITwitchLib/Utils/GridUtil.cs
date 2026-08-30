@@ -114,19 +114,18 @@ public static class GridUtil
 	///     or <see cref="Grid.InvalidCell" /> (-1) if one cannot be found in range.
 	/// </returns>
 	/// <remarks>
-	///     This search is based on <c>GameUtil.FloodFillFind</c>, which does a breadth first search,
+	///     This search is based on <c>FloodFill.Find</c>, which does a breadth first search,
 	///     moving out approximately equally in all directions
 	/// </remarks>
-	/// <seealso cref="GameUtil.FloodFillFind{T}" />
+	/// <seealso cref="FloodFill.Find" />
 	/// <seealso cref="IsCellEmpty" />
 	[PublicAPI]
 	public static int NearestEmptyCell(int baseCell)
 	{
-		var emptyCell = GameUtil.FloodFillFind<object>(
-			(cell, _) => IsCellEmpty(cell) && Grid.AreCellsInSameWorld(cell, baseCell),
-			null,
+		var emptyCell = FloodFill.Find(
+			cell => IsCellEmpty(cell) && Grid.AreCellsInSameWorld(cell, baseCell),
 			baseCell,
-			NearestEmptyCellDepth,
+			new FloodFill.MaxDepth(NearestEmptyCellDepth),
 			false,
 			false
 		);
@@ -150,24 +149,23 @@ public static class GridUtil
 	///     empty, or <see cref="Grid.InvalidCell" /> (-1) if one cannot be found in range.
 	/// </returns>
 	/// <remarks>
-	///     This search is based on <c>GameUtil.FloodFillFind</c>, which does a breadth first search,
+	///     This search is based on <c>FloodFill.Find</c>, which does a breadth first search,
 	///     moving out approximately equally in all directions
 	/// </remarks>
-	/// <seealso cref="GameUtil.FloodFillFind{T}" />
+	/// <seealso cref="FloodFill.Find" />
 	/// <seealso cref="IsCellEmpty" />
 	[PublicAPI]
 	public static int FindCellWithCavityClearance(int baseCell)
 	{
-		var emptyCell = GameUtil.FloodFillFind<object>(
-			static (cell, _) =>
+		var emptyCell = FloodFill.Find(
+			static cell =>
 			{
 				var cellEmpty = IsCellEmpty(cell);
 				var neighborsValid = GetNeighborsInBounds(cell).All(IsCellEmpty);
 				return cellEmpty && neighborsValid;
 			},
-			null,
 			baseCell,
-			NearestEmptyCellDepth,
+			new FloodFill.MaxDepth(NearestEmptyCellDepth),
 			false,
 			false
 		);
@@ -190,24 +188,23 @@ public static class GridUtil
 	///     neighbors do not have foundation, or <see cref="Grid.InvalidCell" /> (-1) if one cannot be found in range.
 	/// </returns>
 	/// <remarks>
-	///     This search is based on <c>GameUtil.FloodFillFind</c>, which does a breadth first search,
+	///     This search is based on <c>FloodFill.Find</c>, which does a breadth first search,
 	///     moving out approximately equally in all directions
 	/// </remarks>
-	/// <seealso cref="GameUtil.FloodFillFind{T}" />
+	/// <seealso cref="FloodFill.Find" />
 	/// <seealso cref="IsCellFoundationEmpty" />
 	[PublicAPI]
 	public static int FindCellWithFoundationClearance(int baseCell)
 	{
-		var emptyCell = GameUtil.FloodFillFind<object>(
-			static (cell, _) =>
+		var emptyCell = FloodFill.Find(
+			static cell =>
 			{
 				var cellEmpty = IsCellFoundationEmpty(cell);
 				var neighborsValid = GetNeighborsInBounds(cell).All(IsCellFoundationEmpty);
 				return cellEmpty && neighborsValid;
 			},
-			null,
 			baseCell,
-			NearestEmptyCellDepth,
+			new FloodFill.MaxDepth(NearestEmptyCellDepth),
 			false,
 			false
 		);
@@ -334,8 +331,8 @@ public static class GridUtil
 		Orientation orientation = Orientation.Neutral
 	)
 	{
-		var foundCell = GameUtil.FloodFillFind<object>(
-			(testCell, _) =>
+		var foundCell = FloodFill.Find(
+			testCell =>
 			{
 				// check that each cell is not solid
 				if (building.PlacementOffsets.Select(
@@ -353,9 +350,8 @@ public static class GridUtil
 						  building.IsValidBuildLocation(null, testCell, orientation, false, out var _);
 				return ret;
 			},
-			null,
 			cell,
-			1_000,
+			new FloodFill.MaxDepth(1_000),
 			false,
 			false
 		);

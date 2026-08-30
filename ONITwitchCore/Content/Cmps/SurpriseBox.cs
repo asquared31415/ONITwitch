@@ -15,6 +15,7 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 	public string SidescreenButtonText => STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.NAME;
 
 	public string SidescreenButtonTooltip => STRINGS.ONITWITCH.UI.SURPRISE_BOX_SIDE_SCREEN.TOOLTIP;
+	public string SidescreenTitle => null;
 
 	public int HorizontalGroupID()
 	{
