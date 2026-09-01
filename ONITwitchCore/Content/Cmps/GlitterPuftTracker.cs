@@ -63,7 +63,7 @@ internal class GlitterPuftTracker : KMonoBehaviour
 		base.OnSpawn();
 
 		var go = gameObject;
-		go.AddOrGet<Rigidbody2D>().isKinematic = true;
+		go.AddOrGet<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
 		collider2D = go.AddOrGet<BoxCollider2D>();
 		collider2D.isTrigger = true;

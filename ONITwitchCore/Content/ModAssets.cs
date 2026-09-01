@@ -103,7 +103,7 @@ internal static class ModAssets
 			locText.font = font;
 			locText.fontStyle = FontStyles.Normal;
 			locText.fontSize = fontSize;
-			locText.enableWordWrapping = true;
+			locText.textWrappingMode = TextWrappingModes.PreserveWhitespace;
 			locText.color = color;
 
 			var postInit = go.AddOrGet<TmpPostInit>();

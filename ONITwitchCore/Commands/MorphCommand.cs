@@ -82,17 +82,18 @@ internal class MorphCommand : CommandBase
 		var go = Util.KInstantiate(Assets.GetPrefab(morphTag), position);
 		go.SetActive(true);
 		go.GetSMI<AnimInterruptMonitor.Instance>().PlayAnim((HashedString) "growup_pst");
-		foreach (var amount in orig.GetAmounts())
+		
+		foreach (var modifier in orig.GetAmounts().ModifierList)
 		{
-			var amountInstance = amount.amount.Lookup(go);
-			if (amountInstance != null)
+			var newAmountInstance = modifier.amount.Lookup(go);
+			if (newAmountInstance != null)
 			{
-				var num = amount.value / amount.GetMax();
-				amountInstance.value = num * amountInstance.GetMax();
+				var num = modifier.value / modifier.GetMax();
+				newAmountInstance.value = num * newAmountInstance.GetMax();
 			}
 		}
 
-		go.Trigger(-2027483228, orig);
-		Object.Destroy(orig);
+		go.Trigger((int) GameHashes.SpawnedFrom, orig);
+		orig.DeleteObject();
 	}
 }
