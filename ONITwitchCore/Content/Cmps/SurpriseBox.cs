@@ -75,6 +75,11 @@ internal class SurpriseBox : KMonoBehaviour, ISidescreenButtonControl
 			return true;
 		}
 
+		if (!Game.IsCorrectDlcActiveForCurrentSave(prefab))
+		{
+			return false;
+		}
+
 		// must be a pickupable
 		if (prefab.GetComponent<Pickupable>() == null)
 		{
